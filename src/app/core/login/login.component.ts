@@ -9,7 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
-  })
+})
 export class LoginComponent implements OnInit {
   signupform: FormGroup;
   loginData = { email:'', password:'' };
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     this.signupform = new FormGroup({
       password: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+[a-zA-Z\s0-9._-]+@[a-zA-Z\sa-z0-9-]+\.[a-zA-Z\s.]{2,20}$/i)]),
-      });
+    });
   }
 
   ngOnInit() {
@@ -36,13 +36,11 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('employee_role',this.user_data.data.role);
       localStorage.setItem('is_on_probation',this.user_data.data.is_on_probation);
       this.router.navigateByUrl('/home/dashboard');
-      }, (err) => {
-        this.showError(err.error);
-        });
-
+    },(err) => {
+      this.showError(err.error);
+    });
   }
   showError(e,position: any = 'top-center') {
     this.toastr.errorToastr(e.message, 'Oops Some went wrong!',{  position: position});
   }
-
 }
