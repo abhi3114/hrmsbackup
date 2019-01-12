@@ -14,6 +14,15 @@ import { AllLeavesComponent } from './all-leaves/all-leaves.component';
 import { ApprovedLeavesComponent } from './approved-leaves/approved-leaves.component';
 import { UnapprovedLeavesComponent } from './unapproved-leaves/unapproved-leaves.component';
 import { AssetsComponent } from './assets/assets.component';
+import { AllOutdoorDutiesComponent } from './all-outdoor-duties/all-outdoor-duties.component';
+import { ApprovedOutdoorDutiesComponent } from './approved-outdoor-duties/approved-outdoor-duties.component';
+import { UnapprovedOutdoorDutiesComponent } from './unapproved-outdoor-duties/unapproved-outdoor-duties.component';
+import { AllLateMarksComponent } from './all-late-marks/all-late-marks.component';
+import { ApprovedLateMarksComponent } from './approved-late-marks/approved-late-marks.component';
+import { UnapprovedLateMarksComponent } from './unapproved-late-marks/unapproved-late-marks.component';
+import { AllMissingAttendanceComponent } from './all-missing-attendance/all-missing-attendance.component';
+import { ApprovedMissingAttendanceComponent } from './approved-missing-attendance/approved-missing-attendance.component';
+import { UnapprovedMissingAttendanceComponent } from './unapproved-missing-attendance/unapproved-missing-attendance.component';
 
 
 @NgModule({
@@ -36,7 +45,16 @@ import { AssetsComponent } from './assets/assets.component';
   DashboardComponent,
   MasterComponent,
   AllLeavesComponent,
-  AssetsComponent
+  AssetsComponent,
+  AllOutdoorDutiesComponent,
+  ApprovedOutdoorDutiesComponent,
+  UnapprovedOutdoorDutiesComponent,
+  AllLateMarksComponent,
+  ApprovedLateMarksComponent,
+  UnapprovedLateMarksComponent,
+  AllMissingAttendanceComponent,
+  ApprovedMissingAttendanceComponent,
+  UnapprovedMissingAttendanceComponent
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })
