@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MasterComponent } from './master/master.component';
+import { MasterComponent } from '../shared/components/master/master.component';
 import { AllLeavesComponent } from './all-leaves/all-leaves.component';
 import { ApprovedLeavesComponent } from './approved-leaves/approved-leaves.component';
 import { UnapprovedLeavesComponent } from './unapproved-leaves/unapproved-leaves.component';

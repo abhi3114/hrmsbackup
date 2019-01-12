@@ -8,7 +8,7 @@ import { CollapseModule } from 'ngx-bootstrap';
 import { OwlDateTimeModule, OwlNativeDateTimeModule,OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { UserRoutingModule } from './user-routing.module';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
-import { MasterComponent } from './master/master.component';
+import { MasterComponent } from '../shared/components/master/master.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AllLeavesComponent } from './all-leaves/all-leaves.component';
 import { ApprovedLeavesComponent } from './approved-leaves/approved-leaves.component';

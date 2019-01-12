@@ -38,7 +38,6 @@ export class AllLeavesComponent implements OnInit {
 
   }
 
-
   ngOnInit()
   {
     this.api.getAllLeaves(this.allLeavesData.start_date , this.allLeavesData.end_date).subscribe(res => {
@@ -50,8 +49,8 @@ export class AllLeavesComponent implements OnInit {
       };
       this.leaveTableTrigger.next();
       }, (err) => {
-        alert(err.error);
-        });
+      alert(err.error);
+    });
   }
 
 }

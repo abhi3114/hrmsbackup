@@ -68,6 +68,18 @@
             <li><a [routerLink]="['leaves/unapproved']"><i class="fa fa-close" aria-hidden="true"></i>Unapproved </a></li>
           </ul>
         </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a><i class="fa fa-reply-all " aria-hidden="true"></i>
+            <span>Manager Section</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a [routerLink]="['users/approved_leaves']"><i class="fa fa-server" aria-hidden="true"></i> Approved Leaves </a></li>
+            <li><a[routerLink]="['users/unapproved_leaves']"><i class="fa fa-close" aria-hidden="true"></i> Unapproved Leaves</a></li>
+          </ul>
+        </li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
