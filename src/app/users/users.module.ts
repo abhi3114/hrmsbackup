@@ -17,24 +17,24 @@ import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
-  CommonModule,
-  DataTablesModule,
-  UserRoutingModule,
-  ModalModule.forRoot(),
-  BsDatepickerModule.forRoot(),
-  CollapseModule.forRoot(),
-  FormsModule,
-  ReactiveFormsModule,
-  BrowserAnimationsModule
+    CommonModule,
+    DataTablesModule,
+    UserRoutingModule,
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    CollapseModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   declarations: [
     LeavesComponent,
     ApprovedLeavesComponent,
     UnapprovedLeavesComponent,
     DashboardComponent,
-    MasterComponent,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    MasterComponent
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
 })
