@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 @Component({
 selector: 'app-master',
 templateUrl: './master.component.html',
-styleUrls: ['./master.component.scss']
+styleUrls: ['./master.component.css']
 })
 export class MasterComponent implements OnInit {
 employee_name:any;employee_photo:any;employee_department:any;employee_email:any;employee_role:any;
