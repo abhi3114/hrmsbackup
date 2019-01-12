@@ -13,4 +13,9 @@ export class UnapprovedLateMarksService {
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
+  recordLateMarkResponse(late_mark_id,late_mark_data)
+  {
+    return this.http.post(environment.baseUrl+'late_marks/'+late_mark_id+'/update_comment',late_mark_data,{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+      "Content-Type": 'application/json'})})
+  }
 }

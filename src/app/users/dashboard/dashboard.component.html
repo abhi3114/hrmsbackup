@@ -157,7 +157,7 @@
               <tbody>
                 <tr *ngFor="let l of lmData">
                   <td>{{l.date}}</td>
-                  <td *ngIf="l.approved==false"><a href="" (click)="getresponse(l.id,l.comment)">{{l.comment}}</a></td>
+                  <td *ngIf="l.approved==false"><a style="cursor: pointer;" (click)="updateLateMarkResponse(recordLateMarkResponse,l.id,l.comment)">{{l.comment}}</a></td>
                   <td *ngIf="l.approved==true">{{l.comment}}</td>
                   <td *ngIf="l.approved==false">No</td>
                   <td *ngIf="l.approved==true">Yes</td>
@@ -201,7 +201,7 @@
                 <td> {{l.approved_on}}</td>
                 <td>{{l.punch}}</td>
                 <td>{{l.reason}}</td>
-                <td><button (click)="updateMissingAttendance(updateMissingAttendanceTemplate,l.id)" type="button" class="add-dynamic-button" [attr.data-maId]="'#' + l.id"><i class="fa fa-edit" aria-hidden="true"></i></button></td>
+                <td><button (click)="updateMissingAttendance(updateMissingAttendanceTemplate,l.id,l.reason)" type="button" class="add-dynamic-button" [attr.data-maId]="'#' + l.id"><i class="fa fa-edit" aria-hidden="true"></i></button></td>
               </tr>
             </tbody>
           </table>
@@ -549,7 +549,7 @@
 </form>
 </div>
 </ng-template>
-<ng-template #updateMissingAttendanceTemplate >
+<ng-template #updateMissingAttendanceTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Record Reason for Missing Attendance</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -557,23 +557,57 @@
     </button>
   </div>
   <div class="modal-body">
-    <form name="leaveForm" novalidate data-ng-submit="validate(leaveForm.$valid)" autocomplete="off">
+    <form  novalidate  (ngSubmit)="validateUpdateMissingAttendanceForm()" [formGroup]="updateMissingAttendanceForm" autocomplete="off">
       <div class="row">
-
         <div>
-
           <div class="col-md-12">
-          <div class="form-group">
-          <label>Reason<sup style="color:red;">*</sup></label>
-          <input name="puropse" type='text' class="form-control" data-ng-model="prp"  required />
+            <div class="form-group">
+              <label>Reason<sup style="color:red;">*</sup></label>
+              <input name="puropse" type='text' class="form-control"[(ngModel)]="updateMissingAttendanceData.reason"  formControlName="comment" required [class.error1]="!updateMissingAttendanceForm.controls.comment.valid && updateMissingAttendanceForm.controls.comment.dirty" />
+              <div *ngIf="( updateMissingAttendanceForm.get('comment').hasError('required') ) && updateMissingAttendanceForm.get('comment').touched">
+               <div class="error" *ngIf="updateMissingAttendanceForm.get('comment').hasError('required') && updateMissingAttendanceForm.get('comment').touched">
+                This field is mandatory
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="" style="margin-top: 23px; text-align: center;">
-     <button type="submit" class="btn btn-primary ladda-button" ladda="loadingDemo" data-style="expand-right">Submit</button>
-   </div>
+      <div class="" style="margin-top: 23px; text-align: center;">
+       <button type="submit" class="btn btn-primary" [disabled]="updateMissingAttendanceForm.invalid">Submit</button>
+     </div>
 
- </div>
-</form>
+   </div>
+ </form>
+</div>
+</ng-template>
+<ng-template #recordLateMarkResponse>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Record Reason for Missing Attendance</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form  novalidate  (ngSubmit)="validateRecordLateMarkResponseForm()" [formGroup]="updateLateMarksForm" autocomplete="off">
+      <div class="row">
+        <div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Reason<sup style="color:red;">*</sup></label>
+              <input name="puropse" type='text' class="form-control"[(ngModel)]="updateLateMarksData.comment"  formControlName="comment" required [class.error1]="!updateLateMarksForm.controls.comment.valid && updateLateMarksForm.controls.comment.dirty" />
+              <div *ngIf="( updateLateMarksForm.get('comment').hasError('required') ) && updateLateMarksForm.get('comment').touched">
+               <div class="error" *ngIf="updateLateMarksForm.get('comment').hasError('required') && updateLateMarksForm.get('comment').touched">
+                This field is mandatory
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="" style="margin-top: 23px; text-align: center;">
+       <button type="submit" class="btn btn-primary" [disabled]="updateLateMarksForm.invalid">Submit</button>
+     </div>
+
+   </div>
+ </form>
 </div>
 </ng-template>

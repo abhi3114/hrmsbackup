@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   late_marks_data:any;missing_attendance_data:any;mentorship_feedback_data:any;
   leavesData:any;invertoryData:any;odData:any;lmData:any;maData:any;
   mentorData:any;isMentororMentee:any;leavesArray:any[];punchArray:any[];monthArray:any[];
-  yearArray:any[];user_data:any;
+  yearArray:any[];user_data:any;missing_attendance_Id:any;
 
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
@@ -35,13 +35,15 @@ export class DashboardComponent implements OnInit {
   modalRef: BsModalRef;
 
   applyLeaveForm: FormGroup;   applyOutdoorDutiesForm: FormGroup; applyLateMarksForm :FormGroup;
-  applyMissingAttendanceForm:FormGroup; salarySlipDownloadForm:FormGroup;
+  applyMissingAttendanceForm:FormGroup; salarySlipDownloadForm:FormGroup;updateMissingAttendanceForm:FormGroup;
+  updateLateMarksForm:FormGroup;
 
   applyLeavesData = { start_date:'', end_date:'',leave_type:'',reason:'' };
   applyOutdoorDutiesData = {start_date:'', end_date:'',project_name:'',client_name:'',location:'',reason:''};
   applyLateMarksData={ date:'',comment:''};
   applyMissingAttendanceData={ date:'',punch:'',reason:''};
   salarySlipDownloadData={ selectedyear:'',selectedmonth:''};
+  updateMissingAttendanceData={reason:''};updateLateMarksData={comment:'',id:''}
 
   constructor(private router:Router,private api:DashBoardService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager)
   {
@@ -71,6 +73,12 @@ export class DashboardComponent implements OnInit {
       year: new FormControl('', [Validators.required]),
       month: new FormControl('', [Validators.required])
       });
+    this.updateMissingAttendanceForm = new FormGroup({
+      comment: new FormControl('', [Validators.required])
+      });
+    this.updateLateMarksForm = new FormGroup({
+      comment: new FormControl('', [Validators.required])
+      })
     this.leaveTableOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -270,14 +278,54 @@ export class DashboardComponent implements OnInit {
         });
 
   }
-
-  updateMissingAttendance(template: TemplateRef<any>,maId)
+    updateMissingAttendance(template: TemplateRef<any>,maId,mareason)
+  {
+    this.missing_attendance_Id=maId;
+    this.modalRef = this.modalService.show(template);
+    this.updateMissingAttendanceData.reason=mareason;
+  }
+  validateUpdateMissingAttendanceForm()
+  {
+    this.api.updateMissingAttendance(this.missing_attendance_Id,this.updateMissingAttendanceData).subscribe(res => {
+      this.user_data=res;
+      this.modalRef.hide();
+      this.showSuccess('Response Recorded');
+      this.updateMissingAttendanceForm.reset();
+      this.RefreshMissingAttendanceData();
+      }, (err) => {
+        this.showError(err.error);
+        this.modalRef.hide();
+        this.updateMissingAttendanceForm.reset();
+        });
+  }
+    updateLateMarkResponse(template: TemplateRef<any>,lmId,lmreason)
   {
     this.modalRef = this.modalService.show(template);
+    this.updateLateMarksData.comment=lmreason;
+    this.updateLateMarksData.id=lmId
   }
+
+  validateRecordLateMarkResponseForm()
+  {
+    this.api.recordLateMarkResponse(this.updateLateMarksData.id,this.updateLateMarksData).subscribe(res => {
+      this.user_data=res;
+      this.modalRef.hide();
+      this.showSuccess('Response Recorded');
+      this.updateLateMarksForm.reset();
+      this.RefreshLateMarkData();
+      }, (err) => {
+        this.showError(err.error);
+        this.modalRef.hide();
+        this.updateLateMarksForm.reset();
+        });
+  }
+
 
   showError(e,position: any = 'top-center') {
     this.toastr.errorToastr(e.message, 'Oops Some went wrong!',{  position: position});
+  }
+  showSuccess(message,position: any = 'top-center') {
+    this.toastr.successToastr(message, 'Success',{  position: position});
   }
 
 }

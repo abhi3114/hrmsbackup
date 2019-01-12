@@ -13,4 +13,9 @@ export class AllMissingAttendanceService {
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
+  updateMissingAttendance(missing_attendance_id,missing_attendance_reason)
+  {
+    return this.http.post(environment.baseUrl+'attendance_missings/'+missing_attendance_id+'/update_reason',missing_attendance_reason,{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+      "Content-Type": 'application/json'})})
+  }
 }
