@@ -35,7 +35,6 @@ export class ApprovedComponent implements OnInit {
     var end_date=moment(this.approvedLeavesData.end_date).format('DD/MM/YYYY');
     this.api.getallapprovedSubordinateLeave(start_date,end_date).subscribe(res => {
       this.approved_leaves_data=res;
-      this.approvedLeavesData=this.approved_leaves_data;
       }, (err) => {
         alert(err.error);
     });
@@ -46,7 +45,6 @@ export class ApprovedComponent implements OnInit {
     var end_date=moment(this.approvedLeavesData.end_date).format('DD/MM/YYYY');
     this.api.getallapprovedSubordinateLeave(start_date,end_date).subscribe(res => {
       this.approved_leaves_data=res;
-      this.approvedLeavesData=this.approved_leaves_data;
       this.leaveTableOptions = {
         pagingType: 'full_numbers',
         pageLength: 10
