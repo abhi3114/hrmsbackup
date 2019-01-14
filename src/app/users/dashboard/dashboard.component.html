@@ -39,13 +39,13 @@
               </thead>
               <tbody>
                 <tr *ngFor="let l of leavesData">
-                  <td>{{l.start_date}}</td>
-                  <td>{{l.end_date}}</td>
+                  <td>{{l.start_date  | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{l.end_date  | date: 'dd/MM/yyyy'}}</td>
                   <td>{{l.leave_type}}</td>
                   <td>{{l.reason}}</td>
                   <td *ngIf="l.approved==false">No</td>
                   <td *ngIf="l.approved==true">Yes</td>
-                  <td>{{l.approved_on}}</td>
+                  <td>{{l.approved_on | date: 'dd/MM/yyyy'}}</td>
                 </tr>
               </tbody>
             </table>
@@ -299,8 +299,13 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label>Reason</label>
-            <textarea type='text' name="leavereason" class="form-control"  [(ngModel)]="applyLeavesData.reason"  [ngModelOptions]="{standalone: true}"></textarea>
+            <label>Reason<sup style="color:red;">*</sup></label>
+            <textarea type='text' name="leavereason" class="form-control"  [(ngModel)]="applyLeavesData.reason"  formControlName="reason" [class.error1]="!applyLeaveForm.controls.reason.valid && applyLeaveForm.controls.reason.dirty" required></textarea>
+            <div *ngIf="( applyLeaveForm.get('reason').hasError('required') ) && applyLeaveForm.get('reason').touched">
+              <div class="error" *ngIf="applyLeaveForm.get('reason').hasError('required') && applyLeaveForm.get('reason').touched">
+                This field is mandatory
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -508,7 +513,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <form  novalidate (ngSubmit)="validateLMForm()" [formGroup]="salarySlipDownloadForm" autocomplete="off">
+    <form  novalidate (ngSubmit)="validateSalarySlipForm()" [formGroup]="salarySlipDownloadForm" autocomplete="off">
       <div class="row">
         <div>
           <div class="col-md-3">
@@ -614,3 +619,4 @@
  </form>
 </div>
 </ng-template>
+

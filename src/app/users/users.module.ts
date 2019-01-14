@@ -23,7 +23,7 @@ import { UnapprovedLateMarksComponent } from './unapproved-late-marks/unapproved
 import { AllMissingAttendanceComponent } from './all-missing-attendance/all-missing-attendance.component';
 import { ApprovedMissingAttendanceComponent } from './approved-missing-attendance/approved-missing-attendance.component';
 import { UnapprovedMissingAttendanceComponent } from './unapproved-missing-attendance/unapproved-missing-attendance.component';
-
+import { BoosterSessionComponent } from './booster-session/booster-session.component';
 
 @NgModule({
   imports: [
@@ -37,7 +37,7 @@ import { UnapprovedMissingAttendanceComponent } from './unapproved-missing-atten
   ReactiveFormsModule,
   BrowserAnimationsModule,
   OwlDateTimeModule,
-  OwlNativeDateTimeModule
+  OwlNativeDateTimeModule,
   ],
   declarations: [
   ApprovedLeavesComponent,
@@ -54,7 +54,8 @@ import { UnapprovedMissingAttendanceComponent } from './unapproved-missing-atten
   UnapprovedLateMarksComponent,
   AllMissingAttendanceComponent,
   ApprovedMissingAttendanceComponent,
-  UnapprovedMissingAttendanceComponent
+  UnapprovedMissingAttendanceComponent,
+  BoosterSessionComponent
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })

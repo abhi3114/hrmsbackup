@@ -79,5 +79,10 @@ export class DashBoardService {
     return this.http.post(environment.baseUrl+'late_marks/'+late_mark_id+'/update_comment',late_mark_data,{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
       "Content-Type": 'application/json'})})
   }
+  getUserSalarySlip(month,year)
+  {
+    return this.http.get(environment.baseUrl+'salaries/'+month +'/'+year+'/payment_slip',{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+      "Content-Type": 'application/json'})})
+  }
 
 }
