@@ -1,0 +1,40 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+    <ol class="breadcrumb">
+      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li class="active">Assets</li>
+    </ol>
+    <section class="content-header">
+     <h4>Asset Details</h4>
+   </section>
+   <section class="content">
+    <div class="row">
+      <div class="box-body">
+        <div class="table-responsive">
+         <table class="table  table-bordered table-striped table-hover" datatable [dtOptions]="assetTableOptions"  [dtTrigger]="assetTableTrigger">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Quantity</th>
+              <th>Date of Issue</th>
+              <th>Returned</th>
+              <th>Date when returned</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of invertoryData">
+              <td ng-bind=""> {{i.title}} </td>
+              <td ng-bind=""> {{i.quantity}} </td>
+              <td>{{i.date_of_issue}}</td>
+              <td *ngIf="l.returned==false">No</td>
+              <td *ngIf="l.returned==true">Yes</td>
+              <td ng-bind="">{{i.returned_on}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+</div>
