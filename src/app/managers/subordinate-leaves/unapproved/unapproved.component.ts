@@ -15,6 +15,7 @@ import * as moment from 'moment';
 export class UnapprovedComponent implements OnInit {
 
   isCollapsed = false;
+  leaveids = [];
   unapprovedLeavesForm: FormGroup;
   unapprovedLeavesData={start_date:'',end_date:''};
   unapproved_leaves_data:any;unapprovedleavesData:any; showDataTable:Boolean;
@@ -64,6 +65,8 @@ export class UnapprovedComponent implements OnInit {
   }
 
   save(){
+    $('.checkbox:checked').each(function() {
+    });
   }
 
 }
