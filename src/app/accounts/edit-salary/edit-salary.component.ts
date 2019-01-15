@@ -21,10 +21,12 @@ export class EditSalaryComponent implements OnInit {
   user_salary_data:any;components:any;user_payemnt_data:any;payment_components:any;
   choices = [{ id: 'choice',amount:'',component:'',details:'' }];user_payment_components:any; paymentArray=[];
   showIncentiveDetail:any;componentArray=[];payment_attributes=[];lwparray=[];data:any;
-  isBetween:any;showUserSalary=false;showUserPayment=false;isshowBreakUp:false;
+  isBetween:any;showUserSalary=false;showUserPayment=false;isshowBreakUp:false;diffyear:any;postdata:any
+  currentyear:any;intermediate:number;total:number;
   addSalaryForm: FormGroup;
   addSalaryData={title:'',start_date:'',total_amount:''};
-  salaryBreakComponents={basic:'',hra:''travel_allowance:'',special_allowance:'',pt:'',pbi:''}
+  salaryBreakComponents={basic:'',hra:'', travel_allowance:'', special_allowance:'', pt:'', pbi:''};
+  modalRef: BsModalRef;
   config = {
     animated:true,
     keyboard: false,
@@ -115,7 +117,7 @@ export class EditSalaryComponent implements OnInit {
   addMoreCT()
   {
     var newItemNo2 = this.choices.length + 1;
-    this.choices.push({ 'id': 'added' + newItemNo2,'component':'' });
+    this.choices.push({ id: 'added' + newItemNo2,component:'',amount:'',details:'' });
     console.log(this.choices);
   }
   delCT (i)
@@ -126,7 +128,7 @@ export class EditSalaryComponent implements OnInit {
         this.componentArray.push({ title:this.paymentArray[i],amount:this.choices[i].amount, _destroy: true });
       }
       else {
-        this.componentArray.push({ id: this.choices[i].id,title:this.titlesArray[i],amount:this.choices[i].amount, _destroy: true });
+        this.componentArray.push({ id: this.choices[i].id,title:this.paymentArray[i],amount:this.choices[i].amount, _destroy: true });
       }
 
       this.choices.splice(i, 1);
@@ -195,12 +197,12 @@ export class EditSalaryComponent implements OnInit {
       this.data=res;
       this.showSuccess('Payment Added');
       this.refreshPayment();
-      this.choices = [{ id: 'choice','component':'' }]; this.paymentArray=[]; this.lwparray=[];
+      this.choices = [{ id: 'choice',component:'',amount:'',details:''}]; this.paymentArray=[]; this.lwparray=[];
       this.componentArray=[];this.payment_attributes=[];
       }, (err) =>
       {
         this.showError(err.error);
-        this.choices = [{ id: 'choice','component':'' }]; this.paymentArray=[]; this.lwparray=[];
+        this.choices = [{ id: 'choice',component:'',amount:'',details:'' }]; this.paymentArray=[]; this.lwparray=[];
         this.componentArray=[];this.payment_attributes=[];
         });
   }
@@ -213,12 +215,12 @@ export class EditSalaryComponent implements OnInit {
   calculate()
   {
     var currentmonth= new Date().getMonth()+1;
-    var currentyear=new Date().getFullYear();
+    this.currentyear=new Date().getFullYear();
     var smonth= parseInt(this.salary_filter.selectedmonth);
-    var prevYear = currentyear-1;
+    var prevYear = this.currentyear-1;
     var diffmonth= smonth - currentmonth;
-    var diffyear= currentyear- this.salary_filter.selectedyear;
-    if(currentyear== this.salary_filter.selectedyear)
+    this.diffyear= (parseInt(this.currentyear) - parseInt(this.salary_filter.selectedyear));
+    if(this.currentyear== this.salary_filter.selectedyear)
     {
       if(diffmonth<1)
       {
@@ -229,7 +231,7 @@ export class EditSalaryComponent implements OnInit {
         this.showCustomError('salary can be reprocessed only of current or previous month');
       }
     }
-    else if(diffyear == 1)
+    else if(this.diffyear == 1)
     {
       if(diffmonth== 11)
       {
@@ -250,22 +252,22 @@ export class EditSalaryComponent implements OnInit {
 
     if(this.user_payemnt_data.lwp_id == null || this.user_payemnt_data.lwp_id == undefined)
     {
-      var postdata ={ lwp_count:this.user_payemnt_data.lwp};
+      this.postdata  ={ lwp_count:this.user_payemnt_data.lwp};
     }
     else
     {
-      var postdata ={ lwp_count:this.user_payemnt_data.lwp,lwp_id:this.user_payemnt_data.lwp_id};
+      this.postdata ={ lwp_count:this.user_payemnt_data.lwp,lwp_id:this.user_payemnt_data.lwp_id};
     }
-    this.api.reprocessSalary(this.stateParams.id,this.user_payemnt_data.payment_id,postdata).subscribe(res => {
+    this.api.reprocessSalary(this.stateParams.id,this.user_payemnt_data.payment_id,this.postdata).subscribe(res => {
       this.data=res;
       this.showSuccess('Payment Reprocessed');
       this.refreshPayment();
-      this.choices = [{ id: 'choice','component':'' }]; this.paymentArray=[]; this.lwparray=[];
+      this.choices = [{ id: 'choice',component:'',amount:'',details:'' }]; this.paymentArray=[]; this.lwparray=[];
       this.componentArray=[];this.payment_attributes=[];
       }, (err) =>
       {
         this.showError(err.error);
-        this.choices = [{ id: 'choice','component':'' }]; this.paymentArray=[]; this.lwparray=[];
+        this.choices = [{ id: 'choice',component:'',amount:'',details:'' }]; this.paymentArray=[]; this.lwparray=[];
         this.componentArray=[];this.payment_attributes=[];
         });
   }
@@ -308,7 +310,9 @@ export class EditSalaryComponent implements OnInit {
     {
       if(total<25000)
       {
-        this.salaryBreakComponents.basic=parseInt(total*0.76);
+        this.total=parseInt(total);
+        this.intermediate=this.total*0.76;
+        this.salaryBreakComponents.basic= this.intermediate.toString();
         this.salaryBreakComponents.hra=parseInt(this.salaryBreakComponents.basic*0.10);
         this.salaryBreakComponents.travel_allowance=0;
       }
@@ -334,7 +338,7 @@ export class EditSalaryComponent implements OnInit {
   }
   validateAddSalaryForm()
   {
-    var array=[] var sum =0;
+    var array=[]; var sum =0;
     array.push({title:'Basic',amount:this.salaryBreakComponents.basic});
     array.push({title:'HRA',amount:this.salaryBreakComponents.hra});
     array.push({title:'Travelling Allowance',amount:this.salaryBreakComponents.travel_allowance});
