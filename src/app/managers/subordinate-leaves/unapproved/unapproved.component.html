@@ -5,7 +5,7 @@
       <li class="active">UnApproved Leaves</li>
     </ol>
     <section class="content-header">
-      <button type="button" class="btn bg-orange btn-flat ladda-button" ng-click="save()" ladda="loadingDemo" data-style="expand-right"><span class="ladda-label">Mark Approved</span><span class="ladda-spinner"></span></button>
+      <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
     </section>
     <section class="content">
       <div class="row">
@@ -14,7 +14,7 @@
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
               <thead>
                 <tr>
-                  <th></th>
+                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkALL()'/></th>
                   <th>User</th>
                   <th>Start Date</th>
                   <th>End Date</th>
@@ -24,7 +24,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let l of unapproved_leaves_data">
-                  <input type="checkbox" [(ngModel)]="l.id" (change)="log()" />
+                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
                   <td>{{l.user_name}}</td>
                   <td>{{l.start_date}}</td>
                   <td>{{l.end_date}}</td>
