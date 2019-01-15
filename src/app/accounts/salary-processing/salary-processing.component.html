@@ -1,0 +1,228 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+   <ol class="breadcrumb">
+    <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+    <li class="active">Salary</li>
+  </ol>
+  <section class="content-header">
+    <form>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-2">
+            <div class="form-group">
+              <label >Month<sup style="color:red;">*</sup></label>
+              <select name="bnknm" class="form-control select2 building-select"  [(ngModel)]="salary_filter.selectedmonth" style="width: 100%;" required>
+                <option  value="" disabled="">Select Month</option>
+                <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Year<sup style="color:red;">*</sup></label>
+              <select name="endDate" class="form-control select2 building-select" [(ngModel)]="salary_filter.selectedyear" style="width: 100%;" required>
+                <option  value="" disabled="">Select Year</option>
+                <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2" style="margin-top: 25px;">
+            <button type="button" class="btn bg-orange btn-flat" (click)="process(processingTemplate)">
+              <i class="fa fa-cogs" aria-hidden="true"></i> Process Salary
+            </button>
+          </div>
+          <div class="col-md-2" style="margin-top: 25px;  margin-left: -50px;">
+          <button type="button" class="btn bg-orange btn-flat"(click)="gotoToggle(toggleSalaryTemplate)">Toggle Salary Slip Download</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+  <section class="content">
+    <div class="row">
+      <div class="box-body">
+        <div class="">
+          <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="salaryTableOptions"  [dtTrigger]="salaryTableTrigger">
+            <thead>
+              <tr>
+               <th><input id='checkAll' type='checkbox' class='check-box' (click)="checkALL()" /></th>
+               <th>Name</th>
+               <th>Department</th>
+               <th>Role</th>
+               <th>Pan No.</th>
+               <th>Salary</th>
+               <th>Date of Joining</th>
+               <th>Edit</th>
+               <th>Download</th>
+             </tr>
+           </thead>
+           <tbody>
+            <tr *ngFor="let i of user_data">
+              <td><input class="checkbox" name="{{i.id}}"  type="checkbox" /></td>
+              <td>{{i.name}}</td>
+              <td>{{i.department}}</td>
+              <td>{{i.role }}</td>
+              <td>{{i.pan_number}}</td>
+              <td><i class="fa fa-inr" aria-hidden="true"></i>{{i.salary}}</td>
+              <td>{{i.date_of_joining | date:'dd/MM/yyyy'}}</td>
+              <td  align="center"><a target="_blank"
+                style="border-radius: 20px; background-color: #dd4b39;font-size: 10px;  padding: 5px 15px 5px 15px; color: white;" [routerLink]="['/home/users',i.id]" [queryParams]="{month:salary_filter.selectedmonth,year:salary_filter.selectedyear}">EDIT</a></td>
+                <td  align="center"><button type="button" class="btn bg-purple" ng-click="downloadsalaryslip(i.id,i.name)" style="border-radius: 20px;font-size: 10px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> DOWNLOAD</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</div>
+<ng-template #processingTemplate>
+ <div class="modal-header">
+   <p class="modal-title pull-left" style="font-size: 18px;">Process Salary</p>
+   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body text-center">
+  <h3>Are you sure?</h3>
+  <h3>You won't be able to revert this</h3>
+  <button type="button" class="btn btn-default btn-success" (click)="confirm()"  style="margin-right: 5px; font-size: 18px; color: #fff;">Yes Process</button>
+  <button type="button" class="btn btn-default btn-danger" (click)="decline()" style="margin-right: 5px; font-size: 18px; color: #fff;">Cancel</button>
+</div>
+</ng-template>
+<ng-template #toggleSalaryTemplate>
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Toggle Salary Slip</h4>
+    </div>
+    <div class="modal-body">
+      <form novalidate (ngSubmit)="validateSalarySlipForm()" [formGroup]="salarySlipToggleForm" autocomplete="off">
+        <div class="row">
+         <div class="col-md-4">
+          <div class="form-group">
+            <label >Month<sup style="color:red;">*</sup></label>
+            <select name="bnknm" class="form-control select2 building-select"   [(ngModel)]="toggle_salary_data.selectedmonth"  formControlName="month"
+            required [class.error1]="!salarySlipToggleForm.controls.month.valid && salarySlipToggleForm.controls.month.dirty">
+            <option  value="" disabled="">Select Month</option>
+            <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
+          </select>
+          <div *ngIf="( salarySlipToggleForm.get('month').hasError('required') )
+          && salarySlipToggleForm.get('month').touched">
+          <div class="error" *ngIf="salarySlipToggleForm.get('month').hasError('required')
+          &&  salarySlipToggleForm.get('month').touched">
+          This field is mandatory
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="form-group">
+      <label>Year<sup style="color:red;">*</sup></label>
+      <select name="endDate" class="form-control select2 building-select"   [(ngModel)]="toggle_salary_data.selectedyear"  formControlName="year"
+      required [class.error1]="!salarySlipToggleForm.controls.year.valid && salarySlipToggleForm.controls.year.dirty">
+      <option  value="" disabled="">Select Year</option>
+      <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
+    </select>
+    <div *ngIf="( salarySlipToggleForm.get('month').hasError('required') )
+    && salarySlipToggleForm.get('month').touched">
+    <div class="error" *ngIf="salarySlipToggleForm.get('month').hasError('required')
+    &&  salarySlipToggleForm.get('month').touched">
+    This field is mandatory
+  </div>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+    <label style="    margin-left: 5px;">OFF/ON Toggle<sup style="color:red;">*</sup>
+    </label>
+    <label class="switch">
+      <input type="checkbox" [(ngModel)]="toggle_salary_data.toggler" formControlName="toggle"
+      [class.error1]="!salarySlipToggleForm.controls.toggle.valid && salarySlipToggleForm.controls.toggle.dirty" (change)="getSiwtchData(toggle_salary_data.toggler)">
+      <span class="slider round"></span>
+    </label>
+    <div *ngIf="( salarySlipToggleForm.get('toggle').hasError('required') )
+    && salarySlipToggleForm.get('toggle').touched">
+    <div class="error" *ngIf="salarySlipToggleForm.get('toggle').hasError('required')
+    &&  salarySlipToggleForm.get('toggle').touched">
+    This field is mandatory
+  </div>
+</div>
+</div>
+</div>
+</div>
+<div>
+  <div style="text-align: center;">
+   <button type="submit" class="btn btn-primary" [disabled]="salarySlipToggleForm.invalid">Save changes</button>
+ </div>
+</div>
+</form>
+</div>
+</div>
+<!-- Default checked -->
+
+</ng-template>
+<style>
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+</style>

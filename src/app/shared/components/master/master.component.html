@@ -1,6 +1,6 @@
 <div class="wrapper"  id="commoncontent">
   <header class="main-header">
-    <a ui-sref="mydashboard" href="" class="logo">
+    <a [routerLink]="['dashboard']" class="logo">
       <span class="logo-mini"><img src="assets/images/small-logo.png" class="img-responsive"></span>
       <span class="logo-lg">
         <img src="assets/images/logo-in.png" class="img-responsive"  id="logo_in">
@@ -119,6 +119,18 @@
    <ul class="treeview-menu">
      <li><a [routerLink]="['users/approved_leaves']"><i class="fa fa-server" aria-hidden="true"></i> Approved Leaves </a></li>
      <li><a [routerLink]="['users/unapproved_leaves']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Unapproved Leaves </a></li>
+   </ul>
+ </li>
+<li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['booster_sessions']"><i class="fa fa-cogs"></i><span>Booster Session</span></a></li>
+  <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+   <a><i class="fa fa-reply-all " aria-hidden="true"></i>
+     <span>Salary Section</span>
+     <span class="pull-right-container">
+       <i class="fa fa-angle-left pull-right"></i>
+     </span>
+   </a>
+   <ul class="treeview-menu">
+     <li><a [routerLink]="['users/salaries']"><i class="fa fa-server" aria-hidden="true"></i> Salary Processing </a></li>
    </ul>
  </li>
 </ul>
