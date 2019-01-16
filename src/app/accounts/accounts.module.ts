@@ -12,7 +12,7 @@ import { SalaryProcessingComponent } from './salary-processing/salary-processing
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { EditSalaryComponent } from './edit-salary/edit-salary.component';
 @NgModule({
-  imports: [
+    imports: [
     CommonModule,
     BrowserAnimationsModule,
     DataTablesModule,
@@ -25,7 +25,7 @@ import { EditSalaryComponent } from './edit-salary/edit-salary.component';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     MatSlideToggleModule
-  ],
-  declarations: [SalaryProcessingComponent, EditSalaryComponent]
-})
+    ],
+    declarations: [SalaryProcessingComponent, EditSalaryComponent]
+    })
 export class AccountsModule { }
