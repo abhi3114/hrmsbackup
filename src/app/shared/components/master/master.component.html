@@ -120,6 +120,19 @@
      <li><a [routerLink]="['users/salaries']"><i class="fa fa-server" aria-hidden="true"></i> Salary Processing </a></li>
    </ul>
  </li>
+ <li *ngIf="employee_role=='ACCOUNTS'"><a  href=""><i class="fa fa-bar-chart " aria-hidden="true"></i>
+  <span>Reports</span>
+  <span class="pull-right-container">
+    <i class="fa fa-angle-left pull-right"></i>
+  </span>
+</a>
+
+<ul class="treeview-menu">
+ <li><a [routerLink]="['users/report/salary_report']"><i class="fa fa-bar-chart" aria-hidden="true"></i>
+ <span>Salary Report</span></a></li>
+ <li><a><i class="fa fa-area-chart" aria-hidden="true"></i><span>Payment Report</span></a></li>
+</ul>
+</li>
  <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="employee_role=='CEO' || employee_role=='SENIOR MANAGER'">
    <a><i class="fa fa-reply-all " aria-hidden="true"></i>
      <span>Manager Section</span>

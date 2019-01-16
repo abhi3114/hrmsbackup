@@ -79,10 +79,10 @@
                 <tr *ngFor="let i of invertoryData">
                   <td ng-bind=""> {{i.title}} </td>
                   <td ng-bind=""> {{i.quantity}} </td>
-                  <td>{{i.date_of_issue}}</td>
+                  <td>{{i.date_of_issue | date: 'dd/MM/yyyy'}}</td>
                   <td *ngIf="i.returned==false">No</td>
                   <td *ngIf="i.returned==true">Yes</td>
-                  <td ng-bind="">{{i.returned_on}}</td>
+                  <td ng-bind="">{{i.returned_on | date: 'dd/MM/yyyy'}}</td>
                 </tr>
               </tbody>
             </table>
@@ -125,7 +125,7 @@
                   <td> {{l.reason}}</td>
                   <td *ngIf="l.approved==true">Yes</td>
                   <td *ngIf="l.approved==false">No</td>
-                  <td>{{l.approved_on}}</td>
+                  <td>{{l.approved_on | date: 'dd/MM/yyyy'}}</td>
                 </tr>
               </tbody>
             </table>
@@ -161,7 +161,7 @@
                   <td *ngIf="l.approved==true">{{l.comment}}</td>
                   <td *ngIf="l.approved==false">No</td>
                   <td *ngIf="l.approved==true">Yes</td>
-                  <td>{{l.approved_on}}</td>
+                  <td>{{l.approved_on | date: 'dd/MM/yyyy'}}</td>
                 </tr>
               </tbody>
             </table>
@@ -198,7 +198,7 @@
                 <td >{{l.date}}</td>
                 <td *ngIf="l.approved==false">No</td>
                 <td *ngIf="l.approved==true">Yes</td>
-                <td> {{l.approved_on}}</td>
+                <td> {{l.approved_on | date: 'dd/MM/yyyy'}}</td>
                 <td>{{l.punch}}</td>
                 <td>{{l.reason}}</td>
                 <td><button (click)="updateMissingAttendance(updateMissingAttendanceTemplate,l.id,l.reason)" type="button" class="add-dynamic-button" [attr.data-maId]="'#' + l.id"><i class="fa fa-edit" aria-hidden="true"></i></button></td>
