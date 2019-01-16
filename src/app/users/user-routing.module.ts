@@ -15,6 +15,7 @@ import { UnapprovedLateMarksComponent } from './unapproved-late-marks/unapproved
 import { AllMissingAttendanceComponent } from './all-missing-attendance/all-missing-attendance.component';
 import { ApprovedMissingAttendanceComponent } from './approved-missing-attendance/approved-missing-attendance.component';
 import { UnapprovedMissingAttendanceComponent } from './unapproved-missing-attendance/unapproved-missing-attendance.component';
+import { BoosterSessionComponent } from './booster-session/booster-session.component';
 
 const routes: Routes = [
 {
@@ -34,7 +35,8 @@ const routes: Routes = [
   {path: 'late_marks/unapproved', component: UnapprovedLateMarksComponent},
   {path: 'missing_attendance', component: AllMissingAttendanceComponent},
   {path: 'missing_attendance/approved', component: ApprovedMissingAttendanceComponent},
-  {path: 'missing_attendance/unapproved', component: UnapprovedMissingAttendanceComponent}
+  {path: 'missing_attendance/unapproved', component: UnapprovedMissingAttendanceComponent},
+  {path: 'booster_sessions', component: BoosterSessionComponent},
   ]
 }
 ];

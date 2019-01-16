@@ -1,0 +1,330 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+   <ol class="breadcrumb">
+    <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+    <li><a><i class="fa fa-money"></i> Salary Section</a></li>
+    <li class="active">View Salary Structure</li>
+  </ol>
+  <section class="content-header">
+    <div class="row" ng-if="sectiontype =='salary'">
+      <div>
+        <div class="col-md-2 col-md-offset-4">
+          <div class="form-group">
+            <label >Month<sup style="color:red;">*</sup></label>
+            <select name="bnknm" class="form-control select2 building-select"  [(ngModel)]="salary_filter.selectedmonth" style="width: 100%;" required>
+              <option  value="" disabled="">Select Month</option>
+              <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Year<sup style="color:red;">*</sup></label>
+            <select name="endDate" class="form-control select2 building-select" [(ngModel)]="salary_filter.selectedyear" style="width: 100%;" required>
+              <option  value="" disabled="">Select Year</option>
+              <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-2" style="margin-top: 24px;">
+          <button type="button" class="btn bg-orange btn-flat" (click)="filter(salary_filter.selectedmonth,salary_filter.selectedyear)">Submit</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="row">
+     <div class="box-body">
+       <div class="panel box box-primary">
+        <div class="box-header with-border">
+          <h4 class="box-title">
+            <a data-toggle="collapse"  data-target="#flatDetails" style="cursor: pointer; color: #fff;">
+              <h4 class="modal-title" id="H1">BASIC DETAILS</h4>
+            </a>
+          </h4>
+        </div>
+        <div id="flatDetails" class="panel-collapse collapse in">
+          <div class="box-body" *ngIf="showUserSalary && showUserPayment" >
+            <div style="margin-bottom: 10px;text-align: center;">
+              <button (click)="addSalary(addSalaryTemplate)" class="btn btn-success" *ngIf="isBetween">
+                <i class="fa fa-plus" aria-hidden="true"></i> Add Salary
+              </button>
+              <button (click)="gotodeleteSalary(deleteSalaryTemplate)" class="btn btn-danger " style="margin-left: 25px;" *ngIf="isBetween">
+                <i class="fa fa-trash-o" aria-hidden="true"></i> Delete Salary
+              </button>
+              <button type="button" class="btn bg-purple" (click)="gotoDownloadAppraisal()" *ngIf="user_salary_data.revision_downloadable" style="margin-left: 25px;">
+                <i class="fa fa-download" aria-hidden="true"></i> Download Salary Revision Letter
+              </button>
+              <button (click)="undoPayment(undoPaymentTemplate)" class="btn btn-danger " style="margin-left: 25px;" *ngIf="isBetween && user_payemnt_data.payment_id">
+                <i class="fa fa-undo" aria-hidden="true"></i> Undo Payment
+              </button>
+            </div>
+            <div>
+              <dl class="col-md-4 booking-grid">
+                <dt>TITLE</dt>
+                <dd> {{user_salary_data.title}} </dd>
+              </dl>
+              <dl class="col-md-4 booking-grid">
+                <dt>START DATE</dt>
+                <dd>{{user_salary_data.start_date | date: 'dd/MM/yyyy'}}</dd>
+              </dl>
+              <dl class="col-md-4 booking-grid">
+                <dt>TOTAL AMOUNT</dt>
+                <dd>{{user_salary_data.amount  | currency:"₹"}}</dd>
+              </dl>
+              <dl class="col-md-4 booking-grid" *ngFor="let s of components; let i = index" >
+                <dt>COMPONENT {{i+1}}</dt>
+                <dd>NAME: {{s.title}}</dd>
+                <dd>AMOUNT: {{s.amount | currency:"₹"}}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel box box-primary">
+        <div class="box-header with-border">
+          <h4 class="box-title">
+            <a data-toggle="collapse"  data-target="#paymentSection" style="cursor: pointer; color: #fff;">
+              <h4 class="modal-title" id="H1">PAYMENT DETAILS</h4>
+            </a>
+          </h4>
+
+        </div>
+        <div id="paymentSection" class="panel-collapse collapse in">
+          <div class="box-body" *ngIf="showUserPayment">
+            <div class="col-md-12">
+              <div class="col-md-4">
+                <label>Total Payable Amount:{{user_payemnt_data.amount}}</label>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+             <div class="col-md-3">
+               <div class="form-group">
+                <label>LWP:</label>
+                <input name="mTitle" type='text' class="form-control" [(ngModel)]="user_payemnt_data.lwp" />
+              </div>
+
+            </div>
+            <div class="col-md-1" style="margin-top: 20px;">
+              <button type="button" class="btn bg-orange ladda-button" ladda="processDemo" data-style="expand-right"
+              (click)="reprocessSal()" [disabled]="!user_payemnt_data.payment_id"><i class="fa fa-cogs" aria-hidden="true" ></i> Re-Process Salary</button>
+            </div>
+          </div>
+
+          <div class="col-md-12" *ngFor="let p of payment_components; let i = index">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Title</label>
+                <input name="mTitle" type='text' class="form-control" [(ngModel)]="p.title" disabled />
+
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Amount</label>
+                <input name="endDate" type='text' class="form-control" [(ngModel)]="p.amount"  disabled
+                />
+              </div>
+            </div>
+            <div class="col-md-2" *ngIf="p.title == 'Incentive'">
+              <div class="form-group">
+                <label>Details</label>
+                <input name="endDate" type='text' class="form-control" [(ngModel)]="p.details" disabled
+                />
+              </div>
+            </div>
+            <div class="col-md-3" style="margin-top: 25px;" *ngIf="p.title == 'Incentive' || p.title == 'EPF' || p.title == 'Special Allowance' || p.title == 'Earlier PF Deduction'|| p.title == 'TDS'|| p.title == 'Other Deductions'|| p.title == 'Salary Advance'|| p.title == 'Overtime'|| p.title == 'Arrears'">
+             <button type="button" class="btn btn-danger" (click)="deletePay(i)" style="border-radius: 20px;"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+           </div>
+         </div>
+
+
+         <form name="leaveForm" novalidate data-ng-submit="validate(leaveForm.$valid)" autocomplete="off">
+          <div class="row">
+
+            <div>
+              <div class="col-md-12" *ngFor="let choice of choices; let i = index"
+              style="margin-top: 10px;margin-left: 15px;">
+              <div class="col-md-3">
+                <select class="select2 form-control" style="height: 35px;" [(ngModel)]="choice.component"  (change)="getpayments(choice.component,i)" [ngModelOptions]="{standalone: true}">
+                  <option  value="" disabled="disabled">Select Component</option>
+                  <option *ngFor="let c of user_payment_components" value="{{c}}">{{c}}</option>
+                </select>
+              </div>
+              <div class="col-md-2" style="margin-left: -10px;">
+                <input type="text"
+                id="Text1"
+                class="form-control"
+                placeholder="Enter Amount"
+                [(ngModel)]="choice.amount" [ngModelOptions]="{standalone: true}" />
+              </div>
+              <div class="col-md-3" style="margin-left: -10px;" *ngIf="choice.component == 'Incentive'">
+                <input type="text"
+                id="Text1"
+                class="form-control"
+                placeholder="Enter Incentive Detail"
+                [(ngModel)]="choice.details" [ngModelOptions]="{standalone: true}" />
+              </div>
+              <div class="col-md-2" *ngIf="i == 0">
+                <button class="btn bg-olive" (click)="addMoreCT()" type="button" style="border-radius: 20px;"><i class="fa fa-plus" aria-hidden="true"></i></button>
+              </div>
+              <div class="col-md-2" *ngIf="i > 0">
+               <button type="button" class="btn bg-maroon" (click)="delCT(i)" style="border-radius: 20px;"><i class="fa fa-minus" aria-hidden="true"></i></button>
+             </div>
+           </div>
+         </div>
+
+       </div>
+       <div style="text-align: center;">
+        <div class="form-group" style="margin-top: 35px;">
+         <button type="submit" class="btn bg-orange" (click)="save()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+         <button type="button" class="btn bg-purple ladda-button" ladda="loadingDemo2" data-style="expand-right" (click)="downloadSalarySlip()" style="margin-left: 25px;"><i class="fa fa-download" aria-hidden="true"></i> Download</button>
+       </div>
+     </div>
+   </form>
+ </div>
+
+
+</div>
+</div>
+</div>
+</div>
+</section>
+
+</div>
+</div>
+<ng-template #deleteSalaryTemplate>
+ <div class="modal-header">
+   <p class="modal-title pull-left" style="font-size: 18px;">Delete Salary</p>
+   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body text-center">
+  <h3>Are you sure?</h3>
+  <h3>You won't be able to revert this</h3>
+  <button type="button" class="btn btn-default btn-success" (click)="confirm()"  style="margin-right: 5px; font-size: 18px; color: #fff;">Yes Delete</button>
+  <button type="button" class="btn btn-default btn-danger" (click)="decline()" style="margin-right: 5px; font-size: 18px; color: #fff;">Cancel</button>
+</div>
+</ng-template>
+<ng-template #undoPaymentTemplate>
+ <div class="modal-header">
+   <p class="modal-title pull-left" style="font-size: 18px;">Undo Payment</p>
+   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body text-center">
+  <h3>Are you sure?</h3>
+  <h3>You won't be able to revert this</h3>
+  <button type="button" class="btn btn-default btn-success" (click)="confirmUndoPayment()"  style="margin-right: 5px; font-size: 18px; color: #fff;">Undo Payment</button>
+  <button type="button" class="btn btn-default btn-danger" (click)="decline()" style="margin-right: 5px; font-size: 18px; color: #fff;">Cancel</button>
+</div>
+</ng-template>
+<ng-template #addSalaryTemplate>
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Add Salary Structure</h4>
+    </div>
+    <div class="modal-body">
+      <form novalidate (ngSubmit)="validateAddSalaryForm()" [formGroup]="addSalaryForm" autocomplete="off">
+        <div class="row">
+          <div>
+           <div class="col-md-12">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Title<sup style="color:red;">*</sup></label>
+                <input name="mTitle" type='text' class="form-control" formControlName="title" [(ngModel)]="addSalaryData.title" required [class.error1]="!addSalaryForm.controls.title.valid && addSalaryForm.controls.start_date.dirty"
+                />
+                <div *ngIf="( addSalaryForm.get('title').hasError('pattern') || addSalaryForm.get('title').hasError('required') ) && addSalaryForm.get('start_date').touched">
+                  <div class="error" *ngIf="(addSalaryForm.get('title').hasError('required') && addSalaryForm.get('title').touched)">
+                    This field is mandatory
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Start Date<sup style="color:red;">*</sup></label>
+                <input name="bnknm" type='text' class="form-control"[(ngModel)]="addSalaryData.start_date" formControlName="start_date" required [class.error1]="!addSalaryForm.controls.start_date.valid && addSalaryForm.controls.start_date.dirty"  [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date" />
+                <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
+              </div>
+              <div *ngIf="(addSalaryForm.get('start_date').hasError('pattern') || addSalaryForm.get('start_date').hasError('required') ) && addSalaryForm.get('start_date').touched">
+                <div class="error" *ngIf="(addSalaryForm.get('start_date').hasError('required') && addSalaryForm.get('start_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Total Amount<sup style="color:red;">*</sup></label>
+                <input name="endDate" type='text' class="form-control" formControlName="total_amount" [(ngModel)]="addSalaryData.total_amount" required [class.error1]="!addSalaryForm.controls.total_amount.valid && addSalaryForm.controls.total_amount.dirty" />
+                <div *ngIf="( addSalaryForm.get('total_amount').hasError('pattern') || addSalaryForm.get('total_amount').hasError('required') ) && addSalaryForm.get('total_amount').touched">
+                  <div class="error" *ngIf="(addSalaryForm.get('total_amount').hasError('required') && addSalaryForm.get('start_date').touched)">
+                    This field is mandatory
+                  </div>
+                  <div class="error" *ngIf="addSalaryForm.get('total_amount').hasError('pattern') && addSalaryForm.get('total_amount').touched">
+                    Invalid total amount
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3" style="margin-top: 24px;">
+              <button type="button" class="btn btn-primary" (click)="breakupSalary(addSalaryData.total_amount)">Get Salary Breakup</button>
+            </div>
+          </div>
+          <div *ngIf="isshowBreakUp">
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label>Basic</label>
+                <input name="" type='text' class="form-control" [(ngModel)]="salaryBreakComponents.basic" [ngModelOptions]="{standalone: true}"  ng-pattern="/^[0-9]*$/" />
+              </div>
+              <div class="col-md-3">
+                <label>HRA</label>
+                <input name="" type='text' class="form-control" [(ngModel)]="salaryBreakComponents.hra" [ngModelOptions]="{standalone: true}" />
+              </div>
+              <div class="col-md-3">
+                <label>Travel Allowance</label>
+                <input name="" type='text' class="form-control" [(ngModel)]="salaryBreakComponents.travel_allowance" [ngModelOptions]="{standalone: true}" />
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label>Special Allowance</label>
+                <input name="" type='text' class="form-control" [(ngModel)]="salaryBreakComponents.special_allowance" [ngModelOptions]="{standalone: true}" />
+              </div>
+              <div class="col-md-3">
+                <label>Professional Tax</label>
+                <input name="" type='text' class="form-control" [(ngModel)]="salaryBreakComponents.pt" [ngModelOptions]="{standalone: true}" />
+              </div>
+              <div class="col-md-3">
+                <label>Performance Based Incentive</label>
+                <input name="" type='text' class="form-control" [(ngModel)]="salaryBreakComponents.pbi" [ngModelOptions]="{standalone: true}" />
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div><br>
+        </div>
+        <div>
+          <div class="col-md-6 form-group" style="margin-top: 10px; margin-left: 13px;">
+            <button type="submit" class="btn btn-primary"  [disabled]="addSalaryForm.invalid">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+</ng-template>
+
+
+
+
+

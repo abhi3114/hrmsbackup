@@ -10,6 +10,12 @@ import { ManagerRoutingModule } from './manager-routing.module'
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { ApprovedComponent } from './subordinate-leaves/approved/approved.component';
 import { UnapprovedComponent } from './subordinate-leaves/unapproved/unapproved.component';
+import { ApprovedOutdoorDutiesComponent } from './subordinate-outdoor-duties/approved-outdoor-duties/approved-outdoor-duties.component';
+import { UnapprovedOutdoorDutiesComponent } from './subordinate-outdoor-duties/unapproved-outdoor-duties/unapproved-outdoor-duties.component';
+import { ApprovedLateMarksComponent } from './subordinate-late-marks/approved-late-marks/approved-late-marks.component';
+import { UnapprovedLateMarksComponent } from './subordinate-late-marks/unapproved-late-marks/unapproved-late-marks.component';
+import { ApprovedMissingAttendanceComponent } from './subordinate-missing-attendance/approved-missing-attendance/approved-missing-attendance.component';
+import { UnapprovedMissingAttendanceComponent } from './subordinate-missing-attendance/unapproved-missing-attendance/unapproved-missing-attendance.component';
 
 
 @NgModule({
@@ -28,7 +34,14 @@ import { UnapprovedComponent } from './subordinate-leaves/unapproved/unapproved.
   ],
   declarations: [
     ApprovedComponent,
-    UnapprovedComponent
+    UnapprovedComponent,
+    ApprovedLateMarksComponent,
+    UnapprovedLateMarksComponent,
+    UnapprovedOutdoorDutiesComponent,
+    ApprovedOutdoorDutiesComponent,
+    ApprovedMissingAttendanceComponent,
+    UnapprovedMissingAttendanceComponent,
+
   ]
 })
 export class ManagersModule { }

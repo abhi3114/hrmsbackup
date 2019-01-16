@@ -15,4 +15,13 @@ export class UnapprovedService {
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
+
+  sendForLeaveApproval(params){
+    return this.http.post(environment.baseUrl+ "leaves/manager/unapproved",params, {
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
 }

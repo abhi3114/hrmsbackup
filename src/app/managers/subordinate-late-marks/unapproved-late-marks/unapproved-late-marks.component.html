@@ -1,0 +1,39 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+    <ol class="breadcrumb">
+      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li class="active">Subordinate (Unapproved Late Marks)</li>
+    </ol>
+    <section class="content-header">
+      <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div>
+            <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
+              <thead>
+                <tr>
+                  <th><input id='checkAll' type='checkbox' class='check-box' ng-click='checkAll()'/></th>
+                  <th>User</th>
+                  <th>Date</th>
+                  <th>Approved On</th>
+                  <th>Comment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of unapproved_late_mark_data">
+                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
+                  <td>{{l.user_name}}</td>
+                  <td>{{l.date}}</td>
+                  <td>{{l.approved_on}}</td>
+                  <td>{{l.comment}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
