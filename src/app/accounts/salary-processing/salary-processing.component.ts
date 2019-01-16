@@ -52,7 +52,7 @@ export class SalaryProcessingComponent implements OnInit {
         });
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
-    this.filteredData=monthandyear.getMonthandYear()
+    this.filteredData=this.api.getMonthandYear();
     this.salary_filter.selectedmonth=this.filteredData.selectedmonth;
     this.salary_filter.selectedyear= this.filteredData.selectedyear;
   }
