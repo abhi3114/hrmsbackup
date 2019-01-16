@@ -2,10 +2,11 @@
   <div class="content-wrapper">
     <ol class="breadcrumb">
       <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-      <li class="active">UnApproved Leaves</li>
+      <li class="active">Subordinate (Unapproved Missing Attendance)</li>
     </ol>
     <section class="content-header">
-      <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
+     <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved
+     </button>
     </section>
     <section class="content">
       <div class="row">
@@ -14,21 +15,19 @@
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
               <thead>
                 <tr>
-                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkALL()'/></th>
+                  <th><input id='checkAll' type='checkbox' class='check-box' ng-click='checkAll()'/></th>
                   <th>User</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>No of days</th>
+                  <th>Date</th>
+                  <th>Punch</th>
                   <th>Reason</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let l of unapproved_leaves_data">
+                <tr *ngFor="let l of unapproved_outdoor_duty_data">
                   <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
                   <td>{{l.user_name}}</td>
-                  <td>{{l.start_date}}</td>
-                  <td>{{l.end_date}}</td>
-                  <td> {{l.no_of_days}}
+                  <td>{{l.date}}</td>
+                  <td>{{l.punch}}</td>
                   <td>{{l.reason}}</td>
                 </tr>
               </tbody>
@@ -39,4 +38,3 @@
     </section>
   </div>
 </div>
-

@@ -5,19 +5,18 @@ import { environment } from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UnapprovedService {
+export class UnapprovedMissingAttendanceService {
 
-  constructor(private http:HttpClient) {
-  }
+  constructor(private http:HttpClient) { }
 
-  getAllUnapprovedSubordinateLeave(start_date, end_date){
-    return this.http.get(environment.baseUrl+ "leaves/manager/unapproved?start_date="+start_date+"&end_date="+end_date,
+  getAllUnapprovedMissingAttendaces(){
+    return this.http.get(environment.baseUrl+ "attendance_missings/manager/unapproved",
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
 
-  sendForLeaveApproval(params){
-    return this.http.post(environment.baseUrl+ "leaves/manager/unapproved",params, {
+  sendForMissingAttendaceApproval(params){
+    return this.http.post(environment.baseUrl+ "attendance_missings/manager/unapproved",params, {
       headers: {
         "Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'
