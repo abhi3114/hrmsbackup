@@ -519,7 +519,7 @@
           <div class="col-md-3">
             <div class="form-group">
               <label >Month<sup style="color:red;">*</sup></label>
-              <select name="bnknm" class="form-control select2 building-select"  ng-model="selectedmonth" style="width: 100%;" [(ngModel)]="salarySlipDownloadData.selectedmonth"
+              <select name="bnknm" class="form-control select2 building-select"  style="width: 100%;" [(ngModel)]="salarySlipDownloadData.selectedmonth"
               formControlName="month" required [class.error1]="!salarySlipDownloadForm.controls.month.valid && salarySlipDownloadForm.controls.month.dirty"  >
               <option  value="" disabled="">Select Month</option>
               <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
@@ -536,7 +536,7 @@
     <div class="col-md-3">
       <div class="form-group">
         <label>Year<sup style="color:red;">*</sup></label>
-        <select name="endDate" class="form-control select2 building-select"  ng-model="selectedyear"
+        <select name="endDate" class="form-control select2 building-select"
         style="width: 100%;" [(ngModel)]="salarySlipDownloadData.selectedyear"  formControlName="year"
         required [class.error1]="!salarySlipDownloadForm.controls.year.valid && salarySlipDownloadForm.controls.year.dirty" >
         <option  value="" disabled="">Select Year</option>

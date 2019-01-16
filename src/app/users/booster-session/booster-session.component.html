@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div class="content-wrapper">
     <ol class="breadcrumb">
-      <li><a ui-sref="app.mydashboard" href="#"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
       <li class="active">Booster Session</li>
     </ol>
     <section class="content-header">
@@ -11,7 +11,7 @@
     <div class="row">
       <div class="box-body">
         <div class="table-responsive">
-          <table class="table  table-bordered table-striped table-hover" dataTable="ng" dt-options="invent">
+        <table class="table  table-bordered table-striped table-hover" datatable [dtOptions]="boosterSessionTableOptions"  [dtTrigger]="boosterSessionTableTrigger">
             <thead>
               <tr>
                 <th>Date</th>
@@ -23,20 +23,21 @@
               </tr>
             </thead>
             <tbody>
-             <tr ng-repeat="i in boostersessionData">
-              <td ng-bind="i.date | ModifiedDate"></td>
-              <td ng-bind="i.manager_name"></td>
-              <td ng-if="i.status == true">Yes</td><td ng-if="i.status == false">No</td>
-              <td ng-bind="i.reason | NullDataFilter"></td>
-              <td ng-bind="i.comment | NullDataFilter"></td>
-              <td ng-if="i.status == true"><a href="" ng-click="recordResponse($parent.i.status,$parent.i.session_id)"  style="border-radius: 20px; background-color:#208b39;  padding: 5px 15px 5px 15px; color: white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-              <td ng-if="i.status == false"><a href="" ng-click="recordResponse($parent.i.status,$parent.i.session_id)" style="border-radius: 20px; background-color:#de2929;  padding: 5px 15px 5px 15px; color: white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
+             <tr *ngFor="let i of booster_session_data">
+               <td>{{i.date}}</td>
+               <td>{{i.manager_name}}</td>
+               <td *ngIf="i.status==true">Yes</td>
+               <td *ngIf="i.status==false">No</td>
+               <td>{{i.reason}}</td>
+               <td>{{i.comment}}</td>
+               <td *ngIf="i.status==true"><a (click)="recordResponse(i.status,i.session_id)"  style="border-radius: 20px; background-color:#208b39;  padding: 5px 15px 5px 15px; color: white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+               <td *ngIf="i.status==false"><a (click)="recordResponse(i.status,i.session_id)" style="border-radius: 20px; background-color:#de2929;  padding: 5px 15px 5px 15px; color: white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+             </tr>
+           </tbody>
+         </table>
+       </div>
+     </div>
+   </div>
+ </section>
 </div>
 </div>

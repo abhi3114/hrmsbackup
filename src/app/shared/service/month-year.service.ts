@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import * as moment from 'moment';
 @Injectable({
   providedIn: 'root'
   })
@@ -31,5 +31,51 @@ export class MonthYearService {
     var firstDay = new Date(y, m, 1);var lastDay = new Date(y, m + 1, 0);
     var filterData=[];filterData.push({firstDay:firstDay,lastDay:lastDay});
     return filterData;
+  }
+  getMonthandYear()
+  {
+    var currentDate=moment();
+    var end = new Date().getFullYear();
+    var startOfMonth = moment().startOf('month');
+    var tenthDayOfMonth=moment(startOfMonth).add(10,'d');
+    if (currentDate.isBetween(startOfMonth, tenthDayOfMonth))
+    {
+      var currentmonth= new Date().getMonth();
+      if(currentmonth == 0){var currentmonth= 12; var y=(end-1).toString();}else{var y=end.toString();}
+    }
+    else
+    {
+      var currentmonth= new Date().getMonth()+1; var y=end.toString();
+    }
+
+    var selectedmonth= currentmonth.toString();
+    var selectedyear=y;
+
+    var data={selectedmonth,selectedyear}
+    return data
+  }
+
+  getSalaryEditableRange(selectedmonth,selectedyear)
+  {
+    var currentDate=moment();
+    var startOfMonth =moment().startOf('month');
+    var previousMonth =moment().subtract(1, 'months');
+    var startOfPreviousMonth =moment(previousMonth).startOf('month');
+    var FifthOfCurrentMonth=moment(startOfMonth).add(5,'d');
+    var SixthOfPreviousMonth =moment(startOfPreviousMonth).add(6,'d');
+    if((currentDate.isBetween(SixthOfPreviousMonth, FifthOfCurrentMonth)))
+    {
+      var editable_start_date=moment(previousMonth).startOf('month');
+      var editable_last_date=moment(previousMonth).endOf('month');
+    }
+    else
+    {
+      var editable_start_date=moment().startOf('month');
+      var editable_last_date=moment().endOf('month');
+    }
+    var hard_coded_date="15"+"/"+selectedmonth+"/"+selectedyear;
+    var comparable_date= moment(hard_coded_date,'DD/MM/YYYY');
+    var isBetween = comparable_date.isBetween(editable_start_date, editable_last_date);
+    return isBetween;
   }
 }
