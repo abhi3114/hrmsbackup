@@ -25,4 +25,11 @@ export class SalaryProcessingService {
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
+
+  getUserPayemntDetails(user_id,month,year)
+  {
+    return this.http.get(environment.baseUrl+ "accounts/users/"+user_id+"/salaries/"+month+"/"+year+"/payments",
+      { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'})})
+  }
 }

@@ -5,15 +5,20 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import * as pdfMake from 'pdfmake/build/pdfmake.js';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
+import * as _ from 'underscore';
 import { SalaryProcessingService } from './salary-processing.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
+import { CustomPdfService } from '../../shared/service/custom-pdf.service';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-salary-processing',
   templateUrl: './salary-processing.component.html',
   styleUrls: ['./salary-processing.component.css']
   })
 export class SalaryProcessingComponent implements OnInit {
-  user_data:any;leavesData:any;process_data:any;
+  user_data:any;leavesData:any;process_data:any;salary_data:any;pdf:any;pdfObj:any;
   salarySlipToggleForm:FormGroup;
   salaryTableOptions: DataTables.Settings = {};
   salaryTableTrigger: Subject<any> = new Subject();
@@ -28,7 +33,7 @@ export class SalaryProcessingComponent implements OnInit {
     ignoreBackdropClick: true,
     class:'modal-md'
   };
-  constructor(private router:Router,private api:SalaryProcessingService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager,private route: ActivatedRoute)
+  constructor(private router:Router,private api:SalaryProcessingService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager,private route: ActivatedRoute,private pdfservice:CustomPdfService)
   {
     this.salarySlipToggleForm = new FormGroup({
       year: new FormControl('', [Validators.required]),
@@ -139,6 +144,22 @@ export class SalaryProcessingComponent implements OnInit {
   navigatetoEditSalary(id)
   {
     this.router.navigate(['/home/users', id],{ queryParams: { month: this.salary_filter.selectedmonth,year:this.salary_filter.selectedyear } });
+  }
+
+  downloadSalarySlip(user_id,user_name)
+  {
+    this.api.getUserPayemntDetails(user_id,this.salary_filter.selectedmonth,this.salary_filter.selectedyear).subscribe(res => {
+      this.salary_data=res;
+      this.pdf = pdfMake;
+      var monthname=_.find(this.monthArray,{id : parseInt(this.salary_filter.selectedmonth) }).name;
+      var filename='Salaryslip_'+localStorage.getItem('employee_name')+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
+      this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.salary_data, localStorage.getItem('employee_name')));
+      this.pdfObj.download(filename);
+      this.showSuccess('Salary Downloaded');
+      }, (err) =>
+      {
+        this.showError(err.error);
+        });
   }
 
   showError(e,position: any = 'top-center') {
