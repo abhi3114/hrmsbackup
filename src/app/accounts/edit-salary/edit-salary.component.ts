@@ -5,11 +5,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import * as pdfMake from 'pdfmake/build/pdfmake.js';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import * as _ from 'underscore';
 import { EditSalaryService } from './edit-salary.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
 import { PaymentComponentsService } from '../../shared/service/payment-components.service';
-
+import { CustomPdfService } from '../../shared/service/custom-pdf.service';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-edit-salary',
   templateUrl: './edit-salary.component.html',
@@ -22,7 +25,7 @@ export class EditSalaryComponent implements OnInit {
   choices = [{ id: 'choice',amount:'',component:'',details:'' }];user_payment_components:any; paymentArray=[];
   showIncentiveDetail:any;componentArray=[];payment_attributes=[];lwparray=[];data:any;
   isBetween:any;showUserSalary=false;showUserPayment=false;isshowBreakUp:boolean;diffyear:any;postdata:any
-  currentyear:any;intermediate:number;total:number;
+  currentyear:any;intermediate:number;total:number;pdf:any;pdfObj:any;
   addSalaryForm: FormGroup;
   addSalaryData={title:'',start_date:'',total_amount:''};
   salaryBreakComponents={basic:'',hra:'', travel_allowance:'', special_allowance:'', pt:'', pbi:''};
@@ -34,7 +37,7 @@ export class EditSalaryComponent implements OnInit {
     ignoreBackdropClick: true,
     class:'modal-lg'
   };
-  constructor(private router:Router,private api:EditSalaryService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager,private route: ActivatedRoute,private paymentData:PaymentComponentsService)
+  constructor(private router:Router,private api:EditSalaryService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager,private route: ActivatedRoute,private paymentData:PaymentComponentsService,private pdfservice:CustomPdfService)
   {
     this.route.params.subscribe( params => this.stateParams=params);
     this.route.queryParams.subscribe( queryParams => this.queryParams=queryParams);
@@ -401,5 +404,41 @@ export class EditSalaryComponent implements OnInit {
         });
   }
 
+  gotoDownloadAppraisal()
+  {
+    if(this.user_salary_data)
+    {
+      this.pdf = pdfMake;
+      var filename='Salary_Revision_Letter';
+      this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalaryRevisonLetterPdf(this.user_salary_data, localStorage.getItem('employee_name')));
+      this.pdfObj.download(filename);
+      this.showSuccess('Salary Revision Letter Downloaded');
+    }
+    else
+    {
+      this.showCustomError("Cannot Download,make sure you have generated the salary before downloading!");
+    }
+
+  }
+
+  downloadSalarySlip()
+  {
+    if(this.user_payemnt_data)
+    {
+      this.pdf = pdfMake;
+      var monthname=_.find(this.monthArray,{id : parseInt(this.salary_filter.selectedmonth) }).name;
+      var filename='Salaryslip_'+localStorage.getItem('employee_name')+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
+      this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.user_payemnt_data,this.user_payemnt_data.details.name));
+      this.pdfObj.download(filename);
+      this.showSuccess('Salary Downloaded');
+    }
+    else
+    {
+      this.showCustomError("Cannot Download,make sure you have generated payment components before downloading!");
+    }
+  }
+
 
 }
+
+

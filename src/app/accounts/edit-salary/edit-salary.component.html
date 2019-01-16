@@ -48,10 +48,18 @@
         <div id="flatDetails" class="panel-collapse collapse in">
           <div class="box-body" *ngIf="showUserSalary && showUserPayment" >
             <div style="margin-bottom: 10px;text-align: center;">
-              <button (click)="addSalary(addSalaryTemplate)" class="btn btn-success" *ngIf="isBetween"><i class="fa fa-plus" aria-hidden="true"></i> Add Salary</button>
-              <button (click)="gotodeleteSalary(deleteSalaryTemplate)" class="btn btn-danger " style="margin-left: 25px;" *ngIf="isBetween"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete Salary</button>
-              <button type="button" class="btn bg-purple ladda-button" ladda="loadingDemo2" data-style="expand-right" ng-click="gotoDownloadAppraisal()" *ngIf="user_salary_data.revision_downloadable" style="margin-left: 25px;"><i class="fa fa-download" aria-hidden="true"></i> Download Salary Revision Letter</button>
-              <button (click)="undoPayment(undoPaymentTemplate)" class="btn btn-danger " style="margin-left: 25px;" *ngIf="isBetween && user_payemnt_data.payment_id"><i class="fa fa-undo" aria-hidden="true"></i> Undo Payment</button>
+              <button (click)="addSalary(addSalaryTemplate)" class="btn btn-success" *ngIf="isBetween">
+                <i class="fa fa-plus" aria-hidden="true"></i> Add Salary
+              </button>
+              <button (click)="gotodeleteSalary(deleteSalaryTemplate)" class="btn btn-danger " style="margin-left: 25px;" *ngIf="isBetween">
+                <i class="fa fa-trash-o" aria-hidden="true"></i> Delete Salary
+              </button>
+              <button type="button" class="btn bg-purple" (click)="gotoDownloadAppraisal()" *ngIf="user_salary_data.revision_downloadable" style="margin-left: 25px;">
+                <i class="fa fa-download" aria-hidden="true"></i> Download Salary Revision Letter
+              </button>
+              <button (click)="undoPayment(undoPaymentTemplate)" class="btn btn-danger " style="margin-left: 25px;" *ngIf="isBetween && user_payemnt_data.payment_id">
+                <i class="fa fa-undo" aria-hidden="true"></i> Undo Payment
+              </button>
             </div>
             <div>
               <dl class="col-md-4 booking-grid">
@@ -173,7 +181,7 @@
        <div style="text-align: center;">
         <div class="form-group" style="margin-top: 35px;">
          <button type="submit" class="btn bg-orange" (click)="save()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
-         <button type="button" class="btn bg-purple ladda-button" ladda="loadingDemo2" data-style="expand-right" ng-click="downloadsalaryslip()" style="margin-left: 25px;"><i class="fa fa-download" aria-hidden="true"></i> Download</button>
+         <button type="button" class="btn bg-purple ladda-button" ladda="loadingDemo2" data-style="expand-right" (click)="downloadSalarySlip()" style="margin-left: 25px;"><i class="fa fa-download" aria-hidden="true"></i> Download</button>
        </div>
      </div>
    </form>
