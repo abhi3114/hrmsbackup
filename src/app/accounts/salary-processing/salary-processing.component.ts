@@ -11,6 +11,7 @@ import * as _ from 'underscore';
 import { SalaryProcessingService } from './salary-processing.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
 import { CustomPdfService } from '../../shared/service/custom-pdf.service';
+import { CommonSalaryService } from '../../shared/service/common-salary.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-salary-processing',
@@ -33,7 +34,7 @@ export class SalaryProcessingComponent implements OnInit {
     ignoreBackdropClick: true,
     class:'modal-md'
   };
-  constructor(private router:Router,private api:SalaryProcessingService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager,private route: ActivatedRoute,private pdfservice:CustomPdfService)
+  constructor(private router:Router,private api:SalaryProcessingService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager,private route: ActivatedRoute,private pdfservice:CustomPdfService,private commonsalary:CommonSalaryService)
   {
     this.salarySlipToggleForm = new FormGroup({
       year: new FormControl('', [Validators.required]),
@@ -52,7 +53,7 @@ export class SalaryProcessingComponent implements OnInit {
         });
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
-    this.filteredData=this.api.getMonthandYear();
+    this.filteredData=this.commonsalary.getMonthandYear();
     this.salary_filter.selectedmonth=this.filteredData.selectedmonth;
     this.salary_filter.selectedyear= this.filteredData.selectedyear;
   }
