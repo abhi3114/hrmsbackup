@@ -11,6 +11,9 @@ import { AccountsRoutingModule } from './accounts-routing.module';
 import { SalaryProcessingComponent } from './salary-processing/salary-processing.component'
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { EditSalaryComponent } from './edit-salary/edit-salary.component';
+import { SalaryImportComponent } from './salary-import/salary-import.component';
+import { PapaParseModule } from 'ngx-papaparse';
+
 @NgModule({
     imports: [
     CommonModule,
@@ -24,8 +27,9 @@ import { EditSalaryComponent } from './edit-salary/edit-salary.component';
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    PapaParseModule
     ],
-    declarations: [SalaryProcessingComponent, EditSalaryComponent]
+    declarations: [SalaryProcessingComponent, EditSalaryComponent, SalaryImportComponent]
     })
 export class AccountsModule { }

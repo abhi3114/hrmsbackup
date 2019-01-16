@@ -116,9 +116,13 @@
        <i class="fa fa-angle-left pull-right"></i>
      </span>
    </a>
-   <ul class="treeview-menu">
-     <li><a [routerLink]="['users/salaries']"><i class="fa fa-server" aria-hidden="true"></i> Salary Processing </a></li>
-   </ul>
+    <ul class="treeview-menu">
+      <li><a [routerLink]="['users/salaries']"><i class="fa fa-server" aria-hidden="true"></i> Salary Processing </a></li>
+      <li>
+        <a [routerLink]="['users/salaries/import']"><i class="fa fa-server" aria-hidden="true"></i> Salary Import
+        </a>
+      </li>
+    </ul>
  </li>
  <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="employee_role=='CEO' || employee_role=='SENIOR MANAGER'">
    <a><i class="fa fa-reply-all " aria-hidden="true"></i>

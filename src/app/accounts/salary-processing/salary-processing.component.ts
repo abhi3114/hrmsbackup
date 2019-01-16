@@ -12,6 +12,7 @@ import { SalaryProcessingService } from './salary-processing.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
 import { CustomPdfService } from '../../shared/service/custom-pdf.service';
 import { CommonSalaryService } from '../../shared/service/common-salary.service';
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-salary-processing',

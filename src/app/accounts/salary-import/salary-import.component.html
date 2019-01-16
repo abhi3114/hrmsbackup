@@ -1,0 +1,104 @@
+<div class="wrapper">
+<div class="content-wrapper">
+<ol class="breadcrumb">
+  <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+  <li class="active">Salary Import</li>
+</ol>
+<section class="content-header">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label >Month<sup style="color:red;">*</sup></label>
+        <select name="bnknm" class="form-control select2 building-select"  [(ngModel)]="salary_filter.selectedmonth" style="width: 100%;" required>
+          <option  value="" disabled="">Select Month</option>
+          <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Year<sup style="color:red;">*</sup></label>
+        <select name="endDate" class="form-control select2 building-select" [(ngModel)]="salary_filter.selectedyear" style="width: 100%;" required>
+          <option  value="" disabled="">Select Year</option>
+          <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Import File<sup style="color:red;">*</sup></label>
+        <input type="file" class="form-control" id="csv-file" name="files" ng-model="dataFile" />
+      </div>
+    </div>
+    <div class="col-md-4" style="margin-top: 25px;">
+      <button type="submit" class="btn bg-orange btn-flat ladda-button" ladda="importLoader" data-style="expand-right" (click)="importCsv()">Import</button>
+      <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="resetCsv()">Reset</button>
+    </div>
+  </div>
+</section>
+<section class="content">
+  <div class="panel box box-primary">
+    <div class="box-header with-border" style="background: red!important">
+      <h4 class="box-title">
+        <a data-toggle="collapse" data-target="#clienttDetails" style="cursor: pointer; color: #fff;">
+          <h4 class="modal-title" id="H3">FAILED LIST</h4>
+        </a>
+      </h4>
+    </div>
+    <div id="clienttDetails" class="panel-collapse collapse in">
+      <div class="box-body">
+        <div>
+          <table class="table  table-bordered table-striped table-hover" dataTable="ng" dt-options="failedTableData" style="background: #ff0a0a!important;" id="sTable"
+            dtOptions]="FailedTableOptions"
+            [dtTrigger]="FailedTableTrigger">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="l in failedData">
+                <td ng-bind="l.user"></td>
+                <td ng-bind="l.message"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel box box-primary">
+    <div class="box-header with-border" style="background: green!important">
+      <h4 class="box-title">
+        <a data-toggle="collapse" data-target="#ODtDetails" style="cursor: pointer; color: #fff;">
+          <h4 class="modal-title" id="H3">SUCCESS LIST</h4>
+        </a>
+      </h4>
+    </div>
+    <div id="ODtDetails" class="panel-collapse collapse in">
+      <div class="box-body">
+        <div>
+          <table class="table  table-bordered table-striped table-hover" dataTable="ng" dt-options="successTableData"
+            datatable  [dtOptions]="SuccessTableOptions"
+            [dtTrigger]="SuccessTableTrigger">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="l in successData">
+                <td ng-bind="l.user"></td>
+                <td ng-bind="l.message"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
