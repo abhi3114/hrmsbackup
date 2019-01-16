@@ -21,7 +21,7 @@ export class EditSalaryComponent implements OnInit {
   user_salary_data:any;components:any;user_payemnt_data:any;payment_components:any;
   choices = [{ id: 'choice',amount:'',component:'',details:'' }];user_payment_components:any; paymentArray=[];
   showIncentiveDetail:any;componentArray=[];payment_attributes=[];lwparray=[];data:any;
-  isBetween:any;showUserSalary=false;showUserPayment=false;isshowBreakUp:false;diffyear:any;postdata:any
+  isBetween:any;showUserSalary=false;showUserPayment=false;isshowBreakUp:boolean;diffyear:any;postdata:any
   currentyear:any;intermediate:number;total:number;
   addSalaryForm: FormGroup;
   addSalaryData={title:'',start_date:'',total_amount:''};
@@ -313,25 +313,25 @@ export class EditSalaryComponent implements OnInit {
         this.total=parseInt(total);
         this.intermediate=this.total*0.76;
         this.salaryBreakComponents.basic= this.intermediate.toString();
-        this.salaryBreakComponents.hra=parseInt(this.salaryBreakComponents.basic*0.10);
-        this.salaryBreakComponents.travel_allowance=0;
+        this.salaryBreakComponents.hra=(parseInt(this.salaryBreakComponents.basic)*0.10).toString();;
+        this.salaryBreakComponents.travel_allowance='0';
       }
       else if(25000<=total && total<=35000)
       {
-        this.salaryBreakComponents.basic=parseInt(total*0.61);
-        this.salaryBreakComponents.hra=parseInt(this.salaryBreakComponents.basic*0.40);
-        this.salaryBreakComponents.travel_allowance=800;
+        this.salaryBreakComponents.basic=(total*0.61).toString();
+        this.salaryBreakComponents.hra=(parseInt(this.salaryBreakComponents.basic)*0.40).toString();
+        this.salaryBreakComponents.travel_allowance='800';
       }
       else
       {
-        this.salaryBreakComponents.basic=parseInt(total*0.45);
-        this.salaryBreakComponents.hra=parseInt(this.salaryBreakComponents.basic*0.40);
-        this.salaryBreakComponents.travel_allowance=1600;
+        this.salaryBreakComponents.basic=(total*0.45).toString();
+        this.salaryBreakComponents.hra=(parseInt(this.salaryBreakComponents.basic)*0.40).toString();
+        this.salaryBreakComponents.travel_allowance='1600';
       }
-      this.salaryBreakComponents.pt=200;
-      this.salaryBreakComponents.pbi=0;
-      this.salaryBreakComponents.special_allowance=parseInt(total-(this.salaryBreakComponents.basic+ this.salaryBreakComponents.hra+this.salaryBreakComponents.travel_allowance));
-      if( this.salaryBreakComponents.special_allowance<0){this.salaryBreakComponents.special_allowance=0};
+      this.salaryBreakComponents.pt='200';
+      this.salaryBreakComponents.pbi='0';
+      this.salaryBreakComponents.special_allowance=(total-(parseInt(this.salaryBreakComponents.basic)+parseInt(this.salaryBreakComponents.hra) +parseInt(this.salaryBreakComponents.travel_allowance))).toString();
+      if( parseInt(this.salaryBreakComponents.special_allowance)<0){this.salaryBreakComponents.special_allowance='0'};
       this.isshowBreakUp=true;
     }
 
@@ -368,13 +368,13 @@ export class EditSalaryComponent implements OnInit {
         this.refreshSalary();
         this.addSalaryForm.reset();
         this.showUserSalary=true;
-        this.salaryBreakComponents={};
+        this.salaryBreakComponents={basic:'',hra:'', travel_allowance:'', special_allowance:'', pt:'', pbi:''};
         }, (err) =>
         {
           this.showError(err.error);
           this.modalRef.hide();
           this.addSalaryForm.reset();
-          this.salaryBreakComponents={};
+          this.salaryBreakComponents={basic:'',hra:'', travel_allowance:'', special_allowance:'', pt:'', pbi:''};
           });
     }
     else
