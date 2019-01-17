@@ -17,6 +17,7 @@ export class SalaryImportComponent implements OnInit {
   salary_filter={selectedmonth:'',selectedyear:''};
   filteredData:any; importedData:any;
   failedData:any;successData:any;
+  canShowtable:boolean;
   SuccessTableOptions: DataTables.Settings = {};
   FailedTableOptions: DataTables.Settings = {};
   SuccessTableTrigger: Subject<any> = new Subject();
@@ -25,11 +26,16 @@ export class SalaryImportComponent implements OnInit {
   constructor(private monthandyear:MonthYearService, private api:CommonSalaryService, private notification:NotificationService, private salaryimport:SalaryImportService, private papa:Papa) { }
 
   ngOnInit() {
+    this.canShowtable = false;
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
     this.filteredData=this.api.getMonthandYear();
     this.salary_filter.selectedmonth=this.filteredData.selectedmonth;
     this.salary_filter.selectedyear= this.filteredData.selectedyear;
+    this.FailedTableOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
   }
 
   importCsv(){
@@ -52,9 +58,11 @@ export class SalaryImportComponent implements OnInit {
             postdata={'data':results.data,'month':selectedmonth,'year': selectedYear}
           }
         });
+        this.FailedTableTrigger.next();
         this.salaryimport.importCsvData(postdata).subscribe(response => {
           this.importedData = response;
           this.displayImportedData();
+          this.canShowtable = true;
           this.notification.showSuccess('Salary Imported Successfully');
         },
         (error) => {
