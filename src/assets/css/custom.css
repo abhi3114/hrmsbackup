@@ -228,4 +228,12 @@ dl.booking-grid {
 .owl-dt-container {
     font-size: 14px!important;
 }
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+   border: 1px solid #dfdfdf!important;margin-left:-1px
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+   background: #f99800;
+   color: #fff!important;
+   border-color: #f99800!important;
+}
 

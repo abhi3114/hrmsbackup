@@ -26,9 +26,9 @@
               <td ng-bind=""> {{i.title}} </td>
               <td ng-bind=""> {{i.quantity}} </td>
               <td>{{i.date_of_issue}}</td>
-              <td *ngIf="l.returned==false">No</td>
-              <td *ngIf="l.returned==true">Yes</td>
-              <td ng-bind="">{{i.returned_on}}</td>
+              <td *ngIf="i.returned==false">No</td>
+              <td *ngIf="i.returned==true">Yes</td>
+              <td ng-bind="">{{i.returned_on | date: 'dd/MM/yyyy'}}</td>
             </tr>
           </tbody>
         </table>

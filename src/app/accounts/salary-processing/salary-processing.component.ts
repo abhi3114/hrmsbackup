@@ -154,8 +154,8 @@ export class SalaryProcessingComponent implements OnInit {
       this.salary_data=res;
       this.pdf = pdfMake;
       var monthname=_.find(this.monthArray,{id : parseInt(this.salary_filter.selectedmonth) }).name;
-      var filename='Salaryslip_'+localStorage.getItem('employee_name')+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
-      this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.salary_data, localStorage.getItem('employee_name')));
+      var filename='Salaryslip_'+user_name+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
+      this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.salary_data,user_name));
       this.pdfObj.download(filename);
       this.showSuccess('Salary Downloaded');
       }, (err) =>

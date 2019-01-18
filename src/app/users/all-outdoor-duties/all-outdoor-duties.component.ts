@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {Observable,Subject} from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
+import { NotificationService } from '../../shared/service/notification.service';
 import { AllOutdoorDutiesService } from './all-outdoor-duties.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
 import * as moment from 'moment';
@@ -20,7 +21,7 @@ export class AllOutdoorDutiesComponent implements OnInit {
   dtElement: DataTableDirective;
   outdoorDutyTableOptions: DataTables.Settings = {};
   outdoorDutyTableTrigger: Subject<any> = new Subject();
-  constructor(private router:Router,private api:AllOutdoorDutiesService,private monthandyear:MonthYearService)
+  constructor(private router:Router,private api:AllOutdoorDutiesService,private monthandyear:MonthYearService,public toastr: NotificationService)
   {
     var filteredData=monthandyear.getFilterData();
     this.outdoorDutiesData.start_date = filteredData[0].firstDay;
@@ -29,6 +30,11 @@ export class AllOutdoorDutiesComponent implements OnInit {
       start_date: new FormControl('', [Validators.required]),
       end_date: new FormControl('', [Validators.required]),
       });
+    this.outdoorDutyTableOptions = {
+      pagingType: 'full_numbers',
+      lengthMenu: [[5, 10, 20, 50,-1],
+      [5, 10, 20, 50,"All" ]]
+    };
   }
 
   validateOutdoorDutiesForm()
@@ -40,7 +46,7 @@ export class AllOutdoorDutiesComponent implements OnInit {
       this.outdoordutiesData=this.api_data.outdoors_data;
       this.rerender();
       }, (err) => {
-        alert(err.error);
+        this.toastr.showError(err.error);
         });
 
   }
@@ -51,13 +57,9 @@ export class AllOutdoorDutiesComponent implements OnInit {
     this.api.getAllOutdoorDuties(start_date ,end_date).subscribe(res => {
       this.api_data=res;
       this.outdoordutiesData=this.api_data.outdoors_data;
-      this.outdoorDutyTableOptions = {
-        pagingType: 'full_numbers',
-        pageLength: 10
-      };
       this.outdoorDutyTableTrigger.next();
       }, (err) => {
-        alert(err.error);
+        this.toastr.showError(err.error);
         })
   }
 

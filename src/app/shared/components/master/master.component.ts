@@ -24,12 +24,7 @@ signOut()
 {
 this.api.logout().subscribe(res => {
 this.user_data=res;
-localStorage.removeItem('employee_name');
-localStorage.removeItem('employee_photo');
-localStorage.removeItem('employee_department');
-localStorage.removeItem('employee_email');
-localStorage.removeItem('employee_role');
-localStorage.removeItem('token');
+localStorage.clear();
 this.router.navigateByUrl('/login');
 }, (err) => {
 alert(err.error);
