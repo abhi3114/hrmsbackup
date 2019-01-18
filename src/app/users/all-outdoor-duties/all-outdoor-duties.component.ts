@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {Observable,Subject} from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DataTableDirective } from 'angular-datatables';
 import { AllOutdoorDutiesService } from './all-outdoor-duties.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
 import * as moment from 'moment';
@@ -15,6 +16,8 @@ export class AllOutdoorDutiesComponent implements OnInit {
   outdoorDutiesForm: FormGroup;
   outdoorDutiesData={start_date:'',end_date:''};
   api_data:any;outdoordutiesData:any; showDataTable:Boolean;
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
   outdoorDutyTableOptions: DataTables.Settings = {};
   outdoorDutyTableTrigger: Subject<any> = new Subject();
   constructor(private router:Router,private api:AllOutdoorDutiesService,private monthandyear:MonthYearService)
@@ -35,6 +38,7 @@ export class AllOutdoorDutiesComponent implements OnInit {
     this.api.getAllOutdoorDuties(start_date,end_date).subscribe(res => {
       this.api_data=res;
       this.outdoordutiesData=this.api_data.outdoors_data;
+      this.rerender();
       }, (err) => {
         alert(err.error);
         });
@@ -55,6 +59,16 @@ export class AllOutdoorDutiesComponent implements OnInit {
       }, (err) => {
         alert(err.error);
         })
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.outdoorDutyTableTrigger.next();
+      });
+
   }
 
 }

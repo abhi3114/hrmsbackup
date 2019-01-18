@@ -118,6 +118,7 @@
    </a>
    <ul class="treeview-menu">
      <li><a [routerLink]="['users/salaries']"><i class="fa fa-server" aria-hidden="true"></i> Salary Processing </a></li>
+      <li><a [routerLink]="['users/missing_salaries']"><i class="fa fa-server" aria-hidden="true"></i> Missing Salary</a></li>
    </ul>
  </li>
  <li *ngIf="employee_role=='ACCOUNTS'"><a  href=""><i class="fa fa-bar-chart " aria-hidden="true"></i>
@@ -128,9 +129,9 @@
 </a>
 
 <ul class="treeview-menu">
- <li><a [routerLink]="['users/report/salary_report']"><i class="fa fa-bar-chart" aria-hidden="true"></i>
+ <li><a [routerLink]="['users/salary_report']"><i class="fa fa-bar-chart" aria-hidden="true"></i>
    <span>Salary Report</span></a></li>
-   <li><a [routerLink]="['users/report/payment_report']"><i class="fa fa-area-chart" aria-hidden="true"></i><span>Payment Report</span></a></li>
+   <li><a [routerLink]="['users/payment_report']"><i class="fa fa-area-chart" aria-hidden="true"></i><span>Payment Report</span></a></li>
  </ul>
 </li>
 <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="employee_role=='CEO' || employee_role=='SENIOR MANAGER'">

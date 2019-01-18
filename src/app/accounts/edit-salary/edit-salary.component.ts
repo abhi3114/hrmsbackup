@@ -440,12 +440,17 @@ export class EditSalaryComponent implements OnInit {
 
   convertAmountintoCurrency(number)
   {
-    var n=number.toLocaleString('en-IN', {
-      currency: 'INR',
-      maximumFractionDigits: 0
-      });
-    return n;
+    if(number!=undefined)
+    {
+      var n=number.toLocaleString('en-IN', {
+        currency: 'INR',
+        maximumFractionDigits: 0
+        });
+      return n;
+    }
+
   }
+
 
 
 }

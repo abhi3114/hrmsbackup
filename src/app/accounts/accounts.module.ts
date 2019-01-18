@@ -14,6 +14,7 @@ import { EditSalaryComponent } from './edit-salary/edit-salary.component';
 import { SalaryReportComponent } from './salary-report/salary-report.component';
 import { PaymentReportComponent } from './payment-report/payment-report.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MissingSalaryComponent } from './missing-salary/missing-salary.component';
 @NgModule({
     imports: [
     CommonModule,
@@ -30,6 +31,6 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     MatSlideToggleModule,
     NgMultiSelectDropDownModule.forRoot()
     ],
-    declarations: [SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent]
+    declarations: [SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent, MissingSalaryComponent]
     })
 export class AccountsModule { }

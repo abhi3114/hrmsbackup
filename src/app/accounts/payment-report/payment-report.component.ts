@@ -77,7 +77,7 @@ export class PaymentReportComponent implements OnInit {
         {
           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) =>
           {
-             this.paymentReportTableTrigger.unsubscribe();
+            this.paymentReportTableTrigger.unsubscribe();
             this.showReport=true;
             })
         }
@@ -109,14 +109,14 @@ export class PaymentReportComponent implements OnInit {
       });
   }
 
-       convertAmountintoCurrency(number)
-      {
-        var n=number.toLocaleString('en-IN', {
-          currency: 'INR',
-          maximumFractionDigits: 0
-          });
-        return n;
-      }
+  convertAmountintoCurrency(number)
+  {
+    var n=number.toLocaleString('en-IN', {
+      currency: 'INR',
+      maximumFractionDigits: 0
+      });
+    return n;
+  }
 
   ngOnInit()
   {
