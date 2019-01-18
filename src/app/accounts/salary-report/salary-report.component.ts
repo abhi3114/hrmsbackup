@@ -114,7 +114,10 @@ export class SalaryReportComponent implements OnInit {
     if (a === undefined){
       return 0
       }else{
-        return a.amount;
+        return a.amount.toLocaleString('en-IN', {
+          currency: 'INR',
+          maximumFractionDigits: 0
+          });
       }
     }
     rerender(): void {
@@ -158,4 +161,12 @@ export class SalaryReportComponent implements OnInit {
         }
       }
 
+      convertAmountintoCurrency(number)
+      {
+        var n=number.toLocaleString('en-IN', {
+          currency: 'INR',
+          maximumFractionDigits: 0
+          });
+        return n;
+      }
     }

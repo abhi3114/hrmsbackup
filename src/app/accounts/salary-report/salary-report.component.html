@@ -60,15 +60,15 @@
                 <td>{{r.pan}}</td>
                 <td>{{r.name}}</td>
                 <td>{{r.employee_number}}</td>
-                <th *ngFor="let h of headings">{{getAmountFromHeading(h,r.components) | currency:"₹"}}</th>
-                <td ng-bind="">{{r.amount | currency:"₹"}}</td>
+                <th *ngFor="let h of headings"><i class="fa fa-inr" aria-hidden="true"></i> {{getAmountFromHeading(h,r.components)}}</th>
+                <td><i class="fa fa-inr" aria-hidden="true"></i> {{ convertAmountintoCurrency(r.amount)}}</td>
               </tr>
               <tr style="font-size: larger; color: #333;">
                <td>TOTAL</td>
                <td>TOTAL</td>
                <td>TOTAL</td>
-               <td *ngFor="let t of totals">{{t | currency:"₹"}}</td>
-               <td>{{sum | currency:"₹": 0}}</td>
+               <td *ngFor="let t of totals"><i class="fa fa-inr" aria-hidden="true"></i> {{convertAmountintoCurrency(t)}}</td>
+               <td> <i class="fa fa-inr" aria-hidden="true"></i> {{convertAmountintoCurrency(sum)}}</td>
              </tr>
            </tbody>
          </table>
