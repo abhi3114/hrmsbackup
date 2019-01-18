@@ -25,7 +25,8 @@
             "styles": [
               "src/styles.css",
               "src/assets/css/custom.css",
-              "node_modules/datatables.net-buttons-dt/css/buttons.dataTables.css"
+              "node_modules/datatables.net-buttons-dt/css/buttons.dataTables.css",
+              "node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css"
             ],
             "scripts": [
              "node_modules/jszip/dist/jszip.js",
@@ -33,7 +34,8 @@
              "node_modules/datatables.net-buttons/js/buttons.colVis.js",
              "node_modules/datatables.net-buttons/js/buttons.flash.js",
              "node_modules/datatables.net-buttons/js/buttons.html5.js",
-             "node_modules/datatables.net-buttons/js/buttons.print.js"
+             "node_modules/datatables.net-buttons/js/buttons.print.js",
+             "node_modules/datatables.net-responsive/js/dataTables.responsive.js"
            ]
           },
           "configurations": {

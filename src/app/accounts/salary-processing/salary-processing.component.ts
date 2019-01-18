@@ -43,7 +43,8 @@ export class SalaryProcessingComponent implements OnInit {
       });
     this.salaryTableOptions = {
       pagingType: 'full_numbers',
-      pageLength: -1
+      lengthMenu: [[-1,50, 100, 150, 200],
+      ["All",50, 100, 150, 200 ]],
     };
     this.api.getallUser().subscribe(res => {
       this.user_data=res;
@@ -170,6 +171,14 @@ export class SalaryProcessingComponent implements OnInit {
     this.toastr.successToastr(message, 'Success',{  position: position});
   }
 
+  convertAmountintoCurrency(number)
+  {
+    var n=number.toLocaleString('en-IN', {
+      currency: 'INR',
+      maximumFractionDigits: 0
+      });
+    return n;
+  }
   ngOnInit()
   {
 

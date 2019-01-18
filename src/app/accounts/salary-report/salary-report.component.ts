@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router} from '@angular/router';
 import {Observable,Subject} from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DataTableDirective } from 'angular-datatables';
 import { NotificationService } from '../../shared/service/notification.service';
 import { SalaryReportService } from './salary-report.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
@@ -16,6 +17,8 @@ import * as moment from 'moment';
   })
 export class SalaryReportComponent implements OnInit {
   salaryReportForm:FormGroup;
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
   salaryReportTableOptions: any = {};
   salaryReportTableTrigger: Subject<any> = new Subject();
   monthArray:any;yearArray:any;filteredData:any;report_data:any;
@@ -30,9 +33,11 @@ export class SalaryReportComponent implements OnInit {
       });
     this.salaryReportTableOptions = {
       pagingType: 'full_numbers',
-      pageLength: -1,
+      lengthMenu: [[-1,50, 100, 150, 200],
+      ["All",50, 100, 150, 200 ]],
       dom: 'Bfrtip',
-      buttons: ['csv','excel' ]
+      buttons: ['csv','excel' ],
+      responsive: true
     };
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
@@ -97,6 +102,7 @@ export class SalaryReportComponent implements OnInit {
       }
       this.reportData=this.reportList.length;
       this.totals=_.values(this.totals);  this.isHdfc=true;
+      this.rerender();
       }, (err) => {
         this.toastr.showError(err.error);
         this.isHdfc=false;
@@ -110,6 +116,14 @@ export class SalaryReportComponent implements OnInit {
       }else{
         return a.amount;
       }
+    }
+    rerender(): void {
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        // Destroy the table first
+        dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+        this.salaryReportTableTrigger.next();
+        });
     }
 
     hdfcReport()

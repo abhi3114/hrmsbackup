@@ -12,6 +12,8 @@ import { AccountsRoutingModule } from './accounts-routing.module';
 import { SalaryProcessingComponent } from './salary-processing/salary-processing.component'
 import { EditSalaryComponent } from './edit-salary/edit-salary.component';
 import { SalaryReportComponent } from './salary-report/salary-report.component';
+import { PaymentReportComponent } from './payment-report/payment-report.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
     imports: [
     CommonModule,
@@ -25,8 +27,9 @@ import { SalaryReportComponent } from './salary-report/salary-report.component';
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    NgMultiSelectDropDownModule.forRoot()
     ],
-    declarations: [SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent]
+    declarations: [SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent]
     })
 export class AccountsModule { }
