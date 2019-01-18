@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy,ViewChild } from '@angular/core';
 import { CommonSalaryService } from '../../shared/service/common-salary.service';
-import { MonthYearService } from '../../shared/service/month-year.service';
 import { Papa } from 'ngx-papaparse';
+import { MonthYearService } from '../../shared/service/month-year.service';
 import {Observable,Subject} from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 import { NotificationService } from '../../shared/service/notification.service';
 import { SalaryImportService } from './salary-import.service';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'app-salary-import',
@@ -18,8 +20,12 @@ export class SalaryImportComponent implements OnInit {
   filteredData:any; importedData:any;
   failedData:any;successData:any;
   canShowtable:boolean;
+  postdata:any;
+  sheet_data:any;
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
   SuccessTableOptions: DataTables.Settings = {};
-  FailedTableOptions: DataTables.Settings = {};
+  FailedTableOptions: any;
   SuccessTableTrigger: Subject<any> = new Subject();
   FailedTableTrigger: Subject<any> = new Subject();
 
@@ -34,13 +40,16 @@ export class SalaryImportComponent implements OnInit {
     this.salary_filter.selectedyear= this.filteredData.selectedyear;
     this.FailedTableOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10
+      pageLength: -1,
+      retrieve:true,
+      dom: 'Bfrtip',
+      buttons: ['csv','excel' ]
     };
   }
 
   importCsv(){
     let file = (<HTMLInputElement>($('#csv-file')[0])).files[0];
-    var postdata = {}
+    this.postdata = {};
     if(file == undefined)
     {
       this.notification.CustomErrorMessage('Please Select a csv file');
@@ -54,19 +63,23 @@ export class SalaryImportComponent implements OnInit {
         var selectedYear = this.salary_filter.selectedyear
         this.papa.parse(file, {
           header: true,
-          complete: function(results) {
-            postdata={'data':results.data,'month':selectedmonth,'year': selectedYear}
+          complete: (results) => {
+            this.sheet_data = results.data
           }
         });
-        this.FailedTableTrigger.next();
-        this.salaryimport.importCsvData(postdata).subscribe(response => {
+        this.postdata = { 'data':this.sheet_data,'month':selectedmonth,'year':selectedYear}
+        console.log(this.postdata);
+        this.salaryimport.importCsvData(this.postdata).subscribe(response => {
           this.importedData = response;
           this.displayImportedData();
           this.canShowtable = true;
+          if (this.canShowtable){
+            this.FailedTableTrigger.next();
+          }
           this.notification.showSuccess('Salary Imported Successfully');
         },
         (error) => {
-          this.notification.showError('err.error');
+          this.notification.showError('error due to Api');
         });
       }
       else

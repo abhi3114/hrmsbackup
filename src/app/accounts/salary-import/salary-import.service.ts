@@ -9,8 +9,10 @@ export class SalaryImportService {
 
   constructor(private http:HttpClient) { }
 
-  importCsvData(data){
-    return this.http.post(environment.baseUrl+"accounts/users/payments/import",data,
+  importCsvData(params){
+    console.log('111111111111');
+    console.log("111"+JSON.stringify(params));
+    return this.http.post(environment.baseUrl+"accounts/users/payments/import",params,
       {
       headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})

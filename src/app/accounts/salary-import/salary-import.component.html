@@ -38,64 +38,53 @@
     </div>
   </div>
 </section>
-<section class="content">
-  <div class="panel box box-primary"  *ngIf="canShowtable">
-    <div class="box-header with-border" style="background: red!important">
-      <h4 class="box-title">
-        <a data-toggle="collapse" data-target="#clienttDetails" style="cursor: pointer; color: #fff;">
-          <h4 class="modal-title" id="H3">FAILED LIST</h4>
-        </a>
-      </h4>
-    </div>
-    <div id="clienttDetails" class="panel-collapse collapse in">
-      <div class="box-body">
-        <div>
-          <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="FailedTableOptions"
-            [dtTrigger]="FailedTableTrigger">
-            <thead>
-              <tr>
-                <th>User</th>
-                <th>Message</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let l of failedData">
-                <td> {{l.user}}</td>
-                <td> {{l.message}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+<section class="content" *ngIf="canShowtable">
+  <div class="row">
+    <div class="box-body">
+      <div class="">
+        <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="FailedTableOptions" [dtTrigger]="FailedTableTrigger">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Message</th>
+           </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let l of failedData">
+              <td> {{l.user}}</td>
+              <td> {{l.message}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-  <div class="panel box box-primary" *ngIf="canShowtable">
-    <div class="box-header with-border" style="background: green!important">
-      <h4 class="box-title">
-        <a data-toggle="collapse" data-target="#ODtDetails" style="cursor: pointer; color: #fff;">
-          <h4 class="modal-title" id="H3">SUCCESS LIST</h4>
-        </a>
-      </h4>
-    </div>
-    <div id="ODtDetails" class="panel-collapse collapse in">
-      <div class="box-body">
-        <div>
-          <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="SuccessTableOptions"
-            [dtTrigger]="SuccessTableTrigger">
-            <thead>
-              <tr>
-                <th>User</th>
-                <th>Message</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let l of successData">
-                <td> {{l.user}}</td>
-                <td> {{l.message}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+</section>
+<section class="content"*ngIf="canShowtable">
+  <div class="box-header with-border" style="background: green!important">
+    <h4 class="box-title">
+      <a data-toggle="collapse" style="cursor: pointer; color: #fff;">
+        <h4 class="modal-title" id="H3">SUCCESS LIST</h4>
+       </a>
+    </h4>
+ </div>
+  <div class="row">
+    <div class="box-body">
+      <div class="">
+        <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="SuccessTableOptions" [dtTrigger]="SuccessTableTrigger">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Message</th>
+           </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let l of successData">
+              <td> {{l.user}}</td>
+              <td> {{l.message}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
