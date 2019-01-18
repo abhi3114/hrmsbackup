@@ -1,14 +1,14 @@
 <div class="wrapper">
   <div class="content-wrapper">
     <ol class="breadcrumb">
-      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
       <li class="active">Manager (Approved Leaves)</li>
     </ol>
     <section class="content-header">
       <form (ngSubmit)="validateApprovedLeavesForm()" [formGroup]="approvedLeavesForm" autocomplete="off" novalidate="off">
       <a (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR ALL LEAVES</h4>
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR APPROVED LEAVES</h4>
       </a>
       <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
         <div>
@@ -53,7 +53,7 @@
                   <th>User</th>
                   <th>Start Date</th>
                   <th>End Date</th>
-                  <th>No of days</th>
+                  <th>Leave Type</th>
                   <th>Reason</th>
                   <th>Approval Date</th>
                 </tr>
@@ -61,11 +61,11 @@
               <tbody>
                 <tr *ngFor="let l of approved_leaves_data">
                   <td>{{l.user_name}}</td>
-                  <td>{{l.start_date}}</td>
-                  <td>{{l.end_date}}</td>
+                  <td>{{l.start_date |  date: 'dd/MM/yyyy'}}</td>
+                  <td>{{l.end_date |  date: 'dd/MM/yyyy'}}</td>
                   <td>{{l.leave_type}}</td>
                   <td>{{l.reason}}</td>
-                  <td>{{l.approved_on}}</td>
+                  <td>{{l.approved_on |  date: 'dd/MM/yyyy'}}</td>
                 </tr>
               </tbody>
             </table>

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Observable,Subject} from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
+import { NotificationService } from '../../../shared/service/notification.service';
 import { ApprovedLateMarksService } from './approved-late-marks.service';
 import { MonthYearService } from '../../../shared/service/month-year.service';
 import * as moment from 'moment';
@@ -17,10 +19,12 @@ export class ApprovedLateMarksComponent implements OnInit {
   approvedLateMarksForm: FormGroup;
   approvedLateMarkData={start_date:'',end_date:''};
   approved_late_mark_data:any; showDataTable:Boolean;
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
 
-  constructor(private router:Router,private api:ApprovedLateMarksService,private monthandyear:MonthYearService) {
+  constructor(private router:Router,private api:ApprovedLateMarksService,private monthandyear:MonthYearService, private notification: NotificationService) {
     var filteredData=monthandyear.getFilterData();
     this.approvedLateMarkData.start_date = filteredData[0].firstDay;
     this.approvedLateMarkData.end_date = filteredData[0].lastDay;
@@ -28,6 +32,11 @@ export class ApprovedLateMarksComponent implements OnInit {
       start_date: new FormControl('', [Validators.required]),
       end_date: new FormControl('', [Validators.required]),
     });
+    this.leaveTableOptions = {
+      pagingType: 'full_numbers',
+      lengthMenu: [[5, 10, 20, 50,-1],
+      [5, 10, 20, 50,"All" ]]
+    };
   }
 
   validateApprovedLateMarksForm(){
@@ -35,8 +44,9 @@ export class ApprovedLateMarksComponent implements OnInit {
     var end_date=moment(this.approvedLateMarkData.end_date).format('DD/MM/YYYY');
     this.api.getAllApprovedSubordinateLateMarks(start_date,end_date).subscribe(res => {
       this.approved_late_mark_data=res;
-      }, (err) => {
-        alert(err.error);
+      this.rerender();
+    }, (err) => {
+      this.notification.showError(err.error);
     });
   }
 
@@ -45,13 +55,18 @@ export class ApprovedLateMarksComponent implements OnInit {
     var end_date=moment(this.approvedLateMarkData.end_date).format('DD/MM/YYYY');
     this.api.getAllApprovedSubordinateLateMarks(start_date,end_date).subscribe(res => {
       this.approved_late_mark_data=res;
-      this.leaveTableOptions = {
-        pagingType: 'full_numbers',
-        pageLength: 10
-      };
       this.leaveTableTrigger.next();
-      }, (err) => {
-      alert(err.error);
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.leaveTableTrigger.next();
     });
   }
 
