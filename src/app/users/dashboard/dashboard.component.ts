@@ -1,30 +1,33 @@
-import { Component, OnInit,TemplateRef } from '@angular/core';
+import { Component, OnInit,TemplateRef,ViewChildren, QueryList  } from '@angular/core';
 import { Router } from '@angular/router';
-import { DashBoardService } from './dashboard.service';
-import { MonthYearService } from '../../shared/service/month-year.service';
-import { CustomPdfService } from '../../shared/service/custom-pdf.service';
 import {Observable,Subject} from 'rxjs';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToastrManager } from 'ng6-toastr-notifications';
+import { NotificationService } from '../../shared/service/notification.service';
+import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'moment';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import * as _ from 'underscore';
+import { DashBoardService } from './dashboard.service';
+import { MonthYearService } from '../../shared/service/month-year.service';
+import { CustomPdfService } from '../../shared/service/custom-pdf.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   })
+
 export class DashboardComponent implements OnInit {
   inventory_data:any; start_date:any; end_date:any;leaves_data:any;outdoor_duties_data:any;
   late_marks_data:any;missing_attendance_data:any;mentorship_feedback_data:any;
   leavesData:any;invertoryData:any;odData:any;lmData:any;maData:any;
   mentorData:any;isMentororMentee:any;leavesArray:any[];punchArray:any[];monthArray:any[];
   yearArray:any[];user_data:any;missing_attendance_Id:any;pdf:any;pdfObj:any;
-
+  @ViewChildren(DataTableDirective)
+  dtElements: QueryList<DataTableDirective>;
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
   assetTableOptions: DataTables.Settings = {};
@@ -44,6 +47,7 @@ export class DashboardComponent implements OnInit {
     backdrop: true,
     ignoreBackdropClick: true
   };
+
   applyLeaveForm: FormGroup;   applyOutdoorDutiesForm: FormGroup; applyLateMarksForm :FormGroup;
   applyMissingAttendanceForm:FormGroup; salarySlipDownloadForm:FormGroup;updateMissingAttendanceForm:FormGroup;
   updateLateMarksForm:FormGroup;
@@ -55,7 +59,7 @@ export class DashboardComponent implements OnInit {
   salarySlipDownloadData={ selectedyear:'',selectedmonth:''};
   updateMissingAttendanceData={reason:''};updateLateMarksData={comment:'',id:''}
 
-  constructor(private router:Router,private api:DashBoardService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager,private pdfservice:CustomPdfService)
+  constructor(private router:Router,private api:DashBoardService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: NotificationService,private pdfservice:CustomPdfService)
   {
     this.applyLeaveForm = new FormGroup({
       start_date: new FormControl('', [Validators.required]),
@@ -92,32 +96,38 @@ export class DashboardComponent implements OnInit {
       })
     this.leaveTableOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
+      lengthMenu: [[5, 10, 20, 50,-1],
+      [5, 10, 20, 50,"All" ]],
       processing: true
     };
     this.assetTableOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
+      lengthMenu: [[5, 10, 20, 50,-1],
+      [5, 10, 20, 50,"All" ]],
       processing: true
     };
     this.outdoorDutyTableOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
+      lengthMenu: [[5, 10, 20, 50,-1],
+      [5, 10, 20, 50,"All" ]],
       processing: true
     };
     this.lateMarkTableOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
+      lengthMenu: [[5, 10, 20, 50,-1],
+      [5, 10, 20, 50,"All" ]],
       processing: true
     };
     this.missingAttendanceTableOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
+      lengthMenu: [[5, 10, 20, 50,-1],
+      [5, 10, 20, 50,"All" ]],
       processing: true
     };
     this.mentorshipTableOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
+      lengthMenu: [[5, 10, 20, 50,-1],
+      [5, 10, 20, 50,"All" ]],
       processing: true
     };
     this.punchArray=['No Punch','No In Punch','Not Out Punch'];
@@ -145,7 +155,7 @@ export class DashboardComponent implements OnInit {
       this.leavesData=this.leaves_data.leaves_data;
       this.leaveTableTrigger.next();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
 
     this.api.getAllInventory().subscribe(res => {
@@ -153,7 +163,7 @@ export class DashboardComponent implements OnInit {
       this.invertoryData=this.inventory_data.inventories_data;
       this.assetTableTrigger.next();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
 
     this.api.getAllOutdoorDuties(this.start_date,this.end_date).subscribe(res => {
@@ -161,7 +171,7 @@ export class DashboardComponent implements OnInit {
       this.odData=this.outdoor_duties_data.outdoors_data;
       this.outdoorDutyTableTrigger.next();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
 
     this.api.getAllLateMarks(this.start_date,this.end_date).subscribe(res => {
@@ -169,7 +179,7 @@ export class DashboardComponent implements OnInit {
       this.lmData=this.late_marks_data.late_marks_data
       this.lateMarkTableTableTrigger.next();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
 
     this.api.getAllMissingAttendance(this.start_date,this.end_date).subscribe(res => {
@@ -177,7 +187,7 @@ export class DashboardComponent implements OnInit {
       this.maData=this.missing_attendance_data.attendance_missing_data;
       this.missingAttendanceTableTrigger.next();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
 
     this.api.getMentorshipFeedback().subscribe(res => {
@@ -189,7 +199,7 @@ export class DashboardComponent implements OnInit {
         this.mentorshipTableTrigger.next();
       }
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
 
   }
@@ -204,11 +214,12 @@ export class DashboardComponent implements OnInit {
     this.api.applyforLeave(this.applyLeavesData).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
+      this.toastr.showSuccess("Leave Applied");
       this.applyLeaveForm.reset();
       this.applyLeavesData.leave_type="";
       this.RefreshLeavesData();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
   RefreshLeavesData()
@@ -216,8 +227,9 @@ export class DashboardComponent implements OnInit {
     this.api.getAllLeaves(this.start_date,this.end_date).subscribe(res => {
       this.leaves_data=res;
       this.leavesData=this.leaves_data.leaves_data;
+      this.rerender();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
   validateApplyOutdoorDutiesForm()
@@ -228,10 +240,11 @@ export class DashboardComponent implements OnInit {
     this.api.applyforOutdoorDuties(Data[0]).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
+      this.toastr.showSuccess("Outddoor Duty Applied");
       this.applyOutdoorDutiesForm.reset();
       this.RefreshOutdoorDutiesData();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
   RefreshOutdoorDutiesData()
@@ -239,8 +252,9 @@ export class DashboardComponent implements OnInit {
     this.api.getAllOutdoorDuties(this.start_date,this.end_date).subscribe(res => {
       this.outdoor_duties_data=res;
       this.odData=this.outdoor_duties_data.outdoors_data;
+      this.rerender();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
   validateLateMarkForm()
@@ -250,10 +264,11 @@ export class DashboardComponent implements OnInit {
     this.api.applyforLateMark(Data[0]).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
+      this.toastr.showSuccess("Late Mark Applied");
       this.applyLateMarksForm.reset();
       this.RefreshLateMarkData();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
 
@@ -263,8 +278,9 @@ export class DashboardComponent implements OnInit {
     this.api.getAllLateMarks(this.start_date,this.end_date).subscribe(res => {
       this.late_marks_data=res;
       this.lmData=this.late_marks_data.late_marks_data
+      this.rerender();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
   validateMissingAttendanceForm()
@@ -274,11 +290,12 @@ export class DashboardComponent implements OnInit {
     this.api.applyforMissingAttendance(Data[0]).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
+      this.toastr.showSuccess("Missing Attendance Applied");
       this.applyMissingAttendanceForm.reset();
       this.applyMissingAttendanceData.punch="";
       this.RefreshMissingAttendanceData();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
   RefreshMissingAttendanceData()
@@ -286,8 +303,9 @@ export class DashboardComponent implements OnInit {
     this.api.getAllMissingAttendance(this.start_date,this.end_date).subscribe(res => {
       this.missing_attendance_data=res;
       this.maData=this.missing_attendance_data.attendance_missing_data;
+      this.rerender();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
 
   }
@@ -302,11 +320,11 @@ export class DashboardComponent implements OnInit {
     this.api.updateMissingAttendance(this.missing_attendance_Id,this.updateMissingAttendanceData).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
-      this.showSuccess('Response Recorded');
+      this.toastr.showSuccess('Response Recorded');
       this.updateMissingAttendanceForm.reset();
       this.RefreshMissingAttendanceData();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         this.modalRef.hide();
         this.updateMissingAttendanceForm.reset();
         });
@@ -323,11 +341,11 @@ export class DashboardComponent implements OnInit {
     this.api.recordLateMarkResponse(this.updateLateMarksData.id,this.updateLateMarksData).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
-      this.showSuccess('Response Recorded');
+      this.toastr.showSuccess('Response Recorded');
       this.updateLateMarksForm.reset();
       this.RefreshLateMarkData();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         this.modalRef.hide();
         this.updateLateMarksForm.reset();
         });
@@ -341,21 +359,24 @@ export class DashboardComponent implements OnInit {
       var filename='Salaryslip_'+localStorage.getItem('employee_name')+'_for_'+monthname+'_'+this.salarySlipDownloadData.selectedyear;
       this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.user_data, localStorage.getItem('employee_name')));
       this.pdfObj.download(filename);
-      this.showSuccess('Salary Downloaded');
+      this.toastr.showSuccess('Salary Downloaded');
       this.modalRef.hide();
       this.salarySlipDownloadForm.reset();this.salarySlipDownloadData.selectedmonth="";this.salarySlipDownloadData.selectedyear="";
       },(err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         this.salarySlipDownloadForm.reset();this.salarySlipDownloadData.selectedmonth="";this.salarySlipDownloadData.selectedyear="";
         })
   }
-
-
-  showError(e,position: any = 'top-center') {
-    this.toastr.errorToastr(e.message, 'Oops Some went wrong!',{  position: position});
+  rerender(): void
+  {
+    this.dtElements.forEach((dtElement: DataTableDirective) => {
+      if(dtElement.dtInstance!=undefined)
+      {
+        dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+          dtElement.dtTrigger.next();
+          });
+      }
+      });
   }
-  showSuccess(message,position: any = 'top-center') {
-    this.toastr.successToastr(message, 'Success',{  position: position});
-  }
-
 }

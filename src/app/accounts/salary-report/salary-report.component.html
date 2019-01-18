@@ -1,0 +1,85 @@
+
+<!-- Content Wrapper. Contains page content -->
+<div class="wrapper">
+  <div class="content-wrapper">
+    <ol class="breadcrumb">
+      <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li class="active">Salary Report</li>
+    </ol>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <form novalidate name="leaveForm" data-ng-submit="validate(leaveForm.$valid)" autocomplete="off">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="form-group">
+              <label >Month<sup style="color:red;">*</sup></label>
+              <select name="bnknm" class="form-control select2 building-select"  [(ngModel)]="salary_report_filter.selectedmonth" style="width: 100%;" required>
+                <option  value="" disabled="">Select Month</option>
+                <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Year<sup style="color:red;">*</sup></label>
+              <select name="endDate" class="form-control select2 building-select" [(ngModel)]="salary_report_filter.selectedyear" style="width: 100%;" required>
+                <option  value="" disabled="">Select Year</option>
+                <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-1" style="margin-top: 25px;">
+            <button type="submit" class="btn bg-orange btn-flat" (click)="getSalaryReportData()">Submit</button>
+          </div>
+
+          <div class="col-md-1" style="margin-top: 25px;" *ngIf="isHdfc">
+            <button type="button" class="btn bg-orange btn-flat ladda-button" ladda="hdfcloader" (click)="hdfcReport()" data-style="expand-right">HDFC Report</button>
+          </div>
+
+        </div>
+      </form>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="row">
+        <div class="box-body">
+          <div class="">
+          <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="salaryReportTableOptions"  [dtTrigger]="salaryReportTableTrigger">
+              <thead>
+                <tr>
+                 <th>Pan Number</th>
+                 <th>Name</th>
+                 <th>Employee No</th>
+                 <th *ngFor="let h of headings">{{h}}</th>
+                 <th>Total</th>
+               </tr>
+             </thead>
+             <tbody>
+              <tr *ngFor="let r of reportList">
+                <td>{{r.pan}}</td>
+                <td>{{r.name}}</td>
+                <td>{{r.employee_number}}</td>
+                <th *ngFor="let h of headings"><i class="fa fa-inr" aria-hidden="true"></i> {{getAmountFromHeading(h,r.components)}}</th>
+                <td><i class="fa fa-inr" aria-hidden="true"></i> {{ convertAmountintoCurrency(r.amount)}}</td>
+              </tr>
+              <tr style="font-size: larger; color: #333;">
+               <td>TOTAL</td>
+               <td>TOTAL</td>
+               <td>TOTAL</td>
+               <td *ngFor="let t of totals"><i class="fa fa-inr" aria-hidden="true"></i> {{convertAmountintoCurrency(t)}}</td>
+               <td> <i class="fa fa-inr" aria-hidden="true"></i> {{convertAmountintoCurrency(sum)}}</td>
+             </tr>
+           </tbody>
+         </table>
+
+       </div>
+     </div>
+   </div>
+   <!-- /.row -->
+ </section>
+ <!-- /.content -->
+</div>
+</div>
+
+

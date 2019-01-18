@@ -438,6 +438,20 @@ export class EditSalaryComponent implements OnInit {
     }
   }
 
+  convertAmountintoCurrency(number)
+  {
+    if(number!=undefined)
+    {
+      var n=number.toLocaleString('en-IN', {
+        currency: 'INR',
+        maximumFractionDigits: 0
+        });
+      return n;
+    }
+
+  }
+
+
 
 }
 

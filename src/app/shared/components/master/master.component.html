@@ -118,42 +118,56 @@
    </a>
    <ul class="treeview-menu">
      <li><a [routerLink]="['users/salaries']"><i class="fa fa-server" aria-hidden="true"></i> Salary Processing </a></li>
+      <li><a [routerLink]="['users/missing_salaries']"><i class="fa fa-server" aria-hidden="true"></i> Missing Salary</a></li>
    </ul>
  </li>
- <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="employee_role=='CEO' || employee_role=='SENIOR MANAGER'">
-   <a><i class="fa fa-reply-all " aria-hidden="true"></i>
-     <span>Manager Section</span>
-     <span class="pull-right-container">
-       <i class="fa fa-angle-left pull-right"></i>
-     </span>
-   </a>
-   <ul class="treeview-menu">
-     <li><a [routerLink]="['users/leaves/approved']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Leaves </a></li>
-     <li><a [routerLink]="['users/leaves/unapproved']"><i class="fa fa-close" aria-hidden="true"></i> Unapproved Leaves </a></li>
-     <li><a [routerLink]="['users/outdoor_duties/approved']">
-      <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Outdoor Duties </a></li>
-     <li><a [routerLink]="['users/outdoor_duties/unapproved']">
+ <li *ngIf="employee_role=='ACCOUNTS'"><a  href=""><i class="fa fa-bar-chart " aria-hidden="true"></i>
+  <span>Reports</span>
+  <span class="pull-right-container">
+    <i class="fa fa-angle-left pull-right"></i>
+  </span>
+</a>
+
+<ul class="treeview-menu">
+ <li><a [routerLink]="['users/salary_report']"><i class="fa fa-bar-chart" aria-hidden="true"></i>
+   <span>Salary Report</span></a></li>
+   <li><a [routerLink]="['users/payment_report']"><i class="fa fa-area-chart" aria-hidden="true"></i><span>Payment Report</span></a></li>
+ </ul>
+</li>
+<li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="employee_role=='CEO' || employee_role=='SENIOR MANAGER'">
+ <a><i class="fa fa-reply-all " aria-hidden="true"></i>
+   <span>Manager Section</span>
+   <span class="pull-right-container">
+     <i class="fa fa-angle-left pull-right"></i>
+   </span>
+ </a>
+ <ul class="treeview-menu">
+   <li><a [routerLink]="['users/leaves/approved']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Leaves </a></li>
+   <li><a [routerLink]="['users/leaves/unapproved']"><i class="fa fa-close" aria-hidden="true"></i> Unapproved Leaves </a></li>
+   <li><a [routerLink]="['users/outdoor_duties/approved']">
+    <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Outdoor Duties </a></li>
+    <li><a [routerLink]="['users/outdoor_duties/unapproved']">
       <i class="fa fa-close" aria-hidden="true"></i> Unapproved OutDoor Duties </a></li>
       <li><a [routerLink]="['users/late_marks/approved']">
-      <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Late Marks </a></li>
-      <li><a [routerLink]="['users/late_marks/unapproved']">
-      <i class="fa fa-close" aria-hidden="true"></i> Unapproved Late Marks </a></li>
-      <li><a [routerLink]="['users/missing_attendances/approved']">
-      <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Missing Attendance </a></li>
-      <li><a [routerLink]="['users/missing_attendances/unapproved']">
-      <i class="fa fa-close" aria-hidden="true"></i> Unapproved Missing Attendance </a></li>
-   </ul>
- </li>
- <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['booster_sessions']"><i class="fa fa-cogs"></i><span>Booster Session</span></a></li>
+        <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Late Marks </a></li>
+        <li><a [routerLink]="['users/late_marks/unapproved']">
+          <i class="fa fa-close" aria-hidden="true"></i> Unapproved Late Marks </a></li>
+          <li><a [routerLink]="['users/missing_attendances/approved']">
+            <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Missing Attendance </a></li>
+            <li><a [routerLink]="['users/missing_attendances/unapproved']">
+              <i class="fa fa-close" aria-hidden="true"></i> Unapproved Missing Attendance </a></li>
+            </ul>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['booster_sessions']"><i class="fa fa-cogs"></i><span>Booster Session</span></a></li>
 
-</ul>
-<!-- /.sidebar-menu -->
-</section>
-<!-- /.sidebar -->
-</aside>
-<!-- Main Header -->
-<router-outlet></router-outlet>
-</div>
+        </ul>
+        <!-- /.sidebar-menu -->
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+    <!-- Main Header -->
+    <router-outlet></router-outlet>
+  </div>
 
 
 
