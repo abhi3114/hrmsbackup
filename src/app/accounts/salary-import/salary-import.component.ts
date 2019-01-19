@@ -24,7 +24,7 @@ export class SalaryImportComponent implements OnInit {
   sheet_data:any;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  SuccessTableOptions: DataTables.Settings = {};
+  SuccessTableOptions: any;
   FailedTableOptions: any;
   SuccessTableTrigger: Subject<any> = new Subject();
   FailedTableTrigger: Subject<any> = new Subject();
@@ -35,7 +35,7 @@ export class SalaryImportComponent implements OnInit {
     this.canShowtable = false;
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
-    this.filteredData=this.api.getMonthandYear();
+    this.filteredData=this.salaryimport.getCsvImportMonthandYear();
     this.salary_filter.selectedmonth=this.filteredData.selectedmonth;
     this.salary_filter.selectedyear= this.filteredData.selectedyear;
     this.FailedTableOptions = {
@@ -43,7 +43,14 @@ export class SalaryImportComponent implements OnInit {
       pageLength: -1,
       retrieve:true,
       dom: 'Bfrtip',
-      buttons: ['csv','excel' ]
+      buttons: ['csv']
+    };
+    this.SuccessTableOptions = {
+      pagingType: 'full_numbers',
+      pageLength: -1,
+      retrieve:true,
+      dom: 'Bfrtip',
+      buttons: ['csv']
     };
   }
 
@@ -73,14 +80,15 @@ export class SalaryImportComponent implements OnInit {
           this.importedData = response;
           this.displayImportedData();
           this.canShowtable = true;
-          if (this.canShowtable){
-            this.FailedTableTrigger.next();
-          }
           this.notification.showSuccess('Salary Imported Successfully');
         },
         (error) => {
           this.notification.showError('error due to Api');
         });
+        if (this.canShowtable){
+          this.FailedTableTrigger.next();
+          this.SuccessTableTrigger.next();
+        }
       }
       else
       {
