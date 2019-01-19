@@ -11,10 +11,13 @@ import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { AccountsRoutingModule } from './accounts-routing.module';
 import { SalaryProcessingComponent } from './salary-processing/salary-processing.component'
 import { EditSalaryComponent } from './edit-salary/edit-salary.component';
+import { SalaryImportComponent } from './salary-import/salary-import.component';
+import { PapaParseModule } from 'ngx-papaparse';
 import { SalaryReportComponent } from './salary-report/salary-report.component';
 import { PaymentReportComponent } from './payment-report/payment-report.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MissingSalaryComponent } from './missing-salary/missing-salary.component';
+
 @NgModule({
     imports: [
     CommonModule,
@@ -29,8 +32,9 @@ import { MissingSalaryComponent } from './missing-salary/missing-salary.componen
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     MatSlideToggleModule,
-    NgMultiSelectDropDownModule.forRoot()
+    PapaParseModule,
+    NgMultiSelectDropDownModule.forRoot(),
     ],
-    declarations: [SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent, MissingSalaryComponent]
+    declarations: [SalaryImportComponent, SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent, MissingSalaryComponent],
     })
 export class AccountsModule { }

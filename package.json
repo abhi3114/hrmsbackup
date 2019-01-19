@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "npm install && npm run build --prod"
+    "staging-deploy": "git pull origin staging && npm install && npm run build --prod",
+    "prod-deploy": "git pull origin master && npm install && npm run build --prod"
   },
   "private": true,
   "dependencies": {
@@ -41,6 +42,7 @@
     "ng-pick-datetime": "^6.0.16",
     "ng6-toastr-notifications": "^1.0.4",
     "ngx-bootstrap": "^3.1.4",
+    "ngx-papaparse": "^3.0.2",
     "pdfmake": "^0.1.40",
     "rxjs": "~6.2.0",
     "underscore": "^1.9.1",
