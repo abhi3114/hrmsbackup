@@ -1,7 +1,9 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import {Observable,Subject} from 'rxjs';
+import { NotificationService } from '../../../shared/service/notification.service';
+import { DataTableDirective } from 'angular-datatables';
 import { ApprovedService } from './approved.service';
 import { MonthYearService } from '../../../shared/service/month-year.service';
 import * as moment from 'moment';
@@ -17,10 +19,12 @@ export class ApprovedComponent implements OnInit {
   approvedLeavesForm: FormGroup;
   approvedLeavesData={start_date:'',end_date:''};
   approved_leaves_data:any;approvedleavesData:any; showDataTable:Boolean;
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
 
-  constructor(private router:Router,private api:ApprovedService,private monthandyear:MonthYearService) {
+  constructor(private router:Router,private api:ApprovedService,private monthandyear:MonthYearService, private notification:NotificationService) {
     var filteredData=monthandyear.getFilterData();
     this.approvedLeavesData.start_date = filteredData[0].firstDay;
     this.approvedLeavesData.end_date = filteredData[0].lastDay;
@@ -28,6 +32,11 @@ export class ApprovedComponent implements OnInit {
       start_date: new FormControl('', [Validators.required]),
       end_date: new FormControl('', [Validators.required]),
     });
+    this.leaveTableOptions = {
+      pagingType: 'full_numbers',
+      lengthMenu: [[5, 10, 20, 50,-1],
+      [5, 10, 20, 50,"All" ]]
+    };
   }
 
   validateApprovedLeavesForm(){
@@ -35,8 +44,9 @@ export class ApprovedComponent implements OnInit {
     var end_date=moment(this.approvedLeavesData.end_date).format('DD/MM/YYYY');
     this.api.getallapprovedSubordinateLeave(start_date,end_date).subscribe(res => {
       this.approved_leaves_data=res;
-      }, (err) => {
-        alert(err.error);
+      this.rerender();
+    }, (err) => {
+       this.notification.showError(err.error);
     });
   }
 
@@ -45,13 +55,17 @@ export class ApprovedComponent implements OnInit {
     var end_date=moment(this.approvedLeavesData.end_date).format('DD/MM/YYYY');
     this.api.getallapprovedSubordinateLeave(start_date,end_date).subscribe(res => {
       this.approved_leaves_data=res;
-      this.leaveTableOptions = {
-        pagingType: 'full_numbers',
-        pageLength: 10
-      };
       this.leaveTableTrigger.next();
-      }, (err) => {
-      alert(err.error);
+    }, (err) => {
+       this.notification.showError(err.error);
+    });
+  }
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.leaveTableTrigger.next();
     });
   }
 

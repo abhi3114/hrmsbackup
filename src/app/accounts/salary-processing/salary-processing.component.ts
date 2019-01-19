@@ -11,6 +11,8 @@ import * as _ from 'underscore';
 import { SalaryProcessingService } from './salary-processing.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
 import { CustomPdfService } from '../../shared/service/custom-pdf.service';
+import { CommonSalaryService } from '../../shared/service/common-salary.service';
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-salary-processing',
@@ -33,7 +35,7 @@ export class SalaryProcessingComponent implements OnInit {
     ignoreBackdropClick: true,
     class:'modal-md'
   };
-  constructor(private router:Router,private api:SalaryProcessingService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager,private route: ActivatedRoute,private pdfservice:CustomPdfService)
+  constructor(private router:Router,private api:SalaryProcessingService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager,private route: ActivatedRoute,private pdfservice:CustomPdfService,private commonsalary:CommonSalaryService)
   {
     this.salarySlipToggleForm = new FormGroup({
       year: new FormControl('', [Validators.required]),
@@ -42,7 +44,8 @@ export class SalaryProcessingComponent implements OnInit {
       });
     this.salaryTableOptions = {
       pagingType: 'full_numbers',
-      pageLength: -1
+      lengthMenu: [[-1,50, 100, 150, 200],
+      ["All",50, 100, 150, 200 ]],
     };
     this.api.getallUser().subscribe(res => {
       this.user_data=res;
@@ -52,7 +55,7 @@ export class SalaryProcessingComponent implements OnInit {
         });
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
-    this.filteredData=this.api.getMonthandYear();
+    this.filteredData=this.commonsalary.getMonthandYear();
     this.salary_filter.selectedmonth=this.filteredData.selectedmonth;
     this.salary_filter.selectedyear= this.filteredData.selectedyear;
   }
@@ -152,8 +155,8 @@ export class SalaryProcessingComponent implements OnInit {
       this.salary_data=res;
       this.pdf = pdfMake;
       var monthname=_.find(this.monthArray,{id : parseInt(this.salary_filter.selectedmonth) }).name;
-      var filename='Salaryslip_'+localStorage.getItem('employee_name')+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
-      this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.salary_data, localStorage.getItem('employee_name')));
+      var filename='Salaryslip_'+user_name+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
+      this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.salary_data,user_name));
       this.pdfObj.download(filename);
       this.showSuccess('Salary Downloaded');
       }, (err) =>
@@ -169,6 +172,18 @@ export class SalaryProcessingComponent implements OnInit {
     this.toastr.successToastr(message, 'Success',{  position: position});
   }
 
+  convertAmountintoCurrency(number)
+  {
+    if(number!=undefined)
+    {
+      var n=number.toLocaleString('en-IN', {
+        currency: 'INR',
+        maximumFractionDigits: 0
+        });
+      return n;
+    }
+
+  }
   ngOnInit()
   {
 

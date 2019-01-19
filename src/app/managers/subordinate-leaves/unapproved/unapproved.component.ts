@@ -1,7 +1,8 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
-import { Component, OnInit } from '@angular/core';
-import {Observable, Subject } from 'rxjs'
+import { Component, OnInit,ViewChild } from '@angular/core';
+import {Observable, Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 import {UnapprovedService} from './unapproved.service'
 import { MonthYearService } from '../../../shared/service/month-year.service';
 import { NotificationService } from '../../../shared/service/notification.service';
@@ -19,6 +20,8 @@ export class UnapprovedComponent implements OnInit {
   leaveids = [];
   unapprovedLeavesData={start_date:'',end_date:''};
   unapproved_leaves_data:any;unapprovedleavesData:any; showDataTable:Boolean;
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
 
@@ -26,6 +29,11 @@ export class UnapprovedComponent implements OnInit {
     var filteredData=my.getFilterData();
     this.unapprovedLeavesData.start_date = filteredData[0].firstDay;
     this.unapprovedLeavesData.end_date = filteredData[0].lastDay;
+    this.leaveTableOptions = {
+      pagingType: 'full_numbers',
+      lengthMenu: [[5, 10, 20, 50,-1],
+      [5, 10, 20, 50,"All" ]]
+    };
   }
 
   ngOnInit() {
@@ -33,17 +41,14 @@ export class UnapprovedComponent implements OnInit {
     var end_date=moment(this.unapprovedLeavesData.end_date).format('DD/MM/YYYY');
     this.api.getAllUnapprovedSubordinateLeave(start_date,end_date).subscribe(res => {
       this.unapproved_leaves_data=res;
-      this.leaveTableOptions = {
-        pagingType: 'full_numbers',
-        pageLength: 10
-      };
-      this.leaveTableTrigger.next();
-      }, (err) => {
-      alert(err.error);
+      this.leaveTableTrigger.next();    
+    }, (err) => {
+       this.notification.showError(err.error);
     });
   }
 
-  checkALL(){
+  checkALL()
+  {
     if ($('.check-box:checked').length > 0)
       $('.checkbox').prop('checked', true);
     else
@@ -61,22 +66,37 @@ export class UnapprovedComponent implements OnInit {
     {
       this.api.sendForLeaveApproval(postdata).subscribe(res => {
         leave_ids = []
-        var start_date=moment(this.unapprovedLeavesData.start_date).format('DD/MM/YYYY');
-        var end_date=moment(this.unapprovedLeavesData.end_date).format('DD/MM/YYYY');
-        this.api.getAllUnapprovedSubordinateLeave(start_date,end_date).subscribe(res => {
-          this.unapproved_leaves_data=res;
-          }, (err) => {
-          alert(err.error);
-        });
         this.notification.showSuccess('Leave approved successfully');
-        }, (err) => {
-        this.notification.showError('err.error');
+        this.refreshData();
+      }, (err) => {
+        this.notification.showError(err.error);
       });
     }
     else
     {
-      this.notification.CustomErrorMessage('Please check atleast one unapproved leave');
+      this.notification.CustomErrorMessage('Please check atleast one leave');
     }
+  }
+
+  refreshData()
+  {
+    var start_date=moment(this.unapprovedLeavesData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedLeavesData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnapprovedSubordinateLeave(start_date,end_date).subscribe(res => {
+      this.unapproved_leaves_data=res;
+      this.rerender();   
+    }, (err) => {
+       this.notification.showError(err.error);
+    });
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.leaveTableTrigger.next();
+    });
   }
 
 }

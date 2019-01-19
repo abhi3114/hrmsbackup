@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div class="content-wrapper">
     <ol class="breadcrumb">
-      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
       <li class="active">Subordinate (Unapproved Outdoor Duties)</li>
     </ol>
     <section class="content-header">
@@ -15,7 +15,7 @@
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
               <thead>
                 <tr>
-                  <th><input id='checkAll' type='checkbox' class='check-box' ng-click='checkAll()'/></th>
+                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkAll()'/></th>
                   <th>User</th>
                   <th>Start Date</th>
                   <th>End Date</th>
