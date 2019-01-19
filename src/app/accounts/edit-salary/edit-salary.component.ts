@@ -410,7 +410,7 @@ export class EditSalaryComponent implements OnInit {
     {
       this.pdf = pdfMake;
       var filename='Salary_Revision_Letter';
-      this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalaryRevisonLetterPdf(this.user_salary_data, localStorage.getItem('employee_name')));
+      this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalaryRevisonLetterPdf(this.user_salary_data,this.user_salary_data.user_name));
       this.pdfObj.download(filename);
       this.showSuccess('Salary Revision Letter Downloaded');
     }
@@ -427,7 +427,7 @@ export class EditSalaryComponent implements OnInit {
     {
       this.pdf = pdfMake;
       var monthname=_.find(this.monthArray,{id : parseInt(this.salary_filter.selectedmonth) }).name;
-      var filename='Salaryslip_'+localStorage.getItem('employee_name')+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
+      var filename='Salaryslip_'+this.user_payemnt_data.name+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
       this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.user_payemnt_data,this.user_payemnt_data.details.name));
       this.pdfObj.download(filename);
       this.showSuccess('Salary Downloaded');
@@ -437,6 +437,20 @@ export class EditSalaryComponent implements OnInit {
       this.showCustomError("Cannot Download,make sure you have generated payment components before downloading!");
     }
   }
+
+  convertAmountintoCurrency(number)
+  {
+    if(number!=undefined)
+    {
+      var n=number.toLocaleString('en-IN', {
+        currency: 'INR',
+        maximumFractionDigits: 0
+        });
+      return n;
+    }
+
+  }
+
 
 
 }

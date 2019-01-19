@@ -1,10 +1,11 @@
-import { Component, OnInit,TemplateRef } from '@angular/core';
+import { Component, OnInit,TemplateRef,ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {Observable,Subject} from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { ToastrManager } from 'ng6-toastr-notifications';
+import { DataTableDirective } from 'angular-datatables';
+import { NotificationService } from '../../shared/service/notification.service';
 import { ApprovedMissingAttendanceService } from './approved-missing-attendance.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
 import * as moment from 'moment';
@@ -18,10 +19,12 @@ export class ApprovedMissingAttendanceComponent implements OnInit {
   missingAttendanceForm: FormGroup;updateMissingAttendanceForm:FormGroup;
   missingAttendanceData={start_date:'',end_date:''};updateMissingAttendanceData={reason:''};
   api_data:any;missingattendanceData:any;   missing_attendance_Id:any;user_data:any;
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
   missingAttendanceTableOptions: DataTables.Settings = {};
   missingAttendanceTableTrigger: Subject<any> = new Subject();
   modalRef: BsModalRef;
-  constructor(private router:Router,private api:ApprovedMissingAttendanceService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager)
+  constructor(private router:Router,private api:ApprovedMissingAttendanceService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: NotificationService)
   {
     var filteredData=monthandyear.getFilterData();
     this.missingAttendanceData.start_date = filteredData[0].firstDay;
@@ -33,6 +36,11 @@ export class ApprovedMissingAttendanceComponent implements OnInit {
     this.updateMissingAttendanceForm = new FormGroup({
       comment: new FormControl('', [Validators.required])
       });
+    this.missingAttendanceTableOptions = {
+      pagingType: 'full_numbers',
+      lengthMenu: [[5, 10, 20, 50,-1],
+      [5, 10, 20, 50,"All" ]]
+    };
   }
 
   validateMissingAttendanceForm()
@@ -42,8 +50,9 @@ export class ApprovedMissingAttendanceComponent implements OnInit {
     this.api.getApprovedMissingAttendance(start_date,end_date).subscribe(res => {
       this.api_data=res;
       this.missingattendanceData=this.api_data.attendance_missings_data;
+      this.rerender();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
 
   }
@@ -54,13 +63,9 @@ export class ApprovedMissingAttendanceComponent implements OnInit {
     this.api.getApprovedMissingAttendance(start_date ,end_date).subscribe(res => {
       this.api_data=res;
       this.missingattendanceData=this.api_data.attendance_missings_data;
-      this.missingAttendanceTableOptions = {
-        pagingType: 'full_numbers',
-        pageLength: 10
-      };
       this.missingAttendanceTableTrigger.next();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         })
   }
   updateMissingAttendance(template: TemplateRef<any>,maId,mareason)
@@ -74,32 +79,23 @@ export class ApprovedMissingAttendanceComponent implements OnInit {
     this.api.updateMissingAttendance(this.missing_attendance_Id,this.updateMissingAttendanceData).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
-      this.showSuccess('Response Recorded');
+      this.toastr.showSuccess('Response Recorded');
       this.updateMissingAttendanceForm.reset();
-      this.RefreshMissingAttendanceData();
+      this.validateMissingAttendanceForm();
       }, (err) => {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         this.modalRef.hide();
         this.updateMissingAttendanceForm.reset();
         });
   }
-  RefreshMissingAttendanceData()
-  {
-    var start_date=moment(this.missingAttendanceData.start_date).format('DD/MM/YYYY');
-    var end_date=moment(this.missingAttendanceData.end_date).format('DD/MM/YYYY');
-    this.api.getApprovedMissingAttendance(start_date,end_date).subscribe(res => {
-      this.api_data=res;
-      this.missingattendanceData=this.api_data.attendance_missings_data;
-      }, (err) => {
-        this.showError(err.error);
-        });
 
-  }
-  showError(e,position: any = 'top-center') {
-    this.toastr.errorToastr(e.message, 'Oops Some went wrong!',{  position: position});
-  }
-  showSuccess(message,position: any = 'top-center') {
-    this.toastr.successToastr(message, 'Success',{  position: position});
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.missingAttendanceTableTrigger.next();
+      });
   }
 
 }

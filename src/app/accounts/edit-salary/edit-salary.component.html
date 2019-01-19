@@ -2,7 +2,7 @@
   <div class="content-wrapper">
    <ol class="breadcrumb">
     <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-    <li><a><i class="fa fa-money"></i> Salary Section</a></li>
+    <li><a  [routerLink]="['/home/users/salaries']"><i class="fa fa-money"></i> Salary Section</a></li>
     <li class="active">View Salary Structure</li>
   </ol>
   <section class="content-header">
@@ -72,12 +72,12 @@
               </dl>
               <dl class="col-md-4 booking-grid">
                 <dt>TOTAL AMOUNT</dt>
-                <dd>{{user_salary_data.amount  | currency:"₹"}}</dd>
+                <dd><i class="fa fa-inr" aria-hidden="true"></i> {{convertAmountintoCurrency(user_salary_data.amount)}}</dd>
               </dl>
               <dl class="col-md-4 booking-grid" *ngFor="let s of components; let i = index" >
                 <dt>COMPONENT {{i+1}}</dt>
                 <dd>NAME: {{s.title}}</dd>
-                <dd>AMOUNT: {{s.amount | currency:"₹"}}</dd>
+                <dd>AMOUNT: <i class="fa fa-inr" aria-hidden="true"></i>  {{convertAmountintoCurrency(s.amount)}}</dd>
               </dl>
             </div>
           </div>
@@ -96,7 +96,7 @@
           <div class="box-body" *ngIf="showUserPayment">
             <div class="col-md-12">
               <div class="col-md-4">
-                <label>Total Payable Amount:{{user_payemnt_data.amount}}</label>
+                <label>Total Payable Amount: <i class="fa fa-inr" aria-hidden="true"></i>  {{convertAmountintoCurrency(user_payemnt_data.amount)}}</label>
               </div>
             </div>
 
@@ -110,7 +110,7 @@
             </div>
             <div class="col-md-1" style="margin-top: 20px;">
               <button type="button" class="btn bg-orange ladda-button" ladda="processDemo" data-style="expand-right"
-              (click)="reprocessSal()" [disabled]="!user_payemnt_data.payment_id"><i class="fa fa-cogs" aria-hidden="true" ></i> Re-Process Salary</button>
+              (click)="reprocessSal()" [disabled]="!user_payemnt_data.payment_id" *ngIf="isBetween"><i class="fa fa-cogs" aria-hidden="true" ></i> Re-Process Salary</button>
             </div>
           </div>
 

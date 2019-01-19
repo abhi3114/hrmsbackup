@@ -64,7 +64,7 @@
             <td >{{l.date}}</td>
             <td *ngIf="l.approved==false">No</td>
             <td *ngIf="l.approved==true">Yes</td>
-            <td> {{l.approved_on}}</td>
+            <td> {{l.approved_on  | date: 'dd/MM/yyyy'}}</td>
             <td>{{l.punch}}</td>
             <td>{{l.reason}}</td>
             <td><button (click)="updateMissingAttendance(updateMissingAttendanceTemplate,l.id,l.reason)" type="button" class="add-dynamic-button" [attr.data-maId]="'#' + l.id"><i class="fa fa-edit" aria-hidden="true"></i></button></td>
