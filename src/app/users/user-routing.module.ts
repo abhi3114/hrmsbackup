@@ -16,6 +16,8 @@ import { AllMissingAttendanceComponent } from './all-missing-attendance/all-miss
 import { ApprovedMissingAttendanceComponent } from './approved-missing-attendance/approved-missing-attendance.component';
 import { UnapprovedMissingAttendanceComponent } from './unapproved-missing-attendance/unapproved-missing-attendance.component';
 import { BoosterSessionComponent } from './booster-session/booster-session.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+
 
 const routes: Routes = [
 {
@@ -37,6 +39,7 @@ const routes: Routes = [
   {path: 'missing_attendance/approved', component: ApprovedMissingAttendanceComponent},
   {path: 'missing_attendance/unapproved', component: UnapprovedMissingAttendanceComponent},
   {path: 'booster_sessions', component: BoosterSessionComponent},
+  {path: 'reset_password', component: ResetPasswordComponent},
   ]
 }
 ];

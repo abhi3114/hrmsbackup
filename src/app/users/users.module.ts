@@ -24,6 +24,7 @@ import { AllMissingAttendanceComponent } from './all-missing-attendance/all-miss
 import { ApprovedMissingAttendanceComponent } from './approved-missing-attendance/approved-missing-attendance.component';
 import { UnapprovedMissingAttendanceComponent } from './unapproved-missing-attendance/unapproved-missing-attendance.component';
 import { BoosterSessionComponent } from './booster-session/booster-session.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { BoosterSessionComponent } from './booster-session/booster-session.compo
   AllMissingAttendanceComponent,
   ApprovedMissingAttendanceComponent,
   UnapprovedMissingAttendanceComponent,
-  BoosterSessionComponent
+  BoosterSessionComponent,
+  ResetPasswordComponent
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })
