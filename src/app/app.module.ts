@@ -5,7 +5,6 @@ import { CoreModule } from './core/core.module';
 import { UsersModule } from './users/users.module';
 import { ManagersModule } from './managers/managers.module';
 import { AccountsModule } from './accounts/accounts.module';
-
 @NgModule({
   declarations: [
     AppComponent
