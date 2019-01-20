@@ -25,7 +25,8 @@
     "@angular/router": "^6.1.0",
     "angular-6-datatable": "^0.8.0",
     "angular-datatables": "^7.0.0",
-    "core-js": "^2.5.4",
+    "bootstrap": "^4.1.1",
+    "core-js": "^2.6.2",
     "datatable": "^2.0.2",
     "datatables": "^1.10.18",
     "datatables.net": "^1.10.19",
@@ -44,7 +45,7 @@
     "pdfmake": "^0.1.40",
     "rxjs": "~6.2.0",
     "underscore": "^1.9.1",
-    "zone.js": "~0.8.26"
+    "zone.js": "^0.8.28"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.8.9",
@@ -54,7 +55,7 @@
     "@types/datatables.net": "^1.10.14",
     "@types/datatables.net-buttons": "^1.4.0",
     "@types/file-saver": "^2.0.0",
-    "@types/jasmine": "~2.8.8",
+    "@types/jasmine": "^2.8.15",
     "@types/jasminewd2": "~2.0.3",
     "@types/jquery": "^3.3.29",
     "@types/node": "~8.9.4",
