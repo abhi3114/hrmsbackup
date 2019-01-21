@@ -17,6 +17,7 @@ import { SalaryReportComponent } from './salary-report/salary-report.component';
 import { PaymentReportComponent } from './payment-report/payment-report.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MissingSalaryComponent } from './missing-salary/missing-salary.component';
+import { FullAndFinalComponent } from './full-and-final/full-and-final.component';
 
 @NgModule({
     imports: [
@@ -35,6 +36,6 @@ import { MissingSalaryComponent } from './missing-salary/missing-salary.componen
     PapaParseModule,
     NgMultiSelectDropDownModule.forRoot(),
     ],
-    declarations: [SalaryImportComponent, SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent, MissingSalaryComponent],
+    declarations: [SalaryImportComponent, SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent, MissingSalaryComponent, FullAndFinalComponent],
     })
 export class AccountsModule { }

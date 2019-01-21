@@ -107,7 +107,7 @@ export class SalaryImportComponent implements OnInit {
               this.SuccessTableTrigger.next(); this.FailedTableTrigger.next();
             }
             });
-          }, 1000)
+          }, 50)
       }
       },
       (error) => {

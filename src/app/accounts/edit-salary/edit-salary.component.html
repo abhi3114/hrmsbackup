@@ -2,11 +2,12 @@
   <div class="content-wrapper">
    <ol class="breadcrumb">
     <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-    <li><a  [routerLink]="['/home/users/salaries']"><i class="fa fa-money"></i> Salary Section</a></li>
+    <li *ngIf="section=='salary'" ><a  [routerLink]="['/home/users/salaries']"><i class="fa fa-money"></i> Salary Section</a></li>
+    <li *ngIf="section=='fullandfinal'"><a  [routerLink]="['/home/users/salaries/full_and_final']"><i class="fa fa-money"></i> Full and Final Section</a></li>
     <li class="active">View Salary Structure</li>
   </ol>
   <section class="content-header">
-    <div class="row" ng-if="sectiontype =='salary'">
+    <div class="row" *ngIf="section =='salary'">
       <div>
         <div class="col-md-2 col-md-offset-4">
           <div class="form-group">
