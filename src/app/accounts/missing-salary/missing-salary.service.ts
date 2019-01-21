@@ -9,7 +9,7 @@ export class MissingSalaryService {
   constructor(private http: HttpClient) { }
   getallUser()
   {
-    return this.http.get(environment.baseUrl+ "accounts/users/salaries/missing",
+    return this.http.get(environment.baseUrl+ "accounts/users/salaries/missing/",
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }

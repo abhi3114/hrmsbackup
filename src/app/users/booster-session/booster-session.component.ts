@@ -11,7 +11,7 @@ import { NotificationService } from '../../shared/service/notification.service';
   selector: 'app-booster-session',
   templateUrl: './booster-session.component.html',
   styleUrls: ['./booster-session.component.css']
-})
+  })
 export class BoosterSessionComponent implements OnInit {
   user_data:any;booster_session_data:any;
   @ViewChild(DataTableDirective)
@@ -19,7 +19,7 @@ export class BoosterSessionComponent implements OnInit {
   boosterSessionTableOptions: DataTables.Settings = {};
   boosterSessionTableTrigger: Subject<any> = new Subject();
   responseData={ response:'',rating:'',comment:'',reason:''};
-  responseForm: FormGroup;  
+  responseForm: FormGroup;
   modalRef: BsModalRef;
   config = {
     animated:true,
@@ -40,15 +40,15 @@ export class BoosterSessionComponent implements OnInit {
       this.user_data=res;
       this.booster_session_data=this.user_data.booster_session_data;
       this.boosterSessionTableTrigger.next();
-    }, (err) => {
-      alert(err.error);
-    });
+      }, (err) => {
+        alert(err.error);
+        });
     this.responseForm = new FormGroup({
       response: new FormControl('', [Validators.required]),
       rating: new FormControl('', []),
       comment: new FormControl('', []),
       reason:new FormControl('',[])
-    });
+      });
     this.responseData.response="yes";
   }
 
@@ -69,7 +69,7 @@ export class BoosterSessionComponent implements OnInit {
 
         "rating": this.responseData.rating,
         "comment": this.responseData.comment,
-        "status":this.status
+        "satuts":this.responseData.response
       }
       if((this.responseData.rating == undefined || this.responseData.rating=="") || (this.responseData.comment==undefined || this.responseData.comment==""))
       {
@@ -86,7 +86,7 @@ export class BoosterSessionComponent implements OnInit {
       var data =
       {
         "reason": this.responseData.reason,
-        "status":status
+        "satuts":this.responseData.response
       }
       if(this.responseData.reason == undefined || this.responseData.reason=="")
       {
@@ -108,9 +108,9 @@ export class BoosterSessionComponent implements OnInit {
       this.modalRef.hide();
       this.toastr.showSuccess('Response recorded');
       this.refreshData();
-    }, (err) => {
-      this.toastr.showError(err.error);
-    });
+      }, (err) => {
+        this.toastr.showError(err.error);
+        });
   }
 
   refreshData()
@@ -119,9 +119,9 @@ export class BoosterSessionComponent implements OnInit {
       this.user_data=res;
       this.booster_session_data=this.user_data.booster_session_data;
       this.rerender();
-    }, (err) => {
-      alert(err.error);
-    });
+      }, (err) => {
+        alert(err.error);
+        });
   }
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -129,7 +129,7 @@ export class BoosterSessionComponent implements OnInit {
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       this.boosterSessionTableTrigger.next();
-    });
+      });
 
   }
 }
