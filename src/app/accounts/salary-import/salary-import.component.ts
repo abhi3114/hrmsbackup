@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy,ViewChild } from '@angular/core';
+import { Component, OnInit,OnDestroy,ViewChildren, QueryList  } from '@angular/core';
 import { CommonSalaryService } from '../../shared/service/common-salary.service';
 import { Papa } from 'ngx-papaparse';
 import { MonthYearService } from '../../shared/service/month-year.service';
@@ -22,8 +22,8 @@ export class SalaryImportComponent implements OnInit {
   canShowtable:boolean;
   postdata:any;
   sheet_data:any;
-  @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
+  @ViewChildren(DataTableDirective)
+  dtElements: QueryList<DataTableDirective>;
   SuccessTableOptions: any;
   FailedTableOptions: any;
   SuccessTableTrigger: Subject<any> = new Subject();
@@ -91,8 +91,23 @@ export class SalaryImportComponent implements OnInit {
       this.notification.showSuccess('Salary Imported Successfully');
       if (this.canShowtable)
       {
-        this.FailedTableTrigger.next();
-        this.SuccessTableTrigger.next();
+        setTimeout(() => {
+          // this.dtElement.dtTrigger.next();
+          // console.log(this.dtElement);
+          this.dtElements.forEach((dtElement: DataTableDirective) => {
+            if(dtElement.dtInstance!=undefined)
+            {
+              dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                dtInstance.destroy();
+                dtElement.dtTrigger.next();
+                });
+            }
+            else
+            {
+              this.SuccessTableTrigger.next(); this.FailedTableTrigger.next();
+            }
+            });
+          }, 1000)
       }
       },
       (error) => {
@@ -113,5 +128,6 @@ export class SalaryImportComponent implements OnInit {
       }
       });
   }
+
 
 }
