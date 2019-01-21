@@ -70,7 +70,7 @@
                   <td> {{l.reason}}</td>
                   <td *ngIf="l.approved==true">Yes</td>
                   <td *ngIf="l.approved==false">No</td>
-                  <td>{{l.approved_on}}</td>
+                  <td>{{l.approved_on | date: 'dd/MM/yyyy'}}</td>
                 </tr>
               </tbody>
             </table>
