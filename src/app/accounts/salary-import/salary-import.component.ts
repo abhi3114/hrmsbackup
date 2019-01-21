@@ -12,7 +12,7 @@ import * as _ from 'underscore';
   selector: 'app-salary-import',
   templateUrl: './salary-import.component.html',
   styleUrls: ['./salary-import.component.css']
-})
+  })
 export class SalaryImportComponent implements OnInit {
 
   monthArray:any;yearArray:any;
@@ -66,29 +66,14 @@ export class SalaryImportComponent implements OnInit {
       var can_import_sheet = true
       if(can_import_sheet)
       {
-        var selectedmonth = this.salary_filter.selectedmonth
-        var selectedYear = this.salary_filter.selectedyear
         this.papa.parse(file, {
           header: true,
           complete: (results) => {
             this.sheet_data = results.data
+            this.callSaveApi(this.sheet_data);
           }
-        });
-        this.postdata = { 'data':this.sheet_data,'month':selectedmonth,'year':selectedYear}
-        console.log(this.postdata);
-        this.salaryimport.importCsvData(this.postdata).subscribe(response => {
-          this.importedData = response;
-          this.displayImportedData();
-          this.canShowtable = true;
-          this.notification.showSuccess('Salary Imported Successfully');
-        },
-        (error) => {
-          this.notification.showError('error due to Api');
-        });
-        if (this.canShowtable){
-          this.FailedTableTrigger.next();
-          this.SuccessTableTrigger.next();
-        }
+          });
+
       }
       else
       {
@@ -96,19 +81,37 @@ export class SalaryImportComponent implements OnInit {
       }
     }
   }
+  callSaveApi(parsedSheetData)
+  {
+    this.postdata = { 'data':parsedSheetData,'month':this.salary_filter.selectedmonth,'year':this.salary_filter.selectedyear}
+    this.salaryimport.importCsvData(this.postdata).subscribe(response => {
+      this.importedData = response;
+      this.displayImportedData();
+      this.canShowtable = true;
+      this.notification.showSuccess('Salary Imported Successfully');
+      if (this.canShowtable)
+      {
+        this.FailedTableTrigger.next();
+        this.SuccessTableTrigger.next();
+      }
+      },
+      (error) => {
+        this.notification.showError('error due to Api');
+        });
+  }
   displayImportedData(){
     this.successData=[];
     this.failedData=[];
     this.importedData.forEach(sdata => {
-     if(sdata.status =='Failed')
-     {
-       this.failedData.push({user:sdata.user,message:sdata.message});
-     }
-     else
-     {
+      if(sdata.status =='Failed')
+      {
+        this.failedData.push({user:sdata.user,message:sdata.message});
+      }
+      else
+      {
         this.successData.push({user:sdata.user,message:sdata.message});
       }
-    });
+      });
   }
 
 }
