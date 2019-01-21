@@ -30,7 +30,7 @@
                   <a [routerLink]="['reset_password']" class="btn btn-default btn-flat">Reset Password</a>
                   <!--     <a href="my-account.php#settings" class="btn btn-default btn-flat" data-toggle="tab">Change Password</a> -->
                 </div>
-                <div style="text-align:center;"><a href="" class="btn btn-default btn-flat" (click)="signOut()">Sign out</a> </div>
+                <div style="text-align:center;"><a class="btn btn-default btn-flat" (click)="signOut()">Sign out</a> </div>
               </li>
             </ul>
           </li>
@@ -115,15 +115,23 @@
            </span>
          </a>
          <ul class="treeview-menu">
-           <li><a [routerLink]="['users/salaries']"><i class="fa fa-server" aria-hidden="true"></i> Salary Processing </a></li>
-            <li>
-              <a [routerLink]="['users/salaries/import']"><i class="fa fa-server" aria-hidden="true"></i> Salary Import
-              </a>
-            </li>
-           <li><a [routerLink]="['users/missing_salaries']"><i class="fa fa-server" aria-hidden="true"></i> Missing Salary</a></li>
-         </ul>
-       </li>
-       <li *ngIf="employee_role=='ACCOUNTS'" style="cursor: pointer;"><a  href=""><i class="fa fa-bar-chart " aria-hidden="true"></i>
+           <li>
+             <a [routerLink]="['users/salaries']"><i class="fa fa-server" aria-hidden="true"></i> Salary Processing
+             </a>
+           </li>
+           <li>
+            <a [routerLink]="['users/salaries/import']"><i class="fa fa-server" aria-hidden="true"></i> Salary Import
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['users/salaries/full_and_final']"><i class="fa fa-users"></i>
+            <span>Full and Final Section</span>
+            </a>
+          </li>
+          <li><a [routerLink]="['users/salaries/missing']"><i class="fa fa-server" aria-hidden="true"></i> Missing Salary</a></li>
+        </ul>
+      </li>
+      <li *ngIf="employee_role=='ACCOUNTS'" style="cursor: pointer;"><a  href=""><i class="fa fa-bar-chart " aria-hidden="true"></i>
         <span>Reports</span>
         <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>

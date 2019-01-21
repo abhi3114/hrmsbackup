@@ -2,11 +2,12 @@
   <div class="content-wrapper">
    <ol class="breadcrumb">
     <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-    <li><a  [routerLink]="['/home/users/salaries']"><i class="fa fa-money"></i> Salary Section</a></li>
+    <li *ngIf="section=='salary'" ><a  [routerLink]="['/home/users/salaries']"><i class="fa fa-money"></i> Salary Section</a></li>
+    <li *ngIf="section=='fullandfinal'"><a  [routerLink]="['/home/users/salaries/full_and_final']"><i class="fa fa-money"></i> Full and Final Section</a></li>
     <li class="active">View Salary Structure</li>
   </ol>
   <section class="content-header">
-    <div class="row" ng-if="sectiontype =='salary'">
+    <div class="row" *ngIf="section =='salary'">
       <div>
         <div class="col-md-2 col-md-offset-4">
           <div class="form-group">
@@ -62,130 +63,131 @@
               </button>
             </div>
             <div>
-              <dl class="col-md-4 booking-grid">
-                <dt>TITLE</dt>
-                <dd> {{user_salary_data.title}} </dd>
-              </dl>
-              <dl class="col-md-4 booking-grid">
-                <dt>START DATE</dt>
-                <dd>{{user_salary_data.start_date | date: 'dd/MM/yyyy'}}</dd>
-              </dl>
-              <dl class="col-md-4 booking-grid">
-                <dt>TOTAL AMOUNT</dt>
-                <dd><i class="fa fa-inr" aria-hidden="true"></i> {{convertAmountintoCurrency(user_salary_data.amount)}}</dd>
-              </dl>
-              <dl class="col-md-4 booking-grid" *ngFor="let s of components; let i = index" >
-                <dt>COMPONENT {{i+1}}</dt>
-                <dd>NAME: {{s.title}}</dd>
-                <dd>AMOUNT: <i class="fa fa-inr" aria-hidden="true"></i>  {{convertAmountintoCurrency(s.amount)}}</dd>
-              </dl>
-            </div>
+             <h3>{{user_salary_data.name}}</h3>
+             <dl class="col-md-4 booking-grid">
+              <dt>TITLE</dt>
+              <dd> {{user_salary_data.title}} </dd>
+            </dl>
+            <dl class="col-md-4 booking-grid">
+              <dt>START DATE</dt>
+              <dd>{{user_salary_data.start_date | date: 'dd/MM/yyyy'}}</dd>
+            </dl>
+            <dl class="col-md-4 booking-grid">
+              <dt>TOTAL AMOUNT</dt>
+              <dd><i class="fa fa-inr" aria-hidden="true"></i> {{convertAmountintoCurrency(user_salary_data.amount)}}</dd>
+            </dl>
+            <dl class="col-md-4 booking-grid" *ngFor="let s of components; let i = index" >
+              <dt>COMPONENT {{i+1}}</dt>
+              <dd>NAME: {{s.title}}</dd>
+              <dd>AMOUNT: <i class="fa fa-inr" aria-hidden="true"></i>  {{convertAmountintoCurrency(s.amount)}}</dd>
+            </dl>
           </div>
         </div>
       </div>
-      <div class="panel box box-primary">
-        <div class="box-header with-border">
-          <h4 class="box-title">
-            <a data-toggle="collapse"  data-target="#paymentSection" style="cursor: pointer; color: #fff;">
-              <h4 class="modal-title" id="H1">PAYMENT DETAILS</h4>
-            </a>
-          </h4>
+    </div>
+    <div class="panel box box-primary">
+      <div class="box-header with-border">
+        <h4 class="box-title">
+          <a data-toggle="collapse"  data-target="#paymentSection" style="cursor: pointer; color: #fff;">
+            <h4 class="modal-title" id="H1">PAYMENT DETAILS</h4>
+          </a>
+        </h4>
 
-        </div>
-        <div id="paymentSection" class="panel-collapse collapse in">
-          <div class="box-body" *ngIf="showUserPayment">
-            <div class="col-md-12">
-              <div class="col-md-4">
-                <label>Total Payable Amount: <i class="fa fa-inr" aria-hidden="true"></i>  {{convertAmountintoCurrency(user_payemnt_data.amount)}}</label>
-              </div>
-            </div>
-
-            <div class="col-md-12">
-             <div class="col-md-3">
-               <div class="form-group">
-                <label>LWP:</label>
-                <input name="mTitle" type='text' class="form-control" [(ngModel)]="user_payemnt_data.lwp" />
-              </div>
-
-            </div>
-            <div class="col-md-1" style="margin-top: 20px;">
-              <button type="button" class="btn bg-orange ladda-button" ladda="processDemo" data-style="expand-right"
-              (click)="reprocessSal()" [disabled]="!user_payemnt_data.payment_id" *ngIf="isBetween"><i class="fa fa-cogs" aria-hidden="true" ></i> Re-Process Salary</button>
+      </div>
+      <div id="paymentSection" class="panel-collapse collapse in">
+        <div class="box-body" *ngIf="showUserPayment">
+          <div class="col-md-12">
+            <div class="col-md-4">
+              <label>Total Payable Amount: <i class="fa fa-inr" aria-hidden="true"></i>  {{convertAmountintoCurrency(user_payemnt_data.amount)}}</label>
             </div>
           </div>
 
-          <div class="col-md-12" *ngFor="let p of payment_components; let i = index">
+          <div class="col-md-12">
+           <div class="col-md-3">
+             <div class="form-group">
+              <label>LWP:</label>
+              <input name="mTitle" type='text' class="form-control" [(ngModel)]="user_payemnt_data.lwp" />
+            </div>
+
+          </div>
+          <div class="col-md-1" style="margin-top: 20px;">
+            <button type="button" class="btn bg-orange ladda-button" ladda="processDemo" data-style="expand-right"
+            (click)="reprocessSal()" [disabled]="!user_payemnt_data.payment_id" *ngIf="isBetween"><i class="fa fa-cogs" aria-hidden="true" ></i> Re-Process Salary</button>
+          </div>
+        </div>
+
+        <div class="col-md-12" *ngFor="let p of payment_components; let i = index">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>Title</label>
+              <input name="mTitle" type='text' class="form-control" [(ngModel)]="p.title" disabled />
+
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Amount</label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="p.amount"  disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-2" *ngIf="p.title == 'Incentive'">
+            <div class="form-group">
+              <label>Details</label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="p.details" disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-3" style="margin-top: 25px;" *ngIf="p.title == 'Incentive' || p.title == 'EPF' || p.title == 'Special Allowance' || p.title == 'Earlier PF Deduction'|| p.title == 'TDS'|| p.title == 'Other Deductions'|| p.title == 'Salary Advance'|| p.title == 'Overtime'|| p.title == 'Arrears'">
+           <button type="button" class="btn btn-danger" (click)="deletePay(i)" style="border-radius: 20px;"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+         </div>
+       </div>
+
+
+       <form name="leaveForm" novalidate data-ng-submit="validate(leaveForm.$valid)" autocomplete="off">
+        <div class="row">
+
+          <div>
+            <div class="col-md-12" *ngFor="let choice of choices; let i = index"
+            style="margin-top: 10px;margin-left: 15px;">
             <div class="col-md-3">
-              <div class="form-group">
-                <label>Title</label>
-                <input name="mTitle" type='text' class="form-control" [(ngModel)]="p.title" disabled />
-
-              </div>
+              <select class="select2 form-control" style="height: 35px;" [(ngModel)]="choice.component"  (change)="getpayments(choice.component,i)" [ngModelOptions]="{standalone: true}">
+                <option  value="" disabled="disabled">Select Component</option>
+                <option *ngFor="let c of user_payment_components" value="{{c}}">{{c}}</option>
+              </select>
             </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Amount</label>
-                <input name="endDate" type='text' class="form-control" [(ngModel)]="p.amount"  disabled
-                />
-              </div>
+            <div class="col-md-2" style="margin-left: -10px;">
+              <input type="text"
+              id="Text1"
+              class="form-control"
+              placeholder="Enter Amount"
+              [(ngModel)]="choice.amount" [ngModelOptions]="{standalone: true}" />
             </div>
-            <div class="col-md-2" *ngIf="p.title == 'Incentive'">
-              <div class="form-group">
-                <label>Details</label>
-                <input name="endDate" type='text' class="form-control" [(ngModel)]="p.details" disabled
-                />
-              </div>
+            <div class="col-md-3" style="margin-left: -10px;" *ngIf="choice.component == 'Incentive'">
+              <input type="text"
+              id="Text1"
+              class="form-control"
+              placeholder="Enter Incentive Detail"
+              [(ngModel)]="choice.details" [ngModelOptions]="{standalone: true}" />
             </div>
-            <div class="col-md-3" style="margin-top: 25px;" *ngIf="p.title == 'Incentive' || p.title == 'EPF' || p.title == 'Special Allowance' || p.title == 'Earlier PF Deduction'|| p.title == 'TDS'|| p.title == 'Other Deductions'|| p.title == 'Salary Advance'|| p.title == 'Overtime'|| p.title == 'Arrears'">
-             <button type="button" class="btn btn-danger" (click)="deletePay(i)" style="border-radius: 20px;"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <div class="col-md-2" *ngIf="i == 0">
+              <button class="btn bg-olive" (click)="addMoreCT()" type="button" style="border-radius: 20px;"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            </div>
+            <div class="col-md-2" *ngIf="i > 0">
+             <button type="button" class="btn bg-maroon" (click)="delCT(i)" style="border-radius: 20px;"><i class="fa fa-minus" aria-hidden="true"></i></button>
            </div>
          </div>
-
-
-         <form name="leaveForm" novalidate data-ng-submit="validate(leaveForm.$valid)" autocomplete="off">
-          <div class="row">
-
-            <div>
-              <div class="col-md-12" *ngFor="let choice of choices; let i = index"
-              style="margin-top: 10px;margin-left: 15px;">
-              <div class="col-md-3">
-                <select class="select2 form-control" style="height: 35px;" [(ngModel)]="choice.component"  (change)="getpayments(choice.component,i)" [ngModelOptions]="{standalone: true}">
-                  <option  value="" disabled="disabled">Select Component</option>
-                  <option *ngFor="let c of user_payment_components" value="{{c}}">{{c}}</option>
-                </select>
-              </div>
-              <div class="col-md-2" style="margin-left: -10px;">
-                <input type="text"
-                id="Text1"
-                class="form-control"
-                placeholder="Enter Amount"
-                [(ngModel)]="choice.amount" [ngModelOptions]="{standalone: true}" />
-              </div>
-              <div class="col-md-3" style="margin-left: -10px;" *ngIf="choice.component == 'Incentive'">
-                <input type="text"
-                id="Text1"
-                class="form-control"
-                placeholder="Enter Incentive Detail"
-                [(ngModel)]="choice.details" [ngModelOptions]="{standalone: true}" />
-              </div>
-              <div class="col-md-2" *ngIf="i == 0">
-                <button class="btn bg-olive" (click)="addMoreCT()" type="button" style="border-radius: 20px;"><i class="fa fa-plus" aria-hidden="true"></i></button>
-              </div>
-              <div class="col-md-2" *ngIf="i > 0">
-               <button type="button" class="btn bg-maroon" (click)="delCT(i)" style="border-radius: 20px;"><i class="fa fa-minus" aria-hidden="true"></i></button>
-             </div>
-           </div>
-         </div>
-
        </div>
-       <div style="text-align: center;">
-        <div class="form-group" style="margin-top: 35px;">
-         <button type="submit" class="btn bg-orange" (click)="save()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
-         <button type="button" class="btn bg-purple ladda-button" ladda="loadingDemo2" data-style="expand-right" (click)="downloadSalarySlip()" style="margin-left: 25px;"><i class="fa fa-download" aria-hidden="true"></i> Download</button>
-       </div>
+
      </div>
-   </form>
- </div>
+     <div style="text-align: center;">
+      <div class="form-group" style="margin-top: 35px;">
+       <button type="submit" class="btn bg-orange" (click)="save()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+       <button type="button" class="btn bg-purple ladda-button" ladda="loadingDemo2" data-style="expand-right" (click)="downloadSalarySlip()" style="margin-left: 25px;"><i class="fa fa-download" aria-hidden="true"></i> Download</button>
+     </div>
+   </div>
+ </form>
+</div>
 
 
 </div>

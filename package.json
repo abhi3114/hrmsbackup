@@ -46,6 +46,7 @@
     "ngx-papaparse": "^3.0.2",
     "pdfmake": "^0.1.40",
     "rxjs": "~6.2.0",
+    "rxjs-compat": "^6.3.3",
     "underscore": "^1.9.1",
     "zone.js": "^0.8.28"
   },
