@@ -85,4 +85,10 @@ export class DashBoardService {
       "Content-Type": 'application/json'})})
   }
 
+  postfeeback(params)
+  {
+    return this.http.post(environment.baseUrl+'feedbacks',params,{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+      "Content-Type": 'application/json'})})
+  }
+
 }

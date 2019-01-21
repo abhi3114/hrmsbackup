@@ -12,7 +12,7 @@ const routes: Routes = [
   path: 'home', component: MasterComponent,
   children: [
   {path: 'users/salaries', component: SalaryProcessingComponent},
-  {path: 'users/:id', component: EditSalaryComponent},
+  {path: 'users/:id/payments', component: EditSalaryComponent},
   {path: 'users/salaries/import', component: SalaryImportComponent},
   {path: 'users/:id/payments', component: EditSalaryComponent},
   {path: 'users/salary_report', component: SalaryReportComponent},
