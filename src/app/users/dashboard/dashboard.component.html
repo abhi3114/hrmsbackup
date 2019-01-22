@@ -255,7 +255,7 @@
   <div class="modal-body">
     <form  novalidate (ngSubmit)="validateApplyLeaveForm()" [formGroup]="applyLeaveForm" autocomplete="off">
       <div class="row">
-        <div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Start Date<sup style="color:red;">*</sup></label>
@@ -282,7 +282,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div class="col-md-12">
         <div class="col-md-6">
           <div class="form-group">
             <label>Leave type<sup style="color:red;">*</sup></label>
@@ -311,7 +311,7 @@
       </div>
       <div class="" style="text-align: center;">
         <div class="">
-          <button type="submit" class="btn btn-primary" [disabled]="applyLeaveForm.invalid">Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="applyLeaveForm.invalid" [ladda]="isLoading">Submit</button>
         </div>
       </div>
     </div>
@@ -328,7 +328,7 @@
   <div class="modal-body">
     <form novalidate (ngSubmit)="validateApplyOutdoorDutiesForm()" [formGroup]="applyOutdoorDutiesForm" autocomplete="off">
       <div class="row">
-        <div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Start Date and Time<sup style="color:red;">*</sup></label>
@@ -353,6 +353,8 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Project/Firm Name<sup style="color:red;">*</sup></label>
@@ -375,6 +377,8 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Location<sup style="color:red;">*</sup></label>
@@ -399,7 +403,7 @@
           </div>
         </div>
         <div class="" style="margin-top: 23px; text-align: center;">
-          <button type="submit" class="btn btn-primary" [disabled]="applyOutdoorDutiesForm.invalid">Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="applyOutdoorDutiesForm.invalid" [ladda]="isLoading">Submit</button>
         </div>
       </div>
     </form>
@@ -441,7 +445,7 @@
           </div>
         </div>
         <div class="" style="text-align: center;">
-          <button type="submit" class="btn btn-primary" [disabled]="applyLateMarksForm.invalid" >Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="applyLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
         </div>
       </div>
     </form>
@@ -501,7 +505,7 @@
         </div>
       </div>
       <div class="" style="text-align: center;">
-        <button type="submit" class="btn btn-primary" [disabled]="applyMissingAttendanceForm.invalid" >Submit</button>
+        <button type="submit" class="btn btn-primary" [disabled]="applyMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
       </div>
     </form>
   </div>
@@ -551,7 +555,7 @@
     </div>
   </div>
   <div class="col-md-3" style="margin-top: 23px;">
-    <button type="submit" class="btn btn-primary" [disabled]="salarySlipDownloadForm.invalid"> <i class="fa fa-download" aria-hidden="true"></i> Download</button>
+    <button type="submit" class="btn btn-primary" [disabled]="salarySlipDownloadForm.invalid" [ladda]="isLoading"> <i class="fa fa-download" aria-hidden="true"></i> Download</button>
   </div>
 </div>
 </div>
@@ -582,7 +586,7 @@
         </div>
       </div>
       <div class="" style="margin-top: 23px; text-align: center;">
-       <button type="submit" class="btn btn-primary" [disabled]="updateMissingAttendanceForm.invalid">Submit</button>
+      <button type="submit" class="btn btn-primary" [disabled]="updateMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
      </div>
 
    </div>
@@ -613,7 +617,7 @@
         </div>
       </div>
       <div class="" style="margin-top: 23px; text-align: center;">
-       <button type="submit" class="btn btn-primary" [disabled]="updateLateMarksForm.invalid">Submit</button>
+       <button type="submit" class="btn btn-primary" [disabled]="updateLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
      </div>
 
    </div>
@@ -628,70 +632,70 @@
     </button>
   </div>
   <div class="modal-body">
-      <div class="row">
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table  table-bordered table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>Sr. No.</th>
-                  <th *ngIf="mentorormentee=='mentor'">Topic</th>
-                  <th *ngIf="mentorormentee=='mentee'">Topic</th>
-                  <th>Rating</th>
-                  <th>Comments</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td *ngIf="mentorormentee=='mentor'">My mentee regularly communicated with me</td>
-                  <td *ngIf="mentorormentee=='mentee'">The mentor was attentive and focussed during the program</td>
-                  <td> <rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating1" class="form-control" style="border: none;"></rating></td>
-                  <td><input name="comment1" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment1" /></td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td *ngIf="mentorormentee=='mentor'">My mentee was quick learner and curious towards work</td>
-                  <td *ngIf="mentorormentee=='mentee'">The mentor communicated with me on regular basis</td>
-                  <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating2" class="form-control" style="border: none;"></rating></td>
-                  <td><input name="comment2" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment2"   /></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td *ngIf="mentorormentee=='mentor'">My mentee concerned about challenges during assigned tasks and was keen to overcome it</td>
-                  <td *ngIf="mentorormentee=='mentee'">The mentor provided me appropriate, relevant and handful information</td>
-                  <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating3" class="form-control" style="border: none;"></rating></td>
-                  <td><input name="comment3" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment3"   /></td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td *ngIf="mentorormentee=='mentor'">My mentee demonstartd a reasonable interest/concern towards me in my quest to offer assistance</td>
-                  <td *ngIf="mentorormentee=='mentee'">I am aware about the resources and tools</td>
-                  <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating4" class="form-control" style="border: none;"></rating></td>
-                  <td><input name="comment4" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment4"  /></td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td *ngIf="mentorormentee=='mentor'">My mentee's attitude and behaviour generally professional and courteous</td>
-                  <td *ngIf="mentorormentee=='mentee'">The mentor was supportive and encouraged me to make decisions that will lead to success</td>
-                  <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating5" class="form-control" style="border: none;"></rating></td>
-                  <td><input name="comment5" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment5"   /></td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td *ngIf="mentorormentee=='mentor'">I recommend my mentee for future mentor program</td>
-                  <td *ngIf="mentorormentee=='mentee'">I would recommend my mentor for further mentorship program</td>
-                  <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating6" class="form-control" style="border: none;"></rating></td>
-                  <td><input name="comment6" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment6" /></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+    <div class="row">
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table  table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Sr. No.</th>
+                <th *ngIf="mentorormentee=='mentor'">Topic</th>
+                <th *ngIf="mentorormentee=='mentee'">Topic</th>
+                <th>Rating</th>
+                <th>Comments</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td *ngIf="mentorormentee=='mentor'">My mentee regularly communicated with me</td>
+                <td *ngIf="mentorormentee=='mentee'">The mentor was attentive and focussed during the program</td>
+                <td> <rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating1" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment1" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment1" /></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td *ngIf="mentorormentee=='mentor'">My mentee was quick learner and curious towards work</td>
+                <td *ngIf="mentorormentee=='mentee'">The mentor communicated with me on regular basis</td>
+                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating2" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment2" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment2"   /></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td *ngIf="mentorormentee=='mentor'">My mentee concerned about challenges during assigned tasks and was keen to overcome it</td>
+                <td *ngIf="mentorormentee=='mentee'">The mentor provided me appropriate, relevant and handful information</td>
+                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating3" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment3" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment3"   /></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td *ngIf="mentorormentee=='mentor'">My mentee demonstartd a reasonable interest/concern towards me in my quest to offer assistance</td>
+                <td *ngIf="mentorormentee=='mentee'">I am aware about the resources and tools</td>
+                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating4" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment4" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment4"  /></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td *ngIf="mentorormentee=='mentor'">My mentee's attitude and behaviour generally professional and courteous</td>
+                <td *ngIf="mentorormentee=='mentee'">The mentor was supportive and encouraged me to make decisions that will lead to success</td>
+                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating5" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment5" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment5"   /></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td *ngIf="mentorormentee=='mentor'">I recommend my mentee for future mentor program</td>
+                <td *ngIf="mentorormentee=='mentee'">I would recommend my mentor for further mentorship program</td>
+                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating6" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment6" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment6" /></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="" style="margin-top: 23px; text-align: center;">
-         <button type="button" class="btn btn-primary" (click)="saveMentorshipResponse()">Submit</button>
-       </div>
+      </div>
+      <div class="" style="margin-top: 23px; text-align: center;">
+       <button type="button" class="btn btn-primary" (click)="saveMentorshipResponse()" [ladda]="isLoading">Submit</button>
      </div>
+   </div>
  </div>
 </ng-template>
 
