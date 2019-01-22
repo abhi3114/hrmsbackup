@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MasterService } from './master.service';
 import {Observable} from 'rxjs';
 import { NotificationService } from '../../service/notification.service';
+import { AppConstants } from '../../class/appConstants';
 @Component({
   selector: 'app-master',
   templateUrl: './master.component.html',
@@ -10,7 +11,7 @@ import { NotificationService } from '../../service/notification.service';
   })
 export class MasterComponent implements OnInit {
   employee_name:any;employee_photo:any;employee_department:any;employee_email:any;employee_role:any;
-  user_data:any;
+  user_data:any;Role=[];
   constructor(private router:Router,private api:MasterService,public toastr: NotificationService)
   {
     console.log('master called');
@@ -19,6 +20,7 @@ export class MasterComponent implements OnInit {
     this.employee_department=localStorage.getItem('employee_department');
     this.employee_email=localStorage.getItem('employee_email');
     this.employee_role=localStorage.getItem('employee_role');
+    this.Role=AppConstants.Role;
   }
 
   signOut()
