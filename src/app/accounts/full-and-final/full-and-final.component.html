@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="col-md-2" style="margin-top: 25px;">
-            <button type="button" class="btn bg-orange btn-flat" (click)="process(processingTemplate)">
+            <button type="button" class="btn bg-orange btn-flat" (click)="process(processingTemplate)" >
               <i class="fa fa-cogs" aria-hidden="true"></i> Process Salary
             </button>
           </div>
@@ -84,7 +84,7 @@
 <div class="modal-body text-center">
   <h3>Are you sure?</h3>
   <h3>You won't be able to revert this</h3>
-  <button type="button" class="btn btn-default btn-success" (click)="confirm()"  style="margin-right: 5px; font-size: 18px; color: #fff;">Yes Process</button>
+  <button type="button" class="btn btn-default btn-success" (click)="confirm()"  style="margin-right: 5px; font-size: 18px; color: #fff;" [ladda]="isLoading">Yes Process</button>
   <button type="button" class="btn btn-default btn-danger" (click)="decline()" style="margin-right: 5px; font-size: 18px; color: #fff;">Cancel</button>
 </div>
 </ng-template>

@@ -9,21 +9,21 @@ import { AccountsModule } from './accounts/accounts.module';
 import { MyInterceptor } from './request-interceptors';
 @NgModule({
   declarations: [
-    AppComponent
+  AppComponent
   ],
   imports: [
-    BrowserModule,
-    HttpClientModule,
-    CoreModule,
-    UsersModule,
-    ManagersModule,
-    AccountsModule
+  BrowserModule,
+  HttpClientModule,
+  CoreModule,
+  UsersModule,
+  ManagersModule,
+  AccountsModule,
   ],
   providers: [    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: MyInterceptor,
-      multi: true
+    provide: HTTP_INTERCEPTORS,
+    useClass: MyInterceptor,
+    multi: true
     }],
-  bootstrap: [AppComponent]
-})
+    bootstrap: [AppComponent]
+    })
 export class AppModule { }

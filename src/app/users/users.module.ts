@@ -9,6 +9,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule,OWL_DATE_TIME_LOCALE } from 
 import { UserRoutingModule } from './user-routing.module';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { MasterComponent } from '../shared/components/master/master.component';
+import { LaddaModule } from 'angular2-ladda';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AllLeavesComponent } from './all-leaves/all-leaves.component';
 import { ApprovedLeavesComponent } from './approved-leaves/approved-leaves.component';
@@ -37,6 +38,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
   BsDatepickerModule.forRoot(),
   CollapseModule.forRoot(),
   RatingModule.forRoot(),
+  LaddaModule,
   FormsModule,
   ReactiveFormsModule,
   BrowserAnimationsModule,
@@ -63,5 +65,5 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
   ResetPasswordComponent
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
-})
+  })
 export class UsersModule { }

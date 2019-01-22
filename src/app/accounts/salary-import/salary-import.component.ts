@@ -22,6 +22,7 @@ export class SalaryImportComponent implements OnInit {
   canShowtable:boolean;
   postdata:any;
   sheet_data:any;
+  isLoading:boolean=true;
   @ViewChildren(DataTableDirective)
   dtElements: QueryList<DataTableDirective>;
   SuccessTableOptions: any;
@@ -54,12 +55,25 @@ export class SalaryImportComponent implements OnInit {
     };
   }
 
+  resetCsv()
+  {
+    if((<HTMLInputElement>document.getElementById("csv-file")).value =="")
+    {
+      this.notification.CustomErrorMessage("No csv selected to reset");
+    }
+    else
+    {
+      (<HTMLInputElement> document.getElementById("csv-file")).value = "" ;
+    }
+  }
+
   importCsv(){
     let file = (<HTMLInputElement>($('#csv-file')[0])).files[0];
     this.postdata = {};
+    this.isLoading=true;
     if(file == undefined)
     {
-      this.notification.CustomErrorMessage('Please Select a csv file');
+      this.notification.CustomErrorMessage('Please Select a csv file');    this.isLoading=false;
     }
     else
     {
@@ -77,7 +91,7 @@ export class SalaryImportComponent implements OnInit {
       }
       else
       {
-        this.notification.CustomErrorMessage('cannot import sheet');
+        this.notification.CustomErrorMessage('cannot import sheet'); this.isLoading=false;
       }
     }
   }
@@ -89,6 +103,7 @@ export class SalaryImportComponent implements OnInit {
       this.displayImportedData();
       this.canShowtable = true;
       this.notification.showSuccess('Salary Imported Successfully');
+      this.isLoading=false;
       if (this.canShowtable)
       {
         setTimeout(() => {
@@ -111,7 +126,7 @@ export class SalaryImportComponent implements OnInit {
       }
       },
       (error) => {
-        this.notification.showError('error due to Api');
+        this.notification.showError('error due to Api'); this.isLoading=false;
         });
   }
   displayImportedData(){
