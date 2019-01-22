@@ -51,14 +51,14 @@ export class SalaryProcessingComponent implements OnInit {
       this.user_data=res;
       this.salaryTableTrigger.next();
       }, (err) => {
-       this.toastr.showError(err.error);
+        this.toastr.showError(err.error);
         });
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
     this.filteredData=this.commonsalary.getMonthandYear();
     this.salary_filter.selectedmonth=this.filteredData.selectedmonth;
     this.salary_filter.selectedyear= this.filteredData.selectedyear;
-     localStorage.setItem('section','salary');
+    localStorage.setItem('section','salary');
   }
   process(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template,this.config);
@@ -107,12 +107,18 @@ export class SalaryProcessingComponent implements OnInit {
     this.modalRef.hide();
   }
 
+  closeSalaryToggle()
+  {
+    this.modalRef.hide();this.salarySlipToggleForm.reset();
+    this.toggle_salary_data.selectedmonth="";this.toggle_salary_data.selectedyear='';
+    this.toggle_salary_data.toggler=false;
+  }
   getAllUser()
   {
     this.api.getallUser().subscribe(res => {
       this.user_data=res;
       }, (err) => {
-       this.toastr.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
 

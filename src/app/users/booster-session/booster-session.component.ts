@@ -56,6 +56,10 @@ export class BoosterSessionComponent implements OnInit {
     this.modalRef = this.modalService.show(template, this.config);
     this.status=status; this.booster_id=booster_session_id;
   }
+  closeModal()
+  {
+    this.modalRef.hide();this.responseForm.reset(); this.responseData.response='yes';
+  }
 
   ngOnInit() {
   }

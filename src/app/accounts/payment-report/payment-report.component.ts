@@ -57,7 +57,7 @@ export class PaymentReportComponent implements OnInit {
   {
     this.api.getPaymentReport(this.paymentReportData.start_date,this.paymentReportData.end_date,this.paymentReportData.components).subscribe(res => {
       this.report_data=res;
-      var headers=[]; var tableData=[];
+      var headers=[];
       if(this.report_data.length>0)
       {
         _.each(this.report_data[0].data,function(data){
@@ -75,19 +75,12 @@ export class PaymentReportComponent implements OnInit {
         this.reportHeader=headers;
         if(this.dtElement.dtInstance!=undefined)
         {
-          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) =>
-          {
-            this.paymentReportTableTrigger.unsubscribe();
-            this.showReport=true;
-            })
+          this.rerender();
         }
         else
         {
           this.paymentReportTableTrigger.next();
-          this.showReport=true;
         }
-
-        //this.rerender();
       }
 
       }, (err) => {
@@ -98,16 +91,19 @@ export class PaymentReportComponent implements OnInit {
     // Do not forget to unsubscribe the event
     this.paymentReportTableTrigger.unsubscribe();
   }
-
   rerender(): void {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
 
-      // Destroy the table first
-      dtInstance.destroy();
-      // Call the dtTrigger to rerender again
-      this.paymentReportTableTrigger.next();
-      });
+    setTimeout(() => {
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+
+        // Destroy the table first
+        dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+        this.paymentReportTableTrigger.next();
+        });
+      }, 500)
   }
+
 
   convertAmountintoCurrency(number)
   {

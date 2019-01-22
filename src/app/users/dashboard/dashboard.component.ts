@@ -215,7 +215,30 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
   }
-  openModal(template: TemplateRef<any>) {
+
+  closeLeaveModal()
+  {
+    this.modalRef.hide();this.applyLeaveForm.reset();
+  }
+  closeODModal()
+  {
+    this.modalRef.hide();this.applyOutdoorDutiesForm.reset();
+  }
+  closeLMModal()
+  {
+    this.modalRef.hide();this.applyLateMarksForm.reset();
+  }
+  closeMAModal()
+  {
+    this.modalRef.hide();this.applyMissingAttendanceForm.reset();this.applyMissingAttendanceData.punch="";
+  }
+  closeDownloadSalary()
+  {
+    this.modalRef.hide();this.salarySlipDownloadForm.reset();this.salarySlipDownloadData.selectedmonth="";
+    this.salarySlipDownloadData.selectedyear="";
+  }
+  openModal(template: TemplateRef<any>)
+  {
     this.modalRef = this.modalService.show(template, this.config);
   }
   validateApplyLeaveForm()
@@ -393,6 +416,11 @@ export class DashboardComponent implements OnInit {
   {
     this.modalRef = this.modalService.show(template, this.customModalConfig);
     this.mentorships_id=mentorships_id; this.mentorormentee=isMentororMentee;
+  }
+  closeMentorshipModal()
+  {
+    this.modalRef.hide();
+    this.recordMentorshipData={rating1:'',rating2:'',rating3:'',rating4:'',rating5:'',rating6:'',comment1:'',comment2:'',comment3:'',comment4:'',comment5:'',comment6:''}
   }
   saveMentorshipResponse()
   {
