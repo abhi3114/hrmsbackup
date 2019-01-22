@@ -248,7 +248,7 @@
 <ng-template #leaveTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for leave</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeLeaveModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -321,7 +321,7 @@
 <ng-template #outdoorDutiesTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for Outdoor Duty</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeODModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -405,10 +405,10 @@
     </form>
   </div>
 </ng-template>
-<ng-template #lateMarkTemplate>
+<ng-template #lateMarkTemplate >
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for Late Mark</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeLMModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -450,14 +450,14 @@
 <ng-template #missingAttendanceTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for Missing Attendance</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeMAModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form  novalidate (ngSubmit)="validateMissingAttendanceForm()" [formGroup]="applyMissingAttendanceForm" autocomplete="off">
       <div class="row">
-        <div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Date and Time<sup style="color:red;">*</sup></label>
@@ -485,7 +485,7 @@
             </div>
           </div>
         </div>
-        <div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Comment<sup style="color:red;">*</sup></label>
@@ -497,6 +497,7 @@
               </div>
             </div>
           </div>
+          <div class="col-md-6"></div>
         </div>
       </div>
       <div class="" style="text-align: center;">
@@ -508,7 +509,7 @@
 <ng-template #userSalarySliptemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Download Salary</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeDownloadSalary()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -622,7 +623,7 @@
 <ng-template #recordMentorshipResponse>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Record Mentorship Feedback</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeMentorshipModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
