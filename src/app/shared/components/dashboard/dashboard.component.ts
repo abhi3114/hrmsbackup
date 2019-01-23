@@ -4,15 +4,15 @@ import {Observable,Subject} from 'rxjs';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NotificationService } from '../../shared/service/notification.service';
+import { NotificationService } from '../../service/notification.service';
 import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'moment';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import * as _ from 'underscore';
 import { DashBoardService } from './dashboard.service';
-import { MonthYearService } from '../../shared/service/month-year.service';
-import { CustomPdfService } from '../../shared/service/custom-pdf.service';
+import { MonthYearService } from '../../service/month-year.service';
+import { CustomPdfService } from '../../service/custom-pdf.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-dashboard',
