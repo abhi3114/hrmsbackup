@@ -9,7 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { LaddaModule } from 'angular2-ladda';
 const routes: Routes = [
 { path: '', redirectTo: 'login', pathMatch: 'full' },
-{ path: 'login',component: LoginComponent },];
+{ path: 'login',component: LoginComponent }
+];
 
 @NgModule({
   imports: [
