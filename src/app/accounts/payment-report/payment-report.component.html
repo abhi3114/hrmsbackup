@@ -71,13 +71,9 @@
         <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="payemntReportTableOptions"  [dtTrigger]="paymentReportTableTrigger">
           <thead>
             <tr>
-             <th>Pan Number</th>
-             <th>Name</th>
-             <th>Employee No</th>
-             <th *ngFor="let rh of reportHeader">{{rh.label}}</th>
-             <th>Total</th>
-           </tr>
-         </thead>
+              <th *ngFor= "let t of report_column">{{t}}</th>
+            </tr>
+          </thead>
          <tbody>
           <tr  *ngFor="let r of report_data">
             <td>{{r.pan}}</td>
