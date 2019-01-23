@@ -26,6 +26,8 @@ import { ApprovedMissingAttendanceComponent } from './approved-missing-attendanc
 import { UnapprovedMissingAttendanceComponent } from './unapproved-missing-attendance/unapproved-missing-attendance.component';
 import { BoosterSessionComponent } from './booster-session/booster-session.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { StationeryComponent } from './stationery/stationery.component';
+import { RequestedStationeryComponent } from './requested-stationery/requested-stationery.component';
 
 
 
@@ -62,7 +64,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
   ApprovedMissingAttendanceComponent,
   UnapprovedMissingAttendanceComponent,
   BoosterSessionComponent,
-  ResetPasswordComponent
+  ResetPasswordComponent,
+  StationeryComponent,
+  RequestedStationeryComponent
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })
