@@ -262,5 +262,23 @@ dl.booking-grid {
        padding-bottom: 6px!important;
      }
      .ladda-button[disabled], .ladda-button[disabled]:hover{ background-color:none;  }
-
+     .dataTables_filter input[type="search"] {
+      border: 1px solid #c5c5c5;
+      border-radius: 3px;
+    }
+    .dataTables_length select {
+      border: 1px solid #c5c5c5;
+      border-radius: 3px;
+    }
+    button.btn.bg-orange.btn-flat {
+      border-radius: 3px;
+    }
+    .box-header.with-border{background:#fff!important;}
+    .box-title .a {color: #f8851c;}
+    table.dataTable thead th, table.dataTable thead td{ white-space: nowrap;   }
+    content-wrapper, .right-side {
+      background: #e6e6e6;
+    }
+    .box-header.with-border {
+      border-bottom: 1px solid #c5c5c5;}
 
