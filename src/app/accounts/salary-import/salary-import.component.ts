@@ -22,7 +22,7 @@ export class SalaryImportComponent implements OnInit {
   canShowtable:boolean;
   postdata:any;
   sheet_data:any;
-  isLoading:boolean=true;
+  isLoading:boolean=false;
   @ViewChildren(DataTableDirective)
   dtElements: QueryList<DataTableDirective>;
   SuccessTableOptions: any;
