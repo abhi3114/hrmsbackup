@@ -301,12 +301,14 @@ dl.booking-grid {
         margin-top: -10px;
         font-size: 12px;
       }
-
-
       input.check-box {
         width: 15px;
         height: 15px;
         vertical-align: initial;
         text-align: center;
         margin-left: 0;
+      }
+      .treeview-menu>li>a
+      {
+        font-size:12px!important;
       }
