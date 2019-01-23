@@ -54,7 +54,19 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['dashboard']"><i class="fa fa-user"></i><span>Dashboard</span></a></li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['assets']"><i class="fa fa-user"></i><span>Assets</span></a></li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['assets']"><i class="fa fa-keyboard-o"></i><span>Assets</span></a></li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
+          <a><i class="fa fa-book" aria-hidden="true"></i>
+            <span>Stationery</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a [routerLink]="['stationery/fulfilled']"><i class="fa fa-server" aria-hidden="true"></i> Fulfilled Stationery</a></li>
+            <li><a [routerLink]="['stationery/requested']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Requested Stationery</a></li>
+          </ul>
+        </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
           <a><i class="fa fa-reply-all " aria-hidden="true"></i>
             <span>My Leaves</span>
@@ -125,7 +137,7 @@
           </li>
           <li>
             <a [routerLink]="['users/salaries/full_and_final']"><i class="fa fa-users"></i>
-            <span>Full and Final Section</span>
+              <span>Full and Final Section</span>
             </a>
           </li>
           <li><a [routerLink]="['users/salaries/missing']"><i class="fa fa-server" aria-hidden="true"></i> Missing Salary</a></li>
