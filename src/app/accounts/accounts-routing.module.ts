@@ -8,6 +8,8 @@ import { SalaryReportComponent } from './salary-report/salary-report.component';
 import { PaymentReportComponent } from './payment-report/payment-report.component';
 import { MissingSalaryComponent } from './missing-salary/missing-salary.component';
 import { FullAndFinalComponent } from './full-and-final/full-and-final.component';
+import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
+
 const routes: Routes = [
 {
   path: 'home', component: MasterComponent,
@@ -21,7 +23,11 @@ const routes: Routes = [
   {path: 'users/salaries/missing', component: MissingSalaryComponent},
   {path: 'users/salaries/full_and_final', component: FullAndFinalComponent},
   ]
-}
+},
+{
+   path: "**",
+   redirectTo: "/home/dashboard"
+},
 ];
 
 @NgModule({
