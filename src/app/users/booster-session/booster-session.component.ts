@@ -28,7 +28,7 @@ export class BoosterSessionComponent implements OnInit {
     ignoreBackdropClick: true
   };
   max: number = 5;
-  isReadonly: boolean = false; status:any; booster_id:any;api_data:any;
+  isReadonly: boolean = false; status:any; booster_id:any;api_data:any;isLoading:boolean=false;
   constructor(private router:Router,private api:BoosterSessionService,private modalService: BsModalService,public toastr: NotificationService)
   {
     this.boosterSessionTableOptions = {
@@ -66,6 +66,7 @@ export class BoosterSessionComponent implements OnInit {
 
   validateLateMarkForm()
   {
+    this.isLoading=true;
     if(this.responseData.response=='yes')
     {
       var postdata =
@@ -77,7 +78,7 @@ export class BoosterSessionComponent implements OnInit {
       }
       if((this.responseData.rating == undefined || this.responseData.rating=="") || (this.responseData.comment==undefined || this.responseData.comment==""))
       {
-        this.toastr.showError('Please provide rating and/or comment');
+        this.toastr.CustomErrorMessage('Please provide rating and/or comment');    this.isLoading=false;
       }
       else
       {
@@ -94,7 +95,7 @@ export class BoosterSessionComponent implements OnInit {
       }
       if(this.responseData.reason == undefined || this.responseData.reason=="")
       {
-        this.toastr.showError('Please provide a reason');
+        this.toastr.CustomErrorMessage('Please provide a reason');this.isLoading=false;
       }
       else
       {
@@ -111,9 +112,9 @@ export class BoosterSessionComponent implements OnInit {
       this.responseForm.reset(); this.responseData.response='yes';
       this.modalRef.hide();
       this.toastr.showSuccess('Response recorded');
-      this.refreshData();
+      this.refreshData();this.isLoading=false;
       }, (err) => {
-        this.toastr.showError(err.error);
+        this.toastr.showError(err.error);this.isLoading=false;
         });
   }
 

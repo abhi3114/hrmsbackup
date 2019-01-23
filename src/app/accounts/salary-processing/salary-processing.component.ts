@@ -27,7 +27,7 @@ export class SalaryProcessingComponent implements OnInit {
   monthArray:any;yearArray:any;filteredData:any;
   salary_filter={selectedmonth:'',selectedyear:''};
   toggle_salary_data={selectedmonth:'',selectedyear:'',toggler:false}
-  modalRef: BsModalRef;
+  modalRef: BsModalRef; isLoading:boolean=false;
   config = {
     animated:true,
     keyboard: false,
@@ -73,7 +73,7 @@ export class SalaryProcessingComponent implements OnInit {
   };
   confirm()
   {
-    var userIds= [];
+    var userIds= [];this.isLoading=true;
 
     $('.checkbox:checked').each(function() {
       var id=$(this).attr('name')
@@ -89,15 +89,15 @@ export class SalaryProcessingComponent implements OnInit {
         this.process_data=res;
         this.toastr.showSuccess('Salary Processed');
         this.modalRef.hide();
-        this.getAllUser();
+        this.getAllUser();this.isLoading=false;
         }, (err) =>
         {
-          this.toastr.showError(err.error);
+          this.toastr.showError(err.error);this.isLoading=false;
           });
     }
     else
     {
-      this.toastr.CustomErrorMessage('Please check atleast one user for processing salary');
+      this.toastr.CustomErrorMessage('Please check atleast one user for processing salary');this.isLoading=false;
       this.modalRef.hide();
     }
   }
@@ -129,6 +129,7 @@ export class SalaryProcessingComponent implements OnInit {
 
   validateSalarySlipForm()
   {
+    this.isLoading=true;
     var postdata =
     {
 
@@ -140,11 +141,13 @@ export class SalaryProcessingComponent implements OnInit {
       this.modalRef.hide();
       this.salarySlipToggleForm.reset();
       this.toggle_salary_data.selectedmonth="";this.toggle_salary_data.selectedyear='';
-      this.toggle_salary_data.toggler=false;
+      this.toggle_salary_data.toggler=false;this.isLoading=false;
       this.getAllUser();
       }, (err) =>
       {
-        this.toastr.showError(err.error);
+        this.toastr.showError(err.error);this.salarySlipToggleForm.reset();
+        this.toggle_salary_data.selectedmonth="";this.toggle_salary_data.selectedyear='';
+        this.toggle_salary_data.toggler=false;this.isLoading=false;
         });
   }
   getSiwtchData(model)

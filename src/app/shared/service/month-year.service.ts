@@ -39,9 +39,9 @@ export class MonthYearService {
     var startOfMonth =moment().startOf('month');
     var previousMonth =moment().subtract(1, 'months');
     var startOfPreviousMonth =moment(previousMonth).startOf('month');
-    var FifthOfCurrentMonth=moment(startOfMonth).add(5,'d');
-    var SixthOfPreviousMonth =moment(startOfPreviousMonth).add(6,'d');
-    if((currentDate.isBetween(SixthOfPreviousMonth, FifthOfCurrentMonth)))
+    var TenthOfCurrentMonth=moment(startOfMonth).add(10,'d');
+    var EleventhOfPreviousMonth =moment(startOfPreviousMonth).add(11,'d');
+    if((currentDate.isBetween(EleventhOfPreviousMonth, TenthOfCurrentMonth)))
     {
       var editable_start_date=moment(previousMonth).startOf('month');
       var editable_last_date=moment(previousMonth).endOf('month');

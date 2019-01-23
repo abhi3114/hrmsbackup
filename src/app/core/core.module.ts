@@ -6,6 +6,7 @@ import { ToastrModule } from 'ng6-toastr-notifications';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { LaddaModule } from 'angular2-ladda';
 const routes: Routes = [
 { path: '', redirectTo: 'login', pathMatch: 'full' },
 { path: 'login',component: LoginComponent },];
@@ -18,12 +19,13 @@ const routes: Routes = [
   BrowserAnimationsModule,
   ToastrModule.forRoot(),
   RouterModule.forRoot(routes),
-  HttpClientModule
+  HttpClientModule,
+  LaddaModule,
   ],
   declarations: [LoginComponent],
   exports: [
   LoginComponent,
   RouterModule
   ]
-})
+  })
 export class CoreModule { }

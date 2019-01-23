@@ -31,8 +31,8 @@
           </div>
         </div>
         <div class="col-md-2" style="margin-top: 25px;">
-          <button type="submit" class="btn bg-orange btn-flat ladda-button" ladda="importLoader" data-style="expand-right" (click)="importCsv()">Import</button>&nbsp;
-          <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="resetCsv()">Reset</button>
+          <button type="submit" class="btn bg-orange btn-flat" (click)="importCsv()" [ladda]="isLoading" style="padding: 6px 10px;">Import</button>&nbsp;
+          <button type="button" class="btn bg-orange btn-flat" (click)="resetCsv()">Reset</button>
         </div>
       </div>
     </section>
