@@ -23,7 +23,7 @@ export class SalaryReportComponent implements OnInit {
   salaryReportTableTrigger: Subject<any> = new Subject();
   monthArray:any;yearArray:any;filteredData:any;report_data:any;
   reportList:any;headings:any;totals=[];sum:any;isShow=false;isHdfc=false;
-  reportData=0;
+  reportData=0;hdfcReportloader:boolean=false;
   salary_report_filter={selectedmonth:'',selectedyear:''};
   constructor(private router:Router,private api:SalaryReportService,private monthandyear:MonthYearService,private commonsalary:CommonSalaryService,public toastr: NotificationService)
   {
@@ -131,6 +131,7 @@ export class SalaryReportComponent implements OnInit {
 
     hdfcReport()
     {
+      this.hdfcReportloader=true;
       var sum1 = 0;var inc=1;var  date=moment().format('DD/MM/YYYY');
       if(this.reportList.length>0)
       {
@@ -155,9 +156,9 @@ export class SalaryReportComponent implements OnInit {
         html_document  += '</head><body>' + data + '</body></html>';
         let HdfcWorddata = new Blob([html_document], { type: 'type: "application/doc"' });
         var title="HDFC_Report_"+_.find(this.monthArray,{id:parseInt(this.salary_report_filter.selectedmonth)}).name+"_"+this.salary_report_filter.selectedyear+".doc";
-        saveAs(HdfcWorddata, title);
+        saveAs(HdfcWorddata, title);this.hdfcReportloader=false;
         }else{
-          this.toastr.CustomErrorMessage("Enable to download.No data present.");
+          this.toastr.CustomErrorMessage("Enable to download.No data present.");this.hdfcReportloader=false;
         }
       }
 

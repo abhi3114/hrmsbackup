@@ -8,6 +8,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CollapseModule } from 'ngx-bootstrap';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
+import { LaddaModule } from 'angular2-ladda';
 import { AccountsRoutingModule } from './accounts-routing.module';
 import { SalaryProcessingComponent } from './salary-processing/salary-processing.component'
 import { EditSalaryComponent } from './edit-salary/edit-salary.component';
@@ -35,6 +36,7 @@ import { FullAndFinalComponent } from './full-and-final/full-and-final.component
     MatSlideToggleModule,
     PapaParseModule,
     NgMultiSelectDropDownModule.forRoot(),
+    LaddaModule,
     ],
     declarations: [SalaryImportComponent, SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent, MissingSalaryComponent, FullAndFinalComponent],
     })

@@ -87,7 +87,7 @@
 <div class="modal-body text-center">
   <h3>Are you sure?</h3>
   <h3>You won't be able to revert this</h3>
-  <button type="button" class="btn btn-default btn-success" (click)="confirm()"  style="margin-right: 5px; font-size: 18px; color: #fff;">Yes Process</button>
+  <button type="button" class="btn btn-default btn-success" (click)="confirm()"  style="margin-right: 5px; font-size: 18px; color: #fff;" [ladda]="isLoading">Yes Process</button>
   <button type="button" class="btn btn-default btn-danger" (click)="decline()" style="margin-right: 5px; font-size: 18px; color: #fff;">Cancel</button>
 </div>
 </ng-template>
@@ -156,7 +156,7 @@
 </div>
 <div>
   <div style="text-align: center;">
-   <button type="submit" class="btn btn-primary" [disabled]="salarySlipToggleForm.invalid">Save changes</button>
+   <button type="submit" class="btn btn-primary" [disabled]="salarySlipToggleForm.invalid" [ladda]="isLoading">Save changes</button>
  </div>
 </div>
 </form>

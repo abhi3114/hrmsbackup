@@ -24,7 +24,7 @@ export class FullAndFinalComponent implements OnInit {
   salary_filter={selectedmonth:'',selectedyear:''};
   user_data:any;  monthArray:any;yearArray:any;filteredData:any;salary_data:any;pdf:any;pdfObj:any;
   section:any;process_data:any;message:any;
-  modalRef: BsModalRef;Section='fullandfinal'
+  modalRef: BsModalRef;Section='fullandfinal'; isLoading : boolean=false;
   config = {
     animated:true,
     keyboard: false,
@@ -66,7 +66,7 @@ export class FullAndFinalComponent implements OnInit {
   };
   confirm()
   {
-    var userIds= [];
+    var userIds= []; this.isLoading=true;
 
     $('.checkbox:checked').each(function() {
       var id=$(this).attr('name')
@@ -83,15 +83,16 @@ export class FullAndFinalComponent implements OnInit {
         this.toastr.showSuccess('Salary Processed');
         this.modalRef.hide();
         this.getAllUser();
+        this.isLoading=false;
         }, (err) =>
         {
-          this.toastr.showError(err.error);
+          this.toastr.showError(err.error);this.isLoading=false;
           });
     }
     else
     {
       this.toastr.CustomErrorMessage('Please check atleast one user for processing salary');
-      this.modalRef.hide();
+      this.modalRef.hide();this.isLoading=false;
     }
   }
 
