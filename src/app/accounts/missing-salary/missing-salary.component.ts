@@ -34,6 +34,7 @@ export class MissingSalaryComponent implements OnInit {
     this.filteredData=this.commonsalary.getMonthandYear();
     this.salary_filter.selectedmonth=this.filteredData.selectedmonth;
     this.salary_filter.selectedyear= this.filteredData.selectedyear;
+    localStorage.setItem('section','salary');
   }
 
   convertAmountintoCurrency(number)

@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataTablesModule } from 'angular-datatables';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule,CollapseModule } from 'ngx-bootstrap';
+import { RatingModule } from 'ngx-bootstrap/rating';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { CollapseModule } from 'ngx-bootstrap';
 import { OwlDateTimeModule, OwlNativeDateTimeModule,OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { UserRoutingModule } from './user-routing.module';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { MasterComponent } from '../shared/components/master/master.component';
+import { LaddaModule } from 'angular2-ladda';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AllLeavesComponent } from './all-leaves/all-leaves.component';
 import { ApprovedLeavesComponent } from './approved-leaves/approved-leaves.component';
@@ -24,6 +25,9 @@ import { AllMissingAttendanceComponent } from './all-missing-attendance/all-miss
 import { ApprovedMissingAttendanceComponent } from './approved-missing-attendance/approved-missing-attendance.component';
 import { UnapprovedMissingAttendanceComponent } from './unapproved-missing-attendance/unapproved-missing-attendance.component';
 import { BoosterSessionComponent } from './booster-session/booster-session.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+
+
 
 @NgModule({
   imports: [
@@ -33,6 +37,8 @@ import { BoosterSessionComponent } from './booster-session/booster-session.compo
   ModalModule.forRoot(),
   BsDatepickerModule.forRoot(),
   CollapseModule.forRoot(),
+  RatingModule.forRoot(),
+  LaddaModule,
   FormsModule,
   ReactiveFormsModule,
   BrowserAnimationsModule,
@@ -55,7 +61,8 @@ import { BoosterSessionComponent } from './booster-session/booster-session.compo
   AllMissingAttendanceComponent,
   ApprovedMissingAttendanceComponent,
   UnapprovedMissingAttendanceComponent,
-  BoosterSessionComponent
+  BoosterSessionComponent,
+  ResetPasswordComponent
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })

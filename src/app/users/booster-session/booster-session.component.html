@@ -11,7 +11,7 @@
     <div class="row">
       <div class="box-body">
         <div class="table-responsive">
-        <table class="table  table-bordered table-striped table-hover" datatable [dtOptions]="boosterSessionTableOptions"  [dtTrigger]="boosterSessionTableTrigger">
+          <table class="table  table-bordered table-striped table-hover" datatable [dtOptions]="boosterSessionTableOptions"  [dtTrigger]="boosterSessionTableTrigger">
             <thead>
               <tr>
                 <th>Date</th>
@@ -24,14 +24,14 @@
             </thead>
             <tbody>
              <tr *ngFor="let i of booster_session_data">
-               <td>{{i.date}}</td>
+               <td>{{i.date | date: 'dd/MM/yyyy'}}</td>
                <td>{{i.manager_name}}</td>
                <td *ngIf="i.status==true">Yes</td>
                <td *ngIf="i.status==false">No</td>
                <td>{{i.reason}}</td>
                <td>{{i.comment}}</td>
-               <td *ngIf="i.status==true"><a (click)="recordResponse(i.status,i.session_id)"  style="border-radius: 20px; background-color:#208b39;  padding: 5px 15px 5px 15px; color: white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-               <td *ngIf="i.status==false"><a (click)="recordResponse(i.status,i.session_id)" style="border-radius: 20px; background-color:#de2929;  padding: 5px 15px 5px 15px; color: white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+               <td *ngIf="i.status==true"><a (click)="recordResponse(responseTemplate,i.session_id,i.status)"  style="border-radius: 20px; background-color:#208b39;  padding: 5px 15px 5px 15px; color: white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+               <td *ngIf="i.status==false"><a (click)="recordResponse(responseTemplate,i.session_id,i.status)" style="border-radius: 20px; background-color:#de2929;  padding: 5px 15px 5px 15px; color: white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
              </tr>
            </tbody>
          </table>
@@ -41,3 +41,72 @@
  </section>
 </div>
 </div>
+<ng-template #responseTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Record Booster Session Response</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form  novalidate (ngSubmit)="validateLateMarkForm()" [formGroup]="responseForm" autocomplete="off">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Change Response<sup style="color:red;">*</sup></label>
+              <select name="yesorno" class="form-control select2 building-select" style="width: 100%;" [(ngModel)]="responseData.response" formControlName="response" required [class.error1]="!responseForm.controls.response.valid && responseForm.controls.response.dirty">
+                <option  value="" disabled="">Select response</option>
+                <option  value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+              <div *ngIf="( responseForm.get('response').hasError('required') ) && responseForm.get('response').touched">
+                <div class="error" *ngIf="responseForm.get('response').hasError('required') && responseForm.get('response').touched">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6" *ngIf="responseData.response== 'yes'">
+            <div class="form-group">
+              <label>Rating<sup style="color:red;">*</sup></label>
+              <rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="responseData.rating" formControlName="rating"  [class.error1]="!responseForm.controls.rating.valid && responseForm.controls.rating.dirty" class="form-control" style="border: none;"></rating>
+              <div *ngIf="( responseForm.get('rating').hasError('required') ) && responseForm.get('rating').touched">
+                <div class="error" *ngIf="responseForm.get('rating').hasError('required') && responseForm.get('ratings').touched">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="col-md-6" *ngIf="responseData.response== 'yes'">
+            <div class="form-group">
+              <label>Comment<sup style="color:red;">*</sup></label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="responseData.comment" formControlName="comment"  [class.error1]="!responseForm.controls.comment.valid && responseForm.controls.comment.dirty" />
+              <div *ngIf="( responseForm.get('comment').hasError('required') ) && responseForm.get('comment').touched">
+                <div class="error" *ngIf="responseForm.get('comment').hasError('required') && responseForm.get('comment').touched">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group" *ngIf="responseData.response== 'no'">
+              <label>Reason<sup style="color:red;">*</sup></label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="responseData.reason" formControlName="reason"  [class.error1]="!responseForm.controls.reason.valid && responseForm.controls.reason.dirty" />
+              <div *ngIf="( responseForm.get('reason').hasError('required') ) && responseForm.get('reason').touched">
+                <div class="error" *ngIf="responseForm.get('reason').hasError('required') && responseForm.get('reason').touched">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="" style="text-align: center;">
+          <button type="submit" class="btn btn-primary" [disabled]="responseForm.invalid" [ladda]="isLoading">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

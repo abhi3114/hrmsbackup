@@ -26,6 +26,8 @@ export class DashboardComponent implements OnInit {
   leavesData:any;invertoryData:any;odData:any;lmData:any;maData:any;
   mentorData:any;isMentororMentee:any;leavesArray:any[];punchArray:any[];monthArray:any[];
   yearArray:any[];user_data:any;missing_attendance_Id:any;pdf:any;pdfObj:any;
+  mentorships_id:any;mentorormentee:any;max:number=5; isReadonly: boolean = false;
+  isLoading:boolean=false;
   @ViewChildren(DataTableDirective)
   dtElements: QueryList<DataTableDirective>;
   leaveTableOptions: DataTables.Settings = {};
@@ -45,9 +47,16 @@ export class DashboardComponent implements OnInit {
     animated:true,
     keyboard: false,
     backdrop: true,
-    ignoreBackdropClick: true
+    ignoreBackdropClick: true,
+    class:'modal-lg'
   };
-
+  customModalConfig = {
+    animated:true,
+    keyboard: false,
+    backdrop: true,
+    ignoreBackdropClick: true,
+    class:'modal-custom'
+  };
   applyLeaveForm: FormGroup;   applyOutdoorDutiesForm: FormGroup; applyLateMarksForm :FormGroup;
   applyMissingAttendanceForm:FormGroup; salarySlipDownloadForm:FormGroup;updateMissingAttendanceForm:FormGroup;
   updateLateMarksForm:FormGroup;
@@ -58,6 +67,7 @@ export class DashboardComponent implements OnInit {
   applyMissingAttendanceData={ date:'',punch:'',reason:''};
   salarySlipDownloadData={ selectedyear:'',selectedmonth:''};
   updateMissingAttendanceData={reason:''};updateLateMarksData={comment:'',id:''}
+  recordMentorshipData={rating1:'',rating2:'',rating3:'',rating4:'',rating5:'',rating6:'',comment1:'',comment2:'',comment3:'',comment4:'',comment5:'',comment6:''}
 
   constructor(private router:Router,private api:DashBoardService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: NotificationService,private pdfservice:CustomPdfService)
   {
@@ -206,11 +216,35 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
   }
-  openModal(template: TemplateRef<any>) {
+
+  closeLeaveModal()
+  {
+    this.modalRef.hide();this.applyLeaveForm.reset();
+  }
+  closeODModal()
+  {
+    this.modalRef.hide();this.applyOutdoorDutiesForm.reset();
+  }
+  closeLMModal()
+  {
+    this.modalRef.hide();this.applyLateMarksForm.reset();
+  }
+  closeMAModal()
+  {
+    this.modalRef.hide();this.applyMissingAttendanceForm.reset();this.applyMissingAttendanceData.punch="";
+  }
+  closeDownloadSalary()
+  {
+    this.modalRef.hide();this.salarySlipDownloadForm.reset();this.salarySlipDownloadData.selectedmonth="";
+    this.salarySlipDownloadData.selectedyear="";
+  }
+  openModal(template: TemplateRef<any>)
+  {
     this.modalRef = this.modalService.show(template, this.config);
   }
   validateApplyLeaveForm()
   {
+    this.isLoading=true;
     this.api.applyforLeave(this.applyLeavesData).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
@@ -218,8 +252,9 @@ export class DashboardComponent implements OnInit {
       this.applyLeaveForm.reset();
       this.applyLeavesData.leave_type="";
       this.RefreshLeavesData();
+      this.isLoading=false;
       }, (err) => {
-        this.toastr.showError(err.error);
+        this.toastr.showError(err.error);this.isLoading=false;
         });
   }
   RefreshLeavesData()
@@ -234,17 +269,18 @@ export class DashboardComponent implements OnInit {
   }
   validateApplyOutdoorDutiesForm()
   {
-
+    this.isLoading=true;
     var Data=[];
     Data.push({outdoor:this.applyOutdoorDutiesData})
     this.api.applyforOutdoorDuties(Data[0]).subscribe(res => {
       this.user_data=res;
+      this.isLoading=false;
       this.modalRef.hide();
       this.toastr.showSuccess("Outddoor Duty Applied");
       this.applyOutdoorDutiesForm.reset();
       this.RefreshOutdoorDutiesData();
       }, (err) => {
-        this.toastr.showError(err.error);
+        this.toastr.showError(err.error); this.isLoading=false;
         });
   }
   RefreshOutdoorDutiesData()
@@ -259,16 +295,17 @@ export class DashboardComponent implements OnInit {
   }
   validateLateMarkForm()
   {
-    var Data=[];
+    var Data=[]; this.isLoading=true;
     Data.push({late_mark:this.applyLateMarksData})
     this.api.applyforLateMark(Data[0]).subscribe(res => {
       this.user_data=res;
+      this.isLoading=false;
       this.modalRef.hide();
       this.toastr.showSuccess("Late Mark Applied");
       this.applyLateMarksForm.reset();
       this.RefreshLateMarkData();
       }, (err) => {
-        this.toastr.showError(err.error);
+        this.toastr.showError(err.error); this.isLoading=false;
         });
   }
 
@@ -285,7 +322,7 @@ export class DashboardComponent implements OnInit {
   }
   validateMissingAttendanceForm()
   {
-    var Data=[];
+    var Data=[]; this.isLoading=true;
     Data.push({attendance_missing:this.applyMissingAttendanceData})
     this.api.applyforMissingAttendance(Data[0]).subscribe(res => {
       this.user_data=res;
@@ -294,8 +331,9 @@ export class DashboardComponent implements OnInit {
       this.applyMissingAttendanceForm.reset();
       this.applyMissingAttendanceData.punch="";
       this.RefreshMissingAttendanceData();
+      this.isLoading=false;
       }, (err) => {
-        this.toastr.showError(err.error);
+        this.toastr.showError(err.error); this.isLoading=false;
         });
   }
   RefreshMissingAttendanceData()
@@ -317,16 +355,18 @@ export class DashboardComponent implements OnInit {
   }
   validateUpdateMissingAttendanceForm()
   {
+    this.isLoading=true;
     this.api.updateMissingAttendance(this.missing_attendance_Id,this.updateMissingAttendanceData).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
       this.toastr.showSuccess('Response Recorded');
       this.updateMissingAttendanceForm.reset();
       this.RefreshMissingAttendanceData();
+      this.isLoading=false;
       }, (err) => {
         this.toastr.showError(err.error);
         this.modalRef.hide();
-        this.updateMissingAttendanceForm.reset();
+        this.updateMissingAttendanceForm.reset();this.isLoading=false;
         });
   }
   updateLateMarkResponse(template: TemplateRef<any>,lmId,lmreason)
@@ -338,20 +378,22 @@ export class DashboardComponent implements OnInit {
 
   validateRecordLateMarkResponseForm()
   {
+    this.isLoading=true;
     this.api.recordLateMarkResponse(this.updateLateMarksData.id,this.updateLateMarksData).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
       this.toastr.showSuccess('Response Recorded');
       this.updateLateMarksForm.reset();
-      this.RefreshLateMarkData();
+      this.RefreshLateMarkData();this.isLoading=false;
       }, (err) => {
         this.toastr.showError(err.error);
         this.modalRef.hide();
-        this.updateLateMarksForm.reset();
+        this.updateLateMarksForm.reset();this.isLoading=false;
         });
   }
   validateSalarySlipForm()
   {
+    this.isLoading=true;
     this.api.getUserSalarySlip(this.salarySlipDownloadData.selectedmonth,this.salarySlipDownloadData.selectedyear).subscribe(res => {
       this.user_data=res;
       this.pdf = pdfMake;
@@ -360,11 +402,12 @@ export class DashboardComponent implements OnInit {
       this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.user_data, localStorage.getItem('employee_name')));
       this.pdfObj.download(filename);
       this.toastr.showSuccess('Salary Downloaded');
+      this.isLoading=false;
       this.modalRef.hide();
       this.salarySlipDownloadForm.reset();this.salarySlipDownloadData.selectedmonth="";this.salarySlipDownloadData.selectedyear="";
       },(err) => {
         this.toastr.showError(err.error);
-        this.salarySlipDownloadForm.reset();this.salarySlipDownloadData.selectedmonth="";this.salarySlipDownloadData.selectedyear="";
+        this.salarySlipDownloadForm.reset();this.salarySlipDownloadData.selectedmonth="";this.salarySlipDownloadData.selectedyear="";      this.isLoading=false;
         })
   }
   rerender(): void
@@ -378,5 +421,73 @@ export class DashboardComponent implements OnInit {
           });
       }
       });
+  }
+
+  recordMentorshipFeeback(template: TemplateRef<any>,mentorships_id,isMentororMentee)
+  {
+    this.modalRef = this.modalService.show(template, this.customModalConfig);
+    this.mentorships_id=mentorships_id; this.mentorormentee=isMentororMentee;
+  }
+  closeMentorshipModal()
+  {
+    this.modalRef.hide();
+    this.recordMentorshipData={rating1:'',rating2:'',rating3:'',rating4:'',rating5:'',rating6:'',comment1:'',comment2:'',comment3:'',comment4:'',comment5:'',comment6:''}
+  }
+  saveMentorshipResponse()
+  {
+    var feedbackData=[]; this.isLoading=true;
+    if(this.mentorormentee== 'mentor')
+    {
+      feedbackData.push({'question':'My mentee regularly communicated with me','rating':this.recordMentorshipData.rating1,'comment':this.recordMentorshipData.comment1});
+      feedbackData.push({'question':'My mentee was quick learner and curious towards work','rating':this.recordMentorshipData.rating2,'comment':this.recordMentorshipData.comment2});
+      feedbackData.push({'question':'My mentee concerned about challenges during assigned tasks and was keen to overcome it','rating':this.recordMentorshipData.rating3,'comment':this.recordMentorshipData.comment3});
+      feedbackData.push({'question':'My mentee demonstartd a reasonable interest/concern towards me in my quest to offer assistance','rating':this.recordMentorshipData.rating4,'comment':this.recordMentorshipData.comment4});
+      feedbackData.push({'question':"My mentee's attitude and behaviour generally professional and courteous",'rating':this.recordMentorshipData.rating5,'comment':this.recordMentorshipData.comment5});
+      feedbackData.push({'question':'I recommend my mentee for future mentor program','rating':this.recordMentorshipData.rating6,'comment':this.recordMentorshipData.comment6});
+    }
+    else
+    {
+      feedbackData.push({'question':'The mentor was attentive and focussed during the program','rating':this.recordMentorshipData.rating1,'comment':this.recordMentorshipData.comment1});
+      feedbackData.push({'question':'The mentor communicated with me on regular basis','rating':this.recordMentorshipData.rating2,'comment':this.recordMentorshipData.comment2});
+      feedbackData.push({'question':'The mentor provided me appropriate, relevant and handful information','rating':this.recordMentorshipData.rating3,'comment':this.recordMentorshipData.comment3});
+      feedbackData.push({'question':'I am aware about the resources and tools','rating':this.recordMentorshipData.rating4,'comment':this.recordMentorshipData.comment4});
+      feedbackData.push({'question':"The mentor was supportive and encouraged me to make decisions that will lead to success",'rating':this.recordMentorshipData.rating5,'comment':this.recordMentorshipData.comment5});
+      feedbackData.push({'question':'I would recommend my mentor for further mentorship program','rating':this.recordMentorshipData.rating6,'comment':this.recordMentorshipData.comment6});
+    }
+    var postdata =
+    {
+      "mentorship_id": this.mentorships_id,
+      "feedback": feedbackData,
+    }
+    if((this.recordMentorshipData.rating1 == "" || this.recordMentorshipData.rating2 == "") || (this.recordMentorshipData.rating3 == "" || this.recordMentorshipData.rating4 == "") || (this.recordMentorshipData.rating5 == "" || this.recordMentorshipData.rating6 == ""))
+    {
+      this.toastr.CustomErrorMessage('Rating not provided for all topics.');_
+    }
+    else
+    {
+      this.api.postfeeback(postdata).subscribe(res => {
+        this.user_data=res;
+        this.modalRef.hide();
+        this.toastr.showSuccess('Response Recorded');
+        this.RefreshMentoship();this.isLoading=false;
+        }, (err) => {
+          this.toastr.showError(err.error);
+          this.modalRef.hide();this.isLoading=false;
+          });
+    }
+  }
+  RefreshMentoship()
+  {
+    this.api.getMentorshipFeedback().subscribe(res => {
+      this.mentorship_feedback_data =res;
+      this.mentorData=this.mentorship_feedback_data.mentorships_data;
+      if(this.mentorData.length>0)
+      {
+        this.isMentororMentee=this.mentorData[0].user;
+        this.rerender();
+      }
+      }, (err) => {
+        this.toastr.showError(err.error);
+        });
   }
 }

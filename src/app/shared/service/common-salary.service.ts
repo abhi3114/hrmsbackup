@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
   })
 export class CommonSalaryService {
-
   constructor() { }
   getMonthandYear(){
     var currentDate=moment();
@@ -33,4 +33,5 @@ export class CommonSalaryService {
     var data={selectedmonth,selectedyear}
     return data
   }
+
 }

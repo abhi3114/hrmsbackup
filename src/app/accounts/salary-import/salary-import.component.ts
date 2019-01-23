@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy,ViewChild } from '@angular/core';
+import { Component, OnInit,OnDestroy,ViewChildren, QueryList  } from '@angular/core';
 import { CommonSalaryService } from '../../shared/service/common-salary.service';
 import { Papa } from 'ngx-papaparse';
 import { MonthYearService } from '../../shared/service/month-year.service';
@@ -12,7 +12,7 @@ import * as _ from 'underscore';
   selector: 'app-salary-import',
   templateUrl: './salary-import.component.html',
   styleUrls: ['./salary-import.component.css']
-})
+  })
 export class SalaryImportComponent implements OnInit {
 
   monthArray:any;yearArray:any;
@@ -22,8 +22,9 @@ export class SalaryImportComponent implements OnInit {
   canShowtable:boolean;
   postdata:any;
   sheet_data:any;
-  @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
+  isLoading:boolean=false;
+  @ViewChildren(DataTableDirective)
+  dtElements: QueryList<DataTableDirective>;
   SuccessTableOptions: any;
   FailedTableOptions: any;
   SuccessTableTrigger: Subject<any> = new Subject();
@@ -54,61 +55,94 @@ export class SalaryImportComponent implements OnInit {
     };
   }
 
+  resetCsv()
+  {
+    if((<HTMLInputElement>document.getElementById("csv-file")).value =="")
+    {
+      this.notification.CustomErrorMessage("No csv selected to reset");
+    }
+    else
+    {
+      (<HTMLInputElement> document.getElementById("csv-file")).value = "" ;
+    }
+  }
+
   importCsv(){
     let file = (<HTMLInputElement>($('#csv-file')[0])).files[0];
     this.postdata = {};
+    this.isLoading=true;
     if(file == undefined)
     {
-      this.notification.CustomErrorMessage('Please Select a csv file');
+      this.notification.CustomErrorMessage('Please Select a csv file');    this.isLoading=false;
     }
     else
     {
       var can_import_sheet = true
       if(can_import_sheet)
       {
-        var selectedmonth = this.salary_filter.selectedmonth
-        var selectedYear = this.salary_filter.selectedyear
         this.papa.parse(file, {
           header: true,
           complete: (results) => {
             this.sheet_data = results.data
+            this.callSaveApi(this.sheet_data);
           }
-        });
-        this.postdata = { 'data':this.sheet_data,'month':selectedmonth,'year':selectedYear}
-        console.log(this.postdata);
-        this.salaryimport.importCsvData(this.postdata).subscribe(response => {
-          this.importedData = response;
-          this.displayImportedData();
-          this.canShowtable = true;
-          this.notification.showSuccess('Salary Imported Successfully');
-        },
-        (error) => {
-          this.notification.showError('error due to Api');
-        });
-        if (this.canShowtable){
-          this.FailedTableTrigger.next();
-          this.SuccessTableTrigger.next();
-        }
+          });
+
       }
       else
       {
-        this.notification.CustomErrorMessage('cannot import sheet');
+        this.notification.CustomErrorMessage('cannot import sheet'); this.isLoading=false;
       }
     }
+  }
+  callSaveApi(parsedSheetData)
+  {
+    this.postdata = { 'data':parsedSheetData,'month':this.salary_filter.selectedmonth,'year':this.salary_filter.selectedyear}
+    this.salaryimport.importCsvData(this.postdata).subscribe(response => {
+      this.importedData = response;
+      this.displayImportedData();
+      this.canShowtable = true;
+      this.notification.showSuccess('Salary Imported Successfully');
+      this.isLoading=false;
+      if (this.canShowtable)
+      {
+        setTimeout(() => {
+          // this.dtElement.dtTrigger.next();
+          // console.log(this.dtElement);
+          this.dtElements.forEach((dtElement: DataTableDirective) => {
+            if(dtElement.dtInstance!=undefined)
+            {
+              dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                dtInstance.destroy();
+                dtElement.dtTrigger.next();
+                });
+            }
+            else
+            {
+              this.SuccessTableTrigger.next(); this.FailedTableTrigger.next();
+            }
+            });
+          }, 50)
+      }
+      },
+      (error) => {
+        this.notification.showError('error due to Api'); this.isLoading=false;
+        });
   }
   displayImportedData(){
     this.successData=[];
     this.failedData=[];
     this.importedData.forEach(sdata => {
-     if(sdata.status =='Failed')
-     {
-       this.failedData.push({user:sdata.user,message:sdata.message});
-     }
-     else
-     {
+      if(sdata.status =='Failed')
+      {
+        this.failedData.push({user:sdata.user,message:sdata.message});
+      }
+      else
+      {
         this.successData.push({user:sdata.user,message:sdata.message});
       }
-    });
+      });
   }
+
 
 }

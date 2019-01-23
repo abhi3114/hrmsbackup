@@ -4,7 +4,7 @@ import {Observable,Subject} from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { ToastrManager } from 'ng6-toastr-notifications';
+import { NotificationService } from '../../shared/service/notification.service';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import * as _ from 'underscore';
@@ -12,6 +12,7 @@ import { EditSalaryService } from './edit-salary.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
 import { PaymentComponentsService } from '../../shared/service/payment-components.service';
 import { CustomPdfService } from '../../shared/service/custom-pdf.service';
+import { CommonSalaryService } from '../../shared/service/common-salary.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-edit-salary',
@@ -24,10 +25,12 @@ export class EditSalaryComponent implements OnInit {
   user_salary_data:any;components:any;user_payemnt_data:any;payment_components:any;
   choices = [{ id: 'choice',amount:'',component:'',details:'' }];user_payment_components:any; paymentArray=[];
   showIncentiveDetail:any;componentArray=[];payment_attributes=[];lwparray=[];data:any;
-  isBetween:any;showUserSalary=false;showUserPayment=false;isshowBreakUp:boolean;diffyear:any;postdata:any
-  currentyear:any;intermediate:number;total:number;pdf:any;pdfObj:any;
+  isBetween:any;showUserSalary=false;showUserPayment=false;isshowBreakUp:boolean=false;diffyear:any;postdata:any
+  currentyear:any;intermediate:number;total:number;pdf:any;pdfObj:any;section:any;
   addSalaryForm: FormGroup;
-  addSalaryData={title:'',start_date:'',total_amount:''};
+  addSalaryData={title:'',start_date:'',total_amount:''};isLoading:boolean=false;isSalaryDownloader:boolean=false;
+  reProcessLoader:boolean=false;addSalaryLoader:boolean=false;deleteSalaryLoader:boolean=false;
+  undoPaymentLoader:boolean=false;
   salaryBreakComponents={basic:'',hra:'', travel_allowance:'', special_allowance:'', pt:'', pbi:''};
   modalRef: BsModalRef;
   config = {
@@ -37,7 +40,7 @@ export class EditSalaryComponent implements OnInit {
     ignoreBackdropClick: true,
     class:'modal-lg'
   };
-  constructor(private router:Router,private api:EditSalaryService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: ToastrManager,private route: ActivatedRoute,private paymentData:PaymentComponentsService,private pdfservice:CustomPdfService)
+  constructor(private router:Router,private api:EditSalaryService,private monthandyear:MonthYearService,private modalService: BsModalService,public toastr: NotificationService,private route: ActivatedRoute,private paymentData:PaymentComponentsService,private pdfservice:CustomPdfService,private commonsalary:CommonSalaryService)
   {
     this.route.params.subscribe( params => this.stateParams=params);
     this.route.queryParams.subscribe( queryParams => this.queryParams=queryParams);
@@ -46,9 +49,11 @@ export class EditSalaryComponent implements OnInit {
       start_date: new FormControl('', [Validators.required]),
       total_amount: new FormControl('', [Validators.required,Validators.pattern(/^[0-9]*$/i)]),
       });
+
   }
   ngOnInit()
   {
+    this.section= localStorage.getItem('section');
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
     this.user_payment_components=this.paymentData.getPaymentComponents();
@@ -61,7 +66,7 @@ export class EditSalaryComponent implements OnInit {
       this.showUserSalary=true;
       }, (err) =>
       {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
     this.api.getUserPayemntDetails(this.stateParams.id,this.salary_filter.selectedmonth,this.salary_filter.selectedyear).subscribe(res => {
       this.user_payemnt_data=res;
@@ -69,7 +74,7 @@ export class EditSalaryComponent implements OnInit {
       this.showUserPayment=true;
       }, (err) =>
       {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
   refreshSalary()
@@ -80,7 +85,7 @@ export class EditSalaryComponent implements OnInit {
       this.showUserSalary=true;
       }, (err) =>
       {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
 
@@ -92,7 +97,7 @@ export class EditSalaryComponent implements OnInit {
       this.showUserPayment=true;
       }, (err) =>
       {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
   filter(month,year)
@@ -104,19 +109,10 @@ export class EditSalaryComponent implements OnInit {
       this.showUserPayment=true;
       }, (err) =>
       {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         });
   }
 
-  showError(e,position: any = 'top-center') {
-    this.toastr.errorToastr(e.message, 'Oops Some went wrong!',{  position: position});
-  }
-  showSuccess(message,position: any = 'top-center') {
-    this.toastr.successToastr(message, 'Success',{  position: position});
-  }
-  showCustomError(message:any,position: any = 'top-center') {
-    this.toastr.errorToastr(message,'Oops Some went wrong!',{  position: position});
-  }
   addMoreCT()
   {
     var newItemNo2 = this.choices.length + 1;
@@ -137,7 +133,7 @@ export class EditSalaryComponent implements OnInit {
       this.choices.splice(i, 1);
       this.paymentArray.splice(i,1);
     }
-    else { this.showCustomError("There must atleast be a single component") }
+    else { this.toastr.CustomErrorMessage("There must atleast be a single component") }
   }
   getpayments(val,index)
   {
@@ -196,17 +192,18 @@ export class EditSalaryComponent implements OnInit {
       }
 
     }
+    this.isLoading=true;
     this.api.editPayment(this.stateParams.id,postdata).subscribe(res => {
       this.data=res;
-      this.showSuccess('Payment Added');
+      this.toastr.showSuccess('Payment Added');
       this.refreshPayment();
       this.choices = [{ id: 'choice',component:'',amount:'',details:''}]; this.paymentArray=[]; this.lwparray=[];
-      this.componentArray=[];this.payment_attributes=[];
+      this.componentArray=[];this.payment_attributes=[];  this.isLoading=false;
       }, (err) =>
       {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         this.choices = [{ id: 'choice',component:'',amount:'',details:'' }]; this.paymentArray=[]; this.lwparray=[];
-        this.componentArray=[];this.payment_attributes=[];
+        this.componentArray=[];this.payment_attributes=[];  this.isLoading=false;
         });
   }
 
@@ -231,7 +228,8 @@ export class EditSalaryComponent implements OnInit {
       }
       else
       {
-        this.showCustomError('salary can be reprocessed only of current or previous month');
+        this.toastr.CustomErrorMessage('salary can be reprocessed only of current or previous month');
+        this.reProcessLoader=false;
       }
     }
     else if(this.diffyear == 1)
@@ -242,12 +240,14 @@ export class EditSalaryComponent implements OnInit {
       }
       else
       {
-        this.showCustomError('salary can be reprocessed only of current or previous month');
+        this.toastr.CustomErrorMessage('salary can be reprocessed only of current or previous month');
+        this.reProcessLoader=false;
       }
     }
     else
     {
-      this.showCustomError('cannot re procees salary for selected year');
+      this.toastr.CustomErrorMessage('cannot re procees salary for selected year');
+      this.reProcessLoader=false;
     }
   }
   callreprocess()
@@ -261,23 +261,30 @@ export class EditSalaryComponent implements OnInit {
     {
       this.postdata ={ lwp_count:this.user_payemnt_data.lwp,lwp_id:this.user_payemnt_data.lwp_id};
     }
+    this.reProcessLoader=true;
     this.api.reprocessSalary(this.stateParams.id,this.user_payemnt_data.payment_id,this.postdata).subscribe(res => {
       this.data=res;
-      this.showSuccess('Payment Reprocessed');
+      this.toastr.showSuccess('Payment Reprocessed');
       this.refreshPayment();
       this.choices = [{ id: 'choice',component:'',amount:'',details:'' }]; this.paymentArray=[]; this.lwparray=[];
-      this.componentArray=[];this.payment_attributes=[];
+      this.componentArray=[];this.payment_attributes=[];        this.reProcessLoader=false;
       }, (err) =>
       {
-        this.showError(err.error);
+        this.toastr.showError(err.error);
         this.choices = [{ id: 'choice',component:'',amount:'',details:'' }]; this.paymentArray=[]; this.lwparray=[];
-        this.componentArray=[];this.payment_attributes=[];
+        this.componentArray=[];this.payment_attributes=[];        this.reProcessLoader=false;
         });
   }
 
   addSalary(template: TemplateRef<any>)
   {
     this.modalRef = this.modalService.show(template,this.config);
+  }
+  closeAddSalaryModal()
+  {
+    this.modalRef.hide();
+    this.salaryBreakComponents={basic:'',hra:'', travel_allowance:'', special_allowance:'', pt:'', pbi:''};
+    this.addSalaryForm.reset();this.isshowBreakUp=false;
   }
 
   gotodeleteSalary(template: TemplateRef<any>) {
@@ -291,23 +298,23 @@ export class EditSalaryComponent implements OnInit {
   }
   confirm()
   {
-
+    this.deleteSalaryLoader=true;
     this.api.deleteSalary(this.stateParams.id,this.user_salary_data.id).subscribe(res => {
       this.data=res;
-      this.showSuccess('Salary Deleted');
+      this.toastr.showSuccess('Salary Deleted');
       this.modalRef.hide();
       this.refreshSalary();
-      this.showUserSalary=false;
+      this.showUserSalary=false;this.deleteSalaryLoader=false;
       }, (err) =>
       {
-        this.showError(err.error);
+        this.toastr.showError(err.error);this.deleteSalaryLoader=false;
         });
   }
   breakupSalary(total)
   {
     if(total == undefined || total == '')
     {
-      this.showCustomError('Please make sure you have entered the amount');
+      this.toastr.CustomErrorMessage('Please make sure you have entered the amount');
     }
     else
     {
@@ -341,6 +348,7 @@ export class EditSalaryComponent implements OnInit {
   }
   validateAddSalaryForm()
   {
+    this.addSalaryLoader=true;
     var array=[]; var sum =0;
     array.push({title:'Basic',amount:this.salaryBreakComponents.basic});
     array.push({title:'HRA',amount:this.salaryBreakComponents.hra});
@@ -366,23 +374,25 @@ export class EditSalaryComponent implements OnInit {
 
       this.api.editSalary(this.stateParams.id,postdata).subscribe(res => {
         this.data=res;
-        this.showSuccess('Salary Added');
+        this.toastr.showSuccess('Salary Added');
         this.modalRef.hide();
         this.refreshSalary();
         this.addSalaryForm.reset();
         this.showUserSalary=true;
         this.salaryBreakComponents={basic:'',hra:'', travel_allowance:'', special_allowance:'', pt:'', pbi:''};
+        this.addSalaryLoader=false;
         }, (err) =>
         {
-          this.showError(err.error);
+          this.toastr.showError(err.error);
           this.modalRef.hide();
           this.addSalaryForm.reset();
           this.salaryBreakComponents={basic:'',hra:'', travel_allowance:'', special_allowance:'', pt:'', pbi:''};
+          this.addSalaryLoader=false;
           });
     }
     else
     {
-      this.showCustomError("All component amounts do not add upto total amount");
+      this.toastr.CustomErrorMessage("All component amounts do not add upto total amount");this.addSalaryLoader=false;
     }
 
   }
@@ -392,15 +402,16 @@ export class EditSalaryComponent implements OnInit {
   }
   confirmUndoPayment()
   {
+    this.undoPaymentLoader=true;
     this.api.undoPayment(this.stateParams.id,this.user_payemnt_data.payment_id).subscribe(res => {
       this.data=res;
-      this.showSuccess('Payment Undone');
+      this.toastr.showSuccess('Payment Undone');
       this.modalRef.hide();
       this.refreshPayment();
-      this.showUserSalary=false;
+      this.undoPaymentLoader=false;
       }, (err) =>
       {
-        this.showError(err.error);
+        this.toastr.showError(err.error);  this.undoPaymentLoader=false;
         });
   }
 
@@ -412,17 +423,18 @@ export class EditSalaryComponent implements OnInit {
       var filename='Salary_Revision_Letter';
       this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalaryRevisonLetterPdf(this.user_salary_data,this.user_salary_data.user_name));
       this.pdfObj.download(filename);
-      this.showSuccess('Salary Revision Letter Downloaded');
+      this.toastr.showSuccess('Salary Revision Letter Downloaded');
     }
     else
     {
-      this.showCustomError("Cannot Download,make sure you have generated the salary before downloading!");
+      this.toastr.CustomErrorMessage("Cannot Download,make sure you have generated the salary before downloading!");
     }
 
   }
 
   downloadSalarySlip()
   {
+    this.isSalaryDownloader=true;
     if(this.user_payemnt_data)
     {
       this.pdf = pdfMake;
@@ -430,11 +442,12 @@ export class EditSalaryComponent implements OnInit {
       var filename='Salaryslip_'+this.user_payemnt_data.name+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
       this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.user_payemnt_data,this.user_payemnt_data.details.name));
       this.pdfObj.download(filename);
-      this.showSuccess('Salary Downloaded');
+      this.toastr.showSuccess('Salary Downloaded');    this.isSalaryDownloader=false;
     }
     else
     {
-      this.showCustomError("Cannot Download,make sure you have generated payment components before downloading!");
+      this.toastr.CustomErrorMessage("Cannot Download,make sure you have generated payment components before downloading!");
+      this.isSalaryDownloader=false;
     }
   }
 
