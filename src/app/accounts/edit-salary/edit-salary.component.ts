@@ -439,7 +439,7 @@ export class EditSalaryComponent implements OnInit {
     {
       this.pdf = pdfMake;
       var monthname=_.find(this.monthArray,{id : parseInt(this.salary_filter.selectedmonth) }).name;
-      var filename='Salaryslip_'+this.user_payemnt_data.name+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
+      var filename='Salaryslip_'+this.user_payemnt_data.details.name+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
       this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.user_payemnt_data,this.user_payemnt_data.details.name));
       this.pdfObj.download(filename);
       this.toastr.showSuccess('Salary Downloaded');    this.isSalaryDownloader=false;
