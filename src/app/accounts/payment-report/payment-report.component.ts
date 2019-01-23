@@ -14,11 +14,16 @@ import * as _ from 'underscore';
 export class PaymentReportComponent implements OnInit {
   dropdownList = [];
   dropdownSettings = {};
-  paymentReportForm: FormGroup;report_data:any;reportHeader=[];showReport=false;
+  paymentReportForm: FormGroup;report_data:any;reportHeader=[];showReport=false; column_headers:any;
+  report_column:any;
   paymentReportData={start_date:'',end_date:'',components:''};
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   payemntReportTableOptions: any = {};
+  columns:any;
+  data:any;
+  headers:any;
+  table_headers:any;
   paymentReportTableTrigger: Subject<any> = new Subject();
   constructor(private router:Router,private api:PaymentReportService,public toastr: NotificationService)
   {
@@ -42,7 +47,8 @@ export class PaymentReportComponent implements OnInit {
       pageLength: -1,
       retrieve:true,
       dom: 'Bfrtip',
-      buttons: ['csv','excel' ]
+      buttons: ['csv','excel' ],
+      responsive: true
     };
     this.showReport=true;
   }
@@ -56,12 +62,13 @@ export class PaymentReportComponent implements OnInit {
   validatePaymentReportForm()
   {
     this.api.getPaymentReport(this.paymentReportData.start_date,this.paymentReportData.end_date,this.paymentReportData.components).subscribe(res => {
-      this.report_data=res;
+      this.report_data = res;
+      this.column_headers = ["Pan Number", "Name", "Employee No", "Total"]
       var headers=[];
       if(this.report_data.length>0)
       {
         _.each(this.report_data[0].data,function(data){
-          headers.push({label:data.label});
+          headers.push(data.label);
           })
         for (var i=0;i<this.report_data.length;i++)
         {
@@ -73,14 +80,8 @@ export class PaymentReportComponent implements OnInit {
           this.report_data[i].total=sum;
         }
         this.reportHeader=headers;
-        if(this.dtElement.dtInstance!=undefined)
-        {
-          this.rerender();
-        }
-        else
-        {
-          this.paymentReportTableTrigger.next();
-        }
+        this.report_column = this.column_headers.concat(this.reportHeader);
+        this.paymentReportTableTrigger.next();
       }
 
       }, (err) => {
