@@ -30,8 +30,8 @@
                <td *ngIf="i.status==false">No</td>
                <td>{{i.reason}}</td>
                <td>{{i.comment}}</td>
-               <td *ngIf="i.status==true"><a (click)="recordResponse(responseTemplate,i.session_id,i.status)"  style="border-radius: 20px; background-color:#208b39;  padding: 5px 15px 5px 15px; color: white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-               <td *ngIf="i.status==false"><a (click)="recordResponse(responseTemplate,i.session_id,i.status)" style="border-radius: 20px; background-color:#de2929;  padding: 5px 15px 5px 15px; color: white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+               <td *ngIf="i.status==true"><button (click)="recordResponse(responseTemplate,i.session_id,i.status)"  class="add-booster-button"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+               <td *ngIf="i.status==false"><button (click)="recordResponse(responseTemplate,i.session_id,i.status)" class="add-dynamic-button"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
              </tr>
            </tbody>
          </table>
