@@ -10,7 +10,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { MasterComponent } from '../shared/components/master/master.component';
 import { LaddaModule } from 'angular2-ladda';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
 import { AllLeavesComponent } from './all-leaves/all-leaves.component';
 import { ApprovedLeavesComponent } from './approved-leaves/approved-leaves.component';
 import { UnapprovedLeavesComponent } from './unapproved-leaves/unapproved-leaves.component';

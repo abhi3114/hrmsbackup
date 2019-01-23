@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ApprovedComponent } from './subordinate-leaves/approved/approved.component';
 import { UnapprovedComponent } from './subordinate-leaves/unapproved/unapproved.component';
 import { ApprovedOutdoorDutiesComponent } from './subordinate-outdoor-duties/approved-outdoor-duties/approved-outdoor-duties.component';
+import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
 import { UnapprovedOutdoorDutiesComponent } from './subordinate-outdoor-duties/unapproved-outdoor-duties/unapproved-outdoor-duties.component';
 import { ApprovedLateMarksComponent } from './subordinate-late-marks/approved-late-marks/approved-late-marks.component';
 import { UnapprovedLateMarksComponent } from './subordinate-late-marks/unapproved-late-marks/unapproved-late-marks.component';
@@ -23,7 +24,11 @@ const routes: Routes = [
       {path: 'users/missing_attendances/approved', component: ApprovedMissingAttendanceComponent },
       {path: 'users/missing_attendances/unapproved', component: UnapprovedMissingAttendanceComponent }
     ]
-  }
+  },
+  {
+    path: "**",
+    redirectTo: "/home/dashboard"
+  },
 ];
 
 @NgModule({
