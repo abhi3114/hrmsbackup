@@ -24,11 +24,7 @@ const routes: Routes = [
       {path: 'users/missing_attendances/approved', component: ApprovedMissingAttendanceComponent },
       {path: 'users/missing_attendances/unapproved', component: UnapprovedMissingAttendanceComponent }
     ]
-  },
-  {
-    path: "**",
-    redirectTo: "/home/dashboard"
-  },
+  }
 ];
 
 @NgModule({

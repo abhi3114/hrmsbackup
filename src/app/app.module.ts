@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { ManagersModule } from './managers/managers.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { MyInterceptor } from './request-interceptors';
+import { AppRoutingModule } from './app-routing.module';
 @NgModule({
   declarations: [
   AppComponent
@@ -18,6 +19,7 @@ import { MyInterceptor } from './request-interceptors';
   UsersModule,
   ManagersModule,
   AccountsModule,
+  AppRoutingModule
   ],
   providers: [    {
     provide: HTTP_INTERCEPTORS,

@@ -41,11 +41,7 @@ const routes: Routes = [
   {path: 'booster_sessions', component: BoosterSessionComponent},
   {path: 'reset_password', component: ResetPasswordComponent},
   ]
-},
-  {
-    path: "**",
-    redirectTo: "/home/dashboard"
-  },
+}
 ];
 
 @NgModule({

@@ -23,11 +23,7 @@ const routes: Routes = [
   {path: 'users/salaries/missing', component: MissingSalaryComponent},
   {path: 'users/salaries/full_and_final', component: FullAndFinalComponent},
   ]
-},
-{
-   path: "**",
-   redirectTo: "/home/dashboard"
-},
+}
 ];
 
 @NgModule({
