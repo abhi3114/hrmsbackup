@@ -19,7 +19,11 @@ export class PaymentReportComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   payemntReportTableOptions: any = {};
-  paymentReportTableTrigger: Subject<any> = new Subject();
+  columns:any;
+  data:any;
+  headers:any;
+  table_headers:any;
+  paymentReportTableTrigger: Subject<any> = new Subject();counter:number=0;
   constructor(private router:Router,private api:PaymentReportService,public toastr: NotificationService)
   {
     this.dropdownList = this.api.getComponentsforPaymentReport();
@@ -39,8 +43,8 @@ export class PaymentReportComponent implements OnInit {
       });
     this.payemntReportTableOptions = {
       pagingType: 'full_numbers',
-      pageLength: -1,
-      retrieve:true,
+      lengthMenu: [[-1,50, 100, 150, 200],
+      ["All",50, 100, 150, 200 ]],
       dom: 'Bfrtip',
       buttons: ['csv','excel' ]
     };
@@ -48,13 +52,12 @@ export class PaymentReportComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    console.log(item);
   }
   onSelectAll(items: any) {
-    console.log(items);
   }
   validatePaymentReportForm()
   {
+
     this.api.getPaymentReport(this.paymentReportData.start_date,this.paymentReportData.end_date,this.paymentReportData.components).subscribe(res => {
       this.report_data=res;
       var headers=[];
@@ -73,23 +76,16 @@ export class PaymentReportComponent implements OnInit {
           this.report_data[i].total=sum;
         }
         this.reportHeader=headers;
-        if(this.dtElement.dtInstance!=undefined)
+        this.report_column = this.column_headers.concat(this.reportHeader);
+        if(this.counter==0)
         {
-          this.rerender();
-        }
-        else
-        {
-          this.paymentReportTableTrigger.next();
+          this.paymentReportTableTrigger.next();    this.counter+=1;
         }
       }
 
       }, (err) => {
         this.toastr.showError(err.error);
         });
-  }
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.paymentReportTableTrigger.unsubscribe();
   }
   rerender(): void {
 
