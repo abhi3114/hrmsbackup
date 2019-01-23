@@ -225,15 +225,37 @@ dl.booking-grid {
         position: absolute;
         z-index: 9999999 !important;
     }
-.owl-dt-container {
-    font-size: 14px!important;
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-   border: 1px solid #dfdfdf!important;margin-left:-1px
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-   background: #f99800;
-   color: #fff!important;
-   border-color: #f99800!important;
-}
+    .owl-dt-container {
+        font-size: 14px!important;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+       border: 1px solid #dfdfdf!important;margin-left:-1px
+   }
+   .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+       background: #f99800;
+       color: #fff!important;
+       border-color: #f99800!important;
+   }
+   rating.form-control {
+       padding: 0;
+       margin: 0;
+       margin-top: -10px;
+   }
+
+
+   .bs-rating-star {
+       font-size: 40px;
+       color: #dfdfdf;
+       line-height: unset;
+   }
+
+
+   .bs-rating-star.active {
+       color: #FF9800;
+   }
+   rating span:focus {border:none; outline : 0}
+   .modal-custom{width: 80%}
+   .ladda-button {font-size: 14px!important;}
+   .ladda-button[disabled], .ladda-button[disabled]:hover{ background-color:none;  }
+
 

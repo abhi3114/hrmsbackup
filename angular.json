@@ -26,7 +26,8 @@
               "src/styles.css",
               "src/assets/css/custom.css",
               "node_modules/datatables.net-buttons-dt/css/buttons.dataTables.css",
-              "node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css"
+              "node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css",
+              "node_modules/ladda/dist/ladda.min.css"
             ],
             "scripts": [
               "node_modules/jszip/dist/jszip.js",
@@ -36,7 +37,6 @@
               "node_modules/datatables.net-buttons/js/buttons.html5.js",
               "node_modules/datatables.net-buttons/js/buttons.print.js",
               "node_modules/datatables.net-responsive/js/dataTables.responsive.js",
-              "assets/js/rating.min.js"
             ]
           },
           "configurations": {

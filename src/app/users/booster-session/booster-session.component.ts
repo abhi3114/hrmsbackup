@@ -11,7 +11,7 @@ import { NotificationService } from '../../shared/service/notification.service';
   selector: 'app-booster-session',
   templateUrl: './booster-session.component.html',
   styleUrls: ['./booster-session.component.css']
-})
+  })
 export class BoosterSessionComponent implements OnInit {
   user_data:any;booster_session_data:any;
   @ViewChild(DataTableDirective)
@@ -19,7 +19,7 @@ export class BoosterSessionComponent implements OnInit {
   boosterSessionTableOptions: DataTables.Settings = {};
   boosterSessionTableTrigger: Subject<any> = new Subject();
   responseData={ response:'',rating:'',comment:'',reason:''};
-  responseForm: FormGroup;  
+  responseForm: FormGroup;
   modalRef: BsModalRef;
   config = {
     animated:true,
@@ -28,7 +28,7 @@ export class BoosterSessionComponent implements OnInit {
     ignoreBackdropClick: true
   };
   max: number = 5;
-  isReadonly: boolean = false; status:any; booster_id:any;api_data:any;
+  isReadonly: boolean = false; status:any; booster_id:any;api_data:any;isLoading:boolean=false;
   constructor(private router:Router,private api:BoosterSessionService,private modalService: BsModalService,public toastr: NotificationService)
   {
     this.boosterSessionTableOptions = {
@@ -40,15 +40,15 @@ export class BoosterSessionComponent implements OnInit {
       this.user_data=res;
       this.booster_session_data=this.user_data.booster_session_data;
       this.boosterSessionTableTrigger.next();
-    }, (err) => {
-      alert(err.error);
-    });
+      }, (err) => {
+        alert(err.error);
+        });
     this.responseForm = new FormGroup({
       response: new FormControl('', [Validators.required]),
       rating: new FormControl('', []),
       comment: new FormControl('', []),
       reason:new FormControl('',[])
-    });
+      });
     this.responseData.response="yes";
   }
 
@@ -56,12 +56,17 @@ export class BoosterSessionComponent implements OnInit {
     this.modalRef = this.modalService.show(template, this.config);
     this.status=status; this.booster_id=booster_session_id;
   }
+  closeModal()
+  {
+    this.modalRef.hide();this.responseForm.reset(); this.responseData.response='yes';
+  }
 
   ngOnInit() {
   }
 
   validateLateMarkForm()
   {
+    this.isLoading=true;
     if(this.responseData.response=='yes')
     {
       var postdata =
@@ -69,11 +74,11 @@ export class BoosterSessionComponent implements OnInit {
 
         "rating": this.responseData.rating,
         "comment": this.responseData.comment,
-        "status":this.status
+        "satuts":this.responseData.response
       }
       if((this.responseData.rating == undefined || this.responseData.rating=="") || (this.responseData.comment==undefined || this.responseData.comment==""))
       {
-        this.toastr.showError('Please provide rating and/or comment');
+        this.toastr.CustomErrorMessage('Please provide rating and/or comment');    this.isLoading=false;
       }
       else
       {
@@ -86,11 +91,11 @@ export class BoosterSessionComponent implements OnInit {
       var data =
       {
         "reason": this.responseData.reason,
-        "status":status
+        "satuts":this.responseData.response
       }
       if(this.responseData.reason == undefined || this.responseData.reason=="")
       {
-        this.toastr.showError('Please provide a reason');
+        this.toastr.CustomErrorMessage('Please provide a reason');this.isLoading=false;
       }
       else
       {
@@ -107,10 +112,10 @@ export class BoosterSessionComponent implements OnInit {
       this.responseForm.reset(); this.responseData.response='yes';
       this.modalRef.hide();
       this.toastr.showSuccess('Response recorded');
-      this.refreshData();
-    }, (err) => {
-      this.toastr.showError(err.error);
-    });
+      this.refreshData();this.isLoading=false;
+      }, (err) => {
+        this.toastr.showError(err.error);this.isLoading=false;
+        });
   }
 
   refreshData()
@@ -119,9 +124,9 @@ export class BoosterSessionComponent implements OnInit {
       this.user_data=res;
       this.booster_session_data=this.user_data.booster_session_data;
       this.rerender();
-    }, (err) => {
-      alert(err.error);
-    });
+      }, (err) => {
+        alert(err.error);
+        });
   }
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -129,7 +134,7 @@ export class BoosterSessionComponent implements OnInit {
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       this.boosterSessionTableTrigger.next();
-    });
+      });
 
   }
 }

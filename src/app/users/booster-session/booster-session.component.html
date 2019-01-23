@@ -44,7 +44,7 @@
 <ng-template #responseTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Record Booster Session Response</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -104,7 +104,7 @@
           </div>
         </div>
         <div class="" style="text-align: center;">
-          <button type="submit" class="btn btn-primary" [disabled]="responseForm.invalid" >Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="responseForm.invalid" [ladda]="isLoading">Submit</button>
         </div>
       </div>
     </form>
