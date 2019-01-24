@@ -55,7 +55,7 @@ export class RequestedStationeryComponent implements OnInit {
   {
     this.modalRef.hide();
     this.stationeryForm.reset();
-    this.stationeryData.selecteditem="";
+    this.stationeryData.selecteditem="";this.stationeryData.comment="";
     this.isLoading=false;
   }
 
@@ -93,6 +93,7 @@ export class RequestedStationeryComponent implements OnInit {
       this.toastr.showSuccess("Stationery Requested");
       this.stationeryForm.reset();
       this.stationeryData.selecteditem="";
+      this.stationeryData.comment="";
       this.refreshData();
       this.isLoading=false;
       }, (err) => {

@@ -23,12 +23,12 @@
           </thead>
           <tbody>
             <tr *ngFor="let i of invertoryData">
-              <td ng-bind=""> {{i.title}} </td>
-              <td ng-bind=""> {{i.quantity}} </td>
-              <td>{{i.date_of_issue}}</td>
+              <td> {{i.title}} </td>
+              <td> {{i.quantity}} </td>
+              <td>{{i.date_of_issue| date:'dd/MM/yyyy'}}</td>
               <td *ngIf="i.returned==false">No</td>
               <td *ngIf="i.returned==true">Yes</td>
-              <td ng-bind="">{{i.returned_on | date: 'dd/MM/yyyy'}}</td>
+              <td>{{i.returned_on | date: 'dd/MM/yyyy'}}</td>
             </tr>
           </tbody>
         </table>
