@@ -24,7 +24,7 @@
                 <tr *ngFor="let s of stationeries">
                   <td>{{s.item}}</td>
                   <td>{{s.quantity}}</td>
-                  <td>{{s.comment}}</td>
+                  <td>{{s.comment | nullData}}</td>
                   <td>
                     <button class="add-dynamic-button" type="button" (click)="deleteRequest(deleteTemplate,s.id)">
                       <i class="fa fa-trash-o" aria-hidden="true"></i>

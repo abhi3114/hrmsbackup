@@ -28,6 +28,7 @@ import { BoosterSessionComponent } from './booster-session/booster-session.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { StationeryComponent } from './stationery/stationery.component';
 import { RequestedStationeryComponent } from './requested-stationery/requested-stationery.component';
+import { NullDataPipe } from '../shared/pipes/null-data.pipe';
 
 
 
@@ -66,7 +67,8 @@ import { RequestedStationeryComponent } from './requested-stationery/requested-s
   BoosterSessionComponent,
   ResetPasswordComponent,
   StationeryComponent,
-  RequestedStationeryComponent
+  RequestedStationeryComponent,
+  NullDataPipe
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })
