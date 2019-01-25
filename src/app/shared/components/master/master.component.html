@@ -53,77 +53,77 @@
       </div>
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['dashboard']"><i class="fa fa-user"></i><span>Dashboard</span></a></li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['assets']"><i class="fa fa-keyboard-o"></i><span>Assets</span></a></li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['dashboard']"><i class="fa custom-icon"><img src="assets/images/dash-icon.png"></i><span>Dashboard</span></a></li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['assets']"><i class="fa custom-icon"><img src="assets/images/asset-icon-n.png"></i><span>Assets</span></a></li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
-          <a><i class="fa fa-book" aria-hidden="true"></i>
+          <a><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/stationary-icon.png"></i>
             <span>Stationery</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-down pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a [routerLink]="['stationery/fulfilled']"><i class="fa fa-server" aria-hidden="true"></i> Fulfilled Stationery</a></li>
-            <li><a [routerLink]="['stationery/requested']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Requested Stationery</a></li>
+            <li><a [routerLink]="['stationery/fulfilled']"><!-- <i class="fa fa-server" aria-hidden="true"></i> --> Fulfilled Stationery</a></li>
+            <li><a [routerLink]="['stationery/requested']"><!-- <i class="fa fa-check-square-o" aria-hidden="true"></i>  -->Requested Stationery</a></li>
           </ul>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
-          <a><i class="fa fa-reply-all " aria-hidden="true"></i>
+          <a><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/leave-icon-n.png"></i>
             <span>My Leaves</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-down pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a [routerLink]="['leaves']"><i class="fa fa-server" aria-hidden="true"></i> All </a></li>
-            <li><a [routerLink]="['leaves/approved']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved </a></li>
-            <li><a [routerLink]="['leaves/unapproved']"><i class="fa fa-close" aria-hidden="true"></i>Unapproved </a></li>
+            <li><a [routerLink]="['leaves']"><!-- <i class="fa fa-server" aria-hidden="true"></i> --> All </a></li>
+            <li><a [routerLink]="['leaves/approved']"><!-- <i class="fa fa-check-square-o" aria-hidden="true"></i> --> Approved </a></li>
+            <li><a [routerLink]="['leaves/unapproved']"><!-- <i class="fa fa-close" aria-hidden="true"></i> -->Unapproved </a></li>
           </ul>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
-          <a><img width="20px" height="15px" src="assets/images/outdoor.png">
+          <a><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/outdoor-duty-icon.png"></i>
             <span>My Outdoor Duties</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-down pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a [routerLink]="['outdoor_duties']"><i class="fa fa-server" aria-hidden="true"></i> All </a></li>
-            <li><a [routerLink]="['outdoor_duties/approved']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved </a></li>
-            <li><a [routerLink]="['outdoor_duties/unapproved']"><i class="fa fa-close" aria-hidden="true"></i>Unapproved </a></li>
+            <li><a [routerLink]="['outdoor_duties']"><!-- <i class="fa fa-server" aria-hidden="true"></i> --> All </a></li>
+            <li><a [routerLink]="['outdoor_duties/approved']"><!-- <i class="fa fa-check-square-o" aria-hidden="true"></i> --> Approved </a></li>
+            <li><a [routerLink]="['outdoor_duties/unapproved']"><!-- <i class="fa fa-close" aria-hidden="true"></i> -->Unapproved </a></li>
           </ul>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
-          <a><img width="20px" height="15px" src="assets/images/late.png">
+          <a><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/late-mark-n.png"></i>
             <span>My Late Marks</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-down pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a [routerLink]="['late_marks']"><i class="fa fa-server" aria-hidden="true"></i> All </a></li>
-            <li><a [routerLink]="['late_marks/approved']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved </a></li>
-            <li><a [routerLink]="['late_marks/unapproved']"><i class="fa fa-close" aria-hidden="true"></i>Unapproved </a></li>
+            <li><a [routerLink]="['late_marks']"><!-- <i class="fa fa-server" aria-hidden="true"></i> --> All </a></li>
+            <li><a [routerLink]="['late_marks/approved']"><!-- <i class="fa fa-check-square-o" aria-hidden="true"></i> --> Approved </a></li>
+            <li><a [routerLink]="['late_marks/unapproved']"><!-- <i class="fa fa-close" aria-hidden="true"></i> -->Unapproved </a></li>
           </ul>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;" >
-          <a><i class="fa fa-warning" aria-hidden="true"></i>
+          <a><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/missing-attendance.png"></i>
             <span>My Missing Attendance</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-down pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a [routerLink]="['missing_attendance']"><i class="fa fa-server" aria-hidden="true"></i> All </a></li>
-            <li><a [routerLink]="['missing_attendance/approved']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved </a></li>
-            <li><a [routerLink]="['missing_attendance/unapproved']"><i class="fa fa-close" aria-hidden="true"></i>Unapproved </a></li>
+            <li><a [routerLink]="['missing_attendance']"><!-- <i class="fa fa-server" aria-hidden="true"></i> --> All </a></li>
+            <li><a [routerLink]="['missing_attendance/approved']"><!-- <i class="fa fa-check-square-o" aria-hidden="true"></i> --> Approved </a></li>
+            <li><a [routerLink]="['missing_attendance/unapproved']"><!-- <i class="fa fa-close" aria-hidden="true"></i> -->Unapproved </a></li>
           </ul>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="employee_role==Role[2]" style="cursor: pointer;">
          <a><i class="fa fa-reply-all " aria-hidden="true"></i>
            <span>Salary Section</span>
            <span class="pull-right-container">
-             <i class="fa fa-angle-left pull-right"></i>
+             <i class="fa fa-angle-down pull-right"></i>
            </span>
          </a>
          <ul class="treeview-menu">
@@ -146,7 +146,7 @@
       <li *ngIf="employee_role==Role[2]" style="cursor: pointer;"><a  href=""><i class="fa fa-bar-chart " aria-hidden="true"></i>
         <span>Reports</span>
         <span class="pull-right-container">
-          <i class="fa fa-angle-left pull-right"></i>
+          <i class="fa fa-angle-down pull-right"></i>
         </span>
       </a>
 
@@ -160,7 +160,7 @@
        <a><i class="fa fa-reply-all " aria-hidden="true"></i>
          <span>Manager Section</span>
          <span class="pull-right-container">
-           <i class="fa fa-angle-left pull-right"></i>
+           <i class="fa fa-angle-down pull-right"></i>
          </span>
        </a>
        <ul class="treeview-menu">
@@ -180,7 +180,7 @@
                     <i class="fa fa-close" aria-hidden="true"></i> Unapproved Missing Attendance </a></li>
                   </ul>
                 </li>
-                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['booster_sessions']"><i class="fa fa-cogs"></i><span>Booster Session</span></a></li>
+                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['booster_sessions']"><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/booster-section-icon.png"></i><span>Booster Session</span></a></li>
 
               </ul>
               <!-- /.sidebar-menu -->

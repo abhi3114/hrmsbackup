@@ -8,14 +8,20 @@
      <form (ngSubmit)="validateLateMarksForm()" [formGroup]="lateMarksForm" autocomplete="off" novalidate="off">
       <a (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR UNAPPROVED LATE MARKS</h4>
+      <h4 class="modal-title" id="H1" style=" background: transparent;
+    border-radius: 10px;
+    padding: 5px;
+    cursor: pointer;
+    color: #212121;
+    font-size: 22px; margin-bottom: 20px;">Filter for Unapproved Late Marks</h4>
     </a>
-    <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+    <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background:transparent;border-radius: 10px">
       <div>
-        <div class="col-md-2">
+        <div class="col-md-3" style="padding: 0">
+            <div class="form-inline">
           <div class="form-group">
-            <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
-            <input name="bnknm" type='text' class="form-control"[(ngModel)]="lateMarksData.start_date" formControlName="start_date" required [class.error1]="!lateMarksForm.controls.start_date.valid && lateMarksForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
+            <label style="color: #3F51B5; margin-right: 10px;">Start Date<sup style="color:red;">*</sup></label>
+            <input name="bnknm" type='text' class="form-control apply-input"[(ngModel)]="lateMarksData.start_date" formControlName="start_date" required [class.error1]="!lateMarksForm.controls.start_date.valid && lateMarksForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
             <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
             <div *ngIf="( lateMarksForm.get('start_date').hasError('minlength') || lateMarksForm.get('start_date').hasError('pattern') || lateMarksForm.get('start_date').hasError('required') ) && lateMarksForm.get('start_date').touched">
               <div class="error" *ngIf="(lateMarksForm.get('start_date').hasError('required') && lateMarksForm.get('start_date').touched)">
@@ -24,10 +30,12 @@
             </div>
           </div>
         </div>
-        <div class="col-md-2">
+        </div>
+       <div class="col-md-3" style="padding: 0">
+          <div class="form-inline">
           <div class="form-group">
-            <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
-            <input name="endDate" type='text' class="form-control" [(ngModel)]="lateMarksData.end_date" formControlName="end_date" required [class.error1]="!lateMarksForm.controls.end_date.valid && lateMarksForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
+            <label style="color: #3F51B5; margin-right: 10px;">End Date<sup style="color:red;">*</sup></label>
+            <input name="endDate" type='text' class="form-control apply-input" [(ngModel)]="lateMarksData.end_date" formControlName="end_date" required [class.error1]="!lateMarksForm.controls.end_date.valid && lateMarksForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
             <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
             <div *ngIf="( lateMarksForm.get('end_date').hasError('minlength') || lateMarksForm.get('end_date').hasError('pattern') || lateMarksForm.get('end_date').hasError('required') ) && lateMarksForm.get('end_date').touched">
               <div class="error" *ngIf="(lateMarksForm.get('end_date').hasError('required') && lateMarksForm.get('end_date').touched)">
@@ -36,8 +44,9 @@
             </div>
           </div>
         </div>
-        <div class="col-md-2" style="margin-top: 24px;">
-          <button type="submit" class="btn bg-orange btn-flat" [disabled]="lateMarksForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
+        </div>
+        <div class="col-md-2" >
+          <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="lateMarksForm.invalid"><!-- <i class="fa fa-filter" aria-hidden="true"></i>  -->Apply Filter</button>
         </div>
       </div>
     </div>
