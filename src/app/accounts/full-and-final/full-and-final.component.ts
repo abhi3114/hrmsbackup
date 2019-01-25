@@ -38,6 +38,7 @@ export class FullAndFinalComponent implements OnInit {
       pagingType: 'full_numbers',
       lengthMenu: [[-1,50, 100, 150, 200],
       ["All",50, 100, 150, 200 ]],
+      order: [[ 1, 'asc' ]]
     };
     this.api.getallUser().subscribe(res => {
       this.user_data=res;

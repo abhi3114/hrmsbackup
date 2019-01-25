@@ -74,12 +74,12 @@
             </dl>
             <dl class="col-md-4 booking-grid">
               <dt>TOTAL AMOUNT</dt>
-              <dd><i class="fa fa-inr" aria-hidden="true"></i> {{convertAmountintoCurrency(user_salary_data.amount)}}</dd>
+              <dd><i class="fa fa-inr" aria-hidden="true"></i> {{user_salary_data.amount | indianCurrency}}</dd>
             </dl>
             <dl class="col-md-4 booking-grid" *ngFor="let s of components; let i = index" >
               <dt>COMPONENT {{i+1}}</dt>
               <dd>NAME: {{s.title}}</dd>
-              <dd>AMOUNT: <i class="fa fa-inr" aria-hidden="true"></i>  {{convertAmountintoCurrency(s.amount)}}</dd>
+              <dd>AMOUNT: <i class="fa fa-inr" aria-hidden="true"></i>  {{s.amount | indianCurrency}}</dd>
             </dl>
           </div>
         </div>
@@ -98,7 +98,7 @@
         <div class="box-body" *ngIf="showUserPayment">
           <div class="col-md-12">
             <div class="col-md-4">
-              <label>Total Payable Amount: <i class="fa fa-inr" aria-hidden="true"></i>  {{convertAmountintoCurrency(user_payemnt_data.amount)}}</label>
+              <label>Total Payable Amount: <i class="fa fa-inr" aria-hidden="true"></i>  {{user_payemnt_data.amount | indianCurrency}}</label>
             </div>
           </div>
 

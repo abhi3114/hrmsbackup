@@ -144,11 +144,11 @@ export class CustomPdfService {
                           [{text: 'HRA', style: 'tableheadContent',border: [true, false, true, false]},
                           {text: this.convertAmountintoCurrency((hra)), style: 'tableContent', alignment: 'right',border: [true, false, true, false]},
 
-                          {text: 'IT TDS', style: 'tableheadContent',border: [true, false, true, false]}, {text:(tds), style: 'tableContent', alignment: 'right',border: [true, false, true, false]}],
+                          {text: 'IT TDS', style: 'tableheadContent',border: [true, false, true, false]}, {text:this.convertAmountintoCurrency(tds), style: 'tableContent', alignment: 'right',border: [true, false, true, false]}],
 
                           [{text: 'Travelling Allowance', style: 'tableheadContent',border: [true, false, true, false]}, {text: this.convertAmountintoCurrency(travel), style: 'tableContent', alignment: 'right',border: [true, false, true, false]},
 
-                          {text: 'EPF', style: 'tableheadContent',border: [true, false, true, false]}, {text:(epf), style: 'tableContent', alignment: 'right',border: [true, false, true, false]}],
+                          {text: 'EPF', style: 'tableheadContent',border: [true, false, true, false]}, {text:this.convertAmountintoCurrency(epf), style: 'tableContent', alignment: 'right',border: [true, false, true, false]}],
 
                           [{text: 'Other Earnings', style: 'tableheadContent',border: [true, false, true, false]}, {text:this.convertAmountintoCurrency(otherexpense) , style: 'tableContent', alignment: 'right',border: [true, false, true, false]},
 

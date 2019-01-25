@@ -60,7 +60,7 @@
                 <tr *ngFor="let l of approved_late_mark_data">
                   <td>{{l.user_name}}</td>
                   <td>{{l.date}}</td>
-                  <td>{{l.approved_on  |  date: 'dd/MM/yyyy'}}</td>
+                  <td>{{l.approved_on  |  date: 'dd/MM/yyyy'| nullData}}</td>
                   <td>{{l.comment}}</td>
                 </tr>
               </tbody>

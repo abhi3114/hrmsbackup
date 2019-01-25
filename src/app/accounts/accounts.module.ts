@@ -19,7 +19,7 @@ import { PaymentReportComponent } from './payment-report/payment-report.componen
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MissingSalaryComponent } from './missing-salary/missing-salary.component';
 import { FullAndFinalComponent } from './full-and-final/full-and-final.component';
-
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
     imports: [
     CommonModule,
@@ -36,7 +36,7 @@ import { FullAndFinalComponent } from './full-and-final/full-and-final.component
     MatSlideToggleModule,
     PapaParseModule,
     NgMultiSelectDropDownModule.forRoot(),
-    LaddaModule,
+    LaddaModule,SharedModule
     ],
     declarations: [SalaryImportComponent, SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent, MissingSalaryComponent, FullAndFinalComponent],
     })
