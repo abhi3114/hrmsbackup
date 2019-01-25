@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MasterComponent } from '../shared/components/master/master.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
 import { AssetsComponent } from './assets/assets.component';
 import { AllLeavesComponent } from './all-leaves/all-leaves.component';
 import { ApprovedLeavesComponent } from './approved-leaves/approved-leaves.component';
@@ -17,6 +17,8 @@ import { ApprovedMissingAttendanceComponent } from './approved-missing-attendanc
 import { UnapprovedMissingAttendanceComponent } from './unapproved-missing-attendance/unapproved-missing-attendance.component';
 import { BoosterSessionComponent } from './booster-session/booster-session.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { StationeryComponent } from './stationery/stationery.component';
+import { RequestedStationeryComponent } from './requested-stationery/requested-stationery.component';
 
 
 const routes: Routes = [
@@ -40,6 +42,8 @@ const routes: Routes = [
   {path: 'missing_attendance/unapproved', component: UnapprovedMissingAttendanceComponent},
   {path: 'booster_sessions', component: BoosterSessionComponent},
   {path: 'reset_password', component: ResetPasswordComponent},
+  {path: 'stationery/fulfilled', component: StationeryComponent},
+  {path: 'stationery/requested', component: RequestedStationeryComponent},
   ]
 }
 ];

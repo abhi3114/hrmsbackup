@@ -10,7 +10,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { MasterComponent } from '../shared/components/master/master.component';
 import { LaddaModule } from 'angular2-ladda';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
 import { AllLeavesComponent } from './all-leaves/all-leaves.component';
 import { ApprovedLeavesComponent } from './approved-leaves/approved-leaves.component';
 import { UnapprovedLeavesComponent } from './unapproved-leaves/unapproved-leaves.component';
@@ -26,6 +26,9 @@ import { ApprovedMissingAttendanceComponent } from './approved-missing-attendanc
 import { UnapprovedMissingAttendanceComponent } from './unapproved-missing-attendance/unapproved-missing-attendance.component';
 import { BoosterSessionComponent } from './booster-session/booster-session.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { StationeryComponent } from './stationery/stationery.component';
+import { RequestedStationeryComponent } from './requested-stationery/requested-stationery.component';
+import { NullDataPipe } from '../shared/pipes/null-data.pipe';
 
 
 
@@ -62,7 +65,10 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
   ApprovedMissingAttendanceComponent,
   UnapprovedMissingAttendanceComponent,
   BoosterSessionComponent,
-  ResetPasswordComponent
+  ResetPasswordComponent,
+  StationeryComponent,
+  RequestedStationeryComponent,
+  NullDataPipe
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })

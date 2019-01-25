@@ -30,7 +30,7 @@ export class EditSalaryComponent implements OnInit {
   addSalaryForm: FormGroup;
   addSalaryData={title:'',start_date:'',total_amount:''};isLoading:boolean=false;isSalaryDownloader:boolean=false;
   reProcessLoader:boolean=false;addSalaryLoader:boolean=false;deleteSalaryLoader:boolean=false;
-  undoPaymentLoader:boolean=false;
+  undoPaymentLoader:boolean=false; intermediatehra:number;intermediatebasic:number;
   salaryBreakComponents={basic:'',hra:'', travel_allowance:'', special_allowance:'', pt:'', pbi:''};
   modalRef: BsModalRef;
   config = {
@@ -321,9 +321,13 @@ export class EditSalaryComponent implements OnInit {
       if(total<25000)
       {
         this.total=parseInt(total);
-        this.intermediate=this.total*0.76;
+        this.intermediate=Math.round(this.total*0.76);
         this.salaryBreakComponents.basic= this.intermediate.toString();
-        this.salaryBreakComponents.hra=(parseInt(this.salaryBreakComponents.basic)*0.10).toString();;
+        this.salaryBreakComponents.hra=(parseInt(this.salaryBreakComponents.basic)*0.10).toString();
+        this.intermediatebasic=Math.round(<number> (parseInt(this.salaryBreakComponents.basic)));
+        this.intermediatehra=Math.round(<number> (parseInt(this.salaryBreakComponents.hra)));
+        this.salaryBreakComponents.basic=this.intermediatebasic.toString();
+        this.salaryBreakComponents.hra=this.intermediatehra.toString();
         this.salaryBreakComponents.travel_allowance='0';
       }
       else if(25000<=total && total<=35000)
@@ -331,11 +335,19 @@ export class EditSalaryComponent implements OnInit {
         this.salaryBreakComponents.basic=(total*0.61).toString();
         this.salaryBreakComponents.hra=(parseInt(this.salaryBreakComponents.basic)*0.40).toString();
         this.salaryBreakComponents.travel_allowance='800';
+        this.intermediatebasic=Math.round(<number> (parseInt(this.salaryBreakComponents.basic)));
+        this.intermediatehra=Math.round(<number> (parseInt(this.salaryBreakComponents.hra)));
+        this.salaryBreakComponents.basic=this.intermediatebasic.toString();
+        this.salaryBreakComponents.hra=this.intermediatehra.toString();
       }
       else
       {
         this.salaryBreakComponents.basic=(total*0.45).toString();
         this.salaryBreakComponents.hra=(parseInt(this.salaryBreakComponents.basic)*0.40).toString();
+        this.intermediatebasic=Math.round(<number> (parseInt(this.salaryBreakComponents.basic)));
+        this.intermediatehra=Math.round(<number> (parseInt(this.salaryBreakComponents.hra)));
+        this.salaryBreakComponents.basic=this.intermediatebasic.toString();
+        this.salaryBreakComponents.hra=this.intermediatehra.toString();
         this.salaryBreakComponents.travel_allowance='1600';
       }
       this.salaryBreakComponents.pt='200';
@@ -421,7 +433,7 @@ export class EditSalaryComponent implements OnInit {
     {
       this.pdf = pdfMake;
       var filename='Salary_Revision_Letter';
-      this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalaryRevisonLetterPdf(this.user_salary_data,this.user_salary_data.user_name));
+      this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalaryRevisonLetterPdf(this.user_salary_data,this.user_salary_data.name));
       this.pdfObj.download(filename);
       this.toastr.showSuccess('Salary Revision Letter Downloaded');
     }
@@ -439,7 +451,7 @@ export class EditSalaryComponent implements OnInit {
     {
       this.pdf = pdfMake;
       var monthname=_.find(this.monthArray,{id : parseInt(this.salary_filter.selectedmonth) }).name;
-      var filename='Salaryslip_'+this.user_payemnt_data.name+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
+      var filename='Salaryslip_'+this.user_payemnt_data.details.name+'_for_'+monthname+'_'+this.salary_filter.selectedyear;
       this.pdfObj=  this.pdf.createPdf(this.pdfservice.getSalarySlipPdf(this.user_payemnt_data,this.user_payemnt_data.details.name));
       this.pdfObj.download(filename);
       this.toastr.showSuccess('Salary Downloaded');    this.isSalaryDownloader=false;

@@ -6,8 +6,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NullDataPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    if (null != value) { return value ;}
-    else {return "Not Provided"; }
+    if (value == null || value == "" )
+    {
+      return "N/A";
+    }
+    else
+    {
+      return value ;
+    }
   }
 
 }
