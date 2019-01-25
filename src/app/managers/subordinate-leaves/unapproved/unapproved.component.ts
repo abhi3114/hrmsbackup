@@ -13,7 +13,7 @@ import * as moment from 'moment';
   selector: 'app-unapproved',
   templateUrl: './unapproved.component.html',
   styleUrls: ['./unapproved.component.css']
-})
+  })
 export class UnapprovedComponent implements OnInit {
 
   isCollapsed = false;
@@ -41,18 +41,18 @@ export class UnapprovedComponent implements OnInit {
     var end_date=moment(this.unapprovedLeavesData.end_date).format('DD/MM/YYYY');
     this.api.getAllUnapprovedSubordinateLeave(start_date,end_date).subscribe(res => {
       this.unapproved_leaves_data=res;
-      this.leaveTableTrigger.next();    
-    }, (err) => {
-       this.notification.showError(err.error);
-    });
+      this.leaveTableTrigger.next();
+      }, (err) => {
+        this.notification.showError(err.error);
+        });
   }
 
   checkALL()
   {
     if ($('.check-box:checked').length > 0)
-      $('.checkbox').prop('checked', true);
+    $('.checkbox').prop('checked', true);
     else
-      $('.checkbox').prop('checked', false);
+    $('.checkbox').prop('checked', false);
   }
 
   save(){
@@ -60,7 +60,7 @@ export class UnapprovedComponent implements OnInit {
     $('.checkbox:checked').each(function() {
       var id = $(this).attr('name');
       leave_ids.push(id);
-    });
+      });
     var postdata = { "leave_ids":  leave_ids}
     if(leave_ids != undefined && leave_ids.length > 0)
     {
@@ -68,9 +68,9 @@ export class UnapprovedComponent implements OnInit {
         leave_ids = []
         this.notification.showSuccess('Leave approved successfully');
         this.refreshData();
-      }, (err) => {
-        this.notification.showError(err.error);
-      });
+        }, (err) => {
+          this.notification.showError(err.error);
+          });
     }
     else
     {
@@ -84,10 +84,11 @@ export class UnapprovedComponent implements OnInit {
     var end_date=moment(this.unapprovedLeavesData.end_date).format('DD/MM/YYYY');
     this.api.getAllUnapprovedSubordinateLeave(start_date,end_date).subscribe(res => {
       this.unapproved_leaves_data=res;
-      this.rerender();   
-    }, (err) => {
-       this.notification.showError(err.error);
-    });
+      $('.check-box').prop('checked', false);
+      this.rerender();
+      }, (err) => {
+        this.notification.showError(err.error);
+        });
   }
 
   rerender(): void {
@@ -96,7 +97,7 @@ export class UnapprovedComponent implements OnInit {
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       this.leaveTableTrigger.next();
-    });
+      });
   }
 
 }

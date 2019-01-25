@@ -17,7 +17,6 @@
                   <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkAll()'/></th>
                   <th>User</th>
                   <th>Date</th>
-                  <th>Approved On</th>
                   <th>Comment</th>
                 </tr>
               </thead>
@@ -26,7 +25,6 @@
                   <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
                   <td>{{l.user_name}}</td>
                   <td>{{l.date}}</td>
-                  <td>{{l.approved_on  |  date: 'dd/MM/yyyy'| nullData}}</td>
                   <td>{{l.comment| nullData}}</td>
                 </tr>
               </tbody>

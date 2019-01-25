@@ -54,6 +54,8 @@
                   <th>Date</th>
                   <th>Punch</th>
                   <th>Reason</th>
+                  <th>Approval Date</th>
+
                 </tr>
               </thead>
               <tbody>
@@ -62,6 +64,7 @@
                   <td>{{l.date}}</td>
                   <td>{{l.punch}}</td>
                   <td>{{l.reason}}</td>
+                  <td>{{l.approved_on | date:'dd/MM/yyyy' | nullData}}</td>
                 </tr>
               </tbody>
             </table>
