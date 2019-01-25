@@ -12,7 +12,7 @@ import * as moment from 'moment';
   selector: 'app-unapproved-outdoor-duties',
   templateUrl: './unapproved-outdoor-duties.component.html',
   styleUrls: ['./unapproved-outdoor-duties.component.css']
-})
+  })
 export class UnapprovedOutdoorDutiesComponent implements OnInit {
 
   isCollapsed = false;
@@ -22,7 +22,7 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
 
-  constructor(private router:Router, private notification:NotificationService, private api:UnapprovedOutdoorDutiesService,private monthandyear:MonthYearService) 
+  constructor(private router:Router, private notification:NotificationService, private api:UnapprovedOutdoorDutiesService,private monthandyear:MonthYearService)
   {
     this.leaveTableOptions = {
       pagingType: 'full_numbers',
@@ -35,16 +35,16 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
     this.api.getAllUnapprovedOutDoorDuties().subscribe(res => {
       this.unapproved_outdoor_duty_data=res;
       this.leaveTableTrigger.next();
-    }, (err) => {
-      this.notification.showError(err.error);
-    });
+      }, (err) => {
+        this.notification.showError(err.error);
+        });
   }
 
   checkAll(){
     if ($('.check-box:checked').length > 0)
-      $('.checkbox').prop('checked', true);
+    $('.checkbox').prop('checked', true);
     else
-      $('.checkbox').prop('checked', false);
+    $('.checkbox').prop('checked', false);
   }
 
   save(){
@@ -52,7 +52,7 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
     $('.checkbox:checked').each(function() {
       var id = $(this).attr('name');
       unapproved_outdoor_ids.push(id);
-    });
+      });
     var postdata = { "outdoor_ids":  unapproved_outdoor_ids}
     if(unapproved_outdoor_ids != undefined && unapproved_outdoor_ids.length > 0)
     {
@@ -60,9 +60,9 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
         unapproved_outdoor_ids = [];
         this.notification.showSuccess('OutDoor Duty approved successfully');
         this.getallODS();
-      }, (err) => {
-        this.notification.showError(err.error);
-      });
+        }, (err) => {
+          this.notification.showError(err.error);
+          });
     }
     else
     {
@@ -74,10 +74,11 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
   {
     this.api.getAllUnapprovedOutDoorDuties().subscribe(res => {
       this.unapproved_outdoor_duty_data=res;
+      $('.check-box').prop('checked', false);
       this.rerender();
-    }, (err) => {
-      this.notification.showError(err.error);
-    });
+      }, (err) => {
+        this.notification.showError(err.error);
+        });
   }
 
   rerender(): void {
@@ -86,7 +87,7 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       this.leaveTableTrigger.next();
-    });
+      });
   }
 
 }

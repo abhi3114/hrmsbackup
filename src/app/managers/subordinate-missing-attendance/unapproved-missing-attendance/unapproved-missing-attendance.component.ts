@@ -10,7 +10,7 @@ import { MonthYearService } from '../../../shared/service/month-year.service';
   selector: 'app-unapproved-missing-attendance',
   templateUrl: './unapproved-missing-attendance.component.html',
   styleUrls: ['./unapproved-missing-attendance.component.css']
-})
+  })
 export class UnapprovedMissingAttendanceComponent implements OnInit {
 
   isCollapsed = false;
@@ -20,30 +20,30 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
 
-  constructor(private router:Router, private notification:NotificationService, private api:UnapprovedMissingAttendanceService,private monthandyear:MonthYearService) 
+  constructor(private router:Router, private notification:NotificationService, private api:UnapprovedMissingAttendanceService,private monthandyear:MonthYearService)
   {
     this.leaveTableOptions = {
       pagingType: 'full_numbers',
       lengthMenu: [[5, 10, 20, 50,-1],
       [5, 10, 20, 50,"All" ]]
     };
-    
+
   }
 
   ngOnInit() {
     this.api.getAllUnapprovedMissingAttendaces().subscribe(res => {
       this.unapproved_missing_attendace=res;
       this.leaveTableTrigger.next();
-    }, (err) => {
-     this.notification.showError(err.error);
-    });
+      }, (err) => {
+        this.notification.showError(err.error);
+        });
   }
 
   checkAll(){
     if ($('.check-box:checked').length > 0)
-      $('.checkbox').prop('checked', true);
+    $('.checkbox').prop('checked', true);
     else
-      $('.checkbox').prop('checked', false);
+    $('.checkbox').prop('checked', false);
   }
 
   save(){
@@ -51,7 +51,7 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
     $('.checkbox:checked').each(function() {
       var id = $(this).attr('name');
       attendance_missing_ids.push(id);
-    });
+      });
     var postdata = { "attendance_missing_ids":  attendance_missing_ids}
     if(attendance_missing_ids != undefined && attendance_missing_ids.length > 0)
     {
@@ -59,9 +59,9 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
         attendance_missing_ids = [];
         this.notification.showSuccess('Missing Attendance approved successfully');
         this.refreshData();
-      }, (err) => {
-        this.notification.showError(err.error);
-      });
+        }, (err) => {
+          this.notification.showError(err.error);
+          });
     }
     else
     {
@@ -73,10 +73,11 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
   {
     this.api.getAllUnapprovedMissingAttendaces().subscribe(res => {
       this.unapproved_missing_attendace=res;
+      $('.check-box').prop('checked', false);
       this.rerender();
-    }, (err) => {
-     this.notification.showError(err.error);
-    }); 
+      }, (err) => {
+        this.notification.showError(err.error);
+        });
   }
 
   rerender(): void {
@@ -85,6 +86,6 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       this.leaveTableTrigger.next();
-    });
+      });
   }
 }
