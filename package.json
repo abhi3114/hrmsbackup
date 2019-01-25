@@ -8,8 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "staging-deploy": "git pull origin staging && npm install && npm run build --prod",
-    "prod-deploy": "git pull origin master && npm install && npm run build --prod"
+    "staging-deploy": "git pull origin staging && npm install && npm install - g @angular/cli && ng build --prod --aot",
+    "prod-deploy": "git pull origin master && npm install && npm install - g @angular/cli &&  ng build --prod --aot"
   },
   "private": true,
   "dependencies": {
