@@ -16,10 +16,11 @@ import { ApprovedLateMarksComponent } from './subordinate-late-marks/approved-la
 import { UnapprovedLateMarksComponent } from './subordinate-late-marks/unapproved-late-marks/unapproved-late-marks.component';
 import { ApprovedMissingAttendanceComponent } from './subordinate-missing-attendance/approved-missing-attendance/approved-missing-attendance.component';
 import { UnapprovedMissingAttendanceComponent } from './subordinate-missing-attendance/unapproved-missing-attendance/unapproved-missing-attendance.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
-  imports: [
+    imports: [
     CommonModule,
     DataTablesModule,
     ManagerRoutingModule,
@@ -30,9 +31,10 @@ import { UnapprovedMissingAttendanceComponent } from './subordinate-missing-atte
     ReactiveFormsModule,
     BrowserAnimationsModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule
-  ],
-  declarations: [
+    OwlNativeDateTimeModule,
+    SharedModule
+    ],
+    declarations: [
     ApprovedComponent,
     UnapprovedComponent,
     ApprovedLateMarksComponent,
@@ -42,6 +44,6 @@ import { UnapprovedMissingAttendanceComponent } from './subordinate-missing-atte
     ApprovedMissingAttendanceComponent,
     UnapprovedMissingAttendanceComponent,
 
-  ]
-})
+    ]
+    })
 export class ManagersModule { }

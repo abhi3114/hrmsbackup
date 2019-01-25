@@ -65,7 +65,7 @@
                   <td>{{l.end_date |  date: 'dd/MM/yyyy'}}</td>
                   <td>{{l.leave_type}}</td>
                   <td>{{l.reason}}</td>
-                  <td>{{l.approved_on |  date: 'dd/MM/yyyy'}}</td>
+                  <td>{{l.approved_on |  date: 'dd/MM/yyyy'| nullData}}</td>
                 </tr>
               </tbody>
             </table>

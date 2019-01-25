@@ -62,7 +62,7 @@
                 <td>{{i.name}}</td>
                 <td>{{i.department}}</td>
                 <td>{{i.role }}</td>
-                <td>{{i.pan_number}}</td>
+                <td>{{i.pan_number | nullData}}</td>
                 <td><i class="fa fa-inr" aria-hidden="true"></i> {{convertAmountintoCurrency(i.salary)}}</td>
                 <td>{{i.date_of_joining | date:'dd/MM/yyyy'}}</td>
                 <td  align="center"><a target="_blank"

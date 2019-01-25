@@ -76,11 +76,11 @@
           </thead>
          <tbody>
           <tr  *ngFor="let r of report_data">
-            <td>{{r.pan}}</td>
+            <td>{{r.pan | nullData}}</td>
             <td>{{r.user_name}}</td>
             <td>{{r.employee_number}}</td>
-            <td *ngFor="let a of r.data"><i class="fa fa-inr" aria-hidden="true"></i> {{convertAmountintoCurrency(a.amount)}}</td>
-            <td><i class="fa fa-inr" aria-hidden="true"></i> {{convertAmountintoCurrency(r.total)}}</td>
+            <td *ngFor="let a of r.data"><i class="fa fa-inr" aria-hidden="true"></i> {{a.amount | indianCurrency}}</td>
+            <td><i class="fa fa-inr" aria-hidden="true"></i> {{r.total | indianCurrency}}</td>
           </tr>
         </tbody>
       </table>
