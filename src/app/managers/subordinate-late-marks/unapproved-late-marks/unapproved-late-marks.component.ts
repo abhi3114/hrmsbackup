@@ -11,7 +11,7 @@ import * as moment from 'moment';
   selector: 'app-unapproved-late-marks',
   templateUrl: './unapproved-late-marks.component.html',
   styleUrls: ['./unapproved-late-marks.component.css']
-})
+  })
 export class UnapprovedLateMarksComponent implements OnInit {
 
   isCollapsed = false;
@@ -34,16 +34,16 @@ export class UnapprovedLateMarksComponent implements OnInit {
     this.api.getAllUnapprovedSubordinateLateMarks().subscribe(res => {
       this.unapproved_late_mark_data=res;
       this.leaveTableTrigger.next();
-    }, (err) => {
-      this.notification.showError(err.error);
-    });
+      }, (err) => {
+        this.notification.showError(err.error);
+        });
   }
 
   checkAll(){
     if ($('.check-box:checked').length > 0)
-      $('.checkbox').prop('checked', true);
+    $('.checkbox').prop('checked', true);
     else
-      $('.checkbox').prop('checked', false);
+    $('.checkbox').prop('checked', false);
   }
 
   save()
@@ -52,7 +52,7 @@ export class UnapprovedLateMarksComponent implements OnInit {
     $('.checkbox:checked').each(function() {
       var id = $(this).attr('name');
       unapproved_late_marks.push(id);
-    });
+      });
     var postdata = { "late_mark_ids":  unapproved_late_marks}
     if(unapproved_late_marks != undefined && unapproved_late_marks.length > 0)
     {
@@ -60,9 +60,9 @@ export class UnapprovedLateMarksComponent implements OnInit {
         unapproved_late_marks = [];
         this.notification.showSuccess('Late mark approved successfully');
         this.refreshData();
-      }, (err) => {
-        this.notification.showError(err.error);
-      });
+        }, (err) => {
+          this.notification.showError(err.error);
+          });
     }
     else
     {
@@ -74,10 +74,11 @@ export class UnapprovedLateMarksComponent implements OnInit {
   {
     this.api.getAllUnapprovedSubordinateLateMarks().subscribe(res => {
       this.unapproved_late_mark_data=res;
+      $('.check-box').prop('checked', false);
       this.rerender();
-    }, (err) => {
-      this.notification.showError(err.error);
-    });
+      }, (err) => {
+        this.notification.showError(err.error);
+        });
   }
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -85,7 +86,7 @@ export class UnapprovedLateMarksComponent implements OnInit {
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       this.leaveTableTrigger.next();
-    });
+      });
   }
 
 }
