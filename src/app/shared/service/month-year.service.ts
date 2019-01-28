@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import * as moment from 'moment';
 @Injectable({
   providedIn: 'root'
   })
@@ -31,5 +31,29 @@ export class MonthYearService {
     var firstDay = new Date(y, m, 1);var lastDay = new Date(y, m + 1, 0);
     var filterData=[];filterData.push({firstDay:firstDay,lastDay:lastDay});
     return filterData;
+  }
+
+  getSalaryEditableRange(selectedmonth,selectedyear)
+  {
+    var currentDate=moment();
+    var startOfMonth =moment().startOf('month');
+    var previousMonth =moment().subtract(1, 'months');
+    var startOfPreviousMonth =moment(previousMonth).startOf('month');
+    var TenthOfCurrentMonth=moment(startOfMonth).add(10,'d');
+    var EleventhOfPreviousMonth =moment(startOfPreviousMonth).add(11,'d');
+    if((currentDate.isBetween(EleventhOfPreviousMonth, TenthOfCurrentMonth)))
+    {
+      var editable_start_date=moment(previousMonth).startOf('month');
+      var editable_last_date=moment(previousMonth).endOf('month');
+    }
+    else
+    {
+      var editable_start_date=moment().startOf('month');
+      var editable_last_date=moment().endOf('month');
+    }
+    var hard_coded_date="15"+"/"+selectedmonth+"/"+selectedyear;
+    var comparable_date= moment(hard_coded_date,'DD/MM/YYYY');
+    var isBetween = comparable_date.isBetween(editable_start_date, editable_last_date);
+    return isBetween;
   }
 }

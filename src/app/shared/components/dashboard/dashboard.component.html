@@ -17,7 +17,7 @@
       <div class="panel box box-primary">
         <div class="box-header with-border">
           <h4 class="box-title">
-            <a data-toggle="collapse" data-target="#clienttDetails" style="cursor: pointer; color: #fff;">
+            <a data-toggle="collapse" data-target="#clienttDetails" style="cursor: pointer; color: #f8851c;">
               <h4 class="modal-title" id="H3">MY LEAVE DETAILS</h4>
             </a>
           </h4>
@@ -45,7 +45,7 @@
                   <td>{{l.reason}}</td>
                   <td *ngIf="l.approved==false">No</td>
                   <td *ngIf="l.approved==true">Yes</td>
-                  <td>{{l.approved_on | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
                 </tr>
               </tbody>
             </table>
@@ -57,7 +57,7 @@
     <div class="panel box box-primary">
       <div class="box-header with-border">
         <h4 class="box-title">
-          <a data-toggle="collapse" data-target="#INVENTdETAILS" style="cursor: pointer; color: #fff;">
+          <a data-toggle="collapse" data-target="#INVENTdETAILS" style="cursor: pointer; color: #f8851c;">
             <h4 class="modal-title" id="H3">MY ASSET DETAILS</h4>
           </a>
         </h4>
@@ -77,12 +77,12 @@
               </thead>
               <tbody>
                 <tr *ngFor="let i of invertoryData">
-                  <td ng-bind=""> {{i.title}} </td>
-                  <td ng-bind=""> {{i.quantity}} </td>
-                  <td>{{i.date_of_issue}}</td>
+                  <td> {{i.title}} </td>
+                  <td> {{i.quantity}} </td>
+                  <td>{{i.date_of_issue | date: 'dd/MM/yyyy' | nullData}}</td>
                   <td *ngIf="i.returned==false">No</td>
                   <td *ngIf="i.returned==true">Yes</td>
-                  <td ng-bind="">{{i.returned_on}}</td>
+                  <td ng-bind="">{{i.returned_on | date: 'dd/MM/yyyy' | nullData}}</td>
                 </tr>
               </tbody>
             </table>
@@ -94,7 +94,7 @@
     <div class="panel box box-primary">
       <div class="box-header with-border">
         <h4 class="box-title">
-          <a data-toggle="collapse" data-target="#ODtDetails" style="cursor: pointer; color: #fff;">
+          <a data-toggle="collapse" data-target="#ODtDetails" style="cursor: pointer; color: #f8851c;">
             <h4 class="modal-title" id="H3">MY OUTDOOR DUTY DETAILS</h4>
           </a>
         </h4>
@@ -125,7 +125,7 @@
                   <td> {{l.reason}}</td>
                   <td *ngIf="l.approved==true">Yes</td>
                   <td *ngIf="l.approved==false">No</td>
-                  <td>{{l.approved_on}}</td>
+                  <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
                 </tr>
               </tbody>
             </table>
@@ -137,7 +137,7 @@
     <div class="panel box box-primary">
       <div class="box-header with-border">
         <h4 class="box-title">
-          <a data-toggle="collapse" data-target="#LMtDetails" style="cursor: pointer; color: #fff;">
+          <a data-toggle="collapse" data-target="#LMtDetails" style="cursor: pointer; color: #f8851c;">
             <h4 class="modal-title" id="H3">MY LATE MARKS DETAILS</h4>
           </a>
         </h4>
@@ -161,7 +161,7 @@
                   <td *ngIf="l.approved==true">{{l.comment}}</td>
                   <td *ngIf="l.approved==false">No</td>
                   <td *ngIf="l.approved==true">Yes</td>
-                  <td>{{l.approved_on}}</td>
+                  <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
                 </tr>
               </tbody>
             </table>
@@ -173,7 +173,7 @@
     <div class="panel box box-primary">
       <div class="box-header with-border">
         <h4 class="box-title">
-          <a data-toggle="collapse" data-target="#MATDetails" style="cursor: pointer; color: #fff;">
+          <a data-toggle="collapse" data-target="#MATDetails" style="cursor: pointer; color: #f8851c;">
             <h4 class="modal-title" id="H3">MY MISSING ATTENDANCE DETAILS</h4>
           </a>
         </h4>
@@ -198,7 +198,7 @@
                 <td >{{l.date}}</td>
                 <td *ngIf="l.approved==false">No</td>
                 <td *ngIf="l.approved==true">Yes</td>
-                <td> {{l.approved_on}}</td>
+                <td> {{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
                 <td>{{l.punch}}</td>
                 <td>{{l.reason}}</td>
                 <td><button (click)="updateMissingAttendance(updateMissingAttendanceTemplate,l.id,l.reason)" type="button" class="add-dynamic-button" [attr.data-maId]="'#' + l.id"><i class="fa fa-edit" aria-hidden="true"></i></button></td>
@@ -213,7 +213,7 @@
   <div class="panel box box-primary">
     <div class="box-header with-border">
       <h4 class="box-title">
-        <a data-toggle="collapse" data-target="#clienttDetails" style="cursor: pointer; color: #fff;">
+        <a data-toggle="collapse" data-target="#clienttDetails" style="cursor: pointer; color: #f8851c;">
           <h4 class="modal-title" id="H3">MY MENTORSHIP PROGRAM DETAILS</h4>
         </a>
       </h4>
@@ -233,7 +233,7 @@
               <tr *ngFor="let m of mentorData">
                 <td *ngIf="isMentororMentee=='mentee'">{{ m.mentor }}</td>
                 <td *ngIf="isMentororMentee=='mentor'">{{ m.mentee }}</td>
-                <td><button type="button" class="btn bg-orange btn-flat" (click)="recordMentorshipFeeback(i.mentorship_id,i.user)">Record your response</button></td>
+                <td><button type="button" class="btn bg-orange btn-flat" (click)="recordMentorshipFeeback(recordMentorshipResponse,m.mentorship_id,m.user)">Record your response</button></td>
               </tr>
             </tbody>
           </table>
@@ -248,14 +248,14 @@
 <ng-template #leaveTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for leave</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeLeaveModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form  novalidate (ngSubmit)="validateApplyLeaveForm()" [formGroup]="applyLeaveForm" autocomplete="off">
       <div class="row">
-        <div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Start Date<sup style="color:red;">*</sup></label>
@@ -282,7 +282,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div class="col-md-12">
         <div class="col-md-6">
           <div class="form-group">
             <label>Leave type<sup style="color:red;">*</sup></label>
@@ -311,7 +311,7 @@
       </div>
       <div class="" style="text-align: center;">
         <div class="">
-          <button type="submit" class="btn btn-primary" [disabled]="applyLeaveForm.invalid">Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="applyLeaveForm.invalid" [ladda]="isLoading">Submit</button>
         </div>
       </div>
     </div>
@@ -321,14 +321,14 @@
 <ng-template #outdoorDutiesTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for Outdoor Duty</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeODModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form novalidate (ngSubmit)="validateApplyOutdoorDutiesForm()" [formGroup]="applyOutdoorDutiesForm" autocomplete="off">
       <div class="row">
-        <div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Start Date and Time<sup style="color:red;">*</sup></label>
@@ -353,6 +353,8 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Project/Firm Name<sup style="color:red;">*</sup></label>
@@ -375,6 +377,8 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Location<sup style="color:red;">*</sup></label>
@@ -399,16 +403,16 @@
           </div>
         </div>
         <div class="" style="margin-top: 23px; text-align: center;">
-          <button type="submit" class="btn btn-primary" [disabled]="applyOutdoorDutiesForm.invalid">Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="applyOutdoorDutiesForm.invalid" [ladda]="isLoading">Submit</button>
         </div>
       </div>
     </form>
   </div>
 </ng-template>
-<ng-template #lateMarkTemplate>
+<ng-template #lateMarkTemplate >
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for Late Mark</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeLMModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -441,7 +445,7 @@
           </div>
         </div>
         <div class="" style="text-align: center;">
-          <button type="submit" class="btn btn-primary" [disabled]="applyLateMarksForm.invalid" >Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="applyLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
         </div>
       </div>
     </form>
@@ -450,14 +454,14 @@
 <ng-template #missingAttendanceTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for Missing Attendance</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeMAModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form  novalidate (ngSubmit)="validateMissingAttendanceForm()" [formGroup]="applyMissingAttendanceForm" autocomplete="off">
       <div class="row">
-        <div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Date and Time<sup style="color:red;">*</sup></label>
@@ -485,7 +489,7 @@
             </div>
           </div>
         </div>
-        <div>
+        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Comment<sup style="color:red;">*</sup></label>
@@ -497,10 +501,11 @@
               </div>
             </div>
           </div>
+          <div class="col-md-6"></div>
         </div>
       </div>
       <div class="" style="text-align: center;">
-        <button type="submit" class="btn btn-primary" [disabled]="applyMissingAttendanceForm.invalid" >Submit</button>
+        <button type="submit" class="btn btn-primary" [disabled]="applyMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
       </div>
     </form>
   </div>
@@ -508,7 +513,7 @@
 <ng-template #userSalarySliptemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Download Salary</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeDownloadSalary()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -519,7 +524,7 @@
           <div class="col-md-3">
             <div class="form-group">
               <label >Month<sup style="color:red;">*</sup></label>
-              <select name="bnknm" class="form-control select2 building-select"  ng-model="selectedmonth" style="width: 100%;" [(ngModel)]="salarySlipDownloadData.selectedmonth"
+              <select name="bnknm" class="form-control select2 building-select"  style="width: 100%;" [(ngModel)]="salarySlipDownloadData.selectedmonth"
               formControlName="month" required [class.error1]="!salarySlipDownloadForm.controls.month.valid && salarySlipDownloadForm.controls.month.dirty"  >
               <option  value="" disabled="">Select Month</option>
               <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
@@ -536,7 +541,7 @@
     <div class="col-md-3">
       <div class="form-group">
         <label>Year<sup style="color:red;">*</sup></label>
-        <select name="endDate" class="form-control select2 building-select"  ng-model="selectedyear"
+        <select name="endDate" class="form-control select2 building-select"
         style="width: 100%;" [(ngModel)]="salarySlipDownloadData.selectedyear"  formControlName="year"
         required [class.error1]="!salarySlipDownloadForm.controls.year.valid && salarySlipDownloadForm.controls.year.dirty" >
         <option  value="" disabled="">Select Year</option>
@@ -550,7 +555,7 @@
     </div>
   </div>
   <div class="col-md-3" style="margin-top: 23px;">
-    <button type="submit" class="btn btn-primary" [disabled]="salarySlipDownloadForm.invalid"> <i class="fa fa-download" aria-hidden="true"></i> Download</button>
+    <button type="submit" class="btn btn-primary" [disabled]="salarySlipDownloadForm.invalid" [ladda]="isLoading"> <i class="fa fa-download" aria-hidden="true"></i> Download</button>
   </div>
 </div>
 </div>
@@ -581,7 +586,7 @@
         </div>
       </div>
       <div class="" style="margin-top: 23px; text-align: center;">
-       <button type="submit" class="btn btn-primary" [disabled]="updateMissingAttendanceForm.invalid">Submit</button>
+      <button type="submit" class="btn btn-primary" [disabled]="updateMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
      </div>
 
    </div>
@@ -612,11 +617,85 @@
         </div>
       </div>
       <div class="" style="margin-top: 23px; text-align: center;">
-       <button type="submit" class="btn btn-primary" [disabled]="updateLateMarksForm.invalid">Submit</button>
+       <button type="submit" class="btn btn-primary" [disabled]="updateLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
      </div>
 
    </div>
  </form>
 </div>
+</ng-template>
+<ng-template #recordMentorshipResponse>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Record Mentorship Feedback</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeMentorshipModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table  table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Sr. No.</th>
+                <th *ngIf="mentorormentee=='mentor'">Topic</th>
+                <th *ngIf="mentorormentee=='mentee'">Topic</th>
+                <th>Rating</th>
+                <th>Comments</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td *ngIf="mentorormentee=='mentor'">My mentee regularly communicated with me</td>
+                <td *ngIf="mentorormentee=='mentee'">The mentor was attentive and focussed during the program</td>
+                <td> <rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating1" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment1" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment1" /></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td *ngIf="mentorormentee=='mentor'">My mentee was a quick learner and curious towards work</td>
+                <td *ngIf="mentorormentee=='mentee'">The mentor communicated with me on regular basis</td>
+                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating2" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment2" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment2"   /></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td *ngIf="mentorormentee=='mentor'">My mentee was concerned about challenges during assigned tasks and was keen to overcome it</td>
+                <td *ngIf="mentorormentee=='mentee'">The mentor provided me appropriate, relevant and handful information</td>
+                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating3" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment3" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment3"   /></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td *ngIf="mentorormentee=='mentor'">My mentee demonstrated a reasonable interest/concern towards me in my quest to offer assistance</td>
+                <td *ngIf="mentorormentee=='mentee'">I am aware about the resources and tools</td>
+                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating4" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment4" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment4"  /></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td *ngIf="mentorormentee=='mentor'">My mentee's attitude and behaviour was professional and courteous</td>
+                <td *ngIf="mentorormentee=='mentee'">The mentor was supportive and encouraged me to make decisions that will lead to success</td>
+                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating5" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment5" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment5"   /></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td *ngIf="mentorormentee=='mentor'">I recommend my mentee for future mentor program</td>
+                <td *ngIf="mentorormentee=='mentee'">I would recommend my mentor for further mentorship program</td>
+                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating6" class="form-control" style="border: none;"></rating></td>
+                <td><input name="comment6" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment6" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="" style="margin-top: 23px; text-align: center;">
+       <button type="button" class="btn btn-primary" (click)="saveMentorshipResponse()" [ladda]="isLoading">Submit</button>
+     </div>
+   </div>
+ </div>
 </ng-template>
 

@@ -1,0 +1,69 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+   <ol class="breadcrumb">
+    <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+    <li class="active">Salary</li>
+  </ol>
+  <section class="content-header">
+    <form>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label >Month<sup style="color:red;">*</sup></label>
+              <select name="bnknm" class="form-control select2 building-select"  [(ngModel)]="salary_filter.selectedmonth" style="width: 100%;" required>
+                <option  value="" disabled="">Select Month</option>
+                <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Year<sup style="color:red;">*</sup></label>
+              <select name="endDate" class="form-control select2 building-select" [(ngModel)]="salary_filter.selectedyear" style="width: 100%;" required>
+                <option  value="" disabled="">Select Year</option>
+                <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+  <section class="content">
+    <div class="row">
+      <div class="box-body">
+        <div class="">
+          <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="salaryTableOptions"  [dtTrigger]="salaryTableTrigger">
+            <thead>
+              <tr>
+               <th>Name</th>
+               <th>Department</th>
+               <th>Role</th>
+               <th>Pan No.</th>
+               <th>Salary</th>
+               <th>Date of Joining</th>
+               <th>Edit</th>
+             </tr>
+           </thead>
+           <tbody>
+            <tr *ngFor="let i of user_data">
+              <td>{{i.name}}</td>
+              <td>{{i.department}}</td>
+              <td>{{i.role }}</td>
+              <td>{{i.pan_number | nullData}}</td>
+              <td><i class="fa fa-inr" aria-hidden="true"></i> {{i.salary | indianCurrency}}</td>
+              <td>{{i.date_of_joining | date:'dd/MM/yyyy'}}</td>
+              <td  align="center"><a target="_blank"
+                style="border-radius: 20px; background-color: #dd4b39;font-size: 10px;  padding: 5px 15px 5px 15px; color: white;" [routerLink]="['/home/users',i.id,'payments']" [queryParams]="{month:salary_filter.selectedmonth,year:salary_filter.selectedyear}">EDIT</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</div>
+
+

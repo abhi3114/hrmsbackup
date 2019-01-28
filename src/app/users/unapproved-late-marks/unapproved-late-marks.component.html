@@ -63,7 +63,7 @@
             <td *ngIf="l.approved==true">{{l.comment}}</td>
             <td *ngIf="l.approved==false">No</td>
             <td *ngIf="l.approved==true">Yes</td>
-            <td>{{l.approved_on}}</td>
+            <td>{{l.approved_on | date: 'dd/MM/yyyy'| nullData}}</td>
           </tr>
         </tbody>
       </table>
@@ -75,7 +75,7 @@
 </div>
 <ng-template #recordLateMarkResponse>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Record Reason for Missing Attendance</h4>
+    <h4 class="modal-title pull-left">Record Late Mark</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>

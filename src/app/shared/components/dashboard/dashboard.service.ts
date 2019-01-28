@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders} from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root'
   })
@@ -82,6 +82,12 @@ export class DashBoardService {
   getUserSalarySlip(month,year)
   {
     return this.http.get(environment.baseUrl+'salaries/'+month +'/'+year+'/payment_slip',{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+      "Content-Type": 'application/json'})})
+  }
+
+  postfeeback(params)
+  {
+    return this.http.post(environment.baseUrl+'feedbacks',params,{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
       "Content-Type": 'application/json'})})
   }
 

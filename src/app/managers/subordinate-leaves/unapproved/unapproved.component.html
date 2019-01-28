@@ -1,44 +1,42 @@
 <div class="wrapper">
   <div class="content-wrapper">
     <ol class="breadcrumb">
-      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-      <li class="active">UnApproved Leaves</li>
+      <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li class="active">Subordinate (Unapproved Leaves)</li>
     </ol>
-    <form (ngSubmit)="save()" [formGroup]="unapprovedLeavesForm">
-      <section class="content-header">
-        <button type="button" class="btn bg-orange btn-flat ladda-button" ladda="loadingDemo" data-style="expand-right"><span class="ladda-label">Mark Approved</span><span class="ladda-spinner"></span></button>
-      </section>
-      <section class="content">
-        <div class="row">
-          <div class="box-body">
-            <div>
-              <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>User</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>No of days</th>
-                    <th>Reason</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let l of unapproved_leaves_data">
-                    <td><input type="checkbox" [formControlName]="l.id"></td>
-                    <td>{{l.user_name}}</td>
-                    <td>{{l.start_date}}</td>
-                    <td>{{l.end_date}}</td>
-                    <td> {{l.no_of_days}}
-                    <td>{{l.reason}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+    <section class="content-header">
+      <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div>
+            <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
+              <thead>
+                <tr>
+                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkALL()'/></th>
+                  <th>User</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Leave Type</th>
+                  <th>Reason</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of unapproved_leaves_data">
+                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
+                  <td>{{l.user_name}}</td>
+                  <td>{{l.start_date |  date: 'dd/MM/yyyy'}}</td>
+                  <td>{{l.end_date |  date: 'dd/MM/yyyy'}}</td>
+                  <td> {{l.leave_type}}
+                  <td>{{l.reason}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </section>
-    </form>
+      </div>
+    </section>
   </div>
 </div>
 
