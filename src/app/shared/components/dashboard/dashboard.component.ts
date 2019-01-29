@@ -245,6 +245,8 @@ export class DashboardComponent implements OnInit {
   validateApplyLeaveForm()
   {
     this.isLoading=true;
+    this.applyLeavesData.start_date=moment(this.applyLeavesData.start_date).format('DD/MM/YYYY');
+    this.applyLeavesData.end_date=moment(this.applyLeavesData.end_date).format('DD/MM/YYYY');
     this.api.applyforLeave(this.applyLeavesData).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
