@@ -9,19 +9,20 @@
     <form>
       <div class="row">
         <div class="col-md-12">
-          <div class="col-md-2">
+          <div class="col-md-1" >   <label style="color:#757575; display: inline-block; font-weight: 400;    margin: 8px 0 0 -5px">Add Filter<!-- <sup style="color:red;">*</sup> --></label></div>
+          <div class="col-md-2 alc alc-fix">
             <div class="form-group">
-              <label style="color:#757575; display: inline-block; font-weight: 400;">Month<sup style="color:red;">*</sup></label>
-              <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth"  required>
+           <!--    <label style="color:#757575; display: inline-block; font-weight: 400;">Month<sup style="color:red;">*</sup></label> -->
+              <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth"  required style="width: 100%;">
                 <option  value="" disabled="">Select Month</option>
                 <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
               </select>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 alc">
             <div class="form-group">
-              <label style="color:#757575; display: inline-block; font-weight: 400;">Year<sup style="color:red;">*</sup></label>
-              <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear"  required>
+             <!--  <label style="color:#757575; display: inline-block; font-weight: 400;">Year<sup style="color:red;">*</sup></label> -->
+              <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear"  required style="width: 100%;">
                 <option  value="" disabled="">Select Year</option>
                 <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
               </select>

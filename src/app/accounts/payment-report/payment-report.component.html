@@ -11,10 +11,11 @@
       <h1 class="title">Payment Report</h1>
       <form novalidate (ngSubmit)="validatePaymentReportForm()" [formGroup]="paymentReportForm" autocomplete="off">
         <div class="">
-         <div class="col-md-2">
+          <div class="col-md-1" >   <label style="color:#757575; display: inline-block; font-weight: 400;    margin: 8px 0 0 -5px">Add Filter<!-- <sup style="color:red;">*</sup> --></label></div>
+         <div class="col-md-2 alc alc-fix">
           <div class="form-group">
-            <label style="color:#757575; display: inline-block; font-weight: 400;">Start Date<sup style="color:red;">*</sup></label>
-            <input name="bnknm" placeholder="Enter Date" type='text' class="form-control d-inline" [owlDateTime]="report_start_date" [owlDateTimeTrigger]="report_start_date"  formControlName="start_date" required [class.error1]="!paymentReportForm.controls.start_date.valid && paymentReportForm.controls.start_date.dirty" [(ngModel)]="paymentReportData.start_date" />
+            <!-- <label style="color:#757575; display: inline-block; font-weight: 400;">Start Date<sup style="color:red;">*</sup></label> -->
+            <input name="bnknm" placeholder="Enter Date" type='text' class="form-control d-inline" [owlDateTime]="report_start_date" [owlDateTimeTrigger]="report_start_date"  formControlName="start_date" required [class.error1]="!paymentReportForm.controls.start_date.valid && paymentReportForm.controls.start_date.dirty" [(ngModel)]="paymentReportData.start_date"  style="width: 100%;" />
             <owl-date-time  [pickerType]="'calendar'" #report_start_date></owl-date-time>
             <div *ngIf="( paymentReportForm.get('start_date').hasError('minlength') || paymentReportForm.get('start_date').hasError('pattern') || paymentReportForm.get('start_date').hasError('required') ) && paymentReportForm.get('start_date').touched">
               <div class="error" *ngIf="(paymentReportForm.get('start_date').hasError('required') && paymentReportForm.get('start_date').touched)">
@@ -24,10 +25,10 @@
           </div>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-2 alc ">
           <div class="form-group">
-            <label style="color:#757575; display: inline-block; font-weight: 400;">End Date<sup style="color:red;">*</sup></label>
-            <input name="endDate" type='text' placeholder="Enter Date" class="form-control d-inline" [owlDateTime]="report_end_date" [owlDateTimeTrigger]="report_end_date" formControlName="end_date" required [class.error1]="!paymentReportForm.controls.end_date.valid && paymentReportForm.controls.end_date.dirty" [(ngModel)]="paymentReportData.end_date" />
+           <!--  <label style="color:#757575; display: inline-block; font-weight: 400;">End Date<sup style="color:red;">*</sup></label> -->
+            <input name="endDate" type='text' placeholder="Enter Date" class="form-control d-inline" [owlDateTime]="report_end_date" [owlDateTimeTrigger]="report_end_date" formControlName="end_date" required [class.error1]="!paymentReportForm.controls.end_date.valid && paymentReportForm.controls.end_date.dirty" [(ngModel)]="paymentReportData.end_date" style="width: 100%;"  />
             <owl-date-time  [pickerType]="'calendar'" #report_end_date></owl-date-time>
             <div *ngIf="( paymentReportForm.get('end_date').hasError('minlength') || paymentReportForm.get('end_date').hasError('pattern') || paymentReportForm.get('end_date').hasError('required') ) && paymentReportForm.get('end_date').touched">
               <div class="error" *ngIf="(paymentReportForm.get('end_date').hasError('required') && paymentReportForm.get('end_date').touched)">
@@ -38,7 +39,7 @@
         </div>
         <div class="col-md-4">
           <div class="form-group multiselect-holder" >
-            <label>Components<sup style="color:red;">*</sup></label><br>
+           <!--  <label>Components<sup style="color:red;">*</sup></label> -->
             <ng-multiselect-dropdown
             [placeholder]="'Select Component'"
             [data]="dropdownList"
@@ -47,7 +48,7 @@
             (onSelect)="onItemSelect($event)"
             (onSelectAll)="onSelectAll($event)"
 
-            formControlName="components" required [class.error1]="!paymentReportForm.controls.components.valid && paymentReportForm.controls.components.dirty"
+            formControlName="components" required [class.error1]="!paymentReportForm.controls.components.valid && paymentReportForm.controls.components.dirty" class="form-control d-inline" style="width: 100%;"
             >
           </ng-multiselect-dropdown>
           <div *ngIf="( paymentReportForm.get('components').hasError('minlength') || paymentReportForm.get('components').hasError('pattern') || paymentReportForm.get('components').hasError('required') ) && paymentReportForm.get('components').touched">
@@ -57,8 +58,8 @@
           </div>
         </div>
       </div>
-      <div class="col-md-1" style="margin-top: 25px;">
-        <button type="submit" class="btn bg-orange btn-flat" [disabled]="paymentReportForm.invalid">Submit</button>
+      <div class="col-md-1" >
+        <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="paymentReportForm.invalid">Submit</button>
       </div>
     </div>
   </form>

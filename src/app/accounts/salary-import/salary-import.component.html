@@ -7,19 +7,20 @@
     <section class="content-header">
       <h1 class="title">Salary Import</h1>
       <div class="">
-        <div class="col-md-2">
+         <div class="col-md-1" >   <label style="color:#757575; display: inline-block; font-weight: 400;    margin: 8px 0 0 -5px">Add Filter<!-- <sup style="color:red;">*</sup> --></label></div>
+        <div class="col-md-2  alc alc-fix">
           <div class="form-group">
-            <label style="color:#757575; display: inline-block; font-weight: 400;" >Month<sup style="color:red;">*</sup></label>
-            <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth" style="" required>
+           <!--  <label style="color:#757575; display: inline-block; font-weight: 400;" >Month<sup style="color:red;">*</sup></label> -->
+            <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth" style="" required style="width: 100%;">
               <option  value="" disabled="">Select Month</option>
               <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
             </select>
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 alc">
           <div class="form-group">
-            <label style="color:#757575; display: inline-block; font-weight: 400;">Year<sup style="color:red;">*</sup></label>
-            <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear" style="" required>
+           <!--  <label style="color:#757575; display: inline-block; font-weight: 400;">Year<sup style="color:red;">*</sup></label> -->
+            <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear" style="" required style="width: 100%;">
               <option  value="" disabled="">Select Year</option>
               <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
             </select>
@@ -33,7 +34,7 @@
 
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <button type="submit" class="btn bg-orange btn-flat btn-salary" (click)="importCsv()" [ladda]="isLoading" style="padding: 6px 10px;">Import</button>&nbsp;
           <button type="button" class="btn bg-orange btn-flat btn-salary" (click)="resetCsv()">Reset</button>
         </div>
