@@ -239,7 +239,7 @@ dl.booking-grid {
   .my-custom-stars .star-button.star-off .material-icons {
       color: #99ccff;
       }*/
-      .modal-custom{width: 90%;}
+      .modal-custom{width: 80%;}
       .error{color: maroon;}
       .fixed .wrapper {
         overflow: auto!important;
@@ -294,7 +294,6 @@ dl.booking-grid {
        color: #FF9800;
      }
      rating span:focus {border:none; outline : 0}
-     .modal-custom{width: 80%}
      .ladda-button {font-size: 14px!important; padding: 6px 18px!important;background: #f39c12!important;}
      .login-box-body .ladda-button{font-size: 14px!important; padding: 6px 18px!important;background: #f39c12!important; color: #fff!important;}
      .ladda-button[data-style=expand-right][data-loading] {
@@ -373,7 +372,7 @@ i.fa.fa-angle-down {
 .skin-blue .sidebar-menu > li:hover > a, .skin-blue .sidebar-menu > li.active > a {
     color: #7c7c7c;
     background: #ffffff;
-    border-right-color: #F07B00; 
+    border-right-color: #F07B00;
 }
 .skin-blue .sidebar-menu > li > a {
     border-right: 5px solid transparent;
@@ -581,7 +580,7 @@ table.dataTable.no-footer{    border-bottom: 1px solid #cecece;
 .modal-body .form-control{    background-color: #e8f2f4; border-color: #e8f2f4;
     color: #2583a2;}
 .modal-content {
-    max-width: 660px!important;
+    /*max-width: 660px!important;*/
     border-radius: 15px;
     margin: 20px auto;
 }
