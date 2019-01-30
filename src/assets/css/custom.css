@@ -742,6 +742,9 @@ input:focus, textarea:focus, select:focus {outline: none!important;}
 .bs-rating-star.active {
     color: #2952ae;
 }
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{color: #333!important;}
 
-
+.multiselect-dropdown[_ngcontent-c4] .dropdown-btn[_ngcontent-c4]{    border: none!important;
+    padding: 0!important;}
+    .multiselect-dropdown[_ngcontent-c4] .dropdown-btn[_ngcontent-c4] .dropdown-down[_ngcontent-c4] {display: none!important;}
 
