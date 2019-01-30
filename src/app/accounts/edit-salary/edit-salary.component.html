@@ -1,18 +1,19 @@
 <div class="wrapper">
   <div class="content-wrapper">
-   <ol class="breadcrumb">
+  <!--  <ol class="breadcrumb">
     <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
     <li *ngIf="section=='salary'" ><a  [routerLink]="['/home/users/salaries']"><i class="fa fa-money"></i> Salary Section</a></li>
     <li *ngIf="section=='fullandfinal'"><a  [routerLink]="['/home/users/salaries/full_and_final']"><i class="fa fa-money"></i> Full and Final Section</a></li>
     <li class="active">View Salary Structure</li>
-  </ol>
+  </ol> -->
   <section class="content-header">
-    <div class="row" *ngIf="section =='salary'">
+    <h1 class="title" style="    margin-left: 15px;">Salary Processing</h1>
+    <div class="" *ngIf="section =='salary'">
       <div>
-        <div class="col-md-2 col-md-offset-4">
+        <div class="col-md-2">
           <div class="form-group">
-            <label >Month<sup style="color:red;">*</sup></label>
-            <select name="bnknm" class="form-control select2 building-select"  [(ngModel)]="salary_filter.selectedmonth" style="width: 100%;" required>
+           <!--  <label  style="display: inline-block;">Month<sup style="color:red;">*</sup></label> -->
+            <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth" style="" required style="width: 100%;">
               <option  value="" disabled="">Select Month</option>
               <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
             </select>
@@ -21,101 +22,181 @@
 
         <div class="col-md-2">
           <div class="form-group">
-            <label>Year<sup style="color:red;">*</sup></label>
-            <select name="endDate" class="form-control select2 building-select" [(ngModel)]="salary_filter.selectedyear" style="width: 100%;" required>
+            <!-- <label style="display: inline-block;">Year<sup style="color:red;">*</sup></label> -->
+            <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear" style="" required style="width: 100%;">
               <option  value="" disabled="">Select Year</option>
               <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
             </select>
           </div>
         </div>
 
-        <div class="col-md-2" style="margin-top: 24px;">
-          <button type="button" class="btn bg-orange btn-flat" (click)="filter(salary_filter.selectedmonth,salary_filter.selectedyear)">Submit</button>
+        <div class="col-md-2" >
+          <button type="button" class="btn bg-orange btn-flat btn-apply" (click)="filter(salary_filter.selectedmonth,salary_filter.selectedyear)">Submit</button>
         </div>
       </div>
     </div>
   </section>
   <section class="content">
-    <div class="row">
+    <div class="">
      <div class="box-body">
        <div class="panel box box-primary">
-        <div class="box-header with-border">
+        <div class="">
           <h4 class="box-title">
-            <a data-toggle="collapse"  data-target="#flatDetails" style="cursor: pointer; color: #f8851c;">
-              <h4 class="modal-title" id="H1">BASIC DETAILS</h4>
+            <a data-toggle="collapse"  data-target="#flatDetails" style="cursor: pointer; color: #757575;">
+              <h1 class="title" id="H1"></h1>
             </a>
           </h4>
         </div>
         <div id="flatDetails" class="panel-collapse collapse in">
           <div class="box-body" *ngIf="showUserSalary && showUserPayment" >
-            <div style="margin-bottom: 10px;text-align: center;">
-              <button (click)="addSalary(addSalaryTemplate)" class="btn btn-success" *ngIf="isBetween">
-                <i class="fa fa-plus" aria-hidden="true"></i> Add Salary
-              </button>
-              <button (click)="gotodeleteSalary(deleteSalaryTemplate)" class="btn btn-danger " style="margin-left: 25px;" *ngIf="isBetween">
-                <i class="fa fa-trash-o" aria-hidden="true"></i> Delete Salary
-              </button>
-              <button type="button" class="btn bg-purple" (click)="gotoDownloadAppraisal()" *ngIf="user_salary_data.revision_downloadable" style="margin-left: 25px;">
-                <i class="fa fa-download" aria-hidden="true"></i> Download Salary Revision Letter
-              </button>
-              <button (click)="undoPayment(undoPaymentTemplate)" class="btn btn-danger " style="margin-left: 25px;" *ngIf="isBetween && user_payemnt_data.payment_id">
-                <i class="fa fa-undo" aria-hidden="true"></i> Undo Payment
-              </button>
+            <div class="clearfix"></div>
+            <div style="margin-bottom: 10px;">
+              <button type="button" class="btn bg-orange btn-flat b-first" (click)="addSalary(addSalaryTemplate)" *ngIf="isBetween" style="margin-right: 20px; margin-left: 5px"><img src="assets/images/dash-icon.png">  Add Salary</button>
+               <button type="button" class="btn bg-orange btn-flat" (click)="gotodeleteSalary(deleteSalaryTemplate)" *ngIf="isBetween" style="margin-right: 20px;"><img src="assets/images/dash-icon.png">  Delete Salary</button>
+                 <button type="button" class="btn bg-orange btn-flat" (click)="gotoDownloadAppraisal()" *ngIf="user_salary_data.revision_downloadable"  style="margin-right: 20px;"><img src="assets/images/dash-icon.png">  Download Salary Revision Letter</button>
+               <button type="button" class="btn bg-orange btn-flat" (click)="undoPayment(undoPaymentTemplate)" *ngIf="isBetween && user_payemnt_data.payment_id"  style="margin-right: 10px;"><img src="assets/images/dash-icon.png">  Undo Payment</button>
+
             </div>
+           
             <div>
-             <h3>{{user_salary_data.name}}</h3>
-             <dl class="col-md-4 booking-grid">
-              <dt>TITLE</dt>
-              <dd> {{user_salary_data.title}} </dd>
+             <h1 class="title">{{user_salary_data.name}}</h1>
+            <div class="table-responsive table-salary">
+              <table class="table table-striped" datatable>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Start Date</th>
+                    <th>Total Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      {{user_salary_data.title}}
+                    </td>
+                    <td>
+                      {{user_salary_data.start_date | date: 'dd/MM/yyyy'}}
+                    </td>
+                    <td>
+                      <i class="fa fa-inr" aria-hidden="true"></i> {{user_salary_data.amount | indianCurrency}}
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+<!--              <div class="col-md-2">
+             <dl class="booking-grid">
+              <dt>Title</dt>
+              <dd>  </dd>
             </dl>
-            <dl class="col-md-4 booking-grid">
-              <dt>START DATE</dt>
+            </div>
+             <div class="col-md-2">
+            <dl class="booking-grid">
+              <dt>Start Date</dt>
               <dd>{{user_salary_data.start_date | date: 'dd/MM/yyyy'}}</dd>
             </dl>
-            <dl class="col-md-4 booking-grid">
-              <dt>TOTAL AMOUNT</dt>
+          </div>
+           <div class="col-md-2">
+            <dl class="booking-grid">
+              <dt>Total Amount</dt>
               <dd><i class="fa fa-inr" aria-hidden="true"></i> {{user_salary_data.amount | indianCurrency}}</dd>
             </dl>
-            <dl class="col-md-4 booking-grid" *ngFor="let s of components; let i = index" >
-              <dt>COMPONENT {{i+1}}</dt>
-              <dd>NAME: {{s.title}}</dd>
-              <dd>AMOUNT: <i class="fa fa-inr" aria-hidden="true"></i>  {{s.amount | indianCurrency}}</dd>
+          </div> -->
+          <div class="row">
+           <div class="col-md-2" *ngFor="let s of components; let i = index">
+            <dl class="booking-grid"  >
+              <dt>Component {{i+1}}</dt>
+              <dd>Name: {{s.title}}</dd>
+              <dd>Amount: <i class="fa fa-inr" aria-hidden="true"></i>  {{s.amount | indianCurrency}}</dd>
             </dl>
+          </div>
+          </div>
           </div>
         </div>
       </div>
     </div>
     <div class="panel box box-primary">
-      <div class="box-header with-border">
+      <div class="">
         <h4 class="box-title">
-          <a data-toggle="collapse"  data-target="#paymentSection" style="cursor: pointer; color: #f8851c;">
-            <h4 class="modal-title" id="H1">PAYMENT DETAILS</h4>
+          <a data-toggle="collapse"  data-target="#paymentSection" style="cursor: pointer; color: #757575;">
+            <h1 class="title" id="H1">Payment Details</h1>
           </a>
         </h4>
 
       </div>
       <div id="paymentSection" class="panel-collapse collapse in">
         <div class="box-body" *ngIf="showUserPayment">
-          <div class="col-md-12">
+          <div class="row">
             <div class="col-md-4">
-              <label>Total Payable Amount: <i class="fa fa-inr" aria-hidden="true"></i>  {{user_payemnt_data.amount | indianCurrency}}</label>
+              <label style="color: #757575; font-weight: 400; font-size: 18px;">Total Payable Amount: <i class="fa fa-inr" aria-hidden="true"></i>  {{user_payemnt_data.amount | indianCurrency}}</label>
             </div>
           </div>
 
-          <div class="col-md-12">
-           <div class="col-md-3">
+          <div class="row">
+           <div class="col-md-5" >
              <div class="form-group">
-              <label>LWP:</label>
-              <input name="mTitle" type='text' class="form-control" [(ngModel)]="user_payemnt_data.lwp" />
+              <label style="color: #757575; font-weight: 400; font-size: 18px; display: inline-block;">LWP:</label>
+              <input name="mTitle" type='text' class="form-control lwp-count" [(ngModel)]="user_payemnt_data.lwp" />
+              <button type="button" class="btn bg-orange btn-apply" (click)="reprocessSal()" [disabled]="!user_payemnt_data.payment_id" *ngIf="isBetween" [ladda]="reProcessLoader" style="    margin-top: 25px;">
+              <!-- <i class="fa fa-cogs" aria-hidden="true" ></i>  -->Re-Process Salary
+            </button>
             </div>
 
           </div>
-          <div class="col-md-1" style="margin-top: 20px;">
-            <button type="button" class="btn bg-orange" (click)="reprocessSal()" [disabled]="!user_payemnt_data.payment_id" *ngIf="isBetween" [ladda]="reProcessLoader">
-              <i class="fa fa-cogs" aria-hidden="true" ></i> Re-Process Salary
-            </button>
-          </div>
+          <!-- <div class="col-md-3" style="margin-top: 20px;" >
+            
+          </div> -->
         </div>
+
+        <div class="table-responsive table-salary">
+              <table class="table table-striped" datatable>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Amount</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      HRA
+                    </td>
+                    <td>
+                      2
+                    </td>
+                    <td>
+                      <i class="fa custom" aria-hidden="true"><img src="assets/images/delete-icon.png"></i> 
+                    </td>
+                  </tr>
+                     <tr>
+                    <td>
+                      HRA
+                    </td>
+                    <td>
+                      2
+                    </td>
+                    <td>
+                      <i class="fa custom" aria-hidden="true"><img src="assets/images/plus-icon.png"></i> 
+                    </td>
+                  </tr>
+                     <tr>
+                    <td>
+                      HRA
+                    </td>
+                    <td>
+                      2
+                    </td>
+                    <td>
+                      <i class="fa custom" aria-hidden="true"><img src="assets/images/minus-icon.png"></i> 
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
 
         <div class="col-md-12" *ngFor="let p of payment_components; let i = index">
           <div class="col-md-3">

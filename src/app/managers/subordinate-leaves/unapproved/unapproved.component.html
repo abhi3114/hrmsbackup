@@ -1,20 +1,21 @@
 <div class="wrapper">
   <div class="content-wrapper">
-    <ol class="breadcrumb">
+   <!--  <ol class="breadcrumb">
       <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
       <li class="active">Subordinate (Unapproved Leaves)</li>
-    </ol>
+    </ol> -->
     <section class="content-header">
-      <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
+      <h1 class="title">Subordinate (Unapproved Leaves)</h1>
+      <button type="button" class="btn bg-orange btn-flat ladda-button btn-manager" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
     </section>
     <section class="content">
-      <div class="row">
+      <div class="">
         <div class="box-body">
           <div>
-            <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
+            <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-striped table-hover" >
               <thead>
                 <tr>
-                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkALL()'/></th>
+                  <th><label class="check-holder"><input id='checkAll' type='checkbox' class='check-box' (click)='checkALL()'/><span class="checkmark"></span></label></th>
                   <th>User</th>
                   <th>Start Date</th>
                   <th>End Date</th>
@@ -24,7 +25,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let l of unapproved_leaves_data">
-                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
+                  <td style="padding: 5px 15px;"><label class="check-holder"><input class="checkbox" name="{{l.id}}"  type="checkbox" /><span class="checkmark"></span></label></td>
                   <td>{{l.user_name}}</td>
                   <td>{{l.start_date |  date: 'dd/MM/yyyy'}}</td>
                   <td>{{l.end_date |  date: 'dd/MM/yyyy'}}</td>
