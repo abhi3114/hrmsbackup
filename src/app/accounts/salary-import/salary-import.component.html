@@ -1,15 +1,16 @@
 <div class="wrapper">
   <div class="content-wrapper">
-    <ol class="breadcrumb">
+    <!-- <ol class="breadcrumb">
       <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
       <li class="active">Salary Import</li>
-    </ol>
+    </ol> -->
     <section class="content-header">
-      <div class="row">
+      <h1 class="title">Salary Import</h1>
+      <div class="">
         <div class="col-md-2">
           <div class="form-group">
-            <label >Month<sup style="color:red;">*</sup></label>
-            <select name="bnknm" class="form-control select2 building-select"  [(ngModel)]="salary_filter.selectedmonth" style="width: 100%;" required>
+            <label style="color:#757575; display: inline-block; font-weight: 400;" >Month<sup style="color:red;">*</sup></label>
+            <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth" style="" required>
               <option  value="" disabled="">Select Month</option>
               <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
             </select>
@@ -17,8 +18,8 @@
         </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label>Year<sup style="color:red;">*</sup></label>
-            <select name="endDate" class="form-control select2 building-select" [(ngModel)]="salary_filter.selectedyear" style="width: 100%;" required>
+            <label style="color:#757575; display: inline-block; font-weight: 400;">Year<sup style="color:red;">*</sup></label>
+            <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear" style="" required>
               <option  value="" disabled="">Select Year</option>
               <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
             </select>
@@ -26,13 +27,15 @@
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label>Import File<sup style="color:red;">*</sup></label>
-            <input type="file" class="form-control" id="csv-file" name="files" ng-model="dataFile" />
+            <!-- <label>Import File<sup style="color:red;">*</sup></label> -->
+            <input type="file" class="form-control inputfile" id="csv-file" name="files" ng-model="dataFile" />
+            <label for="file">Choose a file</label>
+
           </div>
         </div>
-        <div class="col-md-2" style="margin-top: 25px;">
-          <button type="submit" class="btn bg-orange btn-flat" (click)="importCsv()" [ladda]="isLoading" style="padding: 6px 10px;">Import</button>&nbsp;
-          <button type="button" class="btn bg-orange btn-flat" (click)="resetCsv()">Reset</button>
+        <div class="col-md-4">
+          <button type="submit" class="btn bg-orange btn-flat btn-salary" (click)="importCsv()" [ladda]="isLoading" style="padding: 6px 10px;">Import</button>&nbsp;
+          <button type="button" class="btn bg-orange btn-flat btn-salary" (click)="resetCsv()">Reset</button>
         </div>
       </div>
     </section>

@@ -1,17 +1,19 @@
 <div class="wrapper">
   <div class="content-wrapper">
-    <ol class="breadcrumb">
+   <!--  <ol class="breadcrumb">
       <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
       <li class="active">Fulfilled Stationery</li>
-    </ol>
+    </ol> -->
     <section class="content-header">
-      <button type="button" class="btn bg-orange btn-flat" (click)="request(requestTemplate)">Request</button>
+      <h1 class="title">Fulfilled Stationery</h1>
+      <button type="button" class="btn bg-orange btn-flat btn-request" (click)="request(requestTemplate)" 
+      style="margin-left:15px;">Request</button>
     </section>
     <section class="content">
-      <div class="row">
+      <div class="">
         <div class="box-body">
           <div>
-            <table datatable [dtOptions]="stationeryTableOptions" [dtTrigger]="stationeryTableTrigger" class="table table-bordered table-striped table-hover" >
+            <table datatable [dtOptions]="stationeryTableOptions" [dtTrigger]="stationeryTableTrigger" class="table table-striped table-hover" >
               <thead>
                 <tr>
                   <th>Item</th>
