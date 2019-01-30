@@ -219,7 +219,7 @@ export class DashboardComponent implements OnInit {
 
   closeLeaveModal()
   {
-    this.modalRef.hide();this.applyLeaveForm.reset();
+    this.modalRef.hide();this.applyLeaveForm.reset();this.applyLeavesData.leave_type="";
   }
   closeODModal()
   {

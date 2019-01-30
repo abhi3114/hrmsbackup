@@ -249,11 +249,6 @@
 <ng-template #leaveTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for leave</h4>
-     <div class="pull-right">
-     <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyLeaveForm.invalid" [ladda]="isLoading">Submit</button>
-    <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeLeaveModal()">
-    <!--   <span aria-hidden="true">&times;</span> --> Cancel
-    </button></div>
   </div>
   <div class="modal-body">
     <form  novalidate (ngSubmit)="validateApplyLeaveForm()" [formGroup]="applyLeaveForm" autocomplete="off">
@@ -312,6 +307,12 @@
           </div>
         </div>
       </div>
+      <div class="col-md-12" style="margin-top: 10px;">
+       <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyLeaveForm.invalid" [ladda]="isLoading">Submit
+       </button>
+       <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeLeaveModal()">Cancel
+       </button>
+     </div>
       <!-- <div class="" style="text-align: center;">
         <div class="">
           <button type="submit" class="btn btn-primary" [disabled]="applyLeaveForm.invalid" [ladda]="isLoading">Submit</button>
@@ -324,14 +325,6 @@
 <ng-template #outdoorDutiesTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for Outdoor Duty</h4>
-     <div class="pull-right">
-     <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyOutdoorDutiesForm.invalid" [ladda]="isLoading">Submit</button>
-    <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeODModal()">
-    <!--   <span aria-hidden="true">&times;</span> --> Cancel
-    </button></div>
-   <!--  <button type="button" class="close pull-right" aria-label="Close" (click)="closeODModal()">
-      <span aria-hidden="true">&times;</span>
-    </button> -->
   </div>
   <div class="modal-body">
     <form novalidate (ngSubmit)="validateApplyOutdoorDutiesForm()" [formGroup]="applyOutdoorDutiesForm" autocomplete="off">
@@ -410,26 +403,18 @@
             </div>
           </div>
         </div>
-        <!-- <div class="" style="margin-top: 23px; text-align: center;">
-          <button type="submit" class="btn btn-primary" [disabled]="applyOutdoorDutiesForm.invalid" [ladda]="isLoading">Submit</button>
-        </div> -->
-      </div>
-    </form>
-  </div>
+        <div class="col-md-12" style="margin-top: 10px;">
+         <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyOutdoorDutiesForm.invalid" [ladda]="isLoading">Submit</button>
+         <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeODModal()"> Cancel
+         </button>
+       </div>
+     </div>
+   </form>
+ </div>
 </ng-template>
 <ng-template #lateMarkTemplate >
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for Late Mark</h4>
-     <div class="pull-right">
-     <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
-    <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeLMModal()">
-    <!--   <span aria-hidden="true">&times;</span> --> Cancel
-    </button>
-  </div>
-
-    <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="closeLMModal()">
-      <span aria-hidden="true">&times;</span>
-    </button> -->
   </div>
   <div class="modal-body">
     <form  novalidate (ngSubmit)="validateLateMarkForm()" [formGroup]="applyLateMarksForm" autocomplete="off">
@@ -459,26 +444,18 @@
             </div>
           </div>
         </div>
-       <!--  <div class="" style="text-align: center;">
-          <button type="submit" class="btn btn-primary" [disabled]="applyLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
-        </div> -->
-      </div>
-    </form>
-  </div>
+        <div class="col-md-12" style="margin-top: 10px;">
+         <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
+         <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeLMModal()"> Cancel
+         </button>
+       </div>
+     </div>
+   </form>
+ </div>
 </ng-template>
 <ng-template #missingAttendanceTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Apply for Missing Attendance</h4>
-    <div class="pull-right">
-     <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
-    <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeMAModal()">
-    <!--   <span aria-hidden="true">&times;</span> --> Cancel
-    </button>
-  </div>
-<!--   
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeMAModal()">
-      <span aria-hidden="true">&times;</span>
-    </button> -->
   </div>
   <div class="modal-body">
     <form  novalidate (ngSubmit)="validateMissingAttendanceForm()" [formGroup]="applyMissingAttendanceForm" autocomplete="off">
@@ -525,25 +502,20 @@
           </div>
           <div class="col-md-6"></div>
         </div>
+        <div class="col-md-12" style="margin-top: 10px;">
+         <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
+         <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeMAModal()">
+          Cancel
+        </button>
       </div>
-      <!-- <div class="" style="text-align: center;">
-        <button type="submit" class="btn btn-primary" [disabled]="applyMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
-      </div> -->
-    </form>
-  </div>
+    </div>
+
+  </form>
+</div>
 </ng-template>
 <ng-template #userSalarySliptemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Download Salary</h4>
-    <div class="pull-right">
-     <button type="submit" class="btn btn-primary btn-submit" [disabled]="salarySlipDownloadForm.invalid" [ladda]="isLoading">Download</button>
-    <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeDownloadSalary()">
-    <!--   <span aria-hidden="true">&times;</span> --> Cancel
-    </button>
-  </div>
-    <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="closeDownloadSalary()">
-      <span aria-hidden="true">&times;</span>
-    </button> -->
   </div>
   <div class="modal-body">
     <form  novalidate (ngSubmit)="validateSalarySlipForm()" [formGroup]="salarySlipDownloadForm" autocomplete="off">
@@ -582,10 +554,13 @@
       </div>
     </div>
   </div>
-  <div class="col-md-2" style="margin-top: 23px;">
-    <button type="submit" class="btn btn-dwnload" [disabled]="salarySlipDownloadForm.invalid" [ladda]="isLoading"> <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/dwnload-icon.png" alt=""></i> </button>
-  </div>
-  <div class="clearfix"></div>
+  <div class="col-md-12" style="margin-top: 10px;">
+   <button type="submit" class="btn btn-primary btn-submit" [disabled]="salarySlipDownloadForm.invalid" [ladda]="isLoading">Download</button>
+   <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeDownloadSalary()">
+     Cancel
+   </button>
+ </div>
+ <div class="clearfix"></div>
 </div>
 </div>
 </form>
@@ -597,38 +572,38 @@
    <!--  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button> -->
-     <div class="pull-right">
+    <div class="pull-right">
      <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateMissingAttendanceForm.invalid"[ladda]="isLoading">Download</button>
-    <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">
-    <!--   <span aria-hidden="true">&times;</span> --> Cancel
+     <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">
+      <!--   <span aria-hidden="true">&times;</span> --> Cancel
     </button>
   </div>
 
 
-  </div>
-  <div class="modal-body">
-    <form  novalidate  (ngSubmit)="validateUpdateMissingAttendanceForm()" [formGroup]="updateMissingAttendanceForm" autocomplete="off">
-      <div class="">
-        <div>
-          <div class="col-md-12">
-            <div class="form-group">
-              <label>Reason<sup style="color:red;">*</sup></label>
-              <input name="puropse" type='text' class="form-control"[(ngModel)]="updateMissingAttendanceData.reason"  formControlName="comment" required [class.error1]="!updateMissingAttendanceForm.controls.comment.valid && updateMissingAttendanceForm.controls.comment.dirty" />
-              <div *ngIf="( updateMissingAttendanceForm.get('comment').hasError('required') ) && updateMissingAttendanceForm.get('comment').touched">
-               <div class="error" *ngIf="updateMissingAttendanceForm.get('comment').hasError('required') && updateMissingAttendanceForm.get('comment').touched">
-                This field is mandatory
-              </div>
+</div>
+<div class="modal-body">
+  <form  novalidate  (ngSubmit)="validateUpdateMissingAttendanceForm()" [formGroup]="updateMissingAttendanceForm" autocomplete="off">
+    <div class="">
+      <div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Reason<sup style="color:red;">*</sup></label>
+            <input name="puropse" type='text' class="form-control"[(ngModel)]="updateMissingAttendanceData.reason"  formControlName="comment" required [class.error1]="!updateMissingAttendanceForm.controls.comment.valid && updateMissingAttendanceForm.controls.comment.dirty" />
+            <div *ngIf="( updateMissingAttendanceForm.get('comment').hasError('required') ) && updateMissingAttendanceForm.get('comment').touched">
+             <div class="error" *ngIf="updateMissingAttendanceForm.get('comment').hasError('required') && updateMissingAttendanceForm.get('comment').touched">
+              This field is mandatory
             </div>
           </div>
         </div>
-        <div class="clearfix"></div>
       </div>
+      <div class="clearfix"></div>
+    </div>
      <!--  <div class="" style="margin-top: 23px; text-align: center;">
       <button type="submit" class="btn btn-primary" [disabled]="updateMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
-     </div> -->
+    </div> -->
 
-   </div>
- </form>
+  </div>
+</form>
 </div>
 </ng-template>
 <ng-template #recordLateMarkResponse>
