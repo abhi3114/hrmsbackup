@@ -42,9 +42,6 @@
   <ng-template #requestTemplate>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Request for Stationery</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="closeRequestModal()">
-        <span aria-hidden="true">&times;</span>
-      </button>
     </div>
     <div class="modal-body">
       <form  novalidate (ngSubmit)="validateRequestForm()" [formGroup]="stationeryForm" autocomplete="off">
@@ -85,9 +82,11 @@
             </div>
           </div>
         </div>
-        <div class="" style="text-align: center;">
+        <div class="col-md-12" style="margin-top: 10px;">
           <div class="">
-            <button type="submit" class="btn btn-primary" [disabled]="stationeryForm.invalid" [ladda]="isLoading">Submit</button>
+            <button type="submit" class="btn btn-primary btn-submit" [disabled]="stationeryForm.invalid" [ladda]="isLoading">Submit</button>
+            <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeRequestModal()">Cancel
+            </button>
           </div>
         </div>
       </div>
@@ -96,7 +95,7 @@
 </ng-template>
 <ng-template #deleteTemplate>
  <div class="modal-header">
- <p class="modal-title pull-left" style="font-size: 18px;">Delete Stationary Request</p>
+   <p class="modal-title pull-left" style="font-size: 18px;">Delete Stationary Request</p>
    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
     <span aria-hidden="true">&times;</span>
   </button>
