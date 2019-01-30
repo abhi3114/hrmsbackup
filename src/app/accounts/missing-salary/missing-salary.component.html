@@ -1,28 +1,26 @@
 <div class="wrapper">
   <div class="content-wrapper">
-   <!-- <ol class="breadcrumb">
+   <ol class="breadcrumb">
     <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
     <li class="active">Salary</li>
-  </ol> -->
+  </ol>
   <section class="content-header">
-    <h1 class="title">Missing Salary</h1>
     <form>
       <div class="row">
         <div class="col-md-12">
-          <div class="col-md-1" >   <label style="color:#757575; display: inline-block; font-weight: 400;    margin: 8px 0 0 -5px">Add Filter<!-- <sup style="color:red;">*</sup> --></label></div>
-          <div class="col-md-2 alc alc-fix">
+          <div class="col-md-4">
             <div class="form-group">
-           <!--    <label style="color:#757575; display: inline-block; font-weight: 400;">Month<sup style="color:red;">*</sup></label> -->
-              <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth"  required style="width: 100%;">
+              <label >Month<sup style="color:red;">*</sup></label>
+              <select name="bnknm" class="form-control select2 building-select"  [(ngModel)]="salary_filter.selectedmonth" style="width: 100%;" required>
                 <option  value="" disabled="">Select Month</option>
                 <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
               </select>
             </div>
           </div>
-          <div class="col-md-2 alc">
+          <div class="col-md-4">
             <div class="form-group">
-             <!--  <label style="color:#757575; display: inline-block; font-weight: 400;">Year<sup style="color:red;">*</sup></label> -->
-              <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear"  required style="width: 100%;">
+              <label>Year<sup style="color:red;">*</sup></label>
+              <select name="endDate" class="form-control select2 building-select" [(ngModel)]="salary_filter.selectedyear" style="width: 100%;" required>
                 <option  value="" disabled="">Select Year</option>
                 <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
               </select>
@@ -33,10 +31,10 @@
     </form>
   </section>
   <section class="content">
-    <div class="">
+    <div class="row">
       <div class="box-body">
         <div class="">
-          <table class="table table-striped table-hover" datatable [dtOptions]="salaryTableOptions"  [dtTrigger]="salaryTableTrigger">
+          <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="salaryTableOptions"  [dtTrigger]="salaryTableTrigger">
             <thead>
               <tr>
                <th>Name</th>
@@ -57,7 +55,7 @@
               <td><i class="fa fa-inr" aria-hidden="true"></i> {{i.salary | indianCurrency}}</td>
               <td>{{i.date_of_joining | date:'dd/MM/yyyy'}}</td>
               <td  align="center"><a target="_blank"
-                style="" [routerLink]="['/home/users',i.id,'payments']" [queryParams]="{month:salary_filter.selectedmonth,year:salary_filter.selectedyear}"><i class="fa fa-custom" aria-hidden="true"><img src="assets/images/edit-icon.png"></i></a></td>
+                style="border-radius: 20px; background-color: #dd4b39;font-size: 10px;  padding: 5px 15px 5px 15px; color: white;" [routerLink]="['/home/users',i.id,'payments']" [queryParams]="{month:salary_filter.selectedmonth,year:salary_filter.selectedyear}">EDIT</a></td>
               </tr>
             </tbody>
           </table>
