@@ -569,46 +569,37 @@
 <ng-template #updateMissingAttendanceTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Record Reason for Missing Attendance</h4>
-   <!--  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button> -->
-    <div class="pull-right">
-     <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateMissingAttendanceForm.invalid"[ladda]="isLoading">Download</button>
-     <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">
-      <!--   <span aria-hidden="true">&times;</span> --> Cancel
-    </button>
   </div>
-
-
-</div>
-<div class="modal-body">
-  <form  novalidate  (ngSubmit)="validateUpdateMissingAttendanceForm()" [formGroup]="updateMissingAttendanceForm" autocomplete="off">
-    <div class="">
-      <div>
-        <div class="col-md-12">
-          <div class="form-group">
-            <label>Reason<sup style="color:red;">*</sup></label>
-            <input name="puropse" type='text' class="form-control"[(ngModel)]="updateMissingAttendanceData.reason"  formControlName="comment" required [class.error1]="!updateMissingAttendanceForm.controls.comment.valid && updateMissingAttendanceForm.controls.comment.dirty" />
-            <div *ngIf="( updateMissingAttendanceForm.get('comment').hasError('required') ) && updateMissingAttendanceForm.get('comment').touched">
-             <div class="error" *ngIf="updateMissingAttendanceForm.get('comment').hasError('required') && updateMissingAttendanceForm.get('comment').touched">
-              This field is mandatory
+  <div class="modal-body">
+    <form  novalidate  (ngSubmit)="validateUpdateMissingAttendanceForm()" [formGroup]="updateMissingAttendanceForm" autocomplete="off">
+      <div class="row">
+        <div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Reason<sup style="color:red;">*</sup></label>
+              <input name="puropse" type='text' class="form-control"[(ngModel)]="updateMissingAttendanceData.reason"  formControlName="comment" required [class.error1]="!updateMissingAttendanceForm.controls.comment.valid && updateMissingAttendanceForm.controls.comment.dirty" />
+              <div *ngIf="( updateMissingAttendanceForm.get('comment').hasError('required') ) && updateMissingAttendanceForm.get('comment').touched">
+               <div class="error" *ngIf="updateMissingAttendanceForm.get('comment').hasError('required') && updateMissingAttendanceForm.get('comment').touched">
+                This field is mandatory
+              </div>
             </div>
           </div>
         </div>
+        <div class="clearfix"></div>
       </div>
-      <div class="clearfix"></div>
-    </div>
-     <!--  <div class="" style="margin-top: 23px; text-align: center;">
-      <button type="submit" class="btn btn-primary" [disabled]="updateMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
-    </div> -->
-
-  </div>
-</form>
+      <div class="col-md-12" style="margin-top: 10px;">
+       <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateMissingAttendanceForm.invalid"[ladda]="isLoading">Submit</button>
+       <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">
+         Cancel
+       </button>
+     </div>
+   </div>
+ </form>
 </div>
 </ng-template>
 <ng-template #recordLateMarkResponse>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Record Reason for Missing Attendance</h4>
+    <h4 class="modal-title pull-left">Record Reason for Late Mark</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -629,10 +620,12 @@
           </div>
         </div>
       </div>
-      <div class="" style="margin-top: 23px; text-align: center;">
-       <button type="submit" class="btn btn-primary" [disabled]="updateLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
+      <div class="col-md-12" style="margin-top: 10px;">
+        <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
+        <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">
+         Cancel
+       </button>
      </div>
-
    </div>
  </form>
 </div>
@@ -640,16 +633,6 @@
 <ng-template #recordMentorshipResponse>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Record Mentorship Feedback</h4>
-    <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="closeMentorshipModal()">
-      <span aria-hidden="true">&times;</span>
-    </button> -->
-     <div class="pull-right">
-     <button type="submit" class="btn btn-primary btn-submit" (click)="saveMentorshipResponse()" [ladda]="isLoading">Download</button>
-    <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeMentorshipModal()">
-    <!--   <span aria-hidden="true">&times;</span> --> Cancel
-    </button>
-  </div>
-
   </div>
   <div class="modal-body">
     <div class="row">
@@ -712,8 +695,10 @@
           </table>
         </div>
       </div>
-      <div class="" style="margin-top: 23px; text-align: center;">
-       <button type="button" class="btn btn-primary" (click)="saveMentorshipResponse()" [ladda]="isLoading">Submit</button>
+      <div class="col-md-12" style="margin-top: 10px;">
+      <button type="submit" class="btn btn-primary btn-submit" (click)="saveMentorshipResponse()" [ladda]="isLoading">Submit</button>
+       <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeMentorshipModal()"> Cancel
+       </button>
      </div>
    </div>
  </div>

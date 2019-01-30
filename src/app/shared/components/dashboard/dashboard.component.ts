@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
     keyboard: false,
     backdrop: true,
     ignoreBackdropClick: true,
-    class:'modal-lg'
+    class:'modal-md'
   };
   customModalConfig = {
     animated:true,
