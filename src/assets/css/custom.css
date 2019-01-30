@@ -748,3 +748,37 @@ input:focus, textarea:focus, select:focus {outline: none!important;}
     padding: 0!important;}
     .multiselect-dropdown[_ngcontent-c4] .dropdown-btn[_ngcontent-c4] .dropdown-down[_ngcontent-c4] {display: none!important;}
 
+    dl.booking-grid {
+    border: 1px solid #fdfdfd;
+    margin-right: -1px;
+    min-height: 155px;
+    padding: 15px;
+    margin: 20px 0;
+    background: #fff;
+
+}
+dl.booking-grid dt {
+    font-size: 14px;
+    color: #757575;
+    font-weight: 400;
+    border-bottom: 1px solid #dfdfdf;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+dl.booking-grid dd {
+    font-weight: bold;
+    color: #757575;
+    font-size: 14px;
+    padding: 4px 0;
+    font-weight: 400;
+    margin: 0;
+}
+
+.table-salary .dataTables_wrapper .dataTables_length, .table-salary .dataTables_wrapper .dataTables_filter{display: none;}
+.table-salary .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate {display: none;}
+
+.form-control.lwp-count{    display: inline-block;
+    width: 50px;
+    border-radius: 30px;
+    border: 1px solid #fff;
+    margin: 0 10px;}
