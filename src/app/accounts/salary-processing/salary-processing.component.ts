@@ -25,7 +25,7 @@ export class SalaryProcessingComponent implements OnInit {
   salarySlipToggleForm:FormGroup;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  salaryTableOptions: DataTables.Settings = {};
+  salaryTableOptions: any = {};
   salaryTableTrigger: Subject<any> = new Subject();
   monthArray:any;yearArray:any;filteredData:any;
   salary_filter={selectedmonth:'',selectedyear:''};
@@ -49,7 +49,8 @@ export class SalaryProcessingComponent implements OnInit {
       pagingType: 'full_numbers',
       lengthMenu: [[-1,50, 100, 150, 200],
       ["All",50, 100, 150, 200 ]],
-      order: [[ 1, 'asc' ]]
+      order: [[ 1, 'asc' ]],
+      aoColumnDefs: [{ bSortable: false, aTargets: [0,7,8] }]
     };
     this.api.getallUser().subscribe(res => {
       this.user_data=res;
@@ -94,6 +95,9 @@ export class SalaryProcessingComponent implements OnInit {
         this.toastr.showSuccess('Salary Processed');
         this.modalRef.hide();
         this.getAllUser();this.isLoading=false;
+        if ($('.check-box:checked').length > 0)
+        {$('.checkbox').prop('checked', false);}
+
         }, (err) =>
         {
           this.toastr.showError(err.error);this.isLoading=false;
