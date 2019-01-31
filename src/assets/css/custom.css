@@ -775,7 +775,7 @@ dl.booking-grid dd {
 }
 
 .table-salary .dataTables_wrapper .dataTables_length, .table-salary .dataTables_wrapper .dataTables_filter{display: none;}
-/*.table-salary .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate {display: none;}*/
+.table-salary .dataTables_wrapper .dataTables_info, .table-salary .dataTables_wrapper .dataTables_paginate {display: none;}
 
 
 .form-control.lwp-count{    display: inline-block;
