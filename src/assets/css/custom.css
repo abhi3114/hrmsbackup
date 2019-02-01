@@ -745,9 +745,9 @@ input:focus, textarea:focus, select:focus {outline: none!important;}
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover{color: #333!important;}
 
-.multiselect-dropdown[_ngcontent-c4] .dropdown-btn[_ngcontent-c4]{    border: none!important;
+.multiselect-dropdown .dropdown-btn{    border: none!important;
     padding: 0!important;}
-    .multiselect-dropdown[_ngcontent-c4] .dropdown-btn[_ngcontent-c4] .dropdown-down[_ngcontent-c4] {display: none!important;}
+    .multiselect-dropdown .dropdown-btn .dropdown-down {display: none!important;}
 
     dl.booking-grid {
     border: 1px solid #fdfdfd;
@@ -784,14 +784,15 @@ dl.booking-grid dd {
     border-radius: 30px;
     border: 1px solid #fff;
     margin: 0 10px;}
-
+.multiselect-dropdown{color: #757575!important;}
     .multiselect-dropdown .dropdown-btn{    padding: 0;
-    border: none;}
+    border: none;    width: 95%!important;}
     .multiselect-dropdown .dropdown-btn .dropdown-down{display: none;}
     :focus{outline: none;}
     .multiselect-dropdown .dropdown-btn .dropdown-up{display: none!important;}
 table.dataTable td.dataTables_empty{text-align: left;}
 .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus{outline: none;}
+.multiselect-dropdown .dropdown-btn .selected-item{    border-radius: 15px!important;    margin-top: -2px;}
 
 
 
