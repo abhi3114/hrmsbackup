@@ -5,7 +5,7 @@
       <form (ngSubmit)="validateOutdoorDutiesForm()" [formGroup]="outdoorDutiesForm" autocomplete="off" novalidate="off">
         <div class="holder-filter" id="collapseBasic" [collapse]="isCollapsed" style="">
           <div>
-            <div class="col-md-2" >   <label style="color:#757575; display: inline-block; font-weight: 400;    margin: 8px 0 0 -5px;">Add Filter<!-- <sup style="color:red;">*</sup> --></label></div>
+            <div class="col-md-1" >   <label style="color:#757575; display: inline-block; font-weight: 400;    margin: 8px 0 0 -5px;">Add Filter<!-- <sup style="color:red;">*</sup> --></label></div>
             <div class="col-md-2 alc alc-fix" >
               <div class="form-group">
                 <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="outdoorDutiesData.start_date" formControlName="start_date" required [class.error1]="!outdoorDutiesForm.controls.start_date.valid && outdoorDutiesForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date" style="width: 100%" />

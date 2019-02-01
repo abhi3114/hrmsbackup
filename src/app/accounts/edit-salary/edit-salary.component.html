@@ -136,7 +136,7 @@
       <div class="row">
        <div class="col-md-5" >
          <div class="form-group">
-          <label style="color: #757575; font-weight: 400; font-size: 18px; display: inline-block;">LWP:</label>
+          <label style="color: #757575; font-weight: 400; font-size: 18px; display: inline-block;">Total LWP</label>
           <input name="mTitle" type='text' class="form-control lwp-count" [(ngModel)]="user_payemnt_data.lwp" />
           <button type="button" class="btn bg-orange btn-apply" (click)="reprocessSal()" [disabled]="!user_payemnt_data.payment_id" *ngIf="isBetween" [ladda]="reProcessLoader" style="    margin-top: 25px;">
             <!-- <i class="fa fa-cogs" aria-hidden="true" ></i>  -->Re-Process Salary
@@ -168,11 +168,47 @@
                 <i class="fa custom" aria-hidden="true" *ngIf="p.title == 'Incentive' || p.title == 'EPF' || p.title == 'Special Allowance' || p.title == 'Earlier PF Deduction'|| p.title == 'TDS'|| p.title == 'Other Deductions'|| p.title == 'Salary Advance'|| p.title == 'Overtime'|| p.title == 'Arrears'" (click)="deletePay(i)" style="cursor: pointer;"><img src="assets/images/delete-icon.png"></i>
               </td>
             </tr>
+           
+            
+              <tr *ngFor="let choice of choices; let i = index ">
+              <td>
+               <select class="select2 form-control d-inline" style="    height: 35px;
+    width: 100%;
+    background: url(../../assets/images/arrow-icon-blue.png) transparent no-repeat;
+    background-position: 95%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #757575;" [(ngModel)]="choice.component"  (change)="getpayments(choice.component,i)" [ngModelOptions]="{standalone: true}">
+                <option  value="" disabled="disabled">Select Component</option>
+                <option *ngFor="let c of user_payment_components" value="{{c}}">{{c}}</option>
+              </select>
+            </td>
+            <td>
+              <input type="text"
+              id="Text1"
+              class="form-control "
+              placeholder="Enter Amount"
+              [(ngModel)]="choice.amount" [ngModelOptions]="{standalone: true}" style="border: none; background: transparent;" />
+            </td>
+            <td><input type="text"
+              id="Text1"
+              class="form-control"
+              placeholder="Enter Incentive Detail"
+              [(ngModel)]="choice.details" [ngModelOptions]="{standalone: true}" *ngIf="choice.component == 'Incentive'" style="border: none"/>
+            </td>
+            <td>
+                <button class="btn " (click)="addMoreCT()" type="button" style="border-radius: 20px; background: transparent; border: none" *ngIf="i == 0"><i class="fa fa-custom" aria-hidden="true" ><img src="assets/images/plus-icon.png"></i></button>
+                <button type="button" class="btn" (click)="delCT(i)" style="border-radius: 20px; background: transparent; border: none" *ngIf="i > 0"><i class="fa fa-custom" aria-hidden="true" ><img src="assets/images/minus-icon.png"></i></button>
+              </td>
+            </tr>
+
+
           </tbody>
         </table>
       </div>
 
-      <div class="table-responsive table-salary">
+    <!--   <div class="table-responsive table-salary">
         <table class="table table-striped" datatable>
           <thead>
             <tr>
@@ -183,37 +219,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let choice of choices; let i = index ">
-              <td>
-               <select class="select2 form-control" style="height: 35px;" [(ngModel)]="choice.component"  (change)="getpayments(choice.component,i)" [ngModelOptions]="{standalone: true}">
-                <option  value="" disabled="disabled">Select Component</option>
-                <option *ngFor="let c of user_payment_components" value="{{c}}">{{c}}</option>
-              </select>
-            </td>
-            <td>
-              <input type="text"
-              id="Text1"
-              class="form-control"
-              placeholder="Enter Amount"
-              [(ngModel)]="choice.amount" [ngModelOptions]="{standalone: true}" />
-            </td>
-            <td><input type="text"
-              id="Text1"
-              class="form-control"
-              placeholder="Enter Incentive Detail"
-              [(ngModel)]="choice.details" [ngModelOptions]="{standalone: true}" *ngIf="choice.component == 'Incentive'" />
-              <td>
-                <button class="btn bg-olive" (click)="addMoreCT()" type="button" style="border-radius: 20px;" *ngIf="i == 0"><i class="fa fa-plus" aria-hidden="true" ></i></button>
-                <button type="button" class="btn bg-maroon" (click)="delCT(i)" style="border-radius: 20px;" *ngIf="i > 0"><i class="fa fa-minus" aria-hidden="true" ></i></button>
-              </td>
-            </tr>
+           
         </tbody>
       </table>
-    </div>
-    <div style="text-align: center;">
+    </div> -->
+    <div style="text-align: left;">
       <div class="form-group" style="margin-top: 35px;">
-       <button type="submit" class="btn bg-orange" (click)="save()" [ladda]="isLoading" *ngIf="isBetween"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
-       <button type="button" class="btn bg-purple" (click)="downloadSalarySlip()" style="margin-left: 25px;" [ladda]="isSalaryDownloader"><i class="fa fa-download" aria-hidden="true"></i> Download</button>
+       <button type="submit" class="btn bg-orange btn-apply" (click)="save()" [ladda]="isLoading" *ngIf="isBetween"><!-- <i class="fa fa-floppy-o" aria-hidden="true"></i>  -->Save changes</button>
+       <button type="button" class="btn btn-apply" (click)="downloadSalarySlip()" style="margin-left: 25px;" [ladda]="isSalaryDownloader"><!-- <i class="fa fa-download" aria-hidden="true"></i>  -->Download</button>
      </div>
    </div>
 

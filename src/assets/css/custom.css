@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 
 body{background: #efefef;
@@ -272,9 +273,9 @@ dl.booking-grid {
        border: 1px solid #dfdfdf!important;margin-left:-1px
      }
      .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-       background: #f99800;
+       background: #F07B00;
        color: #fff!important;
-       border-color: #f99800!important;
+       border-color: #F07B00!important;
      }
      rating.form-control {
        padding: 0;
@@ -387,10 +388,10 @@ i.fa.fa-angle-down {
     top: 20px;}
     .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side {
     background-color: #fff;
-    box-shadow: 0 0 22px -3px rgba(0, 0, 0, 0.49);
+    box-shadow: 0 0 65px -10px rgba(0, 0, 0, 0.49);
 }
 .skin-blue .sidebar-menu .treeview-menu > li.active > a, .skin-blue .sidebar-menu .treeview-menu > li > a:hover {
-    color: #212121;
+    color: #F07B00;
 }
 .box.box-primary{border: none!important; box-shadow: none!important;}
 .box-header.with-border {
@@ -639,7 +640,7 @@ th .checkmark{    top: 5px;
 
 /* When the checkbox is checked, add a blue background */
 .check-holder input:checked ~ .checkmark {
-  background-color: #de8442;
+  background-color: #F07B00;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -655,7 +656,7 @@ th .checkmark{    top: 5px;
 }
 
 button.btn.bg-orange.btn-flat.btn-salary {
-    background: #ec7818!important;
+    background: #F07B00!important;
     padding: 6px 20px;
     border-radius: 15px;
     color: #fff!important;
@@ -783,3 +784,14 @@ dl.booking-grid dd {
     border-radius: 30px;
     border: 1px solid #fff;
     margin: 0 10px;}
+
+    .multiselect-dropdown .dropdown-btn{    padding: 0;
+    border: none;}
+    .multiselect-dropdown .dropdown-btn .dropdown-down{display: none;}
+    :focus{outline: none;}
+    .multiselect-dropdown .dropdown-btn .dropdown-up{display: none!important;}
+table.dataTable td.dataTables_empty{text-align: left;}
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus{outline: none;}
+
+
+
