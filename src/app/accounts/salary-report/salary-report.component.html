@@ -1,20 +1,15 @@
-
-<!-- Content Wrapper. Contains page content -->
 <div class="wrapper">
   <div class="content-wrapper">
-   <!--  <ol class="breadcrumb">
-      <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-      <li class="active">Salary Report</li>
-    </ol> -->
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1 class="title">Salary Report</h1>
       <form novalidate name="leaveForm" data-ng-submit="validate(leaveForm.$valid)" autocomplete="off">
-        <div class="">
-          <div class="col-md-1" >   <label style="color:#757575; display: inline-block; font-weight: 400;    margin: 8px 0 0 -5px">Add Filter<!-- <sup style="color:red;">*</sup> --></label></div>
+        <div class="row">
+          <div class="col-md-2" >
+            <label style="color:#757575;display: inline-block;font-weight: 400;margin: 8px 0 0 -5px">Add Filter
+            </label>
+          </div>
           <div class="col-md-2 alc alc-fix">
             <div class="form-group">
-             <!--  <label style="color:#757575; display: inline-block; font-weight: 400;">Month<sup style="color:red;">*</sup></label> -->
               <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_report_filter.selectedmonth" style="width: 100%;" required>
                 <option  value="" disabled="">Select Month</option>
                 <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
@@ -23,7 +18,6 @@
           </div>
           <div class="col-md-2 alc">
             <div class="form-group">
-            <!--   <label style="color:#757575; display: inline-block; font-weight: 400;">Year<sup style="color:red;">*</sup></label> -->
               <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_report_filter.selectedyear" style="width: 100%;" required>
                 <option  value="" disabled="">Select Year</option>
                 <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
@@ -33,20 +27,17 @@
           <div class="col-md-1" >
             <button type="submit" class="btn bg-orange btn-flat btn-salary" (click)="getSalaryReportData()">Submit</button>
           </div>
-          <div class="col-md-offset-5 col-md-1" style="" *ngIf="isHdfc">
+          <div class="col-md-offset-2 col-md-1" style="" *ngIf="isHdfc">
             <button type="button" class="btn bg-orange btn-flat pull-right btn-dblue" (click)="hdfcReport()" [ladda]="hdfcReportloader">HDFC Report</button>
           </div>
-
         </div>
       </form>
     </section>
-    <!-- Main content -->
     <section class="content">
-
       <div class="col-md-12">
         <div class="box-body">
           <div class="">
-          <table class="table table-striped table-hover" datatable [dtOptions]="salaryReportTableOptions"  [dtTrigger]="salaryReportTableTrigger">
+            <table class="table table-striped table-hover" datatable [dtOptions]="salaryReportTableOptions"  [dtTrigger]="salaryReportTableTrigger">
               <thead>
                 <tr>
                  <th>Pan Number</th>
@@ -71,16 +62,13 @@
                <td *ngFor="let t of totals"><i class="fa fa-inr" aria-hidden="true"></i> {{t | indianCurrency}}</td>
                <td> <i class="fa fa-inr" aria-hidden="true"></i> {{sum | indianCurrency}}</td>
              </tr>
-           </tbody>
-         </table>
-
+             </tbody>
+          </table>
+        </div>
        </div>
      </div>
-   </div>
-   <!-- /.row -->
- </section>
- <!-- /.content -->
-</div>
+    </section>
+  </div>
 </div>
 
 
