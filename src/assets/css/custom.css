@@ -21,8 +21,15 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   background: rgba(255, 255, 255, 0.83);
   padding: 10px;
   border-radius: 4px;
-  box-shadow: 0px 0px 100px 0 #fff;
+  /*box-shadow: 0px 0px 100px 0 #fff;*/
   border: 4px solid #fff;
+      margin-bottom: 0;
+    padding: 0;
+}
+.login-box, .register-box {
+    width: 360px;
+    margin: 4% auto 0;
+    padding: 0;
 }
 
 .login-box-body,
@@ -31,7 +38,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   padding: 20px;
   border: 4px solid #ffffff!important;
   border-radius: 5px;
-  box-shadow: 0 0 10px 0;
+  /*box-shadow: 0 0 10px 0;*/
 }
 .skin-blue .main-header .logo {
   background-color: #ffffff;
@@ -92,44 +99,7 @@ nav.navbar.navbar-static-top:before {
 .skin-blue .treeview-menu > li.active > a, .skin-blue .treeview-menu > li > a:hover {
   color: #fff;
 }
-@media (max-width: 767px){
-  table.dataTable thead th{    white-space: nowrap!important; width: 0%!important;}
-  table.dataTable thead th, table.dataTable thead td{    }
-  table.dataTable tbody th, table.dataTable tbody td {
-    padding: 0px 10px!important;
-    vertical-align: middle!important;
-  }
-  .dataTables_wrapper .col-xs-6 {
-    width: auto!important;
-  }
-  .dataTables_wrapper .dataTables_filter {
-    margin-top: 0!important;
-  }
-  .dataTables_wrapper .dataTables_filter input {
 
-    padding: 0px 10px!important;
-  }
-  .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter{font-weight: 600;}
-  .pagination{margin:0 0 20px!important;}
-  .alc-fix {margin-left: 0px;}
-}
-
-@media only screen and (max-width: 760px) {
-
-  #logo_in{
-   width: 150px;
- }
- .dashboard-page button.btn.bg-orange.btn-flat {
-    border-radius: 3px;
-    display: block;
-    width: 100%;
-    margin: 20px 0;
-    text-align: left;
-}
-.b-first{margin-left: 0px!important}
-
- #calcBtn{ margin-top:5px; }
-}
 dl.booking-grid {
   border: 1px solid #dfdfdf;
   margin-right: -1px;
@@ -296,7 +266,7 @@ dl.booking-grid {
      }
      rating span:focus {border:none; outline : 0}
      .ladda-button {font-size: 14px!important; padding: 6px 18px!important;background: #f39c12!important;}
-     .login-box-body .ladda-button{font-size: 14px!important; padding: 6px 18px!important;background: #f39c12!important; color: #fff!important;}
+     .login-box-body .ladda-button{font-size: 14px!important; padding: 8px 18px!important;background: #3449b0!important; color: #fff!important; width: 100%!important;}
      .ladda-button[data-style=expand-right][data-loading] {
        padding-right: 50px!important;
        padding-top: 6px!important;
@@ -317,7 +287,7 @@ dl.booking-grid {
     -webkit-appearance: none;
     }
     button.btn.bg-orange.btn-flat {
-      border-radius: 3px;
+      border-radius: 3px; 
     }
     .box-header.with-border{background:#fff!important;}
     .box-title .a {color: #f8851c;}
@@ -417,7 +387,7 @@ table.dataTable thead th, table.dataTable thead td {
     }*/
     .new-box{margin-bottom: 50px;}
     button.btn.bg-orange.btn-flat {
-      border-radius: 3px; margin-bottom: 20px;
+      border-radius: 3px; margin-bottom: 10px;
     }
     .box-header.with-border{background:#efefef!important; border-bottom: none!important}
     .box-title .a {color: #f8851c;}
@@ -773,7 +743,7 @@ dl.booking-grid dd {
     padding: 4px 0;
     font-weight: 400;
     margin: 0;
-}
+} 
 
 .table-salary .dataTables_wrapper .dataTables_length, .table-salary .dataTables_wrapper .dataTables_filter{display: none;}
 .table-salary .dataTables_wrapper .dataTables_info, .table-salary .dataTables_wrapper .dataTables_paginate {display: none;}
@@ -793,6 +763,80 @@ dl.booking-grid dd {
 table.dataTable td.dataTables_empty{text-align: left;}
 .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus{outline: none;}
 .multiselect-dropdown .dropdown-btn .selected-item{    border-radius: 15px!important;    margin-top: -2px;}
+.left-login-box{background: #F07B00;height: 100vh; text-align: center; }
+.left-login-box img{margin: 18% auto 0;}
+.right-login-box{background: #fff; height: 100vh;}
+.login-box-msg-he{color: #212121;font-size: 20px; text-align: center;}
+.logo-pp{    margin-top: -75px;}
+.login-box-body .form-control{    background: #f4f4f4;
+    border-color: #f4f4f4;
+    padding: 20px;
+    font-size: 15px;}
+    .form-control-feedback{right: 6px;}
+    .forgot-link{color: #757575; text-align: center; margin: 10px auto; font-size: 12px;
+    display: table;}
+    .forgot-link:hover{color: #3449b0;}
+.rememme{color: #757575; font-size: 12px;}
+.lock-img{ margin: 0 auto;  }
+
+
+
+
+/*=== MEdia Quireis ==*/
+@media (max-width: 767px){
+  table.dataTable thead th{    white-space: nowrap!important; width: 0%!important;}
+  table.dataTable thead th, table.dataTable thead td{    }
+  table.dataTable tbody th, table.dataTable tbody td {
+    padding: 0px 10px!important;
+    vertical-align: middle!important;
+  }
+  .dataTables_wrapper .col-xs-6 {
+    width: auto!important;
+  }
+  .dataTables_wrapper .dataTables_filter {
+    margin-top: 0!important;
+  }
+  .dataTables_wrapper .dataTables_filter input {
+
+    padding: 0px 10px!important;
+  }
+  .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter{font-weight: 600;}
+  .pagination{margin:0 0 20px!important;}
+  .alc-fix {margin-left: 0px;}
+  .login-box, .register-box{    width: auto;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    padding: 20px;}
+    .left-login-box {
+    background: #F07B00;
+    height: 100%;
+    text-align: center;
+    padding: 10px 30px 46px;
+}
+.left-login-box img{    margin: 5px auto;}
+.right-login-box{height: 100%; padding: 20px 20px 50px; }
+.lock-img{    width: 130px;
+    margin: 0 auto;}
+}
+
+@media only screen and (max-width: 760px) {
+
+  #logo_in{
+   width: 150px;
+ }
+ .dashboard-page button.btn.bg-orange.btn-flat {
+    border-radius: 7px;
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+    text-align: left;
+}
+.b-first{margin-left: 0px!important}
+
+ #calcBtn{ margin-top:5px; }
+}
+
 
 
 

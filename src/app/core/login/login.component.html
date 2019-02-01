@@ -1,12 +1,24 @@
-<div style="background: url(assets/images/login-bg.jpg)
+<!-- <div style="background: url(assets/images/login-bg.jpg)
   no-repeat center; background-size: cover; position: absolute;
   width: 100%; top: 0; bottom: 0; left: 0; right: 0;">
-  <div class="login-box" id="content" >
+
+
+
+ 
+</div>
+ -->
+
+<div class="row">
+  <div class="col-md-6 left-login-box"><img src="assets/images/bg-logins.png" alt=""  class="img-responsive"></div>
+  <div class="col-md-6 right-login-box"> <div class="login-box" id="content" >
     <div class="login-logo" >
-      <img src="assets/images/logo.png">
+      <img src="assets/images/lock-loginicon.png" class="img-responsive  lock-img" >
+      <img src="assets/images/logo.png" class="logo-pp">
+      <p class="login-box-msg-he" >Website Admin Panel</p>
     </div>
-    <div class="login-box-body">
-      <p class="login-box-msg" style=" text-transform: uppercase;">HRMS | Login</p>
+    <div class="login-box-body" style="padding: 0;">
+      
+      <p class="login-box-msg" style=" text-transform: uppercase;font-size: 16px;">Log In</p>
       <form name="loginForm" novalidate (ngSubmit)="validateLoginForm()" [formGroup]="signupform" autocomplete="off">
       <div class="form-group has-feedback">
         <input style="margin-bottom: 0px;" type="url" class="form-control" id="foremail" aria-describedby="emailHelp" placeholder="Enter Email Address" name="" required [(ngModel)]="loginData.email" formControlName="email" [class.error1]="!signupform.controls.email.valid && signupform.controls.email.dirty">
@@ -18,21 +30,24 @@
             Invalid email address
           </div>
         </div>
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+       <!--  <span class="glyphicon glyphicon-envelope form-control-feedback"></span> -->
       </div>
       <div class="form-group has-feedback">
         <input type="password" class="form-control" id="foremail" aria-describedby="emailHelp" placeholder="Enter Password" name="" required  [(ngModel)]="loginData.password" formControlName="password"
         [class.error1]="!signupform.controls.password.valid && signupform.controls.password.dirty" style="margin-top: 25px; margin-bottom:0px;">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <span class="glyphicon form-control-feedback"><img src="assets/images/eye-icon.png" alt=""></span>
       </div>
+       <div class="form-group ">
+          <p class="rememme">Remember Me</p>
+       </div>
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-12">
           <button type="submit" class="btn bg-orange btn-flat ladda-button" [disabled]="signupform.invalid" [ladda]="isLoading">Login</button>
+          <a href="" class="forgot-link">Forgot password?</a>
         </div>
         <!-- /.col -->
       </div>
       </form>
     </div>
-  </div>
+  </div></div>
 </div>
-
