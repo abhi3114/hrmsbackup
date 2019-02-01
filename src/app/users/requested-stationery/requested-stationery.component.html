@@ -50,7 +50,7 @@
            <div class="col-md-6">
             <div class="form-group">
               <label>Items<sup style="color:red;">*</sup></label>
-              <select name="leavType" class="select2 form-control" style="width: 100%; height: 35px;" [(ngModel)]="stationeryData.selecteditem" formControlName="item" [class.error1]="!stationeryForm.controls.item.valid && stationeryForm.controls.item.dirty" required >
+              <select name="leavType" class="select2 form-control d-inline fd-inline" style="width: 100%; height: 35px;" [(ngModel)]="stationeryData.selecteditem" formControlName="item" [class.error1]="!stationeryForm.controls.item.valid && stationeryForm.controls.item.dirty" required >
                 <option value="" disabled="disabled">Select item</option>
                 <option *ngFor="let s of stationery_data" value="{{s.id}}">{{s.name}}</option>
               </select>
@@ -75,7 +75,7 @@
           </div>
         </div>
         <div class="col-md-12">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="form-group">
               <label>Comment</label>
               <textarea type='text' name="leavereason" class="form-control"  [(ngModel)]="stationeryData.comment" [ngModelOptions]="{standalone: true}"></textarea>
@@ -83,6 +83,7 @@
           </div>
         </div>
         <div class="col-md-12" style="margin-top: 10px;">
+
           <div class="">
             <button type="submit" class="btn btn-primary btn-submit" [disabled]="stationeryForm.invalid" [ladda]="isLoading">Submit</button>
             <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeRequestModal()">Cancel
@@ -94,16 +95,16 @@
   </div>
 </ng-template>
 <ng-template #deleteTemplate>
- <div class="modal-header">
+ <!-- <div class="modal-header">
    <p class="modal-title pull-left" style="font-size: 18px;">Delete Stationary Request</p>
    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
     <span aria-hidden="true">&times;</span>
   </button>
-</div>
-<div class="modal-body text-center">
-  <h3>Are you sure?</h3>
-  <h3>You won't be able to revert this</h3>
-  <button type="button" class="btn btn-default btn-success" (click)="confirm()"  style="margin-right: 5px; font-size: 18px; color: #fff;" [ladda]="deleteLoader">Yes Process</button>
-  <button type="button" class="btn btn-default btn-danger" (click)="decline()" style="margin-right: 5px; font-size: 18px; color: #fff;">Cancel</button>
+</div> -->
+<div class="modal-body text-center" style="margin-bottom: 30px;">
+ <!--  <h3></h3> -->
+  <h3>Are you sure? <br>You won't be able to revert this</h3>
+  <button type="button" class="btn btn-primary btn-submit ladda-button" (click)="confirm()"  style="" [ladda]="deleteLoader">Yes Process</button>
+  <button type="button" class="btn  btn-cancel" (click)="decline()" style="">Cancel</button>
 </div>
 </ng-template>

@@ -13,9 +13,12 @@
         </a> -->
         <div class="" id="collapseBasic" [collapse]="isCollapsed" style="">
           <div>
-            <div class="col-md-3" >
+            <div class="col-md-1" style="padding-right: 0" >
+          <label style="color:#757575; display: inline-block;font-weight: 400;margin: 8px 0 0 0">Add Filter</label>
+        </div>
+             <div class="col-md-2 alc alc-fix">
               <div class="form-group">
-                <label style="color:#757575; display: inline-block; font-weight: 400;">Start Date<sup style="color:red;">*</sup></label>
+                <!-- <label style="color:#757575; display: inline-block; font-weight: 400;">Start Date<sup style="color:red;">*</sup></label> -->
                 <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="approvedLateMarkData.start_date" formControlName="start_date" required [class.error1]="!approvedLateMarksForm.controls.start_date.valid && approvedLateMarksForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
                 <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
                 <div *ngIf="( approvedLateMarksForm.get('start_date').hasError('minlength') || approvedLateMarksForm.get('start_date').hasError('pattern') || approvedLateMarksForm.get('start_date').hasError('required') ) && approvedLateMarksForm.get('start_date').touched">
@@ -25,9 +28,9 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3" style="padding: 0">
+          <div class="col-md-2 alc ">
               <div class="form-group">
-                <label style="color:#757575; display: inline-block; font-weight: 400;">End Date<sup style="color:red;">*</sup></label>
+             <!--    <label style="color:#757575; display: inline-block; font-weight: 400;">End Date<sup style="color:red;">*</sup></label> -->
                 <input name="endDate" type='text' class="form-control d-inline" [(ngModel)]="approvedLateMarkData.end_date" formControlName="end_date" required [class.error1]="!approvedLateMarksForm.controls.end_date.valid && approvedLateMarksForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
                 <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
                 <div *ngIf="( approvedLateMarksForm.get('end_date').hasError('minlength') || approvedLateMarksForm.get('end_date').hasError('pattern') || approvedLateMarksForm.get('end_date').hasError('required') ) && approvedLateMarksForm.get('end_date').touched">
@@ -37,7 +40,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-2" style="padding: 0">
+            <div class="col-md-2" >
               <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="approvedLateMarksForm.invalid"><!-- <i class="fa fa-filter" aria-hidden="true"></i>  -->Apply</button>
             </div>
           </div>
@@ -45,7 +48,7 @@
       </form>
     </section>
     <section class="content">
-      <div class="row">
+      <div class="">
         <div class="box-body">
           <div>
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-striped table-hover" >

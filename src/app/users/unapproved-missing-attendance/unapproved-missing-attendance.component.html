@@ -80,7 +80,7 @@
   </div>
   <div class="modal-body">
     <form  novalidate  (ngSubmit)="validateUpdateMissingAttendanceForm()" [formGroup]="updateMissingAttendanceForm" autocomplete="off">
-      <div class="row">
+      <div class="">
         <div>
           <div class="col-md-12">
             <div class="form-group">
@@ -94,9 +94,16 @@
           </div>
         </div>
       </div>
-      <div class="" style="margin-top: 23px; text-align: center;">
+
+        <div class="" style="    margin-left: 5px;">
+            <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
+            <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">Cancel
+            </button>
+          </div>
+
+     <!--  <div class="" style="margin-top: 23px; text-align: center;">
        <button type="submit" class="btn btn-primary" [disabled]="updateMissingAttendanceForm.invalid">Submit</button>
-     </div>
+     </div> -->
 
    </div>
  </form>

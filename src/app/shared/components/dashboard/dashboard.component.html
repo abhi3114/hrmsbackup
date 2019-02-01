@@ -281,7 +281,7 @@
         <div class="col-md-12">
           <div class="form-group">
             <label>Leave type<sup style="color:red;">*</sup></label>
-            <select name="leavType" class="select2 form-control" style="width: 100%; height: 35px;" [(ngModel)]="applyLeavesData.leave_type" formControlName="leave_type" [class.error1]="!applyLeaveForm.controls.leave_type.valid && applyLeaveForm.controls.leave_type.dirty" required >
+            <select name="leavType" class="select2 form-control d-inline fd-inline" style="width: 100%; height: 35px;" [(ngModel)]="applyLeavesData.leave_type" formControlName="leave_type" [class.error1]="!applyLeaveForm.controls.leave_type.valid && applyLeaveForm.controls.leave_type.dirty" required >
               <option value="" disabled="disabled">Select leave type</option>
               <option *ngFor="let l of leavesArray" value="{{l}}">{{l}}</option>
             </select>
@@ -304,7 +304,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12" style="margin-top: 10px;">
+      <div class="col-md-12" style="margin-top: 10px; margin-left: 5px;">
        <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyLeaveForm.invalid" [ladda]="isLoading">Submit
        </button>
        <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeLeaveModal()">Cancel
@@ -395,7 +395,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12" style="margin-top: 10px;">
+        <div class="col-md-12" style="margin-top: 10px;margin-left: 5px;">
          <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyOutdoorDutiesForm.invalid" [ladda]="isLoading">Submit</button>
          <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeODModal()"> Cancel
          </button>
@@ -436,7 +436,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12" style="margin-top: 10px;">
+        <div class="col-md-12" style="margin-top: 10px;margin-left: 5px;">
          <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
          <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeLMModal()"> Cancel
          </button>
@@ -468,7 +468,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <label>Punch Detail<sup style="color:red;">*</sup></label>
-              <select name="punchType" class="select2 form-control" style="width: 100%; height: 35px;" [(ngModel)]="applyMissingAttendanceData.punch"  formControlName="punch" required [class.error1]="!applyMissingAttendanceForm.controls.punch.valid && applyMissingAttendanceForm.controls.punch.dirty" >
+              <select name="punchType" class="select2 form-control d-inline fd-inline" style="width: 100%; height: 35px;" [(ngModel)]="applyMissingAttendanceData.punch"  formControlName="punch" required [class.error1]="!applyMissingAttendanceForm.controls.punch.valid && applyMissingAttendanceForm.controls.punch.dirty" >
                 <option value="" disabled="disabled">Select punch type</option>
                 <option *ngFor="let pt of punchArray" value="{{pt}}">{{pt}}</option>
               </select>
@@ -494,7 +494,7 @@
           </div>
           <div class="col-md-6"></div>
         </div>
-        <div class="col-md-12" style="margin-top: 10px;">
+        <div class="col-md-12" style="margin-top: 10px;margin-left: 5px;">
          <button type="submit" class="btn btn-primary btn-submit" [disabled]="applyMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
          <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeMAModal()">
           Cancel
@@ -513,10 +513,10 @@
     <form  novalidate (ngSubmit)="validateSalarySlipForm()" [formGroup]="salarySlipDownloadForm" autocomplete="off">
       <div class="">
         <div class="">
-          <div class="col-md-5">
+          <div class="col-md-6">
             <div class="form-group">
-              <label >Month<sup style="color:red;">*</sup></label>
-              <select name="bnknm" class="form-control select2 building-select"  style="width: 100%;" [(ngModel)]="salarySlipDownloadData.selectedmonth"
+             <!--  <label >Month<sup style="color:red;">*</sup></label> -->
+              <select name="bnknm" class="form-control select2 building-select d-inline fd-inline"  style="width: 100%;" [(ngModel)]="salarySlipDownloadData.selectedmonth"
               formControlName="month" required [class.error1]="!salarySlipDownloadForm.controls.month.valid && salarySlipDownloadForm.controls.month.dirty"  >
               <option  value="" disabled="">Select Month</option>
               <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
@@ -530,10 +530,10 @@
         </div>
       </div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-6">
       <div class="form-group">
-        <label>Year<sup style="color:red;">*</sup></label>
-        <select name="endDate" class="form-control select2 building-select"
+     <!--    <label>Year<sup style="color:red;">*</sup></label> -->
+        <select name="endDate" class="form-control select2 building-select d-inline fd-inline"
         style="width: 100%;" [(ngModel)]="salarySlipDownloadData.selectedyear"  formControlName="year"
         required [class.error1]="!salarySlipDownloadForm.controls.year.valid && salarySlipDownloadForm.controls.year.dirty" >
         <option  value="" disabled="">Select Year</option>
@@ -546,11 +546,13 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12" style="margin-top: 10px;">
+  <div class="col-md-12 " style="padding-left: 5px">
+    <div class="form-group" style="margin-bottom: 0">
    <button type="submit" class="btn btn-primary btn-submit" [disabled]="salarySlipDownloadForm.invalid" [ladda]="isLoading">Download</button>
    <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeDownloadSalary()">
      Cancel
    </button>
+ </div>
  </div>
  <div class="clearfix"></div>
 </div>
@@ -579,7 +581,7 @@
         </div>
         <div class="clearfix"></div>
       </div>
-      <div class="col-md-12" style="margin-top: 10px;">
+      <div class="col-md-12" style="margin-top: 10px;margin-left: 5px;">
        <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateMissingAttendanceForm.invalid"[ladda]="isLoading">Submit</button>
        <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">
          Cancel
@@ -609,7 +611,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12" style="margin-top: 10px;">
+      <div class="col-md-12" style="margin-top: 10px;margin-left: 5px;">
         <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
         <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">
          Cancel
@@ -684,7 +686,7 @@
           </table>
         </div>
       </div>
-      <div class="col-md-12" style="margin-top: 10px;">
+      <div class="col-md-12" style="margin-top: 10px;margin-left: 5px;">
         <button type="submit" class="btn btn-primary btn-submit" (click)="saveMentorshipResponse()" [ladda]="isLoading">Submit</button>
         <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeMentorshipModal()"> Cancel
         </button>
