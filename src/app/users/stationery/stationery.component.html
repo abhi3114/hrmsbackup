@@ -48,7 +48,7 @@
          <div class="col-md-6">
           <div class="form-group">
             <label>Items<sup style="color:red;">*</sup></label>
-            <select name="leavType" class="select2 form-control" style="width: 100%; height: 35px;" [(ngModel)]="stationeryData.selecteditem" formControlName="item" [class.error1]="!stationeryForm.controls.item.valid && stationeryForm.controls.item.dirty" required >
+            <select name="leavType" class="select2 form-control d-inline fd-inline" style="width: 100%; height: 35px;" [(ngModel)]="stationeryData.selecteditem" formControlName="item" [class.error1]="!stationeryForm.controls.item.valid && stationeryForm.controls.item.dirty" required >
               <option value="" disabled="disabled">Select item</option>
               <option *ngFor="let s of stationery_data" value="{{s.id}}">{{s.name}}</option>
             </select>
@@ -73,7 +73,7 @@
         </div>
       </div>
       <div class="col-md-12">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="form-group">
             <label>Comment</label>
             <textarea type='text' name="leavereason" class="form-control"  [(ngModel)]="stationeryData.comment" [ngModelOptions]="{standalone: true}"></textarea>

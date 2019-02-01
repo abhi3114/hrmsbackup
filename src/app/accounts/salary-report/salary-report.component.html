@@ -1,11 +1,11 @@
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
-      <h1 class="title">Salary Report</h1>
+      <h1 class="title" style="margin-left: 5px;">Salary Report</h1>
       <form novalidate name="leaveForm" data-ng-submit="validate(leaveForm.$valid)" autocomplete="off">
-        <div class="">
-          <div class="col-md-2" >
-            <label style="color:#757575;display: inline-block;font-weight: 400;margin: 8px 0 0 -5px">Add Filter
+        <div class="" style="margin-left: 5px;">
+          <div class="col-md-1" >
+            <label style="color:#757575;display: inline-block;font-weight: 400;margin: 8px 0 0 0">Add Filter
             </label>
           </div>
           <div class="col-md-2 alc alc-fix">
@@ -27,14 +27,14 @@
           <div class="col-md-1" >
             <button type="submit" class="btn bg-orange btn-flat btn-salary" (click)="getSalaryReportData()">Submit</button>
           </div>
-          <div class="col-md-offset-2 col-md-1" style="" *ngIf="isHdfc">
+          <div class="col-md-offset-6" style="" *ngIf="isHdfc">
             <button type="button" class="btn bg-orange btn-flat pull-right btn-dblue" (click)="hdfcReport()" [ladda]="hdfcReportloader">HDFC Report</button>
           </div>
         </div>
       </form>
     </section>
     <section class="content">
-      <div class="col-md-12">
+      <div class="">
         <div class="box-body">
           <div class="">
             <table class="table table-striped table-hover" datatable [dtOptions]="salaryReportTableOptions"  [dtTrigger]="salaryReportTableTrigger">
