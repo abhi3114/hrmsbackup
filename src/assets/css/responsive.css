@@ -1,0 +1,13 @@
+@media only screen and (max-width: 760px)
+{
+  #logo_in{
+   width: 150px;
+ }
+ .dashboard-page button.btn.bg-orange.btn-flat
+ {
+  border-radius: 3px;
+  display: block;
+  width: 100%;
+  margin: 20px 0;
+  text-align: left;
+}
