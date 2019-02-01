@@ -5,7 +5,7 @@
       <form (ngSubmit)="validateOutdoorDutiesForm()" [formGroup]="outdoorDutiesForm" autocomplete="off" novalidate="off">
        <div class="holder-filter" id="collapseBasic" [collapse]="isCollapsed" style="">
         <div>
-        <div class="col-md-2" >
+        <div class="col-md-1" >
            <label style="color:#757575; display: inline-block; font-weight: 400;margin: 8px 0 0 -5px;">Add Filter</label></div>
            <div class="col-md-2 alc alc-fix" >
             <div class="form-group">
@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="col-md-2">
-          <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="outdoorDutiesForm.invalid"><!-- i class="fa fa-filter" aria-hidden="true"></i> --> Apply</button>
+          <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="outdoorDutiesForm.invalid" style="margin-bottom: 30px;"><!-- i class="fa fa-filter" aria-hidden="true"></i> --> Apply</button>
         </div>
       </div>
     </div>
