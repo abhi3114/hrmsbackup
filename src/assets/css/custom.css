@@ -524,6 +524,8 @@ span.multiselect-selected-text {
           .table>thead:first-child>tr:first-child>th{font-weight: 400;}
           .btn-request {
             padding: 5px 10px!important;
+
+    margin-bottom: 30px!important;
           }
 
 
