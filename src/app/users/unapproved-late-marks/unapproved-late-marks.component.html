@@ -70,9 +70,6 @@
 <ng-template #recordLateMarkResponse>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Record Late Mark</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
   </div>
   <div class="modal-body">
     <form  novalidate  (ngSubmit)="validateRecordLateMarkResponseForm()" [formGroup]="updateLateMarksForm" autocomplete="off">
@@ -90,15 +87,13 @@
           </div>
         </div>
       </div>
+
        <div class="" style="    margin-left: 5px; margin-bottom: 10px;">
             <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
             <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">Cancel
             </button>
           </div>
 
-    <!--   <div class="" style="margin-top: 23px; text-align: center;">
-       <button type="submit" class="btn btn-primary" [disabled]="updateLateMarksForm.invalid">Submit</button>
-     </div> -->
 
    </div>
  </form>
