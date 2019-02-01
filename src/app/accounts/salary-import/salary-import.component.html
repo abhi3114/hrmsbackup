@@ -1,89 +1,82 @@
 <div class="wrapper">
   <div class="content-wrapper">
-    <!-- <ol class="breadcrumb">
-      <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-      <li class="active">Salary Import</li>
-    </ol> -->
     <section class="content-header">
       <h1 class="title">Salary Import</h1>
       <div class="">
-         <div class="col-md-1" >   <label style="color:#757575; display: inline-block; font-weight: 400;    margin: 8px 0 0 -5px">Add Filter<!-- <sup style="color:red;">*</sup> --></label></div>
-        <div class="col-md-2  alc alc-fix">
-          <div class="form-group">
-           <!--  <label style="color:#757575; display: inline-block; font-weight: 400;" >Month<sup style="color:red;">*</sup></label> -->
-            <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth" style="" required style="width: 100%;">
-              <option  value="" disabled="">Select Month</option>
-              <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-md-2 alc">
-          <div class="form-group">
-           <!--  <label style="color:#757575; display: inline-block; font-weight: 400;">Year<sup style="color:red;">*</sup></label> -->
-            <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear" style="" required style="width: 100%;">
-              <option  value="" disabled="">Select Year</option>
-              <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <!-- <label>Import File<sup style="color:red;">*</sup></label> -->
-            <input type="file" class="form-control " id="csv-file" name="files" ng-model="dataFile"  style=" background: #fff; border: 1px solid #fff; border-radius:30px;" />
-            <!-- <label for="file">Choose a file</label> -->
-
-          </div>
-        </div>
-        <div class="col-md-3">
-          <button type="submit" class="btn bg-orange btn-flat btn-salary" (click)="importCsv()" [ladda]="isLoading" style="padding: 6px 10px;">Import</button>&nbsp;
-          <button type="button" class="btn bg-orange btn-flat btn-salary" (click)="resetCsv()">Reset</button>
-        </div>
-      </div>
-    </section>
-    <section class="content">
-     <ng-container *ngIf="canShowtable">
-      <div class="panel box box-primary" ng-show="showTables">
-        <div class="box-header with-border" style="background: red!important">
-          <h4 class="box-title">
-            <a data-toggle="collapse" data-target="#clienttDetails" style="cursor: pointer; color: #fff;">
-             <h4 class="modal-title" id="H3">FAILED LIST</h4>
-           </a>
-         </h4>
+        <div class="col-md-1" >
+         <label style="color:#757575; display: inline-block; font-weight: 400;margin: 8px 0 0 -5px">Add Filter</label>
        </div>
-       <div id="clienttDetails" class="panel-collapse collapse in">
-         <div class="box-body">
-          <div>
-
-            <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="FailedTableOptions" [dtTrigger]="FailedTableTrigger">
-              <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Message</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let l of failedData">
-                  <td> {{l.user}}</td>
-                  <td> {{l.message}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+       <div class="col-md-2  alc alc-fix">
+        <div class="form-group">
+         <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth" style="" required style="width: 100%;">
+          <option  value="" disabled="">Select Month</option>
+          <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
+        </select>
       </div>
     </div>
-  </ng-container>
+    <div class="col-md-2 alc">
+      <div class="form-group">
+       <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear" style="" required style="width: 100%;">
+        <option  value="" disabled="">Select Year</option>
+        <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <input type="file" class="form-control " id="csv-file" name="files" ng-model="dataFile"  style=" background: #fff; border: 1px solid #fff; border-radius:30px;" />
+    </div>
+  </div>
+  <div class="col-md-3">
+    <button type="submit" class="btn bg-orange btn-flat btn-salary" (click)="importCsv()" [ladda]="isLoading" style="padding: 6px 10px;">Import</button>&nbsp;
+    <button type="button" class="btn bg-orange btn-flat btn-salary" (click)="resetCsv()">Reset</button>
+  </div>
+</div>
+</section>
+<div class="clearfix"></div>
+<section class="content">
+ <ng-container *ngIf="canShowtable">
+  <div class="panel box box-primary" ng-show="showTables">
+    <div class="box-header with-border" style="background: red!important">
+      <h4 class="box-title">
+        <a data-toggle="collapse" data-target="#failedTable" style="cursor: pointer; color: #fff;">
+         <h6 class="modal-title" id="H3">FAILED LIST</h6>
+       </a>
+     </h4>
+   </div>
+   <div id="failedTable" class="panel-collapse collapse in">
+     <div class="box-body">
+      <div>
+      <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="FailedTableOptions" [dtTrigger]="FailedTableTrigger">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let l of failedData">
+              <td> {{l.user}}</td>
+              <td> {{l.message}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-container>
 </section>
 <section class="content">
   <ng-container *ngIf="canShowtable">
     <div class="box-header with-border" style="background: green!important">
       <h4 class="box-title">
-        <a data-toggle="collapse" style="cursor: pointer; color: #fff;">
-          <h4 class="modal-title" id="H3">SUCCESS LIST</h4>
+        <a data-toggle="collapse" data-toggle="collapse" data-target="#successTable" style="cursor: pointer; color: #fff;">
+          <h6 class="modal-title" id="H3">SUCCESS LIST</h6>
         </a>
       </h4>
     </div>
-    <div class="row">
+    <div id="successTable" class="panel-collapse collapse in">
       <div class="box-body">
         <div class="">
           <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="SuccessTableOptions" [dtTrigger]="SuccessTableTrigger">
@@ -103,5 +96,5 @@
         </div>
       </div>
     </div>
-    </ng-container>
-  </section>
+  </ng-container>
+</section>
