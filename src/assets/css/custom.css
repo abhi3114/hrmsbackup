@@ -739,60 +739,7 @@ span.multiselect-selected-text {
 
 
 
-            /*=== MEdia Quireis ==*/
-            @media (max-width: 767px){
-              table.dataTable thead th{    white-space: nowrap!important; width: 0%!important;}
-              table.dataTable thead th, table.dataTable thead td{    }
-              table.dataTable tbody th, table.dataTable tbody td {
-                padding: 0px 10px!important;
-                vertical-align: middle!important;
-              }
-              .dataTables_wrapper .col-xs-6 {
-                width: auto!important;
-              }
-              .dataTables_wrapper .dataTables_filter {
-                margin-top: 0!important;
-              }
-              .dataTables_wrapper .dataTables_filter input {
-
-                padding: 0px 10px!important;
-              }
-              .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter{font-weight: 600;}
-              .pagination{margin:0 0 20px!important;}
-              .alc-fix {margin-left: 0px;}
-              .login-box, .register-box{    width: auto;
-                margin: 0 auto;
-                padding: 0;
-                text-align: center;
-                padding: 20px;}
-                .left-login-box {
-                  background: #F07B00;
-                  height: 100%;
-                  text-align: center;
-                  padding: 10px 30px 46px;
-                }
-                .left-login-box img{    margin: 5px auto;}
-                .right-login-box{height: 100%; padding: 20px 20px 50px; }
-                .lock-img{    width: 130px;
-                  margin: 0 auto;}
-                }
-
-                @media only screen and (max-width: 760px) {
-
-                  #logo_in{
-                   width: 150px;
-                 }
-                 .dashboard-page button.btn.bg-orange.btn-flat {
-                  border-radius: 7px;
-                  display: block;
-                  width: 100%;
-                  margin: 20px 0;
-                  text-align: left;
-                }
-                .b-first{margin-left: 0px!important}
-
-                #calcBtn{ margin-top:5px; }
-              }
+           
 
               .inputfile + label {
                 font-size: 13px;
@@ -889,6 +836,139 @@ span.multiselect-selected-text {
                           color: #2583a2;
                           border-radius: 10px;
                         }
+.fa.custom-icon img {
+    width: 25px;
+}
+
+.content-wrapper, .right-side {
+    background: transparent;
+}
+
+
+
+
+
+/*=====Responsive=========*/
+
+ @media (max-width: 991px){
+    .left-login-box {
+         background: #F07B00;
+         height: 100%;
+         text-align: center;
+         padding: 10px 30px 46px;
+    }
+    .left-login-box img{
+         margin: 5px auto;
+    }
+     .right-login-box{
+        height: 100%;
+         padding: 20px 20px 50px;
+    }
+     .lock-img{
+         width: 130px;
+         margin: 0 auto;
+    }
+ }
+ @media (max-width: 767px){
+     table.dataTable thead th{
+         white-space: nowrap!important;
+         width: 0%!important;
+    }
+     table.dataTable thead th, table.dataTable thead td{
+    }
+     table.dataTable tbody th, table.dataTable tbody td {
+         padding: 0px 10px!important;
+         vertical-align: middle!important;
+    }
+     .dataTables_wrapper .col-xs-6 {
+         width: auto!important;
+    }
+     .dataTables_wrapper .dataTables_filter {
+         margin-top: 0!important;
+    }
+     .dataTables_wrapper .dataTables_filter input {
+         padding: 0px 10px!important;
+    }
+     .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter{
+        font-weight: 600;
+        margin: -6px 0 20px;
+    }
+     .pagination{
+        margin:0 0 20px!important;
+    }
+     .alc-fix {
+        margin-left: 0px;
+    }
+     .login-box, .register-box{
+         width: auto;
+         margin: 0 auto;
+         padding: 0;
+         text-align: center;
+         padding: 20px;
+    }
+     .left-login-box {
+         background: #F07B00;
+         height: 100%;
+         text-align: center;
+         padding: 10px 30px 46px;
+    }
+     .left-login-box img{
+         margin: 5px auto;
+    }
+     .right-login-box{
+        height: 100%;
+         padding: 20px 20px 50px;
+    }
+     .lock-img{
+         width: 130px;
+         margin: 0 auto;
+    }
+    span.logo-lg img{
+       width: 53%;
+       margin: 6px 0
+    }
+    .alc-fix {
+      margin-left: 0;
+      margin-top: 10px;
+  }
+  .btn-apply{
+    margin-left: 0;
+  }
+  .dataTables_wrapper .dataTables_filter label{float: right;}
+  .table-responsive{border: 1px solid transparent;}
+  .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate{text-align: left;}
+  .alc{
+    padding: 0;
+  }
+}
+@media (max-width: 440px){
+  .dataTables_wrapper .dataTables_filter label{float: left;     margin-bottom: 25px;}
+  .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter{width: 100%; float: none; text-align: left;     margin: 20px 0;}
+}
+ @media only screen and (max-width: 760px) {
+     #logo_in{
+         width: 150px;
+    }
+     .dashboard-page button.btn.bg-orange.btn-flat {
+         border-radius: 7px;
+         display: block;
+         width: 100%;
+         margin: 20px 0;
+         text-align: left;
+    }
+     .b-first{
+        margin-left: 0px!important
+    }
+     #calcBtn{
+         margin-top:5px;
+    }
+}
+
+
+
+
+
+
 
 
 
