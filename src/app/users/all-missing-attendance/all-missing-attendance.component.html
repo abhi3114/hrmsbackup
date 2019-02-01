@@ -5,7 +5,7 @@
       <form (ngSubmit)="validateMissingAttendanceForm()" [formGroup]="missingAttendanceForm" autocomplete="off" novalidate="off">
         <div class="" id="collapseBasic" [collapse]="isCollapsed" style="">
           <div>
-          <div class="col-md-1" >
+            <div class="col-md-1" >
               <label style="color:#757575; display: inline-block; font-weight: 400;margin: 8px 0 0 -5px;">Add Filter</label>
             </div>
             <div class="col-md-2 alc alc-fix">
@@ -74,9 +74,6 @@
 <ng-template #updateMissingAttendanceTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Record Reason for Missing Attendance</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
   </div>
   <div class="modal-body">
     <form  novalidate  (ngSubmit)="validateUpdateMissingAttendanceForm()" [formGroup]="updateMissingAttendanceForm" autocomplete="off">
@@ -94,10 +91,14 @@
           </div>
         </div>
       </div>
-      <div class="" style="margin-top: 23px; text-align: center;">
-       <button type="submit" class="btn btn-primary" [disabled]="updateMissingAttendanceForm.invalid">Submit</button>
+      <div class="col-md-12" style="margin-top: 10px;">
+       <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateMissingAttendanceForm.invalid" style="background: #f39c12!important;border: none;">
+         Submit
+       </button>
+       <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">
+         Cancel
+       </button>
      </div>
-
    </div>
  </form>
 </div>
