@@ -2,7 +2,7 @@
   <div class="content-wrapper">
 
     <section class="content-header">
-      <h1 class="title">All Late Marks</h1>
+      <h1 class="title" style="margin-bottom: 20px;">All Late Marks</h1>
       <form (ngSubmit)="validateLateMarksForm()" [formGroup]="lateMarksForm" autocomplete="off" novalidate="off">
         <div class="" id="collapseBasic" [collapse]="isCollapsed" style="">
           <div>
@@ -74,7 +74,7 @@
   </div>
   <div class="modal-body">
     <form  novalidate  (ngSubmit)="validateRecordLateMarkResponseForm()" [formGroup]="updateLateMarksForm" autocomplete="off">
-      <div class="row">
+      <div class="">
         <div>
           <div class="col-md-12">
             <div class="form-group">
@@ -88,12 +88,11 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12" style="margin-top: 10px;">
-      <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateLateMarksForm.invalid" style="background: #f39c12!important;border: none;">Submit</button>
-       <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">
-         Cancel
-       </button>
-     </div>
+       <div class="" style="    margin-left: 5px;">
+            <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
+            <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">Cancel
+            </button>
+          </div>
    </div>
  </form>
 </div>

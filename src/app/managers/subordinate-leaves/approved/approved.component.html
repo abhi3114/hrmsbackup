@@ -5,7 +5,7 @@
       <li class="active">Manager (Approved Leaves)</li>
     </ol> -->
     <section class="content-header">
-      <h1 class="title">Manager (Approved Leaves)</h1>
+      <h1 class="title" style="margin-bottom: 20px;">Manager (Approved Leaves)</h1>
       <form (ngSubmit)="validateApprovedLeavesForm()" [formGroup]="approvedLeavesForm" autocomplete="off" novalidate="off">
      <!--  <a (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
@@ -13,9 +13,12 @@
       </a> -->
       <div class="" id="collapseBasic" [collapse]="isCollapsed" style="">
         <div>
-          <div class="col-md-3" >
+          <div class="col-md-1" style="padding-right: 0" >
+          <label style="color:#757575; display: inline-block;font-weight: 400;margin: 8px 0 0 0">Add Filter</label>
+        </div>
+          <div class="col-md-2 alc alc-fix">
             <div class="form-group">
-              <label style="color:#757575; display: inline-block; font-weight: 400;">Start Date<sup style="color:red;">*</sup></label>
+              <!-- <label style="color:#757575; display: inline-block; font-weight: 400;">Start Date<sup style="color:red;">*</sup></label> -->
               <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="approvedLeavesData.start_date" formControlName="start_date" required [class.error1]="!approvedLeavesForm.controls.start_date.valid && approvedLeavesForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
               <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
               <div *ngIf="( approvedLeavesForm.get('start_date').hasError('minlength') || approvedLeavesForm.get('start_date').hasError('pattern') || approvedLeavesForm.get('start_date').hasError('required') ) && approvedLeavesForm.get('start_date').touched">
@@ -25,9 +28,9 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3" style="padding: 0">
+          <div class="col-md-2 alc ">
             <div class="form-group">
-              <label style="color:#757575; display: inline-block; font-weight: 400;">End Date<sup style="color:red;">*</sup></label>
+             <!--  <label style="color:#757575; display: inline-block; font-weight: 400;">End Date<sup style="color:red;">*</sup></label> -->
               <input name="endDate" type='text' class="form-control d-inline" [(ngModel)]="approvedLeavesData.end_date" formControlName="end_date" required [class.error1]="!approvedLeavesForm.controls.end_date.valid && approvedLeavesForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
               <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
               <div *ngIf="( approvedLeavesForm.get('end_date').hasError('minlength') || approvedLeavesForm.get('end_date').hasError('pattern') || approvedLeavesForm.get('end_date').hasError('required') ) && approvedLeavesForm.get('end_date').touched">
@@ -37,7 +40,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-2" style="padding: 0">
+          <div class="col-md-2">
             <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="approvedLeavesForm.invalid"><!-- <i class="fa fa-filter" aria-hidden="true"></i>  -->Apply</button>
           </div>
         </div>

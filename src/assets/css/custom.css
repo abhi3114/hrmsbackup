@@ -339,7 +339,7 @@ span.multiselect-selected-text {
       {
         font-size:12px!important;
       }
-      .bg-orange{color: #757575!important; background-color: #fff!important; font-size: 14px; padding: 15px;}
+      .bg-orange{color: #757575!important; background-color: #fff!important; font-size: 14px; padding: 10px;}
       .bg-orange img {margin-right: 10px;}
       .sidebar-menu>li>a>.fa, .sidebar-menu>li>a>.glyphicon, .sidebar-menu>li>a>.ion {
         width: 40px;
@@ -446,7 +446,7 @@ span.multiselect-selected-text {
       h1.title {
         padding: 10px;
         font-size: 24px;
-        margin-bottom: 20px;
+        margin-bottom: 0;
       }
       .box{background: #eee;}
       span.logo-lg img {
@@ -524,6 +524,8 @@ span.multiselect-selected-text {
           .table>thead:first-child>tr:first-child>th{font-weight: 400;}
           .btn-request {
             padding: 5px 10px!important;
+
+    margin-bottom: 30px!important;
           }
 
 
@@ -649,6 +651,7 @@ span.multiselect-selected-text {
                   border-radius: 20px;
                   padding: 5px 20px!important;
                   margin-bottom: 35px;
+                  margin-right: 10px; 
                 }
 
                 button.dt-button.buttons-csv.buttons-html5, button.dt-button.buttons-excel.buttons-html5{background: #ec7818!important;
@@ -843,9 +846,9 @@ span.multiselect-selected-text {
 .content-wrapper, .right-side {
     background: transparent;
 }
+.modal-body{padding-bottom: 25px;}
 
-
-
+.fd-inline{width: 100%; border-radius: 5px; margin-left: 0;    background-position: 97%; }
 
 
 /*=====Responsive=========*/
@@ -868,6 +871,11 @@ span.multiselect-selected-text {
          width: 130px;
          margin: 0 auto;
     }
+     .alc-fix {
+      margin-left: 0;
+      margin-top: 10px;
+  }
+  .d-inline{margin-left: 0;}
  }
  @media (max-width: 767px){
      table.dataTable thead th{
