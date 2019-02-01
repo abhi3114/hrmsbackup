@@ -31,7 +31,7 @@ export class RequestedStationeryComponent implements OnInit {
     keyboard: false,
     backdrop: true,
     ignoreBackdropClick: true,
-    class:'modal-lg'
+    class:'modal-md'
   };
   constructor(private router:Router,private api:RequestedStationeryService,private monthandyear:MonthYearService,public toastr: NotificationService,private modalService: BsModalService)
   {
