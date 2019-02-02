@@ -13,13 +13,11 @@
       </a> -->
       <div class="" id="collapseBasic" [collapse]="isCollapsed" style="">
         <div>
-          <div class="col-md-1" style="padding-right: 0" >
-          <label style="color:#757575; display: inline-block;font-weight: 400;margin: 8px 0 0 0">Add Filter</label>
-        </div>
-          <div class="col-md-2 alc alc-fix">
-            <div class="form-group">
+          <div class="col-md-12">
+           <label class="filter-label">Add Filter</label>
+            <div class="lo-btn">
               <!-- <label style="color:#757575; display: inline-block; font-weight: 400;">Start Date<sup style="color:red;">*</sup></label> -->
-              <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="approvedOutDoorDutyData.start_date" formControlName="start_date" required [class.error1]="!approvedOutDoorDutyForm.controls.start_date.valid && approvedOutDoorDutyForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
+              <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="approvedOutDoorDutyData.start_date" formControlName="start_date" required [class.error1]="!approvedOutDoorDutyForm.controls.start_date.valid && approvedOutDoorDutyForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  style="width: 100%;" />
               <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
               <div *ngIf="( approvedOutDoorDutyForm.get('start_date').hasError('minlength') || approvedOutDoorDutyForm.get('start_date').hasError('pattern') || approvedOutDoorDutyForm.get('start_date').hasError('required') ) && approvedOutDoorDutyForm.get('start_date').touched">
                 <div class="error" *ngIf="(approvedOutDoorDutyForm.get('start_date').hasError('required') && approvedOutDoorDutyForm.get('start_date').touched)">
@@ -27,11 +25,9 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-2 alc ">
-            <div class="form-group">
+             <div class="lo-btn">
             <!--   <label style="color:#757575; display: inline-block; font-weight: 400;">End Date<sup style="color:red;">*</sup></label> -->
-              <input name="endDate" type='text' class="form-control d-inline" [(ngModel)]="approvedOutDoorDutyData.end_date" formControlName="end_date" required [class.error1]="!approvedOutDoorDutyForm.controls.end_date.valid && approvedOutDoorDutyForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
+              <input name="endDate" type='text' class="form-control d-inline" [(ngModel)]="approvedOutDoorDutyData.end_date" formControlName="end_date" required [class.error1]="!approvedOutDoorDutyForm.controls.end_date.valid && approvedOutDoorDutyForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date" style="width: 100%;" />
               <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
               <div *ngIf="( approvedOutDoorDutyForm.get('end_date').hasError('minlength') || approvedOutDoorDutyForm.get('end_date').hasError('pattern') || approvedOutDoorDutyForm.get('end_date').hasError('required') ) && approvedOutDoorDutyForm.get('end_date').touched">
                 <div class="error" *ngIf="(approvedOutDoorDutyForm.get('end_date').hasError('required') && approvedOutDoorDutyForm.get('end_date').touched)">
@@ -39,10 +35,9 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-2" >
             <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="approvedOutDoorDutyForm.invalid"><!-- <i class="fa fa-filter" aria-hidden="true"></i>  -->Apply</button>
           </div>
+        
         </div>
       </div>
       </form>
