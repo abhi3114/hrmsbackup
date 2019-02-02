@@ -5,9 +5,9 @@
       <form (ngSubmit)="validateOutdoorDutiesForm()" [formGroup]="outdoorDutiesForm" autocomplete="off" novalidate="off">
         <div class="holder-filter" id="collapseBasic" [collapse]="isCollapsed" style="">
           <div>
-            <div class="col-md-1" >   <label style="color:#757575; display: inline-block; font-weight: 400;    margin: 8px 0 0 -5px;">Add Filter<!-- <sup style="color:red;">*</sup> --></label></div>
-            <div class="col-md-2 alc alc-fix" >
-              <div class="form-group">
+            <div class="col-md-12" >   
+              <label class="filter-label">Add Filter<!-- <sup style="color:red;">*</sup> --></label>
+           <div class="lo-btn">
                 <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="outdoorDutiesData.start_date" formControlName="start_date" required [class.error1]="!outdoorDutiesForm.controls.start_date.valid && outdoorDutiesForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date" style="width: 100%" />
                 <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
                 <div *ngIf="( outdoorDutiesForm.get('start_date').hasError('minlength') || outdoorDutiesForm.get('start_date').hasError('pattern') || outdoorDutiesForm.get('start_date').hasError('required') ) && outdoorDutiesForm.get('start_date').touched">
@@ -16,9 +16,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2 alc">
-              <div class="form-group">
+              <div class="lo-btn">
                 <input name="endDate" type='text' class="form-control d-inline" [(ngModel)]="outdoorDutiesData.end_date" formControlName="end_date" required [class.error1]="!outdoorDutiesForm.controls.end_date.valid && outdoorDutiesForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date" style="width: 100%" />
                 <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
                 <div *ngIf="( outdoorDutiesForm.get('end_date').hasError('minlength') || outdoorDutiesForm.get('end_date').hasError('pattern') || outdoorDutiesForm.get('end_date').hasError('required') ) && outdoorDutiesForm.get('end_date').touched">
@@ -27,10 +25,9 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
               <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="outdoorDutiesForm.invalid"><!-- <i class="fa fa-filter" aria-hidden="true"></i>  -->Apply</button>
-            </div>
+              </div>
+          
           </div>
         </div>
       </form>

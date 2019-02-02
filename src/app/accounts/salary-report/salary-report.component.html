@@ -4,30 +4,32 @@
       <h1 class="title" style="margin-left: 5px; margin-bottom: 25px;">Salary Report</h1>
       <form novalidate name="leaveForm" data-ng-submit="validate(leaveForm.$valid)" autocomplete="off">
         <div class="" style="margin-left: 5px;">
-          <div class="col-md-1" >
-            <label style="color:#757575;display: inline-block;font-weight: 400;margin: 8px 0 0 0">Add Filter
-            </label>
-          </div>
-          <div class="col-md-2 alc alc-fix">
-            <div class="form-group">
+          <div class="col-md-8" >
+            <label class="filter-label">Add Filter</label>
+             <div class="lo-btn">
               <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_report_filter.selectedmonth" style="width: 100%;" required>
                 <option  value="" disabled="">Select Month</option>
                 <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
               </select>
             </div>
-          </div>
-          <div class="col-md-2 alc">
-            <div class="form-group">
+              <div class="lo-btn">
               <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_report_filter.selectedyear" style="width: 100%;" required>
                 <option  value="" disabled="">Select Year</option>
                 <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
               </select>
             </div>
-          </div>
-          <div class="col-md-1" >
             <button type="submit" class="btn bg-orange btn-flat btn-salary" (click)="getSalaryReportData()">Submit</button>
           </div>
-          <div class="col-md-offset-6" style="" *ngIf="isHdfc">
+          <div class="col-md-2 alc alc-fix">
+           
+          </div>
+          <div class="col-md-2 alc">
+          
+          </div>
+          <div class="col-md-1" >
+            
+          </div>
+          <div class="col-md-offset-4" style="" *ngIf="isHdfc">
             <button type="button" class="btn bg-orange btn-flat pull-right btn-dblue" (click)="hdfcReport()" [ladda]="hdfcReportloader">HDFC Report</button>
           </div>
         </div>

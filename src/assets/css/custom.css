@@ -276,7 +276,9 @@ span.multiselect-selected-text {
        color: #FF9800;
      }
      rating span:focus {border:none; outline : 0}
-     .ladda-button {font-size: 14px!important; padding: 6px 18px!important;background: #f39c12!important;}
+     .ladda-button {font-size: 14px!important; padding: 6px 18px!important;background: #F07B00!important;}
+     .btn-primary.active, .btn-primary:active, .open>.dropdown-toggle.btn-primary{border-color: #F07B00;}
+     .btn-primary.focus, .btn-primary:focus{border-color: #F07B00;}
      .login-box-body .ladda-button{font-size: 14px!important; padding: 8px 18px!important;background: #3449b0!important; color: #fff!important; width: 100%!important;}
      .ladda-button[data-style=expand-right][data-loading] {
        padding-right: 50px!important;
@@ -340,7 +342,7 @@ span.multiselect-selected-text {
         font-size:12px!important;
       }
       .bg-orange{color: #757575!important; background-color: #fff!important; font-size: 14px; padding: 10px;}
-      .bg-orange img {margin-right: 10px;}
+      .bg-orange img {margin-right: 5px;}
       .sidebar-menu>li>a>.fa, .sidebar-menu>li>a>.glyphicon, .sidebar-menu>li>a>.ion {
         width: 40px;
       }
@@ -467,6 +469,7 @@ span.multiselect-selected-text {
       .dataTables_wrapper .dataTables_length {
         float: left;
         margin-top: 0;
+        margin-bottom: 20px;
       }
       .dataTables_filter input[type="search"] {
         border: 1px solid #fdfdfd;
@@ -541,10 +544,10 @@ span.multiselect-selected-text {
             -webkit-appearance: none;
           }
           .btn-apply {
-            background: #de7f42!important;
+            background: #F07B00!important;
             padding: 6px 22px;
             border-radius: 30px!important;
-            color: #fff!important; margin-bottom: 30px; margin-left: 5px;
+            color: #fff!important; margin-bottom: 30px; margin-left: 10px;
           }
           .holder-filter{margin:20px 0;}
           .mt-20{margin-top: 20px;}
@@ -642,7 +645,7 @@ span.multiselect-selected-text {
                   padding: 6px 20px;
                   border-radius: 15px;
                   color: #fff!important;
-                  margin-right: 10px;
+                  margin: 0 8px;
                 }
                 button.btn.bg-orange.btn-flat.pull-right.btn-dblue.ladda-button {
                   /* float: right!important; */
@@ -757,7 +760,7 @@ span.multiselect-selected-text {
 
               .btn[class*='bg-']:hover{    border: 1px solid #d9dad9;}
               input:focus, textarea:focus, select:focus {outline: none!important;}
-              .btn-request{     background: #de7f42!important;
+              .btn-request{     background: #F07B00!important;
                 color: #fff!important;
                 padding: 8px 15px!important;
                 margin-bottom: 35px;}
@@ -849,10 +852,33 @@ span.multiselect-selected-text {
 .modal-body{padding-bottom: 25px;}
 
 .fd-inline{width: 100%; border-radius: 5px; margin-left: 0;    background-position: 97%; }
-
+.lo-btn {
+    display: inline-block;
+    width: 160px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+}
+.filter-label {
+    color: #757575;
+    display: inline-block;
+    font-weight: 400;
+    margin: 8px 0px 20px -5px;
+}
+button.btn.bg-orange.btn-flat{
+  margin-bottom: 0;
+}
+.inputf-holder{width: 240px;    margin-left: 10px;}
+.in-file{ background: #fff; border: 1px solid #fff; border-radius:30px; width: 100%;}
+.ml-holder{width: 350px;}
+.dashboard-page .bg-orange{    padding: 10px 8px;
+    margin: 10px 0;}
 
 /*=====Responsive=========*/
-
+@media (max-width: 1024px){
+  button.btn.bg-orange.btn-flat.btn-salary{
+        padding: 6px 10px;    margin: 0 4px 
+  }
+}
  @media (max-width: 991px){
     .left-login-box {
          background: #F07B00;
@@ -875,8 +901,16 @@ span.multiselect-selected-text {
       margin-left: 0;
       margin-top: 10px;
   }
-  .d-inline{margin-left: 0;}
+ 
  }
+  @media (max-width: 782px){
+   .d-inline{margin-left: 0;}
+ .lo-btn{display: inline-block;
+    width: 100%;
+    margin: 0 0 10px;}
+    .filter-label{    margin: 8px 0px 10px 0px;
+    width: 100%;}
+  }
  @media (max-width: 767px){
      table.dataTable thead th{
          white-space: nowrap!important;
@@ -941,6 +975,7 @@ span.multiselect-selected-text {
   }
   .btn-apply{
     margin-left: 0;
+    margin-top: 10px;
   }
   .dataTables_wrapper .dataTables_filter label{float: right;}
   .table-responsive{border: 1px solid transparent;}
@@ -948,6 +983,8 @@ span.multiselect-selected-text {
   .alc{
     padding: 0;
   }
+  button.btn.bg-orange.btn-flat.btn-salary{width: 100%;width: 100%;
+    margin: 5px 0;}
 }
 @media (max-width: 440px){
   .dataTables_wrapper .dataTables_filter label{float: left;     margin-bottom: 25px;}
