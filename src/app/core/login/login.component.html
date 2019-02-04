@@ -10,21 +10,29 @@
 
       <p class="login-box-msg" style=" text-transform: uppercase;font-size: 16px;">Log In</p>
       <form name="loginForm" novalidate (ngSubmit)="validateLoginForm()" [formGroup]="signupform" autocomplete="off">
-      <div class="form-group has-feedback">
-        <input style="margin-bottom: 0px;" type="url" class="form-control" id="foremail" aria-describedby="emailHelp" placeholder="Enter Email Address" name="" required [(ngModel)]="loginData.email" formControlName="email" [class.error1]="!signupform.controls.email.valid && signupform.controls.email.dirty">
-        <div *ngIf="( signupform.get('email').hasError('minlength') || signupform.get('email').hasError('pattern') ||signupform.get('email').hasError('required') ) && signupform.get('email').touched">
-          <div class="error" *ngIf="signupform.get('email').hasError('required') && signupform.get('email').touched">
-            This field is mandatory
-          </div>
-          <div class="error" *ngIf="signupform.get('email').hasError('pattern') && signupform.get('email').touched">
-            Invalid email address
+        <div class="form-group has-feedback">
+          <input style="margin-bottom: 0px;" type="url" class="form-control" id="foremail" aria-describedby="emailHelp" placeholder="Enter Email Address" name="" required [(ngModel)]="loginData.email" formControlName="email" [class.error1]="!signupform.controls.email.valid && signupform.controls.email.dirty">
+          <div *ngIf="( signupform.get('email').hasError('minlength') || signupform.get('email').hasError('pattern') ||signupform.get('email').hasError('required') ) && signupform.get('email').touched">
+            <div class="error" *ngIf="signupform.get('email').hasError('required') && signupform.get('email').touched">
+              This field is mandatory
+            </div>
+            <div class="error" *ngIf="signupform.get('email').hasError('pattern') && signupform.get('email').touched">
+              Invalid email address
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" id="foremail" aria-describedby="emailHelp" placeholder="Enter Password" name="" required  [(ngModel)]="loginData.password" formControlName="password"
-        [class.error1]="!signupform.controls.password.valid && signupform.controls.password.dirty" style="margin-top: 25px; margin-bottom:0px;">
-        <!-- <span class="glyphicon form-control-feedback"><img src="assets/images/eye-icon.png" alt=""></span> -->
+        <div class="form-group has-feedback">
+          <input  [type]="show ? 'text' : 'password'" class="form-control" id="foremail" aria-describedby="emailHelp" placeholder="Enter Password" name="" required  [(ngModel)]="loginData.password" formControlName="password"
+          [class.error1]="!signupform.controls.password.valid && signupform.controls.password.dirty" style="margin-top: 25px; margin-bottom:0px;">
+          <span class="glyphicon" style="z-index: 999!important;
+          cursor: pointer;
+          position: absolute;
+          right: 15px;
+          top: 15px;"
+          (click)="viewPassword()">
+          <img src="assets/images/eye-icon.png" alt="" *ngIf="show">
+          <img src="assets/images/eye-icon-close.png" alt="" *ngIf="!show">
+        </span>
       </div>
       <div class="row">
         <div class="col-sm-12">
@@ -32,7 +40,7 @@
         </div>
         <!-- /.col -->
       </div>
-      </form>
-    </div>
-  </div></div>
+    </form>
+  </div>
+</div></div>
 </div>

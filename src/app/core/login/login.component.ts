@@ -13,12 +13,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   signupform: FormGroup;
   loginData = { email:'', password:'' };
-  user_data:any;isLoading: boolean = false;
+  user_data:any;isLoading: boolean = false;show: boolean;
   constructor(private router:Router,private api:LoginService,public toastr: ToastrManager) {
     this.signupform = new FormGroup({
       password: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+[a-zA-Z\s0-9._-]+@[a-zA-Z\sa-z0-9-]+\.[a-zA-Z\s.]{2,20}$/i)]),
       });
+    this.show = false;
   }
 
   ngOnInit() {
@@ -45,5 +46,9 @@ export class LoginComponent implements OnInit {
   }
   showError(e,position: any = 'top-center') {
     this.toastr.errorToastr(e.message, 'Oops Something went wrong!',{  position: position});
+  }
+  viewPassword()
+  {
+    this.show = !this.show;
   }
 }
