@@ -8,6 +8,7 @@ import { NotificationService } from '../../shared/service/notification.service';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import * as _ from 'underscore';
+import * as moment from 'moment';
 import { EditSalaryService } from './edit-salary.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
 import { PaymentComponentsService } from '../../shared/service/payment-components.service';
@@ -369,6 +370,7 @@ export class EditSalaryComponent implements OnInit {
     array.push({title:'Professional Tax',amount:  this.salaryBreakComponents.pt});
     array.push({title:'Performance Based Incentive',amount:  this.salaryBreakComponents.pbi});
     sum= (parseInt(this.salaryBreakComponents.basic)+parseInt(this.salaryBreakComponents.hra)+parseInt(this.salaryBreakComponents.travel_allowance)+parseInt(this.salaryBreakComponents.special_allowance)+parseInt(this.salaryBreakComponents.pbi)); //addition of all salary components//
+    this.addSalaryData.start_date=moment(this.addSalaryData.start_date).format('DD/MM/YYYY');
     var postdata =
     {
 
