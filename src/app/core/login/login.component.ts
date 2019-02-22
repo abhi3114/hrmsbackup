@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('employee_email',this.user_data.data.email);
       localStorage.setItem('employee_role',this.user_data.data.role);
       localStorage.setItem('is_on_probation',this.user_data.data.is_on_probation);
+      localStorage.setItem('can_access_manager', this.user_data.data.can_access_manager_section);
+      localStorage.setItem('can_access_accounts', this.user_data.data.can_access_accounts);
       this.router.navigateByUrl('/home/dashboard');
       this.isLoading=false;
       },(err) => {
