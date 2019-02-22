@@ -11,9 +11,8 @@ import { AppConstants } from '../../class/appConstants';
   })
 export class MasterComponent implements OnInit {
   employee_name:any;employee_photo:any;employee_department:any;employee_email:any;employee_role:any;
-  user_data:any;
-  can_access_manager:any;
-  can_access_accounts:any;
+  user_data:any;Role=[];
+  Departments=[];
   constructor(private router:Router,private api:MasterService,public toastr: NotificationService)
   {
     console.log('master called');
@@ -22,8 +21,9 @@ export class MasterComponent implements OnInit {
     this.employee_department=localStorage.getItem('employee_department');
     this.employee_email=localStorage.getItem('employee_email');
     this.employee_role=localStorage.getItem('employee_role');
-    this.can_access_manager = localStorage.getItem('can_access_manager');
-    this.can_access_accounts = localStorage.getItem('can_access_accounts');
+    this.Role=AppConstants.Role;
+    this.Departments = AppConstants.Departments;
+
   }
 
   signOut()
