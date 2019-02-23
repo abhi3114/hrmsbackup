@@ -15,7 +15,7 @@
     <div class="row">
       <div class="box-body" *ngIf="showLeavePolicy">
         <h4 style="text-align:center;">Leave Policy Details</h4>
-        <pdf-viewer [src]="'http://localhost:4200/assets/files/leavepolicy.pdf'"
+        <pdf-viewer [src]="'/assets/files/leavepolicy.pdf'"
         [render-text]="true" [page]="2"
         style="display: block;"
         ></pdf-viewer>
@@ -24,7 +24,7 @@
     <div class="row">
       <div class="box-body" *ngIf="showAttendancePolicy">
         <h4 style="text-align:center;">Attendance Policy Details</h4>
-        <pdf-viewer [src]="'http://localhost:4200/assets/files/attendancepolicy.pdf'"
+        <pdf-viewer [src]="'/assets/files/attendancepolicy.pdf'"
         [render-text]="true"
         style="display: block;"
         ></pdf-viewer>
@@ -33,7 +33,7 @@
     <div class="row">
       <div class="box-body" *ngIf="showSHPolicy">
         <h4 style="text-align:center;">SH Policy Details</h4>
-        <pdf-viewer [src]="'http://localhost:4200/assets/files/SHpolicy.pdf'"
+        <pdf-viewer [src]="'/assets/files/SHpolicy.pdf'"
         [render-text]="true"
         style="display: block;"
         ></pdf-viewer>
