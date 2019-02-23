@@ -29,7 +29,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { StationeryComponent } from './stationery/stationery.component';
 import { RequestedStationeryComponent } from './requested-stationery/requested-stationery.component';
 import { SharedModule } from '../shared/shared.module';
-
+import { PoliciesComponent } from './policies/policies.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { SharedModule } from '../shared/shared.module';
   BrowserAnimationsModule,
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
-  SharedModule
+  SharedModule,
+  PdfViewerModule
   ],
   declarations: [
   ApprovedLeavesComponent,
@@ -69,6 +71,7 @@ import { SharedModule } from '../shared/shared.module';
   ResetPasswordComponent,
   StationeryComponent,
   RequestedStationeryComponent,
+  PoliciesComponent,
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })

@@ -312,3 +312,7 @@ dl.booking-grid {
       {
         font-size:12px!important;
       }
+      .active-policy-button
+      {
+        background-color: #a26937 !important
+      }

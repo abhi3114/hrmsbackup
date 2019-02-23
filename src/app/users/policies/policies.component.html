@@ -1,0 +1,44 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+    <ol class="breadcrumb">
+      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li class="active">Policies</li>
+    </ol>
+    <section class="content-header">
+     <h4>Policies Details</h4>
+     <button type="button" class="btn bg-orange btn-flat" [ngClass]="{'active-policy-button': showLeavePolicy}"(click)="downloadLeavePolicy()" style="margin-right: 5px;">Download Leave Policy</button>
+     <button type="button" class="btn bg-orange btn-flat" [ngClass]="{'active-policy-button': showAttendancePolicy}"(click)="downloadattendancePolicy()" style="margin-right: 5px;">Download Attendance Policy</button>
+     <button type="button" class="btn bg-orange btn-flat" [ngClass]="{'active-policy-button': showSHPolicy}"(click)="downloadSHPolicy()" style="margin-right: 5px;">Download SH Policy
+     </button>
+   </section>
+   <section class="content">
+    <div class="row">
+      <div class="box-body" *ngIf="showLeavePolicy">
+        <h4 style="text-align:center;">Leave Policy Details</h4>
+        <pdf-viewer [src]="'http://localhost:4200/assets/files/leavepolicy.pdf'"
+        [render-text]="true" [page]="2"
+        style="display: block;"
+        ></pdf-viewer>
+      </div>
+    </div>
+    <div class="row">
+      <div class="box-body" *ngIf="showAttendancePolicy">
+        <h4 style="text-align:center;">Attendance Policy Details</h4>
+        <pdf-viewer [src]="'http://localhost:4200/assets/files/attendancepolicy.pdf'"
+        [render-text]="true"
+        style="display: block;"
+        ></pdf-viewer>
+      </div>
+    </div>
+    <div class="row">
+      <div class="box-body" *ngIf="showSHPolicy">
+        <h4 style="text-align:center;">SH Policy Details</h4>
+        <pdf-viewer [src]="'http://localhost:4200/assets/files/SHpolicy.pdf'"
+        [render-text]="true"
+        style="display: block;"
+        ></pdf-viewer>
+      </div>
+    </div>
+  </section>
+</div>
+</div>

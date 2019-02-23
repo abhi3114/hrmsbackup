@@ -19,7 +19,7 @@ import { BoosterSessionComponent } from './booster-session/booster-session.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { StationeryComponent } from './stationery/stationery.component';
 import { RequestedStationeryComponent } from './requested-stationery/requested-stationery.component';
-
+import { PoliciesComponent } from './policies/policies.component';
 
 const routes: Routes = [
 {
@@ -44,6 +44,7 @@ const routes: Routes = [
   {path: 'reset_password', component: ResetPasswordComponent},
   {path: 'stationery/fulfilled', component: StationeryComponent},
   {path: 'stationery/requested', component: RequestedStationeryComponent},
+  {path: 'policies', component: PoliciesComponent},
   ]
 }
 ];
