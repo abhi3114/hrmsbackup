@@ -330,3 +330,8 @@ dl.booking-grid {
         background: #f4f4f4!important;
         font-weight: bolder;
       }
+      .canvasWrapper
+      {
+        border: 1px solid #dfdfdf;
+        box-shadow: 3px 5px 5px 0px #d2d6de;
+      }
