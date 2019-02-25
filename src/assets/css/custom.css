@@ -316,3 +316,17 @@ dl.booking-grid {
       {
         background-color: #a26937 !important
       }
+      .policy-links
+      {
+        color: #353535!important;
+      }
+      .policy-links:hover
+      {
+        color: #FF9800!important;
+      }
+      .policy-list.active>a
+      {
+        color: #FF9800!important;
+        background: #f4f4f4!important;
+        font-weight: bolder;
+      }
