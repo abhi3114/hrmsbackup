@@ -2,6 +2,7 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {Observable,Subject} from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UnapprovedLateMarksService } from './unapproved-late-marks.service';
 import { MonthYearService } from '../../../shared/service/month-year.service';
 import { NotificationService } from '../../../shared/service/notification.service';
@@ -15,6 +16,8 @@ import * as moment from 'moment';
 export class UnapprovedLateMarksComponent implements OnInit {
 
   isCollapsed = false;
+  unapprovedLateMarkForm: FormGroup;
+  unapprovedLateMarkFormData={start_date:'',end_date:''};
   unapproved_late_mark_data:any; showDataTable:Boolean;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
@@ -28,15 +31,24 @@ export class UnapprovedLateMarksComponent implements OnInit {
       lengthMenu: [[5, 10, 20, 50,-1],
       [5, 10, 20, 50,"All" ]]
     };
+    var filteredData=monthandyear.getFilterData();
+    this.unapprovedLateMarkFormData.start_date = filteredData[0].firstDay;
+    this.unapprovedLateMarkFormData.end_date = filteredData[0].lastDay;
+    this.unapprovedLateMarkForm = new FormGroup({
+      start_date: new FormControl('', [Validators.required]),
+      end_date: new FormControl('', [Validators.required]),
+    });
   }
 
   ngOnInit() {
-    this.api.getAllUnapprovedSubordinateLateMarks().subscribe(res => {
+    var start_date=moment(this.unapprovedLateMarkFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedLateMarkFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnapprovedSubordinateLateMarks(start_date,end_date).subscribe(res => {
       this.unapproved_late_mark_data=res;
       this.leaveTableTrigger.next();
       }, (err) => {
         this.notification.showError(err.error);
-        });
+    });
   }
 
   checkAll(){
@@ -70,9 +82,22 @@ export class UnapprovedLateMarksComponent implements OnInit {
     }
   }
 
+  filterSubOrdinateLateMark(){
+    var start_date=moment(this.unapprovedLateMarkFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedLateMarkFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnapprovedSubordinateLateMarks(start_date,end_date).subscribe(res => {
+      this.unapproved_late_mark_data=res;
+      this.rerender();
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
   refreshData()
   {
-    this.api.getAllUnapprovedSubordinateLateMarks().subscribe(res => {
+    var start_date=moment(this.unapprovedLateMarkFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedLateMarkFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnapprovedSubordinateLateMarks(start_date, end_date).subscribe(res => {
       this.unapproved_late_mark_data=res;
       $('.check-box').prop('checked', false);
       this.rerender();

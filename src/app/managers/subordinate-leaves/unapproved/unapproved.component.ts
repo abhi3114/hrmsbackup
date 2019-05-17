@@ -20,7 +20,8 @@ export class UnapprovedComponent implements OnInit {
   leaveids = [];
   unapprovedLeavesData={start_date:'',end_date:''};
   unapproved_leaves_data:any;unapprovedleavesData:any; showDataTable:Boolean;
-  @ViewChild(DataTableDirective)
+  unapprovedLeavesForm: FormGroup;
+ @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();

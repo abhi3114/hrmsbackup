@@ -51,6 +51,38 @@
               <thead>
                 <tr>
                   <th>User</th>
+                  <th>Late Marks Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of approved_late_mark_data">
+                  <td>{{l.user_name}}</td>
+                  <td><a (click)="userLateMarkList(userLateMarkListtemp,l)">{{l.late_marks_count}}</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<ng-template #userLateMarkListtemp>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Approved Late Marks</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div>
+            <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
+              <thead>
+                <tr>
+                  <th>User</th>
                   <th>Date</th>
                   <th>Comment</th>
                   <th>Approval Date</th>
@@ -70,4 +102,4 @@
       </div>
     </section>
   </div>
-</div>
+</ng-template>

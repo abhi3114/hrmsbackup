@@ -7,6 +7,45 @@
     <section class="content-header">
       <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
     </section>
+    <section class="content-header">
+      <form (ngSubmit)="filterUnapprovedLeavesForm()" [formGroup]="unapprovedLeavesForm" autocomplete="off" novalidate="off">
+      <a (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR APPROVED LEAVES</h4>
+      </a>
+      <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+        <div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
+              <input name="bnknm" type='text' class="form-control"[(ngModel)]="unapprovedLeavesData.start_date" formControlName="start_date" required [class.error1]="!unapprovedLeavesForm.controls.start_date.valid && unapprovedLeavesForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
+              <div *ngIf="( unapprovedLeavesForm.get('start_date').hasError('minlength') || unapprovedLeavesForm.get('start_date').hasError('pattern') || unapprovedLeavesForm.get('start_date').hasError('required') ) && unapprovedLeavesForm.get('start_date').touched">
+                <div class="error" *ngIf="(unapprovedLeavesForm.get('start_date').hasError('required') && unapprovedLeavesForm.get('start_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="unapprovedLeavesData.end_date" formControlName="end_date" required [class.error1]="!unapprovedLeavesForm.controls.end_date.valid && unapprovedLeavesForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
+              <div *ngIf="( unapprovedLeavesForm.get('end_date').hasError('minlength') || unapprovedLeavesForm.get('end_date').hasError('pattern') || unapprovedLeavesForm.get('end_date').hasError('required') ) && unapprovedLeavesForm.get('end_date').touched">
+                <div class="error" *ngIf="(unapprovedLeavesForm.get('end_date').hasError('required') && unapprovedLeavesForm.get('end_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2" style="margin-top: 24px;">
+            <button type="submit" class="btn bg-orange btn-flat" [disabled]="unapprovedLeavesForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+      </form>
+    </section>
     <section class="content">
       <div class="row">
         <div class="box-body">

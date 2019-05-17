@@ -9,9 +9,9 @@ import { environment } from '../../../../environments/environment';
 export class UnapprovedLateMarksService {
 
   constructor(private http:HttpClient) { }
-  getAllUnapprovedSubordinateLateMarks()
+  getAllUnapprovedSubordinateLateMarks(start_date,end_date)
   {
-    return this.http.get(environment.baseUrl+ "late_marks/manager/unapproved",
+    return this.http.get(environment.baseUrl+ "late_marks/manager/unapproved?start_date="+start_date+"&end_date="+end_date,
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
