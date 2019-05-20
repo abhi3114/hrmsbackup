@@ -5,9 +5,6 @@
       <li class="active">Subordinate (Unapproved Late Marks)</li>
     </ol>
     <section class="content-header">
-      <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
-    </section>
-    <section class="content-header">
       <form (ngSubmit)="filterSubOrdinateLateMark()" [formGroup]="unapprovedLateMarkForm" autocomplete="off" novalidate="off">
       <a (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
@@ -53,6 +50,62 @@
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
               <thead>
                 <tr>
+                  <th>User</th>
+                  <th>LateMarks Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of unapproved_late_mark_data">
+                  <td>{{l.user_name}}</td>
+                  <td><a (click)="userLateMarkList(userLateMarkListtemp,l)">{{l.late_marks_count}}</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<ng-template #userLateMarkListtemp>
+  <section class="content-header">
+    <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
+    <form  novalidate  (ngSubmit)="validateRecordLateMarkResponseForm()" [formGroup]="updateLateMarksForm" autocomplete="off">
+    <button type="submit" class="btn btn-primary" [disabled]="updateLateMarksForm.invalid">Reject</button>
+    <div class="" style="margin-top: 23px; text-align: center;">
+    </div>
+      <div class="row">
+        <div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Rejection Reason<sup style="color:red;">*</sup></label>
+              <input name="puropse" type='text' class="form-control"[(ngModel)]="updateLateMarksData.comment"  formControlName="comment" required [class.error1]="!updateLateMarksForm.controls.comment.valid && updateLateMarksForm.controls.comment.dirty" />
+              <div *ngIf="( updateLateMarksForm.get('comment').hasError('required') ) && updateLateMarksForm.get('comment').touched">
+                <div class="error" *ngIf="updateLateMarksForm.get('comment').hasError('required') && updateLateMarksForm.get('comment').touched">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">UnApproved Late Marks</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div>
+            <table class="table table-bordered table-striped table-hover" >
+              <thead>
+                <tr>
                   <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkAll()'/></th>
                   <th>User</th>
                   <th>Date</th>
@@ -60,7 +113,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let l of unapproved_late_mark_data">
+                <tr *ngFor="let l of user_unapproved_late_mark_data">
                   <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
                   <td>{{l.user_name}}</td>
                   <td>{{l.date}}</td>
@@ -73,4 +126,7 @@
       </div>
     </section>
   </div>
-</div>
+</ng-template>
+
+
+

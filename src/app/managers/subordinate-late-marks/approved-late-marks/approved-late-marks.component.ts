@@ -21,6 +21,7 @@ export class ApprovedLateMarksComponent implements OnInit {
   approvedLateMarksForm: FormGroup;
   approvedLateMarkData={start_date:'',end_date:''};
   approved_late_mark_data:any; showDataTable:Boolean;
+  user_approved_late_mark_data:any;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   leaveTableOptions: DataTables.Settings = {};
@@ -71,8 +72,7 @@ export class ApprovedLateMarksComponent implements OnInit {
     var end_date=moment(this.approvedLateMarkData.end_date).format('DD/MM/YYYY');
     var user_id = l.user_id
     this.api.getAllApprovedSpecificSubordinateLateMarks(start_date,end_date, user_id).subscribe(res => {
-      this.approved_late_mark_data=res;
-      this.leaveTableTrigger.next();
+      this.user_approved_late_mark_data=res;
     }, (err) => {
       this.notification.showError(err.error);
     });
@@ -86,5 +86,6 @@ export class ApprovedLateMarksComponent implements OnInit {
       this.leaveTableTrigger.next();
     });
   }
+
 
 }

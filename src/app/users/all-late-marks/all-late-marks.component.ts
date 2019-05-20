@@ -16,7 +16,8 @@ import * as moment from 'moment';
   })
 export class AllLateMarksComponent implements OnInit {
   isCollapsed = false;
-  lateMarksForm: FormGroup;  updateLateMarksForm:FormGroup;
+  lateMarksForm: FormGroup;  updateLateMarksForm:FormGroup; editLateMarkForm:FormGroup;
+  editLateMarkFormData = {date: '', comment: '', id: ''};
   lateMarksData={start_date:'',end_date:''};updateLateMarksData={comment:'',id:''};
   api_data:any;latemarksData:any; showDataTable:Boolean;
   @ViewChild(DataTableDirective)
@@ -74,6 +75,18 @@ export class AllLateMarksComponent implements OnInit {
     this.updateLateMarksData.comment=lmreason;
     this.updateLateMarksData.id=lmId
   }
+
+  editLateMarks(template: TemplateRef<any>,lm){
+    this.editLateMarkForm = new FormGroup({
+      date: new FormControl('', [Validators.required]),
+      comment: new FormControl('', [Validators.required])
+    });
+    this.modalRef = this.modalService.show(template);
+    this.editLateMarkFormData.date=lm.date;
+    this.editLateMarkFormData.id=lm.id
+    this.editLateMarkFormData.comment=lm.comment
+  }
+
 
   validateRecordLateMarkResponseForm()
   {
