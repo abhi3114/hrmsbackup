@@ -24,6 +24,8 @@ export class UnapprovedLateMarksComponent implements OnInit {
   updateLateMarksData={comment:''};
   unapproved_late_mark_data:any; showDataTable:Boolean;
   user_unapproved_late_mark_data:any;
+  singleLateMarkResponse:any;
+  user_id:any;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   modalRef: BsModalRef;
@@ -67,23 +69,26 @@ export class UnapprovedLateMarksComponent implements OnInit {
     $('.checkbox').prop('checked', false);
   }
 
-  save()
+  save(user_id)
   {
     var unapproved_late_marks = []
     $('.checkbox:checked').each(function() {
       var id = $(this).attr('name');
       unapproved_late_marks.push(id);
       });
-    var postdata = { "late_mark_ids":  unapproved_late_marks}
+    var postdata = { "late_mark_ids":  unapproved_late_marks, reason: this.updateLateMarksData.comment}
     if(unapproved_late_marks != undefined && unapproved_late_marks.length > 0)
     {
-      this.api.sendForLateMarksApproval(postdata).subscribe(res => {
+      this.api.sendForBulkLateMarksApproval(postdata).subscribe(res => {
         unapproved_late_marks = [];
-        this.notification.showSuccess('Late mark approved successfully');
         this.refreshData();
+        this.refreshList(user_id);
+        this.notification.showSuccess('Late mark approved successfully');
+        this.updateLateMarksForm.reset();
         }, (err) => {
-          this.notification.showError(err.error);
-          });
+        $('.modal').remove();
+        this.notification.showError(err.error);
+      });
     }
     else
     {
@@ -107,8 +112,8 @@ export class UnapprovedLateMarksComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
     var start_date=moment(this.unapprovedLateMarkFormData.start_date).format('DD/MM/YYYY');
     var end_date=moment(this.unapprovedLateMarkFormData.end_date).format('DD/MM/YYYY');
-    var user_id = l.user_id
-    this.api.getAllUnApprovedSpecificSubordinateLateMarks(start_date,end_date, user_id).subscribe(res => {
+    this.user_id = l.user_id
+    this.api.getAllUnApprovedSpecificSubordinateLateMarks(start_date,end_date, this.user_id).subscribe(res => {
       this.user_unapproved_late_mark_data=res;
     }, (err) => {
       this.notification.showError(err.error);
@@ -122,13 +127,15 @@ export class UnapprovedLateMarksComponent implements OnInit {
       var id = $(this).attr('name');
       unapproved_late_marks.push(id);
       });
-    var postdata = { "late_mark_ids":  unapproved_late_marks, rejection_reason: this.updateLateMarksData.comment}
+    var postdata = { "late_mark_ids":  unapproved_late_marks, reason: this.updateLateMarksData.comment}
     if(unapproved_late_marks != undefined && unapproved_late_marks.length > 0)
     {
-      this.api.sendForLateMarksApproval(postdata).subscribe(res => {
+      this.api.sendForBulkLateMarksRejection(postdata).subscribe(res => {
         unapproved_late_marks = [];
-        this.notification.showSuccess('Late mark approved successfully');
         this.refreshData();
+        this.refreshList(this.user_id);
+        this.updateLateMarksForm.reset();
+        this.notification.showSuccess('Late mark Rejected successfully');
         }, (err) => {
           this.notification.showError(err.error);
           });
@@ -151,6 +158,19 @@ export class UnapprovedLateMarksComponent implements OnInit {
         this.notification.showError(err.error);
         });
   }
+
+  refreshList(user_id){
+    var start_date=moment(this.unapprovedLateMarkFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedLateMarkFormData.end_date).format('DD/MM/YYYY');
+    this.user_id = user_id
+    this.api.getAllUnApprovedSpecificSubordinateLateMarks(start_date,end_date, this.user_id).subscribe(res => {
+      this.user_unapproved_late_mark_data=res;
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+
+  }
+
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
@@ -159,5 +179,26 @@ export class UnapprovedLateMarksComponent implements OnInit {
       this.leaveTableTrigger.next();
       });
   }
+
+  approveSingleLateMark(l){
+    this.api.sendForSingleLateMarksApproval(l).subscribe(res => {
+    this.refreshData();
+    this.refreshList(this.user_id)
+    this.notification.showSuccess('Late mark Approved successfully');
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  rejectSigleLateMark(l){
+    this.api.sendForSingleLateMarksRejection(l).subscribe(res => {
+    this.refreshData();
+    this.refreshList(this.user_id)
+    this.notification.showSuccess('Late mark Rejected successfully');
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
 
 }

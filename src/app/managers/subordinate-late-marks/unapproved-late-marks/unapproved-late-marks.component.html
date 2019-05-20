@@ -69,17 +69,21 @@
 </div>
 
 <ng-template #userLateMarkListtemp>
+  <div class="modal-header">
+    <h4 class="modal-title" style="text-align: center;">UnApproved LateMarks</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   <section class="content-header">
-    <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
     <form  novalidate  (ngSubmit)="validateRecordLateMarkResponseForm()" [formGroup]="updateLateMarksForm" autocomplete="off">
-    <button type="submit" class="btn btn-primary" [disabled]="updateLateMarksForm.invalid">Reject</button>
     <div class="" style="margin-top: 23px; text-align: center;">
     </div>
       <div class="row">
         <div>
           <div class="col-md-12">
             <div class="form-group">
-              <label>Rejection Reason<sup style="color:red;">*</sup></label>
+              <label>Reason<sup style="color:red;">*</sup></label>
               <input name="puropse" type='text' class="form-control"[(ngModel)]="updateLateMarksData.comment"  formControlName="comment" required [class.error1]="!updateLateMarksForm.controls.comment.valid && updateLateMarksForm.controls.comment.dirty" />
               <div *ngIf="( updateLateMarksForm.get('comment').hasError('required') ) && updateLateMarksForm.get('comment').touched">
                 <div class="error" *ngIf="updateLateMarksForm.get('comment').hasError('required') && updateLateMarksForm.get('comment').touched">
@@ -90,14 +94,10 @@
           </div>
         </div>
       </div>
+      <button type="submit" class="btn btn-danger btn-flat" [disabled]="updateLateMarksForm.invalid">Mark Reject</button>
+      <button type="button" class="btn bg-orange btn-flat ladda-button" [disabled]="updateLateMarksForm.invalid" (click)="save(user_id)" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
     </form>
   </section>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">UnApproved Late Marks</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
   <div class="modal-body">
     <section class="content">
       <div class="row">
@@ -110,6 +110,8 @@
                   <th>User</th>
                   <th>Date</th>
                   <th>Comment</th>
+                  <th>Approve</th>
+                  <th>Reject</th>
                 </tr>
               </thead>
               <tbody>
@@ -118,6 +120,8 @@
                   <td>{{l.user_name}}</td>
                   <td>{{l.date}}</td>
                   <td>{{l.comment| nullData}}</td>
+                  <td><a style="cursor: pointer;" (click)="approveSingleLateMark(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
+                  <td><a style="cursor: pointer;" (click)="rejectSigleLateMark(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
                 </tr>
               </tbody>
             </table>

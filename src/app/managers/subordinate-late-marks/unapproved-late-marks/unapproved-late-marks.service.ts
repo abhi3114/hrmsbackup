@@ -15,7 +15,7 @@ export class UnapprovedLateMarksService {
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
-  sendForLateMarksApproval(params){
+  sendForBulkLateMarksApproval(params){
     return this.http.post(environment.baseUrl+ "managers/late_marks/bulk_approve",params,{
       headers: {
         "Authorization": 'Token token=' + localStorage.getItem('token'),
@@ -23,8 +23,8 @@ export class UnapprovedLateMarksService {
       }
     })
   }
-  sendForLateMarksRejection(params){
-    return this.http.post(environment.baseUrl+ "manager/late_marks/"+params+"/reject", {
+  sendForBulkLateMarksRejection(params){
+    return this.http.post(environment.baseUrl+ "managers/late_marks/bulk_reject",params,{
       headers: {
         "Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'
@@ -37,4 +37,20 @@ export class UnapprovedLateMarksService {
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
+
+  sendForSingleLateMarksApproval(late_mark_id){
+    return this.http.post(environment.baseUrl+ "managers/late_marks/"+late_mark_id+"/approve",late_mark_id,{
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
+
+  sendForSingleLateMarksRejection(late_mark_id){
+    return this.http.delete(environment.baseUrl+ "managers/late_marks/"+late_mark_id+"/reject",
+      { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'})})
+  }
+
 }
