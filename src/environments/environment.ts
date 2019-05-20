@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl:"http://staging.hrms.property-pistol.in/api/"
+  baseUrl:"http://localhost:3000/api/"
 };
 
 /*

@@ -31,6 +31,7 @@ import { RequestedStationeryComponent } from './requested-stationery/requested-s
 import { SharedModule } from '../shared/shared.module';
 import { PoliciesComponent } from './policies/policies.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { RejectedLateMarksComponent } from './rejected-late-marks/rejected-late-marks.component';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   StationeryComponent,
   RequestedStationeryComponent,
   PoliciesComponent,
+  RejectedLateMarksComponent,
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })

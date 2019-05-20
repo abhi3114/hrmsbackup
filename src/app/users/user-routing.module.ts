@@ -20,6 +20,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { StationeryComponent } from './stationery/stationery.component';
 import { RequestedStationeryComponent } from './requested-stationery/requested-stationery.component';
 import { PoliciesComponent } from './policies/policies.component';
+import { RejectedLateMarksComponent } from './rejected-late-marks/rejected-late-marks.component';
+
 
 const routes: Routes = [
 {
@@ -37,6 +39,7 @@ const routes: Routes = [
   {path: 'late_marks', component: AllLateMarksComponent},
   {path: 'late_marks/approved', component: ApprovedLateMarksComponent},
   {path: 'late_marks/unapproved', component: UnapprovedLateMarksComponent},
+  {path: 'late_marks/rejected', component: RejectedLateMarksComponent},
   {path: 'missing_attendance', component: AllMissingAttendanceComponent},
   {path: 'missing_attendance/approved', component: ApprovedMissingAttendanceComponent},
   {path: 'missing_attendance/unapproved', component: UnapprovedMissingAttendanceComponent},
