@@ -21,6 +21,8 @@ import { StationeryComponent } from './stationery/stationery.component';
 import { RequestedStationeryComponent } from './requested-stationery/requested-stationery.component';
 import { PoliciesComponent } from './policies/policies.component';
 import { RejectedLateMarksComponent } from './rejected-late-marks/rejected-late-marks.component';
+import { RejectedLeavesComponent } from './rejected-leaves/rejected-leaves.component';
+
 
 
 const routes: Routes = [
@@ -33,6 +35,7 @@ const routes: Routes = [
   {path: 'leaves', component: AllLeavesComponent},
   {path: 'leaves/approved', component: ApprovedLeavesComponent},
   {path: 'leaves/unapproved', component: UnapprovedLeavesComponent},
+  {path: 'leaves/rejected', component: RejectedLeavesComponent},
   {path: 'outdoor_duties', component: AllOutdoorDutiesComponent},
   {path: 'outdoor_duties/approved', component: ApprovedOutdoorDutiesComponent},
   {path: 'outdoor_duties/unapproved', component: UnapprovedOutdoorDutiesComponent},
