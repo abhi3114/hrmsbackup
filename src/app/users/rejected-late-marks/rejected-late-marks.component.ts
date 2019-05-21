@@ -19,7 +19,7 @@ export class RejectedLateMarksComponent implements OnInit {
   isCollapsed = false; api_data:any;
   rejectedLateMarksForm: FormGroup;
   rejectedLateMarksData={start_date:'',end_date:''};
-  rejectedLatemarksData:any; showDataTable:Boolean;
+  rejectedLatemarks:any; showDataTable:Boolean;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   lateMarkTableOptions: DataTables.Settings = {};
@@ -46,7 +46,7 @@ export class RejectedLateMarksComponent implements OnInit {
     var end_date=moment(this.rejectedLateMarksData.end_date).format('DD/MM/YYYY');
     this.api.getAllRejectedLateMarks(start_date ,end_date).subscribe(res => {
       this.api_data=res;
-      this.rejectedLatemarksData=this.api_data.late_marks_data;
+      this.rejectedLatemarks=this.api_data.late_marks_data;
       this.lateMarkTableTableTrigger.next();
       }, (err) => {
       this.toastr.showError(err.error);
@@ -58,7 +58,7 @@ export class RejectedLateMarksComponent implements OnInit {
     var end_date=moment(this.rejectedLateMarksData.end_date).format('DD/MM/YYYY');
     this.api.getAllRejectedLateMarks(start_date ,end_date).subscribe(res => {
       this.api_data=res;
-      this.rejectedLatemarksData=this.api_data.late_marks_data;
+      this.rejectedLatemarks=this.api_data.late_marks_data;
       this.rerender();
       }, (err) => {
       this.toastr.showError(err.error);
