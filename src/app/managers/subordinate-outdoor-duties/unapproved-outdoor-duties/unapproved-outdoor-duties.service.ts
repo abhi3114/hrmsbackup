@@ -9,8 +9,8 @@ export class UnapprovedOutdoorDutiesService {
 
   constructor(private http:HttpClient) { }
 
-  getAllUnapprovedOutDoorDuties(){
-    return this.http.get(environment.baseUrl+ "outdoors/manager/unapproved",
+  getAllUnapprovedOutDoorDuties(start_date,end_date){
+    return this.http.get(environment.baseUrl+ "managers/outdoor_duties/unapproved?start_date="+start_date+"&end_date="+end_date,
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }

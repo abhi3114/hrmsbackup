@@ -5,6 +5,43 @@
       <li class="active">Subordinate (Unapproved Outdoor Duties)</li>
     </ol>
     <section class="content-header">
+      <form (ngSubmit)="filterSubOrdinateOutdoor()" [formGroup]="unapprovedOutdoorForm" autocomplete="off" novalidate="off">
+      <a (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR ALL Unapproved Outdoors</h4>
+      </a>
+      <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+        <div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
+              <input name="bnknm" type='text' class="form-control"[(ngModel)]="unapprovedOutdoorFormData.start_date" formControlName="start_date" required [class.error1]="!unapprovedOutdoorForm.controls.start_date.valid && unapprovedOutdoorForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
+              <div *ngIf="( unapprovedOutdoorForm.get('start_date').hasError('minlength') || unapprovedOutdoorForm.get('start_date').hasError('pattern') || unapprovedOutdoorForm.get('start_date').hasError('required') ) && unapprovedOutdoorForm.get('start_date').touched">
+                <div class="error" *ngIf="(unapprovedOutdoorForm.get('start_date').hasError('required') && unapprovedOutdoorForm.get('start_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="unapprovedOutdoorForm.end_date" formControlName="end_date" required [class.error1]="!unapprovedOutdoorForm.controls.end_date.valid && unapprovedOutdoorForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
+              <div *ngIf="( unapprovedOutdoorForm.get('end_date').hasError('minlength') || unapprovedOutdoorForm.get('end_date').hasError('pattern') || unapprovedOutdoorForm.get('end_date').hasError('required') ) && unapprovedOutdoorForm.get('end_date').touched">
+                <div class="error" *ngIf="(unapprovedOutdoorForm.get('end_date').hasError('required') && unapprovedOutdoorForm.get('end_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2" style="margin-top: 24px;">
+            <button type="submit" class="btn bg-orange btn-flat" [disabled]="unapprovedOutdoorForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+      </form>
      <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved
      </button>
     </section>
