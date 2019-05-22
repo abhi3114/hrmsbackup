@@ -54,24 +54,14 @@
                 <tr>
                   <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkAll()'/></th>
                   <th>User</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Project/Firm Name</th>
-                  <th>Client/Broker Name</th>
-                  <th>Location</th>
-                  <th>Purpose</th>
+                  <th>Unapproved Outdoor Duties Count</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let l of unapproved_outdoor_duty_data">
                   <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
                   <td>{{l.user_name}}</td>
-                  <td>{{l.start_date}}</td>
-                  <td>{{l.end_date}}</td>
-                  <td>{{l.project_name}}</td>
-                  <td>{{l.client_name}}</td>
-                  <td>{{l.location}}</td>
-                  <td>{{l.reason}}</td>
+                  <td>{{l.outdoors_count}}</td>
                 </tr>
               </tbody>
             </table>

@@ -51,25 +51,13 @@
               <thead>
                 <tr>
                   <th>User</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Project/Firm Name</th>
-                  <th>Client/Broker Name</th>
-                  <th>Location</th>
-                  <th>Purpose</th>
-                  <th>Approval Date</th>
+                  <th>Approved Outdoor Duties Count</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let l of approved_outdoor_duty_data">
                   <td>{{l.user_name}}</td>
-                  <td>{{l.start_date}}</td>
-                  <td>{{l.end_date}}</td>
-                  <td>{{l.project_name}}</td>
-                  <td>{{l.client_name}}</td>
-                  <td>{{l.location}}</td>
-                  <td>{{l.reason}}</td>
-                  <td>{{l.approved_on |  date: 'dd/MM/yyyy'| nullData}}</td>
+                  <td>{{l.outdoors_count}}</td>
                 </tr>
               </tbody>
             </table>
