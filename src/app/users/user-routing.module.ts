@@ -9,6 +9,7 @@ import { UnapprovedLeavesComponent } from './unapproved-leaves/unapproved-leaves
 import { AllOutdoorDutiesComponent } from './all-outdoor-duties/all-outdoor-duties.component';
 import { ApprovedOutdoorDutiesComponent } from './approved-outdoor-duties/approved-outdoor-duties.component';
 import { UnapprovedOutdoorDutiesComponent } from './unapproved-outdoor-duties/unapproved-outdoor-duties.component';
+import { RejectedOutdoorDutiesComponent } from './rejected-outdoor-duties/rejected-outdoor-duties.component';
 import { AllLateMarksComponent } from './all-late-marks/all-late-marks.component';
 import { ApprovedLateMarksComponent } from './approved-late-marks/approved-late-marks.component';
 import { UnapprovedLateMarksComponent } from './unapproved-late-marks/unapproved-late-marks.component';
@@ -40,6 +41,7 @@ const routes: Routes = [
   {path: 'outdoor_duties', component: AllOutdoorDutiesComponent},
   {path: 'outdoor_duties/approved', component: ApprovedOutdoorDutiesComponent},
   {path: 'outdoor_duties/unapproved', component: UnapprovedOutdoorDutiesComponent},
+  {path: 'outdoor_duties/rejected', component: RejectedOutdoorDutiesComponent},
   {path: 'late_marks', component: AllLateMarksComponent},
   {path: 'late_marks/approved', component: ApprovedLateMarksComponent},
   {path: 'late_marks/unapproved', component: UnapprovedLateMarksComponent},

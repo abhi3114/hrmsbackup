@@ -34,6 +34,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { RejectedLateMarksComponent } from './rejected-late-marks/rejected-late-marks.component';
 import { RejectedLeavesComponent } from './rejected-leaves/rejected-leaves.component';
 import { RejectedMissingAttendancesComponent } from './rejected-missing-attendances/rejected-missing-attendances.component';
+import { RejectedOutdoorDutiesComponent } from './rejected-outdoor-duties/rejected-outdoor-duties.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { RejectedMissingAttendancesComponent } from './rejected-missing-attendan
   RejectedLateMarksComponent,
   RejectedLeavesComponent,
   RejectedMissingAttendancesComponent,
+  RejectedOutdoorDutiesComponent
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })
