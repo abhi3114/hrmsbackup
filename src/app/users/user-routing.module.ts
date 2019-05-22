@@ -22,6 +22,7 @@ import { RequestedStationeryComponent } from './requested-stationery/requested-s
 import { PoliciesComponent } from './policies/policies.component';
 import { RejectedLateMarksComponent } from './rejected-late-marks/rejected-late-marks.component';
 import { RejectedLeavesComponent } from './rejected-leaves/rejected-leaves.component';
+import { RejectedMissingAttendancesComponent } from './rejected-missing-attendances/rejected-missing-attendances.component';
 
 
 
@@ -46,6 +47,7 @@ const routes: Routes = [
   {path: 'missing_attendance', component: AllMissingAttendanceComponent},
   {path: 'missing_attendance/approved', component: ApprovedMissingAttendanceComponent},
   {path: 'missing_attendance/unapproved', component: UnapprovedMissingAttendanceComponent},
+  {path: 'missing_attendance/rejected', component: RejectedMissingAttendancesComponent},
   {path: 'booster_sessions', component: BoosterSessionComponent},
   {path: 'reset_password', component: ResetPasswordComponent},
   {path: 'stationery/fulfilled', component: StationeryComponent},

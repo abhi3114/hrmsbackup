@@ -1,0 +1,71 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+    <ol class="breadcrumb">
+      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li class="active" style="text-align: center;">Rejected Late Marks</li>
+    </ol>
+    <section class="content-header">
+      <form (ngSubmit)="getFilteredRejectedMissingAttendances()" [formGroup]="rejectedMissingAttendancesForm" autocomplete="off" novalidate="off">
+      <a (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR REJECTED Attendances</h4>
+      </a>
+      <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+        <div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
+              <input name="bnknm" type='text' class="form-control"[(ngModel)]="rejectedMissingAttendancesData.start_date" formControlName="start_date" required [class.error1]="!rejectedMissingAttendancesForm.controls.start_date.valid && rejectedMissingAttendancesForm.controls.start_date.dirty" [owlDateTime]="all_MissingAttendances_start_date" [owlDateTimeTrigger]="all_MissingAttendances_start_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_MissingAttendances_start_date></owl-date-time>
+              <div *ngIf="( rejectedMissingAttendancesForm.get('start_date').hasError('minlength') || rejectedMissingAttendancesForm.get('start_date').hasError('pattern') || rejectedMissingAttendancesForm.get('start_date').hasError('required') ) && rejectedMissingAttendancesForm.get('start_date').touched">
+                <div class="error" *ngIf="(rejectedMissingAttendancesForm.get('start_date').hasError('required') && rejectedMissingAttendancesForm.get('start_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="rejectedMissingAttendancesData.end_date" formControlName="end_date" required [class.error1]="!rejectedMissingAttendancesForm.controls.end_date.valid && rejectedMissingAttendancesForm.controls.end_date.dirty" [owlDateTime]="all_MissingAttendances_end_date" [owlDateTimeTrigger]="all_MissingAttendances_end_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_MissingAttendances_end_date></owl-date-time>
+              <div *ngIf="( rejectedMissingAttendancesForm.get('end_date').hasError('minlength') || rejectedMissingAttendancesForm.get('end_date').hasError('pattern') || rejectedMissingAttendancesForm.get('end_date').hasError('required') ) && rejectedMissingAttendancesForm.get('end_date').touched">
+                <div class="error" *ngIf="(rejectedMissingAttendancesForm.get('end_date').hasError('required') && rejectedMissingAttendancesForm.get('end_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2" style="margin-top: 24px;">
+            <button type="submit" class="btn bg-orange btn-flat" [disabled]="rejectedMissingAttendancesForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+      </form>
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div>
+            <table class="table  table-bordered table-striped table-hover" datatable [dtOptions]="lateMarkTableOptions"  [dtTrigger]="lateMarkTableTableTrigger">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Punch</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let l of rejectedMissingAttendances">
+                <td>{{l.date}}</td>
+                <td>{{l.punch}}</td>
+                <td>{{l.reason}}</td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

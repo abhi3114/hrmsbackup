@@ -33,6 +33,7 @@ import { PoliciesComponent } from './policies/policies.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { RejectedLateMarksComponent } from './rejected-late-marks/rejected-late-marks.component';
 import { RejectedLeavesComponent } from './rejected-leaves/rejected-leaves.component';
+import { RejectedMissingAttendancesComponent } from './rejected-missing-attendances/rejected-missing-attendances.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { RejectedLeavesComponent } from './rejected-leaves/rejected-leaves.compo
   PoliciesComponent,
   RejectedLateMarksComponent,
   RejectedLeavesComponent,
+  RejectedMissingAttendancesComponent,
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })

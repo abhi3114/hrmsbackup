@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RejectedLeavesComponent } from './rejected-leaves.component';
 
 describe('RejectedLeavesComponent', () => {
