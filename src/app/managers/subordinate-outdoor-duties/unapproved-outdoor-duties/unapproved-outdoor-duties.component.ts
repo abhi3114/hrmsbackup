@@ -118,7 +118,7 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
     $('.checkbox').prop('checked', false);
   }
 
-  save(){
+  save(user_id){
     var unapproved_outdoor_ids = []
     $('.checkbox:checked').each(function() {
       var id = $(this).attr('name');
@@ -129,9 +129,12 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
     {
       this.api.sendForBulkOutdoorsApproval(postdata).subscribe(res => {
         unapproved_outdoor_ids = [];
+        this.refreshData();
+        this.refreshList(user_id);
         this.notification.showSuccess('Outdoor duties are approved successfully');
-        this.getallODS();
+        this.updateOutdoorsForm.reset();
         }, (err) => {
+          $('.modal').remove();
           this.notification.showError(err.error);
           });
     }
