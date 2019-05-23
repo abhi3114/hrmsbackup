@@ -74,7 +74,28 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
 
   validateRecordOutdoorResponseForm()
   {
-
+    var unapproved_outdoors = []
+     $('.checkbox:checked').each(function() {
+       var id = $(this).attr('name');
+       unapproved_outdoors.push(id);
+       });
+     var postdata = { "outdoor_ids":  unapproved_outdoors, reason: this.updateOutdoorsData.comment}
+     if(unapproved_outdoors != undefined && unapproved_outdoors.length > 0)
+     {
+       this.api.sendForBulkOutdoorsRejection(postdata).subscribe(res => {
+         unapproved_outdoors = [];
+         this.refreshData();
+         this.refreshList(this.user_id);
+         this.updateOutdoorsForm.reset();
+         this.notification.showSuccess('Outdoor duties are rejected successfully');
+         }, (err) => {
+           this.notification.showError(err.error);
+           });
+     }
+     else
+     {
+       this.notification.CustomErrorMessage('Please check atleast one outdoor duty');
+     }
   }
 
   userOutdoorsList(template: TemplateRef<any>, l)
@@ -106,9 +127,9 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
     var postdata = { "outdoor_ids":  unapproved_outdoor_ids}
     if(unapproved_outdoor_ids != undefined && unapproved_outdoor_ids.length > 0)
     {
-      this.api.sendForOutDoorDutiesApproval(postdata).subscribe(res => {
+      this.api.sendForBulkOutdoorsApproval(postdata).subscribe(res => {
         unapproved_outdoor_ids = [];
-        this.notification.showSuccess('OutDoor Duty approved successfully');
+        this.notification.showSuccess('Outdoor duties are approved successfully');
         this.getallODS();
         }, (err) => {
           this.notification.showError(err.error);

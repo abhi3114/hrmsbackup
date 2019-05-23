@@ -24,8 +24,8 @@ export class UnapprovedOutdoorDutiesService {
     })
   }
 
-  sendForSingleOutdoorRejection(late_mark_id){
-    return this.http.delete(environment.baseUrl+ "managers/outdoor_duties/"+late_mark_id+"/reject",
+  sendForSingleOutdoorRejection(outdoor_id){
+    return this.http.delete(environment.baseUrl+ "managers/outdoor_duties/"+outdoor_id+"/reject",
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
@@ -37,8 +37,17 @@ export class UnapprovedOutdoorDutiesService {
         "Content-Type": 'application/json'})})
   }
 
-  sendForOutDoorDutiesApproval(params){
-    return this.http.post(environment.baseUrl+ "outdoors/manager/unapproved",params, {
+  sendForBulkOutdoorsApproval(params){
+    return this.http.post(environment.baseUrl+ "managers/outdoor_duties/bulk_approve",params,{
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
+
+  sendForBulkOutdoorsRejection(params){
+    return this.http.post(environment.baseUrl+ "managers/outdoor_duties/bulk_reject",params,{
       headers: {
         "Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'
