@@ -8,7 +8,7 @@
       <form (ngSubmit)="filterSubOrdinateOutdoor()" [formGroup]="unapprovedOutdoorForm" autocomplete="off" novalidate="off">
       <a (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR ALL Unapproved Outdoors</h4>
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">Filter for Unapproved Outdoor Duties</h4>
       </a>
       <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
         <div>
@@ -27,7 +27,7 @@
           <div class="col-md-2">
             <div class="form-group">
               <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
-              <input name="endDate" type='text' class="form-control" [(ngModel)]="unapprovedOutdoorForm.end_date" formControlName="end_date" required [class.error1]="!unapprovedOutdoorForm.controls.end_date.valid && unapprovedOutdoorForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="unapprovedOutdoorFormData.end_date" formControlName="end_date" required [class.error1]="!unapprovedOutdoorForm.controls.end_date.valid && unapprovedOutdoorForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
               <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
               <div *ngIf="( unapprovedOutdoorForm.get('end_date').hasError('minlength') || unapprovedOutdoorForm.get('end_date').hasError('pattern') || unapprovedOutdoorForm.get('end_date').hasError('required') ) && unapprovedOutdoorForm.get('end_date').touched">
                 <div class="error" *ngIf="(unapprovedOutdoorForm.get('end_date').hasError('required') && unapprovedOutdoorForm.get('end_date').touched)">
