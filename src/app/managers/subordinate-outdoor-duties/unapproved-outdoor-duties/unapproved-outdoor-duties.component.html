@@ -42,8 +42,6 @@
         </div>
       </div>
       </form>
-     <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved
-     </button>
     </section>
     <section class="content">
       <div class="row">
@@ -52,14 +50,12 @@
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
               <thead>
                 <tr>
-                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkAll()'/></th>
                   <th>User</th>
                   <th>Unapproved Outdoor Duties Count</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let l of unapproved_outdoor_duty_data">
-                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
                   <td>{{l.user_name}}</td>
                   <td><a (click)="userOutdoorsList(userOutdoorListtemp,l)">{{l.outdoors_count}}</a></td>
                 </tr>
@@ -129,8 +125,8 @@
                   <td>{{l.project_name}}</td>
                   <td>{{l.reason}}</td>
                   <td>{{l.location}}</td>
-                  <td><a style="cursor: pointer;"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
-                  <td><a style="cursor: pointer;"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+                  <td><a style="cursor: pointer;" (click)="approveSingleOutdoor(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
+                  <td><a style="cursor: pointer;" (click)="rejectSigleOutdoor(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
                 </tr>
               </tbody>
             </table>

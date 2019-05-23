@@ -142,4 +142,47 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
       });
   }
 
+  refreshData()
+  {
+    var start_date=moment(this.unapprovedOutdoorFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedOutdoorFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnapprovedOutDoorDuties(start_date, end_date).subscribe(res => {
+      this.unapproved_outdoor_duty_data=res;
+      $('.check-box').prop('checked', false);
+      this.rerender();
+      }, (err) => {
+        this.notification.showError(err.error);
+        });
+  }
+
+  refreshList(user_id){
+    var start_date=moment(this.unapprovedOutdoorFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedOutdoorFormData.end_date).format('DD/MM/YYYY');
+    this.user_id = user_id
+    this.api.getAllUnApprovedSpecificSubordinateOutdoors(start_date,end_date, this.user_id).subscribe(res => {
+      this.unapproved_outdoor_duty_data=res;
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  approveSingleOutdoor(l){
+    this.api.sendForSingleOutdoorApproval(l).subscribe(res => {
+    this.refreshData();
+    this.refreshList(this.user_id)
+    this.notification.showSuccess('Outdoor duty is approved successfully');
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  rejectSigleOutdoor(l){
+    this.api.sendForSingleOutdoorRejection(l).subscribe(res => {
+    this.refreshData();
+    this.refreshList(this.user_id)
+    this.notification.showSuccess('Outdoor duty is rejected successfully');
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
 }
