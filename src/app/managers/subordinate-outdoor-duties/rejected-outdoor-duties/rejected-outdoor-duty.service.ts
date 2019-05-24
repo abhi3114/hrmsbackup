@@ -8,14 +8,14 @@ import { environment } from '../../../../environments/environment';
 export class RejectedOutdoorDutyService {
   constructor(private http:HttpClient) { }
 
-  getAllRejectedOutdoorDuties() {
-    return this.http.get(environment.baseUrl+ "managers/outdoor_duties/rejected",
+  getAllRejectedOutdoorDuties(start_date, end_date) {
+    return this.http.get(environment.baseUrl+ "managers/outdoor_duties/rejected?start_date="+start_date+"&end_date="+end_date,
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
 
-  getRejectedSpecificSubordinateOutdoors(user_id) {
-    return this.http.get(environment.baseUrl+ "managers/outdoor_duties/users/" + user_id + "/rejected",
+  getRejectedSpecificSubordinateOutdoors(start_date, end_date, user_id) {
+    return this.http.get(environment.baseUrl+ "managers/outdoor_duties/users/"+user_id+"/rejected?start_date="+start_date+"&end_date="+end_date,
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }

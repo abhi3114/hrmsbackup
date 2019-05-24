@@ -18,9 +18,10 @@ import * as moment from 'moment';
 export class RejectedOutdoorDutiesComponent implements OnInit {
 
   isCollapsed = false;
-  rejected_outdoor_duty_data:any;
+  rejectedOutDoorDutyForm: FormGroup;
+  rejectedOutDoorDutyData={start_date:'',end_date:''};
+  rejected_outdoor_duty_data:any; showDataTable:Boolean;
   user_rejected_outdoor_data:any;
-  showDataTable:Boolean;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   leaveTableOptions: DataTables.Settings = {};
@@ -28,6 +29,13 @@ export class RejectedOutdoorDutiesComponent implements OnInit {
   modalRef: BsModalRef;
 
   constructor(private router:Router, private api:RejectedOutdoorDutyService, private monthandyear:MonthYearService, private notification:NotificationService, private modalService: BsModalService) {
+    var filteredData=monthandyear.getFilterData();
+    this.rejectedOutDoorDutyForm = new FormGroup({
+      start_date: new FormControl('', [Validators.required]),
+      end_date: new FormControl('', [Validators.required]),
+    });
+    this.rejectedOutDoorDutyData.start_date = filteredData[0].firstDay;
+    this.rejectedOutDoorDutyData.end_date = filteredData[0].lastDay;
     this.leaveTableOptions = {
       pagingType: 'full_numbers',
       lengthMenu: [[5, 10, 20, 50,-1],
@@ -36,7 +44,9 @@ export class RejectedOutdoorDutiesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.api.getAllRejectedOutdoorDuties().subscribe(res => {
+    var start_date = moment(this.rejectedOutDoorDutyData.start_date).format('DD/MM/YYYY');
+    var end_date = moment(this.rejectedOutDoorDutyData.end_date).format('DD/MM/YYYY');
+    this.api.getAllRejectedOutdoorDuties(start_date, end_date).subscribe(res => {
       this.rejected_outdoor_duty_data=res;
       this.leaveTableTrigger.next();
     }, (err) => {
@@ -44,11 +54,31 @@ export class RejectedOutdoorDutiesComponent implements OnInit {
     });
   }
 
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.leaveTableTrigger.next();
+    });
+  }
+
   userOutdoorsList(template: TemplateRef<any>, l) {
     this.modalRef = this.modalService.show(template);
+    var start_date=moment(this.rejectedOutDoorDutyData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.rejectedOutDoorDutyData.end_date).format('DD/MM/YYYY');
     var user_id = l.user_id
-    this.api.getRejectedSpecificSubordinateOutdoors(user_id).subscribe(res => {
+    this.api.getRejectedSpecificSubordinateOutdoors(start_date, end_date, user_id).subscribe(res => {
       this.user_rejected_outdoor_data = res;
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  validateRejectedOutDoorDutyForm(){
+    var start_date = moment(this.rejectedOutDoorDutyData.start_date).format('DD/MM/YYYY');
+    var end_date = moment(this.rejectedOutDoorDutyData.end_date).format('DD/MM/YYYY');
+    this.api.getAllRejectedOutdoorDuties(start_date, end_date).subscribe(res => {
+      this.rejected_outdoor_duty_data = res;
+      this.rerender();
     }, (err) => {
       this.notification.showError(err.error);
     });
