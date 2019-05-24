@@ -18,6 +18,7 @@ import { ApprovedMissingAttendanceComponent } from './subordinate-missing-attend
 import { UnapprovedMissingAttendanceComponent } from './subordinate-missing-attendance/unapproved-missing-attendance/unapproved-missing-attendance.component';
 import { SharedModule } from '../shared/shared.module';
 import { RejectedLateMarksComponent } from './subordinate-late-marks/rejected-late-marks/rejected-late-marks.component';
+import { RejectedOutdoorDutiesComponent } from './subordinate-outdoor-duties/rejected-outdoor-duties/rejected-outdoor-duties.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { RejectedLateMarksComponent } from './subordinate-late-marks/rejected-la
     ApprovedMissingAttendanceComponent,
     UnapprovedMissingAttendanceComponent,
     RejectedLateMarksComponent,
+    RejectedOutdoorDutiesComponent,
 
     ]
     })

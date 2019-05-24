@@ -171,6 +171,11 @@
           <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Outdoor Duties </a></li>
           <li><a [routerLink]="['users/outdoor_duties/unapproved']">
             <i class="fa fa-close" aria-hidden="true"></i> Unapproved OutDoor Duties </a></li>
+          <li>
+            <a [routerLink]="['users/outdoor_duties/rejected']">
+              <i class="fa fa-close" aria-hidden="true"></i> Rejected Outdoor Duties
+            </a>
+          </li>
             <li><a [routerLink]="['users/late_marks/approved']">
               <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Late Marks </a></li>
               <li><a [routerLink]="['users/late_marks/unapproved']">
@@ -194,7 +199,3 @@
           <!-- Main Header -->
           <router-outlet></router-outlet>
         </div>
-
-
-
-
