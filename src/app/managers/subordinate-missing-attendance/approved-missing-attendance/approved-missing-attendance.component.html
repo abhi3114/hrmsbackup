@@ -8,7 +8,7 @@
       <form (ngSubmit)="validateApprovedMissingAttendanceForm()" [formGroup]="approvedMissingAttendanceForm" autocomplete="off" novalidate="off">
       <a (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR ALL APPROVED MISSING ATTENDANCE</h4>
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER for Approved Missing Attendances</h4>
       </a>
       <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
         <div>
@@ -51,20 +51,13 @@
               <thead>
                 <tr>
                   <th>User</th>
-                  <th>Date</th>
-                  <th>Punch</th>
-                  <th>Reason</th>
-                  <th>Approval Date</th>
-
+                  <th>Approved Missing Attendance Count</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let l of approved_missing_attendances_data">
                   <td>{{l.user_name}}</td>
-                  <td>{{l.date}}</td>
-                  <td>{{l.punch}}</td>
-                  <td>{{l.reason}}</td>
-                  <td>{{l.approved_on | date:'dd/MM/yyyy' | nullData}}</td>
+                  <td><a (click)="userMissingAttendanceList(userMissingAttendanceListtemp,l)">{{l.attendance_missing_count}}</a></td>
                 </tr>
               </tbody>
             </table>
@@ -74,3 +67,41 @@
     </section>
   </div>
 </div>
+<ng-template #userMissingAttendanceListtemp>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Approved Missing Attendances</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover" >
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Punch</th>
+                  <th>Reason</th>
+                  <th>Approved On</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of user_approved_attendance_missing_data">
+                  <td>{{l.user_name}}</td>
+                  <td>{{l.date}}</td>
+                  <td>{{l.punch_type}}</td>
+                  <td>{{l.reason}}</td>
+                  <td>{{l.approved_on}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>
