@@ -8,6 +8,7 @@ import { MonthYearService } from '../../../shared/service/month-year.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-unapproved-missing-attendance',
@@ -19,17 +20,18 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
   isCollapsed = false;
   unapproved_missing_attendance:any; showDataTable:Boolean;
   @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;s
+  dtElement: DataTableDirective;
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
   user_unapproved_attendance_missing_data:any;
   modalRef: BsModalRef;
   user_id:any;
+  unapprovedAttendanceMissingForm: FormGroup;
+  unapprovedAttendanceMissingFormData = {start_date:'',end_date:''};
   updateAttendanceMissingsForm: FormGroup;
   updateAttendanceMissingsData={comment:''};
 
-  constructor(private router:Router, private notification:NotificationService, private api:UnapprovedMissingAttendanceService,private monthandyear:MonthYearService, private modalService: BsModalService)
-  {
+  constructor(private router:Router, private notification:NotificationService, private api:UnapprovedMissingAttendanceService,private monthandyear:MonthYearService, private modalService: BsModalService) {
     this.leaveTableOptions = {
       pagingType: 'full_numbers',
       lengthMenu: [[5, 10, 20, 50,-1],
@@ -38,10 +40,19 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
     this.updateAttendanceMissingsForm = new FormGroup({
       comment: new FormControl('', [Validators.required])
     });
+    var filteredData=monthandyear.getFilterData();
+    this.unapprovedAttendanceMissingFormData.start_date = filteredData[0].firstDay;
+    this.unapprovedAttendanceMissingFormData.end_date = filteredData[0].lastDay;
+    this.unapprovedAttendanceMissingForm = new FormGroup({
+      start_date: new FormControl('', [Validators.required]),
+      end_date: new FormControl('', [Validators.required]),
+    });
   }
 
   ngOnInit() {
-    this.api.getAllUnapprovedMissingAttendances().subscribe(res => {
+    var start_date = moment(this.unapprovedAttendanceMissingFormData.start_date).format('DD/MM/YYYY');
+    var end_date = moment(this.unapprovedAttendanceMissingFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnapprovedMissingAttendances(start_date, end_date).subscribe(res => {
       this.unapproved_missing_attendance=res;
       this.leaveTableTrigger.next();
       }, (err) => {
@@ -49,14 +60,25 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
         });
   }
 
-  checkAll(){
+  filterSubOrdinateAttendanceMissing(){
+    var start_date=moment(this.unapprovedAttendanceMissingFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedAttendanceMissingFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnapprovedMissingAttendances(start_date, end_date).subscribe(res => {
+      this.unapproved_missing_attendance = res;
+      this.rerender();
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  checkAll() {
     if ($('.check-box:checked').length > 0)
     $('.checkbox').prop('checked', true);
     else
     $('.checkbox').prop('checked', false);
   }
 
-  save(user_id){
+  save(user_id) {
     var attendance_missing_ids = []
     $('.checkbox:checked').each(function() {
       var id = $(this).attr('name');
@@ -82,9 +104,10 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
     }
   }
 
-  refreshData()
-  {
-    this.api.getAllUnapprovedMissingAttendances().subscribe(res => {
+  refreshData() {
+    var start_date = moment(this.unapprovedAttendanceMissingFormData.start_date).format('DD/MM/YYYY');
+    var end_date = moment(this.unapprovedAttendanceMissingFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnapprovedMissingAttendances(start_date, end_date).subscribe(res => {
       this.unapproved_missing_attendance=res;
       $('.check-box').prop('checked', false);
       this.rerender();
@@ -104,7 +127,9 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
 
   refreshList(user_id){
     this.user_id = user_id
-    this.api.getAllUnApprovedSpecificSubordinateAttendanceMissing(this.user_id).subscribe(res => {
+    var start_date=moment(this.unapprovedAttendanceMissingFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedAttendanceMissingFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnApprovedSpecificSubordinateAttendanceMissing(this.user_id, start_date, end_date).subscribe(res => {
       this.user_unapproved_attendance_missing_data=res;
     }, (err) => {
       this.notification.showError(err.error);
@@ -114,7 +139,9 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
   userAttendanceMissingList(template: TemplateRef<any>, l) {
     this.modalRef = this.modalService.show(template);
     this.user_id = l.user_id
-    this.api.getAllUnApprovedSpecificSubordinateAttendanceMissing(this.user_id).subscribe(res => {
+    var start_date=moment(this.unapprovedAttendanceMissingFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedAttendanceMissingFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnApprovedSpecificSubordinateAttendanceMissing(this.user_id, start_date, end_date).subscribe(res => {
       this.user_unapproved_attendance_missing_data = res;
     }, (err) => {
       this.notification.showError(err.error);

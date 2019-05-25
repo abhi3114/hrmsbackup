@@ -9,14 +9,14 @@ export class UnapprovedMissingAttendanceService {
 
   constructor(private http:HttpClient) { }
 
-  getAllUnapprovedMissingAttendances(){
-    return this.http.get(environment.baseUrl+ "managers/attendance_missings/unapproved",
+  getAllUnapprovedMissingAttendances(start_date, end_date){
+    return this.http.get(environment.baseUrl+ "managers/attendance_missings/unapproved?start_date="+start_date+"&end_date="+end_date,
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
-
-  getAllUnApprovedSpecificSubordinateAttendanceMissing(user_id) {
-    return this.http.get(environment.baseUrl+ "managers/attendance_missings/users/"+user_id+"/unapproved",
+s
+  getAllUnApprovedSpecificSubordinateAttendanceMissing(user_id, start_date, end_date) {
+    return this.http.get(environment.baseUrl+ "managers/attendance_missings/users/"+user_id+"/unapproved?start_date="+start_date+"&end_date="+end_date,
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
