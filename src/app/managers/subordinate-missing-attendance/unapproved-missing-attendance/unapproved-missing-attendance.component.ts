@@ -7,6 +7,7 @@ import { NotificationService } from '../../../shared/service/notification.servic
 import { MonthYearService } from '../../../shared/service/month-year.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-unapproved-missing-attendance',
@@ -24,6 +25,8 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
   user_unapproved_attendance_missing_data:any;
   modalRef: BsModalRef;
   user_id:any;
+  updateAttendanceMissingsForm: FormGroup;
+  updateAttendanceMissingsData={comment:''};
 
   constructor(private router:Router, private notification:NotificationService, private api:UnapprovedMissingAttendanceService,private monthandyear:MonthYearService, private modalService: BsModalService)
   {
@@ -32,7 +35,9 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
       lengthMenu: [[5, 10, 20, 50,-1],
       [5, 10, 20, 50,"All" ]]
     };
-
+    this.updateAttendanceMissingsForm = new FormGroup({
+      comment: new FormControl('', [Validators.required])
+    });
   }
 
   ngOnInit() {
@@ -51,7 +56,7 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
     $('.checkbox').prop('checked', false);
   }
 
-  save(){
+  save(user_id){
     var attendance_missing_ids = []
     $('.checkbox:checked').each(function() {
       var id = $(this).attr('name');
@@ -60,17 +65,20 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
     var postdata = { "attendance_missing_ids":  attendance_missing_ids}
     if(attendance_missing_ids != undefined && attendance_missing_ids.length > 0)
     {
-      this.api.sendForMissingAttendaceApproval(postdata).subscribe(res => {
+      this.api.sendForBulkAttendanceMissingApproval(postdata).subscribe(res => {
         attendance_missing_ids = [];
-        this.notification.showSuccess('Missing Attendance approved successfully');
+        this.notification.showSuccess('Missing attendances are approved successfully');
         this.refreshData();
-        }, (err) => {
-          this.notification.showError(err.error);
-          });
+        this.refreshList(user_id);
+        this.updateAttendanceMissingsForm.reset();
+      }, (err) => {
+        $('.modal').remove();
+        this.notification.showError(err.error);
+      });
     }
     else
     {
-      this.notification.CustomErrorMessage('Please check atleast one attendace');
+      this.notification.CustomErrorMessage('Please check atleast one missing attendance');
     }
   }
 
@@ -117,7 +125,7 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
     this.api.sendForSingleAttendanceMissingApproval(l).subscribe(res => {
     this.refreshData();
     this.refreshList(this.user_id)
-    this.notification.showSuccess('Attendance Missing is approved successfully');
+    this.notification.showSuccess('Missing attendance is approved successfully');
     }, (err) => {
       this.notification.showError(err.error);
     });
@@ -127,9 +135,32 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
     this.api.sendForSingleAttendanceMissingRejection(l).subscribe(res => {
     this.refreshData();
     this.refreshList(this.user_id)
-    this.notification.showSuccess('Attendance Missing is rejected successfully');
+    this.notification.showSuccess('Missing attendance is rejected successfully');
     }, (err) => {
       this.notification.showError(err.error);
     });
+  }
+
+  validateRecordAttendanceMissingResponseForm() {
+    var unapproved_attendance_missings = []
+     $('.checkbox:checked').each(function() {
+       var id = $(this).attr('name');
+       unapproved_attendance_missings.push(id);
+     });
+     var postdata = { "attendance_missing_ids":  unapproved_attendance_missings, reason: this.updateAttendanceMissingsData.comment}
+     if(unapproved_attendance_missings != undefined && unapproved_attendance_missings.length > 0) {
+       this.api.sendForBulkAttendanceMissingRejection(postdata).subscribe(res => {
+         unapproved_attendance_missings = [];
+         this.refreshData();
+         this.refreshList(this.user_id);
+         this.updateAttendanceMissingsForm.reset();
+         this.notification.showSuccess('Missing attendances are rejected successfully');
+         }, (err) => {
+           this.notification.showError(err.error);
+           });
+     }
+     else {
+       this.notification.CustomErrorMessage('Please check atleast one missing attendance');
+     }
   }
 }

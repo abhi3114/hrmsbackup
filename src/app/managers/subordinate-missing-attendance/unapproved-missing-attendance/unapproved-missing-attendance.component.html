@@ -36,6 +36,27 @@
     </button>
   </div>
   <section class="content-header">
+    <form  novalidate  (ngSubmit)="validateRecordAttendanceMissingResponseForm()" [formGroup]="updateAttendanceMissingsForm" autocomplete="off">
+    <div class="" style="margin-top: 23px; text-align: center;">
+    </div>
+      <div class="row">
+        <div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Reason<sup style="color:red;">*</sup></label>
+              <input name="puropse" type='text' class="form-control"[(ngModel)]="updateAttendanceMissingsData.comment"  formControlName="comment" required [class.error1]="!updateAttendanceMissingsForm.controls.comment.valid && updateAttendanceMissingsForm.controls.comment.dirty" />
+              <div *ngIf="( updateAttendanceMissingsForm.get('comment').hasError('required') ) && updateAttendanceMissingsForm.get('comment').touched">
+                <div class="error" *ngIf="updateAttendanceMissingsForm.get('comment').hasError('required') && updateAttendanceMissingsForm.get('comment').touched">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-danger btn-flat" [disabled]="updateAttendanceMissingsForm.invalid">Mark Reject</button>
+      <button type="button" class="btn bg-orange btn-flat ladda-button" [disabled]="updateAttendanceMissingsForm.invalid" (click)="save(user_id)" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
+    </form>
   </section>
   <div class="modal-body">
     <section class="content">

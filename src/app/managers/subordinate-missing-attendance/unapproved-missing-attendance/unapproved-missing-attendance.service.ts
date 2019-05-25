@@ -44,4 +44,22 @@ export class UnapprovedMissingAttendanceService {
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
+
+  sendForBulkAttendanceMissingRejection(params){
+    return this.http.post(environment.baseUrl+ "managers/attendance_missings/bulk_reject",params,{
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
+
+  sendForBulkAttendanceMissingApproval(params){
+    return this.http.post(environment.baseUrl+ "managers/attendance_missings/bulk_approve",params,{
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
 }
