@@ -9,8 +9,14 @@ export class UnapprovedMissingAttendanceService {
 
   constructor(private http:HttpClient) { }
 
-  getAllUnapprovedMissingAttendaces(){
-    return this.http.get(environment.baseUrl+ "attendance_missings/manager/unapproved",
+  getAllUnapprovedMissingAttendances(){
+    return this.http.get(environment.baseUrl+ "managers/attendance_missings/unapproved",
+      { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'})})
+  }
+
+  getAllUnApprovedSpecificSubordinateAttendanceMissing(user_id) {
+    return this.http.get(environment.baseUrl+ "managers/attendance_missings/users/"+user_id+"/unapproved",
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
@@ -22,5 +28,20 @@ export class UnapprovedMissingAttendanceService {
         "Content-Type": 'application/json'
       }
     })
+  }
+
+  sendForSingleAttendanceMissingApproval(attendance_missing_id){
+    return this.http.post(environment.baseUrl+ "managers/attendance_missings/"+attendance_missing_id+"/approve",attendance_missing_id, {
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
+
+  sendForSingleAttendanceMissingRejection(attendance_missing_id){
+    return this.http.delete(environment.baseUrl+ "managers/attendance_missings/"+attendance_missing_id+"/reject",
+      { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'})})
   }
 }

@@ -1,10 +1,12 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import {Observable,Subject} from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { UnapprovedMissingAttendanceService } from './unapproved-missing-attendance.service';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { MonthYearService } from '../../../shared/service/month-year.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
   selector: 'app-unapproved-missing-attendance',
@@ -14,13 +16,16 @@ import { MonthYearService } from '../../../shared/service/month-year.service';
 export class UnapprovedMissingAttendanceComponent implements OnInit {
 
   isCollapsed = false;
-  unapproved_missing_attendace:any; showDataTable:Boolean;
+  unapproved_missing_attendance:any; showDataTable:Boolean;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;s
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
+  user_unapproved_attendance_missing_data:any;
+  modalRef: BsModalRef;
+  user_id:any;
 
-  constructor(private router:Router, private notification:NotificationService, private api:UnapprovedMissingAttendanceService,private monthandyear:MonthYearService)
+  constructor(private router:Router, private notification:NotificationService, private api:UnapprovedMissingAttendanceService,private monthandyear:MonthYearService, private modalService: BsModalService)
   {
     this.leaveTableOptions = {
       pagingType: 'full_numbers',
@@ -31,8 +36,8 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.api.getAllUnapprovedMissingAttendaces().subscribe(res => {
-      this.unapproved_missing_attendace=res;
+    this.api.getAllUnapprovedMissingAttendances().subscribe(res => {
+      this.unapproved_missing_attendance=res;
       this.leaveTableTrigger.next();
       }, (err) => {
         this.notification.showError(err.error);
@@ -71,8 +76,8 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
 
   refreshData()
   {
-    this.api.getAllUnapprovedMissingAttendaces().subscribe(res => {
-      this.unapproved_missing_attendace=res;
+    this.api.getAllUnapprovedMissingAttendances().subscribe(res => {
+      this.unapproved_missing_attendance=res;
       $('.check-box').prop('checked', false);
       this.rerender();
       }, (err) => {
@@ -87,5 +92,44 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
       // Call the dtTrigger to rerender again
       this.leaveTableTrigger.next();
       });
+  }
+
+  refreshList(user_id){
+    this.user_id = user_id
+    this.api.getAllUnApprovedSpecificSubordinateAttendanceMissing(this.user_id).subscribe(res => {
+      this.user_unapproved_attendance_missing_data=res;
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  userAttendanceMissingList(template: TemplateRef<any>, l) {
+    this.modalRef = this.modalService.show(template);
+    this.user_id = l.user_id
+    this.api.getAllUnApprovedSpecificSubordinateAttendanceMissing(this.user_id).subscribe(res => {
+      this.user_unapproved_attendance_missing_data = res;
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  approveSingleAttendanceMissing(l){
+    this.api.sendForSingleAttendanceMissingApproval(l).subscribe(res => {
+    this.refreshData();
+    this.refreshList(this.user_id)
+    this.notification.showSuccess('Attendance Missing is approved successfully');
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  rejectSigleAttendanceMissing(l){
+    this.api.sendForSingleAttendanceMissingRejection(l).subscribe(res => {
+    this.refreshData();
+    this.refreshList(this.user_id)
+    this.notification.showSuccess('Attendance Missing is rejected successfully');
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
   }
 }

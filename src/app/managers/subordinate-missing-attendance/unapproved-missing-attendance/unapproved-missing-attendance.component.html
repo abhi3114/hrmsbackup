@@ -4,10 +4,6 @@
       <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
       <li class="active">Subordinate (Unapproved Missing Attendance)</li>
     </ol>
-    <section class="content-header">
-     <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved
-     </button>
-    </section>
     <section class="content">
       <div class="row">
         <div class="box-body">
@@ -15,20 +11,14 @@
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
               <thead>
                 <tr>
-                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkAll()'/></th>
                   <th>User</th>
-                  <th>Date</th>
-                  <th>Punch</th>
-                  <th>Reason</th>
+                  <th>Unapproved Missing Attendance Count</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let l of unapproved_missing_attendace">
-                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
+                <tr *ngFor="let l of unapproved_missing_attendance">
                   <td>{{l.user_name}}</td>
-                  <td>{{l.date}}</td>
-                  <td>{{l.punch}}</td>
-                  <td>{{l.reason | nullData}}</td>
+                  <td><a (click)="userAttendanceMissingList(userAttendanceMissingListtemp,l)">{{l.attendance_missing_count}}</a></td>
                 </tr>
               </tbody>
             </table>
@@ -38,3 +28,47 @@
     </section>
   </div>
 </div>
+<ng-template #userAttendanceMissingListtemp>
+  <div class="modal-header">
+    <h4 class="modal-title" style="text-align: center;">Unapproved Attendance Missing</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <section class="content-header">
+  </section>
+  <div class="modal-body">
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover" >
+              <thead>
+                <tr>
+                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkAll()'/></th>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Punch</th>
+                  <th>Reason</th>
+                  <th>Mark Approved</th>
+                  <th>Mark Rejected</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of user_unapproved_attendance_missing_data">
+                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
+                  <td>{{l.user_name}}</td>
+                  <td>{{l.date}}</td>
+                  <td>{{l.punch_type}}</td>
+                  <td>{{l.reason}}</td>
+                  <td><a style="cursor: pointer;" (click)="approveSingleAttendanceMissing(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
+                  <td><a style="cursor: pointer;" (click)="rejectSigleAttendanceMissing(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>
