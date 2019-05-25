@@ -184,7 +184,7 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
     var end_date=moment(this.unapprovedOutdoorFormData.end_date).format('DD/MM/YYYY');
     this.user_id = user_id
     this.api.getAllUnApprovedSpecificSubordinateOutdoors(start_date,end_date, this.user_id).subscribe(res => {
-      this.unapproved_outdoor_duty_data=res;
+      this.user_unapproved_outdoor_data=res;
     }, (err) => {
       this.notification.showError(err.error);
     });
