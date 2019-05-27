@@ -124,7 +124,7 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
       var id = $(this).attr('name');
       unapproved_outdoor_ids.push(id);
       });
-    var postdata = { "outdoor_ids":  unapproved_outdoor_ids}
+    var postdata = { "outdoor_ids":  unapproved_outdoor_ids, reason: this.updateOutdoorsData.comment}
     if(unapproved_outdoor_ids != undefined && unapproved_outdoor_ids.length > 0)
     {
       this.api.sendForBulkOutdoorsApproval(postdata).subscribe(res => {

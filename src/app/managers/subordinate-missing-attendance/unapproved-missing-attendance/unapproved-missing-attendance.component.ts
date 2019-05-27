@@ -84,7 +84,7 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
       var id = $(this).attr('name');
       attendance_missing_ids.push(id);
       });
-    var postdata = { "attendance_missing_ids":  attendance_missing_ids}
+    var postdata = { "attendance_missing_ids":  attendance_missing_ids, reason: this.updateAttendanceMissingsData.comment }
     if(attendance_missing_ids != undefined && attendance_missing_ids.length > 0)
     {
       this.api.sendForBulkAttendanceMissingApproval(postdata).subscribe(res => {

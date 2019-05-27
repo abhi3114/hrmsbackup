@@ -75,7 +75,7 @@ export class UnapprovedComponent implements OnInit {
       var id = $(this).attr('name');
       unapproved_leave_ids.push(id);
       });
-    var postdata = { "leave_ids":  unapproved_leave_ids}
+    var postdata = { "leave_ids":  unapproved_leave_ids, reason: this.updateLeavesData.comment}
     if(unapproved_leave_ids != undefined && unapproved_leave_ids.length > 0)
     {
       this.api.sendForBulkLeavesApproval(postdata).subscribe(res => {
