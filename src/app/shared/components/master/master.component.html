@@ -187,6 +187,9 @@
                   <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Missing Attendance </a></li>
                   <li><a [routerLink]="['users/missing_attendances/unapproved']">
                     <i class="fa fa-close" aria-hidden="true"></i> Unapproved Missing Attendance </a></li>
+                    <li><a [routerLink]="['users/missing_attendances/rejected']">
+                      <i class="fa fa-close" aria-hidden="true"></i> Rejected Missing Attendances </a>
+                    </li>
                   </ul>
                 </li>
                 <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['booster_sessions']"><i class="fa fa-cogs"></i><span>Booster Session</span></a></li>

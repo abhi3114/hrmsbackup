@@ -11,6 +11,7 @@ import { UnapprovedLateMarksComponent } from './subordinate-late-marks/unapprove
 import { RejectedLateMarksComponent } from './subordinate-late-marks/rejected-late-marks/rejected-late-marks.component';
 import { ApprovedMissingAttendanceComponent } from './subordinate-missing-attendance/approved-missing-attendance/approved-missing-attendance.component';
 import { UnapprovedMissingAttendanceComponent } from './subordinate-missing-attendance/unapproved-missing-attendance/unapproved-missing-attendance.component';
+import { RejectedMissingAttendanceComponent } from './subordinate-missing-attendance/rejected-missing-attendance/rejected-missing-attendance.component';
 import { MasterComponent } from '../shared/components/master/master.component';
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
       {path: 'users/late_marks/unapproved', component: UnapprovedLateMarksComponent },
       {path: 'users/late_marks/rejected', component: RejectedLateMarksComponent },
       {path: 'users/missing_attendances/approved', component: ApprovedMissingAttendanceComponent },
-      {path: 'users/missing_attendances/unapproved', component: UnapprovedMissingAttendanceComponent }
+      {path: 'users/missing_attendances/unapproved', component: UnapprovedMissingAttendanceComponent },
+      {path: 'users/missing_attendances/rejected', component: RejectedMissingAttendanceComponent }
     ]
   }
 ];
