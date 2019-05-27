@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ApprovedComponent } from './subordinate-leaves/approved/approved.component';
 import { UnapprovedComponent } from './subordinate-leaves/unapproved/unapproved.component';
+import { RejectedComponent } from './subordinate-leaves/rejected/rejected.component';
 import { ApprovedOutdoorDutiesComponent } from './subordinate-outdoor-duties/approved-outdoor-duties/approved-outdoor-duties.component';
 import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
 import { UnapprovedOutdoorDutiesComponent } from './subordinate-outdoor-duties/unapproved-outdoor-duties/unapproved-outdoor-duties.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
     children: [
       {path: 'users/leaves/approved', component: ApprovedComponent},
       {path: 'users/leaves/unapproved', component: UnapprovedComponent},
+      {path: 'users/leaves/rejected', component: RejectedComponent},
       {path: 'users/outdoor_duties/approved', component: ApprovedOutdoorDutiesComponent },
       {path: 'users/outdoor_duties/unapproved', component: UnapprovedOutdoorDutiesComponent },
       {path: 'users/outdoor_duties/rejected', component: RejectedOutdoorDutiesComponent },

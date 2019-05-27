@@ -20,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RejectedLateMarksComponent } from './subordinate-late-marks/rejected-late-marks/rejected-late-marks.component';
 import { RejectedOutdoorDutiesComponent } from './subordinate-outdoor-duties/rejected-outdoor-duties/rejected-outdoor-duties.component';
 import { RejectedMissingAttendanceComponent } from './subordinate-missing-attendance/rejected-missing-attendance/rejected-missing-attendance.component';
+import { RejectedComponent } from './subordinate-leaves/rejected/rejected.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { RejectedMissingAttendanceComponent } from './subordinate-missing-attend
     RejectedLateMarksComponent,
     RejectedOutdoorDutiesComponent,
     RejectedMissingAttendanceComponent,
+    RejectedComponent,
 
     ]
     })
