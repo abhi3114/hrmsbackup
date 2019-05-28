@@ -5,13 +5,10 @@
       <li class="active">Subordinate (Unapproved Leaves)</li>
     </ol>
     <section class="content-header">
-      <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
-    </section>
-    <section class="content-header">
       <form (ngSubmit)="filterUnapprovedLeavesForm()" [formGroup]="unapprovedLeavesForm" autocomplete="off" novalidate="off">
       <a (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR APPROVED LEAVES</h4>
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">Filter for Unapproved Leaves</h4>
       </a>
       <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
         <div>
@@ -53,22 +50,14 @@
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
               <thead>
                 <tr>
-                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkALL()'/></th>
                   <th>User</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Leave Type</th>
-                  <th>Reason</th>
+                  <th>Unapproved Leaves Count</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let l of unapproved_leaves_data">
-                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
                   <td>{{l.user_name}}</td>
-                  <td>{{l.start_date |  date: 'dd/MM/yyyy'}}</td>
-                  <td>{{l.end_date |  date: 'dd/MM/yyyy'}}</td>
-                  <td> {{l.leave_type}}
-                  <td>{{l.reason}}</td>
+                  <td><a (click)="userLeavesList(userLeavesListtemp,l)">{{l.leaves_count}}</a></td>
                 </tr>
               </tbody>
             </table>
@@ -79,3 +68,72 @@
   </div>
 </div>
 
+<ng-template #userLeavesListtemp>
+  <div class="modal-header">
+    <h4 class="modal-title" style="text-align: center;">Unapproved Leaves</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <section class="content-header">
+    <form  novalidate  (ngSubmit)="validateRecordLeavesResponseForm()" [formGroup]="updateLeavesForm" autocomplete="off">
+    <div class="" style="margin-top: 23px; text-align: center;">
+    </div>
+      <div class="row">
+        <div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Reason<sup style="color:red;">*</sup></label>
+              <input name="puropse" type='text' class="form-control"[(ngModel)]="updateLeavesData.comment"  formControlName="comment" required [class.error1]="!updateLeavesForm.controls.comment.valid && updateLeavesForm.controls.comment.dirty" />
+              <div *ngIf="( updateLeavesForm.get('comment').hasError('required') ) && updateLeavesForm.get('comment').touched">
+                <div class="error" *ngIf="updateLeavesForm.get('comment').hasError('required') && updateLeavesForm.get('comment').touched">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-danger btn-flat" [disabled]="updateLeavesForm.invalid">Mark Reject</button>
+      <button type="button" class="btn bg-orange btn-flat ladda-button" [disabled]="updateLeavesForm.invalid" (click)="save(user_id)" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
+    </form>
+  </section>
+  <div class="modal-body">
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover" >
+              <thead>
+                <tr>
+                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkAll()'/></th>
+                  <th>User</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>No. of Days</th>
+                  <th>Leave Type</th>
+                  <th>Reason</th>
+                  <th>Approve</th>
+                  <th>Reject</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of user_unapproved_leaves_data">
+                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
+                  <td>{{l.user_name}}</td>
+                  <td>{{l.start_date}}</td>
+                  <td>{{l.end_date}}</td>
+                  <td>{{l.no_of_days}}</td>
+                  <td>{{l.leave_type}}</td>
+                  <td>{{l.reason}}</td>
+                  <td><a style="cursor: pointer;" (click)="approveSingleLeave(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
+                  <td><a style="cursor: pointer;" (click)="rejectSingleLeave(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>

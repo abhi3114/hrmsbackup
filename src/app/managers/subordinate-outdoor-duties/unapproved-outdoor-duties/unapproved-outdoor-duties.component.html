@@ -5,8 +5,43 @@
       <li class="active">Subordinate (Unapproved Outdoor Duties)</li>
     </ol>
     <section class="content-header">
-     <button type="button" class="btn bg-orange btn-flat ladda-button" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved
-     </button>
+      <form (ngSubmit)="filterSubOrdinateOutdoor()" [formGroup]="unapprovedOutdoorForm" autocomplete="off" novalidate="off">
+      <a (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">Filter for Unapproved Outdoor Duties</h4>
+      </a>
+      <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+        <div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
+              <input name="bnknm" type='text' class="form-control"[(ngModel)]="unapprovedOutdoorFormData.start_date" formControlName="start_date" required [class.error1]="!unapprovedOutdoorForm.controls.start_date.valid && unapprovedOutdoorForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
+              <div *ngIf="( unapprovedOutdoorForm.get('start_date').hasError('minlength') || unapprovedOutdoorForm.get('start_date').hasError('pattern') || unapprovedOutdoorForm.get('start_date').hasError('required') ) && unapprovedOutdoorForm.get('start_date').touched">
+                <div class="error" *ngIf="(unapprovedOutdoorForm.get('start_date').hasError('required') && unapprovedOutdoorForm.get('start_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="unapprovedOutdoorFormData.end_date" formControlName="end_date" required [class.error1]="!unapprovedOutdoorForm.controls.end_date.valid && unapprovedOutdoorForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
+              <div *ngIf="( unapprovedOutdoorForm.get('end_date').hasError('minlength') || unapprovedOutdoorForm.get('end_date').hasError('pattern') || unapprovedOutdoorForm.get('end_date').hasError('required') ) && unapprovedOutdoorForm.get('end_date').touched">
+                <div class="error" *ngIf="(unapprovedOutdoorForm.get('end_date').hasError('required') && unapprovedOutdoorForm.get('end_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2" style="margin-top: 24px;">
+            <button type="submit" class="btn bg-orange btn-flat" [disabled]="unapprovedOutdoorForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+      </form>
     </section>
     <section class="content">
       <div class="row">
@@ -15,26 +50,14 @@
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
               <thead>
                 <tr>
-                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkAll()'/></th>
                   <th>User</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Project/Firm Name</th>
-                  <th>Client/Broker Name</th>
-                  <th>Location</th>
-                  <th>Purpose</th>
+                  <th>Unapproved Outdoor Duties Count</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let l of unapproved_outdoor_duty_data">
-                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
                   <td>{{l.user_name}}</td>
-                  <td>{{l.start_date}}</td>
-                  <td>{{l.end_date}}</td>
-                  <td>{{l.project_name}}</td>
-                  <td>{{l.client_name}}</td>
-                  <td>{{l.location}}</td>
-                  <td>{{l.reason}}</td>
+                  <td><a (click)="userOutdoorsList(userOutdoorListtemp,l)">{{l.outdoors_count}}</a></td>
                 </tr>
               </tbody>
             </table>
@@ -44,3 +67,72 @@
     </section>
   </div>
 </div>
+<ng-template #userOutdoorListtemp>
+  <div class="modal-header">
+    <h4 class="modal-title" style="text-align: center;">Unapproved Outdoor Duties</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <section class="content-header">
+    <form  novalidate  (ngSubmit)="validateRecordOutdoorResponseForm()" [formGroup]="updateOutdoorsForm" autocomplete="off">
+    <div class="" style="margin-top: 23px; text-align: center;">
+    </div>
+      <div class="row">
+        <div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Reason<sup style="color:red;">*</sup></label>
+              <input name="puropse" type='text' class="form-control"[(ngModel)]="updateOutdoorsData.comment"  formControlName="comment" required [class.error1]="!updateOutdoorsForm.controls.comment.valid && updateOutdoorsForm.controls.comment.dirty" />
+              <div *ngIf="( updateOutdoorsForm.get('comment').hasError('required') ) && updateOutdoorsForm.get('comment').touched">
+                <div class="error" *ngIf="updateOutdoorsForm.get('comment').hasError('required') && updateOutdoorsForm.get('comment').touched">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-danger btn-flat" [disabled]="updateOutdoorsForm.invalid">Mark Reject</button>
+      <button type="button" class="btn bg-orange btn-flat ladda-button" [disabled]="updateOutdoorsForm.invalid" (click)="save(user_id)" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
+    </form>
+  </section>
+  <div class="modal-body">
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover" >
+              <thead>
+                <tr>
+                  <th><input id='checkAll' type='checkbox' class='check-box' (click)='checkAll()'/></th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Client Name</th>
+                  <th>Project Name</th>
+                  <th>Reason</th>
+                  <th>Location</th>
+                  <th>Approve</th>
+                  <th>Reject</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of user_unapproved_outdoor_data">
+                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
+                  <td>{{l.start_date}}</td>
+                  <td>{{l.end_date}}</td>
+                  <td>{{l.client_name}}</td>
+                  <td>{{l.project_name}}</td>
+                  <td>{{l.reason}}</td>
+                  <td>{{l.location}}</td>
+                  <td><a style="cursor: pointer;" (click)="approveSingleOutdoor(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
+                  <td><a style="cursor: pointer;" (click)="rejectSigleOutdoor(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>
