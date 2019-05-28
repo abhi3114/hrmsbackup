@@ -47,7 +47,7 @@ export class RejectedMissingAttendancesComponent implements OnInit {
     var end_date=moment(this.rejectedMissingAttendancesData.end_date).format('DD/MM/YYYY');
     this.api.getAllRejectedMissingAttendances(start_date ,end_date).subscribe(res => {
       this.api_data=res;
-      this.rejectedMissingAttendances=this.api_data.MissingAttendances_data;
+      this.rejectedMissingAttendances=this.api_data.attendance_missings_data;
       this.lateMarkTableTableTrigger.next();
       }, (err) => {
       this.toastr.showError(err.error);
@@ -59,7 +59,7 @@ export class RejectedMissingAttendancesComponent implements OnInit {
     var end_date=moment(this.rejectedMissingAttendancesData.end_date).format('DD/MM/YYYY');
     this.api.getAllRejectedMissingAttendances(start_date ,end_date).subscribe(res => {
       this.api_data=res;
-      this.rejectedMissingAttendances=this.api_data.missing_attendances_data;
+      this.rejectedMissingAttendances=this.api_data.attendance_missings_data;
       this.rerender();
       }, (err) => {
       this.toastr.showError(err.error);

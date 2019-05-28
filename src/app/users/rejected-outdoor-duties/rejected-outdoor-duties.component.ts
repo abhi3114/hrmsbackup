@@ -47,7 +47,7 @@ export class RejectedOutdoorDutiesComponent implements OnInit {
     var end_date=moment(this.rejectedoutDoorDutiesData.end_date).format('DD/MM/YYYY');
     this.api.getAllRejectedOutDoorDuties(start_date ,end_date).subscribe(res => {
       this.api_data=res;
-      this.rejectedoutDoorDuties=this.api_data.rejected_outdoorduties_data;
+      this.rejectedoutDoorDuties=this.api_data.outdoors_data;
       this.outdoorDutyTableTrigger.next();
       }, (err) => {
       this.toastr.showError(err.error);
@@ -59,7 +59,7 @@ export class RejectedOutdoorDutiesComponent implements OnInit {
     var end_date=moment(this.rejectedoutDoorDutiesData.end_date).format('DD/MM/YYYY');
     this.api.getAllRejectedOutDoorDuties(start_date ,end_date).subscribe(res => {
       this.api_data=res;
-      this.rejectedoutDoorDuties=this.api_data.rejected_outdoorduties_data;
+      this.rejectedoutDoorDuties=this.api_data.outdoors_data;
       this.rerender();
       }, (err) => {
       this.toastr.showError(err.error);
