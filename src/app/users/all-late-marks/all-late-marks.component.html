@@ -52,17 +52,16 @@
           <tr>
             <th>Date</th>
             <th>Comment</th>
-            <th>Approved</th>
+            <th>Status</th>
             <th>Approval Date</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let l of latemarksData">
             <td>{{l.date}}</td>
-            <td *ngIf="l.approved==false"><a style="cursor: pointer;" (click)="updateLateMarkResponse(recordLateMarkResponse,l.id,l.comment)">{{l.comment}}</a></td>
-            <td *ngIf="l.approved==true">{{l.comment}}</td>
-            <td *ngIf="l.approved==false">No</td>
-            <td *ngIf="l.approved==true">Yes</td>
+            <td *ngIf="l.status=='Unapproved'"><a style="cursor: pointer;" (click)="updateLateMarkResponse(recordLateMarkResponse,l.id,l.comment)">{{l.comment}}</a></td>
+            <td *ngIf="l.status!='Unapproved'">{{l.comment}}</td>
+            <td>{{l.status}}</td>
             <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
           </tr>
         </tbody>
@@ -104,5 +103,3 @@
  </form>
 </div>
 </ng-template>
-
-
