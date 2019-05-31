@@ -54,6 +54,7 @@
             <th>Comment</th>
             <th>Approved</th>
             <th>Approval Date</th>
+            <th> Edit </th>
           </tr>
         </thead>
         <tbody>
@@ -64,6 +65,11 @@
             <td *ngIf="l.approved==false">No</td>
             <td *ngIf="l.approved==true">Yes</td>
             <td>{{l.approved_on | date: 'dd/MM/yyyy'| nullData}}</td>
+            <td>
+              <button class="add-dynamic-button" type="button" (click)="updateLateMarkResponse(recordLateMarkResponse,l.id,l.comment)">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>

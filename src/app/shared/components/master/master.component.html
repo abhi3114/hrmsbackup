@@ -78,6 +78,7 @@
             <li><a [routerLink]="['leaves']"><i class="fa fa-server" aria-hidden="true"></i> All </a></li>
             <li><a [routerLink]="['leaves/approved']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved </a></li>
             <li><a [routerLink]="['leaves/unapproved']"><i class="fa fa-close" aria-hidden="true"></i>Unapproved </a></li>
+            <li><a [routerLink]="['leaves/rejected']"><i class="fa fa-close" aria-hidden="true"></i>Rejected </a></li>
           </ul>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
@@ -91,6 +92,7 @@
             <li><a [routerLink]="['outdoor_duties']"><i class="fa fa-server" aria-hidden="true"></i> All </a></li>
             <li><a [routerLink]="['outdoor_duties/approved']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved </a></li>
             <li><a [routerLink]="['outdoor_duties/unapproved']"><i class="fa fa-close" aria-hidden="true"></i>Unapproved </a></li>
+            <li><a [routerLink]="['outdoor_duties/rejected']"><i class="fa fa-close" aria-hidden="true"></i>Rejected</a></li>
           </ul>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
@@ -104,6 +106,7 @@
             <li><a [routerLink]="['late_marks']"><i class="fa fa-server" aria-hidden="true"></i> All </a></li>
             <li><a [routerLink]="['late_marks/approved']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved </a></li>
             <li><a [routerLink]="['late_marks/unapproved']"><i class="fa fa-close" aria-hidden="true"></i>Unapproved </a></li>
+            <li><a [routerLink]="['late_marks/rejected']"><i class="fa fa-close" aria-hidden="true"></i>Rejected</a></li>
           </ul>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;" >
@@ -117,6 +120,7 @@
             <li><a [routerLink]="['missing_attendance']"><i class="fa fa-server" aria-hidden="true"></i> All </a></li>
             <li><a [routerLink]="['missing_attendance/approved']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved </a></li>
             <li><a [routerLink]="['missing_attendance/unapproved']"><i class="fa fa-close" aria-hidden="true"></i>Unapproved </a></li>
+            <li><a [routerLink]="['missing_attendance/rejected']"><i class="fa fa-close" aria-hidden="true"></i>Rejected </a></li>
           </ul>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="can_access_accounts" style="cursor: pointer;">
@@ -157,40 +161,74 @@
        </ul>
      </li>
      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="can_access_manager" style="cursor: pointer;">
-       <a><i class="fa fa-reply-all " aria-hidden="true"></i>
+       <a><i class="fa fa-user-secret " aria-hidden="true"></i>
          <span>Manager Section</span>
          <span class="pull-right-container">
            <i class="fa fa-angle-left pull-right"></i>
          </span>
        </a>
        <ul class="treeview-menu">
-         <li><a [routerLink]="['users/leaves/approved']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Leaves </a></li>
-         <li><a [routerLink]="['users/leaves/unapproved']"><i class="fa fa-close" aria-hidden="true"></i> Unapproved Leaves </a></li>
-         <li><a [routerLink]="['users/outdoor_duties/approved']">
-          <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Outdoor Duties </a></li>
-          <li><a [routerLink]="['users/outdoor_duties/unapproved']">
-            <i class="fa fa-close" aria-hidden="true"></i> Unapproved OutDoor Duties </a></li>
-            <li><a [routerLink]="['users/late_marks/approved']">
-              <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Late Marks </a></li>
-              <li><a [routerLink]="['users/late_marks/unapproved']">
-                <i class="fa fa-close" aria-hidden="true"></i> Unapproved Late Marks </a></li>
-                <li><a [routerLink]="['users/missing_attendances/approved']">
-                  <i class="fa fa-check-square-o" aria-hidden="true"></i> Approved Missing Attendance </a></li>
-                  <li><a [routerLink]="['users/missing_attendances/unapproved']">
-                    <i class="fa fa-close" aria-hidden="true"></i> Unapproved Missing Attendance </a></li>
-                  </ul>
-                </li>
-                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['booster_sessions']"><i class="fa fa-cogs"></i><span>Booster Session</span></a></li>
-                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['policies']"><i class="fa fa-book"></i><span>Policies</span></a></li>
-              </ul>
-              <!-- /.sidebar-menu -->
-            </section>
-            <!-- /.sidebar -->
-          </aside>
-          <!-- Main Header -->
-          <router-outlet></router-outlet>
-        </div>
-
-
-
-
+         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="can_access_manager" style="cursor: pointer;">
+           <a><i class="fa fa-calendar-o " aria-hidden="true"></i>
+             <span>Leaves</span>
+             <span class="pull-right-container">
+               <i class="fa fa-angle-left pull-right"></i>
+             </span>
+           </a>
+           <ul class="treeview-menu">
+             <li><a [routerLink]="['users/leaves/approved']"><i class="fa fa-check" aria-hidden="true"></i>Approved</a></li>
+             <li><a [routerLink]="['users/leaves/unapproved']"><i class="fa fa-question" aria-hidden="true"></i>Unapproved</a></li>
+             <li><a [routerLink]="['users/leaves/rejected']"><i class="fa fa-times" aria-hidden="true"></i>Rejected</a></li>
+          </ul>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="can_access_manager" style="cursor: pointer;">
+          <a><i class="fa fa-plane" aria-hidden="true"></i>
+            <span>Outdoor Duties</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a [routerLink]="['users/outdoor_duties/approved']"><i class="fa fa-check" aria-hidden="true"></i>Approved</a></li>
+            <li><a [routerLink]="['users/outdoor_duties/unapproved']"><i class="fa fa-question" aria-hidden="true"></i>Unapproved</a></li>
+            <li><a [routerLink]="['users/outdoor_duties/rejected']"><i class="fa fa-times" aria-hidden="true"></i>Rejected</a></li>
+         </ul>
+       </li>
+       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="can_access_manager" style="cursor: pointer;">
+         <a><i class="fa fa-clock-o" aria-hidden="true"></i>
+           <span>Late Marks</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu">
+           <li><a [routerLink]="['users/late_marks/approved']"><i class="fa fa-check" aria-hidden="true"></i>Approved</a></li>
+           <li><a [routerLink]="['users/late_marks/unapproved']"><i class="fa fa-question" aria-hidden="true"></i>Unapproved</a></li>
+           <li><a [routerLink]="['users/late_marks/rejected']"><i class="fa fa-times" aria-hidden="true"></i>Rejected</a></li>
+        </ul>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="can_access_manager" style="cursor: pointer;">
+        <a><i class="fa fa-calendar-times-o" aria-hidden="true"></i>
+          <span>Missing Attendances</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a [routerLink]="['users/missing_attendances/approved']"><i class="fa fa-check" aria-hidden="true"></i>Approved</a></li>
+          <li><a [routerLink]="['users/missing_attendances/unapproved']"><i class="fa fa-question" aria-hidden="true"></i>Unapproved</a></li>
+          <li><a [routerLink]="['users/missing_attendances/rejected']"><i class="fa fa-times" aria-hidden="true"></i>Rejected</a></li>
+       </ul>
+     </li>
+      </ul>
+    </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['booster_sessions']"><i class="fa fa-cogs"></i><span>Booster Session</span></a></li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['policies']"><i class="fa fa-book"></i><span>Policies</span></a></li>
+    </ul>
+    <!-- /.sidebar-menu -->
+  </section>
+  <!-- /.sidebar -->
+</aside>
+<!-- Main Header -->
+<router-outlet></router-outlet>
+</div>

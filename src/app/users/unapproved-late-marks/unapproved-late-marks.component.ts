@@ -19,6 +19,8 @@ export class UnapprovedLateMarksComponent implements OnInit {
   lateMarksForm: FormGroup;updateLateMarksForm:FormGroup;
   lateMarksData={start_date:'',end_date:''};updateLateMarksData={comment:'',id:''};
   api_data:any;latemarksData:any; showDataTable:Boolean;
+  unapprovedLateMarkForm: FormGroup;
+  unapprovedLateMarkFormData={start_date:'',end_date:''};
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   lateMarkTableOptions: DataTables.Settings = {};
@@ -55,6 +57,8 @@ export class UnapprovedLateMarksComponent implements OnInit {
         });
 
   }
+
+  filterSubOrdinateLateMark(){}
   ngOnInit()
   {
     var start_date=moment(this.lateMarksData.start_date).format('DD/MM/YYYY');

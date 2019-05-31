@@ -9,6 +9,7 @@ import { UnapprovedLeavesComponent } from './unapproved-leaves/unapproved-leaves
 import { AllOutdoorDutiesComponent } from './all-outdoor-duties/all-outdoor-duties.component';
 import { ApprovedOutdoorDutiesComponent } from './approved-outdoor-duties/approved-outdoor-duties.component';
 import { UnapprovedOutdoorDutiesComponent } from './unapproved-outdoor-duties/unapproved-outdoor-duties.component';
+import { RejectedOutdoorDutiesComponent } from './rejected-outdoor-duties/rejected-outdoor-duties.component';
 import { AllLateMarksComponent } from './all-late-marks/all-late-marks.component';
 import { ApprovedLateMarksComponent } from './approved-late-marks/approved-late-marks.component';
 import { UnapprovedLateMarksComponent } from './unapproved-late-marks/unapproved-late-marks.component';
@@ -20,6 +21,11 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { StationeryComponent } from './stationery/stationery.component';
 import { RequestedStationeryComponent } from './requested-stationery/requested-stationery.component';
 import { PoliciesComponent } from './policies/policies.component';
+import { RejectedLateMarksComponent } from './rejected-late-marks/rejected-late-marks.component';
+import { RejectedLeavesComponent } from './rejected-leaves/rejected-leaves.component';
+import { RejectedMissingAttendancesComponent } from './rejected-missing-attendances/rejected-missing-attendances.component';
+
+
 
 const routes: Routes = [
 {
@@ -31,15 +37,19 @@ const routes: Routes = [
   {path: 'leaves', component: AllLeavesComponent},
   {path: 'leaves/approved', component: ApprovedLeavesComponent},
   {path: 'leaves/unapproved', component: UnapprovedLeavesComponent},
+  {path: 'leaves/rejected', component: RejectedLeavesComponent},
   {path: 'outdoor_duties', component: AllOutdoorDutiesComponent},
   {path: 'outdoor_duties/approved', component: ApprovedOutdoorDutiesComponent},
   {path: 'outdoor_duties/unapproved', component: UnapprovedOutdoorDutiesComponent},
+  {path: 'outdoor_duties/rejected', component: RejectedOutdoorDutiesComponent},
   {path: 'late_marks', component: AllLateMarksComponent},
   {path: 'late_marks/approved', component: ApprovedLateMarksComponent},
   {path: 'late_marks/unapproved', component: UnapprovedLateMarksComponent},
+  {path: 'late_marks/rejected', component: RejectedLateMarksComponent},
   {path: 'missing_attendance', component: AllMissingAttendanceComponent},
   {path: 'missing_attendance/approved', component: ApprovedMissingAttendanceComponent},
   {path: 'missing_attendance/unapproved', component: UnapprovedMissingAttendanceComponent},
+  {path: 'missing_attendance/rejected', component: RejectedMissingAttendancesComponent},
   {path: 'booster_sessions', component: BoosterSessionComponent},
   {path: 'reset_password', component: ResetPasswordComponent},
   {path: 'stationery/fulfilled', component: StationeryComponent},
