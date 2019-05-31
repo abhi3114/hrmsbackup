@@ -94,8 +94,8 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-danger btn-flat" [disabled]="updateLeavesForm.invalid">Mark Reject</button>
       <button type="button" class="btn bg-orange btn-flat ladda-button" [disabled]="updateLeavesForm.invalid" (click)="save(user_id)" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
+      <button type="submit" class="btn btn-danger btn-flat pull-right" [disabled]="updateLeavesForm.invalid">Mark Reject</button>
     </form>
   </section>
   <div class="modal-body">
