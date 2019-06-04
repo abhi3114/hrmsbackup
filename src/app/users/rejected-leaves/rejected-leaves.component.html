@@ -1,0 +1,75 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+    <ol class="breadcrumb">
+      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li class="active" style="text-align: center;">Rejected Late Marks</li>
+    </ol>
+    <section class="content-header">
+      <form (ngSubmit)="getFilteredRejectedLeaves()" [formGroup]="rejectedLeavesForm" autocomplete="off" novalidate="off">
+      <a (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR REJECTED LATE MARKS</h4>
+      </a>
+      <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+        <div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
+              <input name="bnknm" type='text' class="form-control"[(ngModel)]="rejectedLeavesData.start_date" formControlName="start_date" required [class.error1]="!rejectedLeavesForm.controls.start_date.valid && rejectedLeavesForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
+              <div *ngIf="( rejectedLeavesForm.get('start_date').hasError('minlength') || rejectedLeavesForm.get('start_date').hasError('pattern') || rejectedLeavesForm.get('start_date').hasError('required') ) && rejectedLeavesForm.get('start_date').touched">
+                <div class="error" *ngIf="(rejectedLeavesForm.get('start_date').hasError('required') && rejectedLeavesForm.get('start_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="rejectedLeavesData.end_date" formControlName="end_date" required [class.error1]="!rejectedLeavesForm.controls.end_date.valid && rejectedLeavesForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
+              <div *ngIf="( rejectedLeavesForm.get('end_date').hasError('minlength') || rejectedLeavesForm.get('end_date').hasError('pattern') || rejectedLeavesForm.get('end_date').hasError('required') ) && rejectedLeavesForm.get('end_date').touched">
+                <div class="error" *ngIf="(rejectedLeavesForm.get('end_date').hasError('required') && rejectedLeavesForm.get('end_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2" style="margin-top: 24px;">
+            <button type="submit" class="btn bg-orange btn-flat" [disabled]="rejectedLeavesForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+      </form>
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div>
+            <table class="table  table-bordered table-striped table-hover" datatable [dtOptions]="lateMarkTableOptions"  [dtTrigger]="lateMarkTableTableTrigger">
+            <thead>
+              <tr>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Leave Type</th>
+                <th>Reason</th>
+                <th>Rejection Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let l of rejectedLeaves">
+                <td>{{l.start_date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{l.end_date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{l.leave_type}}</td>
+                <td>{{l.reason}}</td>
+                <td>{{l.review_reason}}</td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

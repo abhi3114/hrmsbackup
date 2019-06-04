@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Observable,Subject} from 'rxjs';
@@ -6,6 +6,8 @@ import { DataTableDirective } from 'angular-datatables';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { ApprovedMissingAttendanceService } from './approved-missing-attendance.service';
 import { MonthYearService } from '../../../shared/service/month-year.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as moment from 'moment';
 
 @Component({
@@ -19,12 +21,14 @@ export class ApprovedMissingAttendanceComponent implements OnInit {
   approvedMissingAttendanceForm: FormGroup;
   approvedMissingAttendanceData={start_date:'',end_date:''};
   approved_missing_attendances_data:any;showDataTable:Boolean;
-   @ViewChild(DataTableDirective)
+  user_approved_attendance_missing_data: any;
+  @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
+  modalRef: BsModalRef;
 
-  constructor(private router:Router,private api:ApprovedMissingAttendanceService,private monthandyear:MonthYearService, private notification:NotificationService) {
+  constructor(private router:Router,private api:ApprovedMissingAttendanceService,private monthandyear:MonthYearService, private notification:NotificationService, private modalService: BsModalService) {
     var filteredData=monthandyear.getFilterData();
     this.approvedMissingAttendanceData.start_date = filteredData[0].firstDay;
     this.approvedMissingAttendanceData.end_date = filteredData[0].lastDay;
@@ -70,4 +74,15 @@ export class ApprovedMissingAttendanceComponent implements OnInit {
     });
   }
 
+  userMissingAttendanceList(template: TemplateRef<any>, l) {
+    this.modalRef = this.modalService.show(template);
+    var start_date=moment(this.approvedMissingAttendanceData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.approvedMissingAttendanceData.end_date).format('DD/MM/YYYY');
+    var user_id = l.user_id
+    this.api.getAllApprovedSpecificSubordinateOutdoors(start_date,end_date, user_id).subscribe(res => {
+      this.user_approved_attendance_missing_data=res;
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
 }

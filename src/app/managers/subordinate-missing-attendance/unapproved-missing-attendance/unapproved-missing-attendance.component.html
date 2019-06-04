@@ -1,37 +1,63 @@
 <div class="wrapper">
   <div class="content-wrapper">
-    <!-- <ol class="breadcrumb">
+    <ol class="breadcrumb">
       <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
       <li class="active">Subordinate (Unapproved Missing Attendance)</li>
-    </ol> -->
+    </ol>
     <section class="content-header">
-      <h1 class="title" style="margin-bottom: 20px;">Subordinate (Unapproved Missing Attendance)</h1>
-     <button type="button" class="btn bg-orange btn-flat ladda-button btn-manager" (click)="save()" ladda="loadingDemo" data-style="expand-right">Mark Approved
-     </button>
+      <form (ngSubmit)="filterSubOrdinateAttendanceMissing()" [formGroup]="unapprovedAttendanceMissingForm" autocomplete="off" novalidate="off">
+      <a (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">Filter for Unapproved Missing Attendances</h4>
+      </a>
+      <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+        <div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
+              <input name="bnknm" type='text' class="form-control"[(ngModel)]="unapprovedAttendanceMissingFormData.start_date" formControlName="start_date" required [class.error1]="!unapprovedAttendanceMissingForm.controls.start_date.valid && unapprovedAttendanceMissingForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
+              <div *ngIf="(unapprovedAttendanceMissingForm.get('start_date').hasError('minlength') || unapprovedAttendanceMissingForm.get('start_date').hasError('pattern') || unapprovedAttendanceMissingForm.get('start_date').hasError('required') ) && unapprovedAttendanceMissingForm.get('start_date').touched">
+                <div class="error" *ngIf="(unapprovedAttendanceMissingForm.get('start_date').hasError('required') && unapprovedAttendanceMissingForm.get('start_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="unapprovedAttendanceMissingFormData.end_date" formControlName="end_date" required [class.error1]="!unapprovedAttendanceMissingForm.controls.end_date.valid && unapprovedAttendanceMissingForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
+              <div *ngIf="( unapprovedAttendanceMissingForm.get('end_date').hasError('minlength') || unapprovedAttendanceMissingForm.get('end_date').hasError('pattern') || unapprovedAttendanceMissingForm.get('end_date').hasError('required') ) && unapprovedAttendanceMissingForm.get('end_date').touched">
+                <div class="error" *ngIf="(unapprovedAttendanceMissingForm.get('end_date').hasError('required') && unapprovedAttendanceMissingForm.get('end_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2" style="margin-top: 24px;">
+            <button type="submit" class="btn bg-orange btn-flat" [disabled]="unapprovedAttendanceMissingForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+      </form>
     </section>
     <section class="content">
-      <div class="">
+      <div class="row">
         <div class="box-body">
           <div>
-            <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table  table-striped table-hover" >
+            <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
               <thead>
                 <tr>
-                  <th><label class="check-holder"><input id='checkAll' type='checkbox' class='check-box' (click)='checkAll()'/>
-                    <span class="checkmark"></span></label></th>
                   <th>User</th>
-                  <th>Date</th>
-                  <th>Punch</th>
-                  <th>Reason</th>
+                  <th>Unapproved Missing Attendance Count</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let l of unapproved_missing_attendace">
-                  <td style="padding: 5px 15px;"> <label class="check-holder"><input class="checkbox" name="{{l.id}}"  type="checkbox" />
-                    <span class="checkmark"></span></label></td>
+                <tr *ngFor="let l of unapproved_missing_attendance">
                   <td>{{l.user_name}}</td>
-                  <td>{{l.date}}</td>
-                  <td>{{l.punch}}</td>
-                  <td>{{l.reason | nullData}}</td>
+                  <td><a (click)="userAttendanceMissingList(userAttendanceMissingListtemp,l)">{{l.attendance_missing_count}}</a></td>
                 </tr>
               </tbody>
             </table>
@@ -41,3 +67,68 @@
     </section>
   </div>
 </div>
+<ng-template #userAttendanceMissingListtemp>
+  <div class="modal-header">
+    <h4 class="modal-title" style="text-align: center;">Unapproved Attendance Missing</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <section class="content-header">
+    <form  novalidate  (ngSubmit)="validateRecordAttendanceMissingResponseForm()" [formGroup]="updateAttendanceMissingsForm" autocomplete="off">
+    <div class="" style="margin-top: 23px; text-align: center;">
+    </div>
+      <div class="row">
+        <div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Reason<sup style="color:red;">*</sup></label>
+              <input name="puropse" type='text' class="form-control"[(ngModel)]="updateAttendanceMissingsData.comment"  formControlName="comment" required [class.error1]="!updateAttendanceMissingsForm.controls.comment.valid && updateAttendanceMissingsForm.controls.comment.dirty" />
+              <div *ngIf="( updateAttendanceMissingsForm.get('comment').hasError('required') ) && updateAttendanceMissingsForm.get('comment').touched">
+                <div class="error" *ngIf="updateAttendanceMissingsForm.get('comment').hasError('required') && updateAttendanceMissingsForm.get('comment').touched">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn bg-orange btn-flat ladda-button" [disabled]="updateAttendanceMissingsForm.invalid" (click)="save(user_id)" ladda="loadingDemo" data-style="expand-right">Mark Approved</button>
+      <button type="submit" class="btn btn-danger btn-flat pull-right" [disabled]="updateAttendanceMissingsForm.invalid">Mark Rejected</button>
+    </form>
+  </section>
+  <div class="modal-body">
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover" >
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Punch</th>
+                  <th>Reason</th>
+                  <th>Mark Approved</th>
+                  <th>Mark Rejected</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of user_unapproved_attendance_missing_data">
+                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
+                  <td>{{l.user_name}}</td>
+                  <td>{{l.date}}</td>
+                  <td>{{l.punch_type}}</td>
+                  <td>{{l.reason}}</td>
+                  <td><a style="cursor: pointer;" (click)="approveSingleAttendanceMissing(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
+                  <td><a style="cursor: pointer;" (click)="rejectSigleAttendanceMissing(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>

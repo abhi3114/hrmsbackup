@@ -1,96 +1,102 @@
 <div class="wrapper">
   <div class="content-wrapper">
-
+    <ol class="breadcrumb">
+      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li class="active">All Late Marks</li>
+    </ol>
     <section class="content-header">
-      <h1 class="title" style="margin-bottom: 20px;">All Late Marks</h1>
       <form (ngSubmit)="validateLateMarksForm()" [formGroup]="lateMarksForm" autocomplete="off" novalidate="off">
-        <div class="" id="collapseBasic" [collapse]="isCollapsed" style="">
-          <div>
-           <div class="col-md-12" >
-             <label class="filter-label">Add Filter</label>
-              <div class="lo-btn">
-             <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="lateMarksData.start_date" formControlName="start_date" required [class.error1]="!lateMarksForm.controls.start_date.valid && lateMarksForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date" style="width: 100%"   />
-             <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
-             <div *ngIf="( lateMarksForm.get('start_date').hasError('minlength') || lateMarksForm.get('start_date').hasError('pattern') || lateMarksForm.get('start_date').hasError('required') ) && lateMarksForm.get('start_date').touched">
-              <div class="error" *ngIf="(lateMarksForm.get('start_date').hasError('required') && lateMarksForm.get('start_date').touched)">
-                This field is mandatory
+      <a (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">Filter for All Late Marks</h4>
+      </a>
+      <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+        <div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
+              <input name="bnknm" type='text' class="form-control"[(ngModel)]="lateMarksData.start_date" formControlName="start_date" required [class.error1]="!lateMarksForm.controls.start_date.valid && lateMarksForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
+              <div *ngIf="( lateMarksForm.get('start_date').hasError('minlength') || lateMarksForm.get('start_date').hasError('pattern') || lateMarksForm.get('start_date').hasError('required') ) && lateMarksForm.get('start_date').touched">
+                <div class="error" *ngIf="(lateMarksForm.get('start_date').hasError('required') && lateMarksForm.get('start_date').touched)">
+                  This field is mandatory
+                </div>
               </div>
             </div>
           </div>
-           <div class="lo-btn">
-           <input name="endDate" type='text' class="form-control d-inline" [(ngModel)]="lateMarksData.end_date" formControlName="end_date" required [class.error1]="!lateMarksForm.controls.end_date.valid && lateMarksForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date" style="width: 100%"  />
-           <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
-           <div *ngIf="( lateMarksForm.get('end_date').hasError('minlength') || lateMarksForm.get('end_date').hasError('pattern') || lateMarksForm.get('end_date').hasError('required') ) && lateMarksForm.get('end_date').touched">
-            <div class="error" *ngIf="(lateMarksForm.get('end_date').hasError('required') && lateMarksForm.get('end_date').touched)">
-              This field is mandatory
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="lateMarksData.end_date" formControlName="end_date" required [class.error1]="!lateMarksForm.controls.end_date.valid && lateMarksForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
+              <div *ngIf="( lateMarksForm.get('end_date').hasError('minlength') || lateMarksForm.get('end_date').hasError('pattern') || lateMarksForm.get('end_date').hasError('required') ) && lateMarksForm.get('end_date').touched">
+                <div class="error" *ngIf="(lateMarksForm.get('end_date').hasError('required') && lateMarksForm.get('end_date').touched)">
+                  This field is mandatory
+                </div>
+              </div>
             </div>
           </div>
+          <div class="col-md-2" style="margin-top: 24px;">
+            <button type="submit" class="btn bg-orange btn-flat" [disabled]="lateMarksForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
+          </div>
         </div>
-           <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="lateMarksForm.invalid"><!-- <i class="fa fa-filter" aria-hidden="true"></i> --> Apply</button>
-           </div>
-          
-    </div>
+      </div>
+      </form>
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div>
+            <table class="table  table-bordered table-striped table-hover" datatable [dtOptions]="lateMarkTableOptions"  [dtTrigger]="lateMarkTableTableTrigger">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Comment</th>
+                <th>Status</th>
+                <th>Approval Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let l of latemarksData">
+                <td>{{l.date}}</td>
+                <td *ngIf="l.status=='Unapproved'"><a style="cursor: pointer;" (click)="updateLateMarkResponse(recordLateMarkResponse,l.id,l.comment)">{{l.comment}}</a></td>
+                <td *ngIf="l.status!='Unapproved'">{{l.comment}}</td>
+                <td>{{l.status}}</td>
+                <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
-</form>
-</section>
-<section class="content">
-  <div class="">
-    <div class="box-body">
-      <div>
-       <table class="table table-striped table-hover" datatable [dtOptions]="lateMarkTableOptions"  [dtTrigger]="lateMarkTableTableTrigger">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Comment</th>
-            <th>Approved</th>
-            <th>Approval Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let l of latemarksData">
-            <td>{{l.date}}</td>
-            <td *ngIf="l.approved==false"><a style="cursor: pointer;" (click)="updateLateMarkResponse(recordLateMarkResponse,l.id,l.comment)">{{l.comment}}</a></td>
-            <td *ngIf="l.approved==true">{{l.comment}}</td>
-            <td *ngIf="l.approved==false">No</td>
-            <td *ngIf="l.approved==true">Yes</td>
-            <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-</section>
-</div>
 </div>
 <ng-template #recordLateMarkResponse>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Record Reason for Late Mark</h4>
   </div>
   <div class="modal-body">
-    <form  novalidate  (ngSubmit)="validateRecordLateMarkResponseForm()" [formGroup]="updateLateMarksForm" autocomplete="off">
-      <div class="">
-        <div>
-          <div class="col-md-12">
-            <div class="form-group">
-              <label>Reason<sup style="color:red;">*</sup></label>
-              <input name="puropse" type='text' class="form-control"[(ngModel)]="updateLateMarksData.comment"  formControlName="comment" required [class.error1]="!updateLateMarksForm.controls.comment.valid && updateLateMarksForm.controls.comment.dirty" />
-              <div *ngIf="( updateLateMarksForm.get('comment').hasError('required') ) && updateLateMarksForm.get('comment').touched">
-               <div class="error" *ngIf="updateLateMarksForm.get('comment').hasError('required') && updateLateMarksForm.get('comment').touched">
+    <form novalidate (ngSubmit)="validateRecordLateMarkResponseForm()" [formGroup]="updateLateMarksForm" autocomplete="off">
+    <div class="">
+      <div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Reason<sup style="color:red;">*</sup></label>
+            <input name="puropse" type='text' class="form-control"[(ngModel)]="updateLateMarksData.comment"  formControlName="comment" required [class.error1]="!updateLateMarksForm.controls.comment.valid && updateLateMarksForm.controls.comment.dirty" />
+            <div *ngIf="(updateLateMarksForm.get('comment').hasError('required') ) && updateLateMarksForm.get('comment').touched">
+              <div class="error" *ngIf="updateLateMarksForm.get('comment').hasError('required') && updateLateMarksForm.get('comment').touched">
                 This field is mandatory
               </div>
             </div>
           </div>
         </div>
       </div>
-       <div class="" style="    margin-left: 5px;">
-            <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
-            <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">Cancel
-            </button>
-          </div>
-   </div>
- </form>
-</div>
+      <div class="" style="margin-left: 5px;">
+        <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateLateMarksForm.invalid" [ladda]="isLoading">Submit</button>
+        <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">Cancel</button>
+      </div>
+    </div>
+    </form>
+  </div>
 </ng-template>
-
-

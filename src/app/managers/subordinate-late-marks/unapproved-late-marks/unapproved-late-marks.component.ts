@@ -1,9 +1,12 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import {Observable,Subject} from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UnapprovedLateMarksService } from './unapproved-late-marks.service';
 import { MonthYearService } from '../../../shared/service/month-year.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { NotificationService } from '../../../shared/service/notification.service';
 import * as moment from 'moment';
 
@@ -15,28 +18,48 @@ import * as moment from 'moment';
 export class UnapprovedLateMarksComponent implements OnInit {
 
   isCollapsed = false;
+  unapprovedLateMarkForm: FormGroup;
+  updateLateMarksForm: FormGroup;
+  unapprovedLateMarkFormData={start_date:'',end_date:''};
+  updateLateMarksData={comment:''};
   unapproved_late_mark_data:any; showDataTable:Boolean;
+  user_unapproved_late_mark_data:any;
+  singleLateMarkResponse:any;
+  user_id:any;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
+  modalRef: BsModalRef;
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
 
-  constructor(private router:Router,private api:UnapprovedLateMarksService,private monthandyear:MonthYearService, private notification: NotificationService)
+  constructor(private router:Router,private api:UnapprovedLateMarksService,private monthandyear:MonthYearService, private notification: NotificationService, private modalService: BsModalService)
   {
     this.leaveTableOptions = {
       pagingType: 'full_numbers',
       lengthMenu: [[5, 10, 20, 50,-1],
       [5, 10, 20, 50,"All" ]]
     };
+    var filteredData=monthandyear.getFilterData();
+    this.unapprovedLateMarkFormData.start_date = filteredData[0].firstDay;
+    this.unapprovedLateMarkFormData.end_date = filteredData[0].lastDay;
+    this.unapprovedLateMarkForm = new FormGroup({
+      start_date: new FormControl('', [Validators.required]),
+      end_date: new FormControl('', [Validators.required]),
+    });
+    this.updateLateMarksForm = new FormGroup({
+      comment: new FormControl('', [Validators.required])
+    });
   }
 
   ngOnInit() {
-    this.api.getAllUnapprovedSubordinateLateMarks().subscribe(res => {
+    var start_date=moment(this.unapprovedLateMarkFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedLateMarkFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnapprovedSubordinateLateMarks(start_date,end_date).subscribe(res => {
       this.unapproved_late_mark_data=res;
       this.leaveTableTrigger.next();
       }, (err) => {
         this.notification.showError(err.error);
-        });
+    });
   }
 
   checkAll(){
@@ -46,20 +69,73 @@ export class UnapprovedLateMarksComponent implements OnInit {
     $('.checkbox').prop('checked', false);
   }
 
-  save()
+  save(user_id)
   {
     var unapproved_late_marks = []
     $('.checkbox:checked').each(function() {
       var id = $(this).attr('name');
       unapproved_late_marks.push(id);
       });
-    var postdata = { "late_mark_ids":  unapproved_late_marks}
+    var postdata = { "late_mark_ids":  unapproved_late_marks, reason: this.updateLateMarksData.comment}
     if(unapproved_late_marks != undefined && unapproved_late_marks.length > 0)
     {
-      this.api.sendForLateMarksApproval(postdata).subscribe(res => {
+      this.api.sendForBulkLateMarksApproval(postdata).subscribe(res => {
         unapproved_late_marks = [];
-        this.notification.showSuccess('Late mark approved successfully');
         this.refreshData();
+        this.refreshList(user_id);
+        this.notification.showSuccess('Late mark approved successfully');
+        this.updateLateMarksForm.reset();
+        }, (err) => {
+        $('.modal').remove();
+        this.notification.showError(err.error);
+      });
+    }
+    else
+    {
+      this.notification.CustomErrorMessage('Please check atleast one Late Mark');
+    }
+  }
+
+  filterSubOrdinateLateMark(){
+    var start_date=moment(this.unapprovedLateMarkFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedLateMarkFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnapprovedSubordinateLateMarks(start_date,end_date).subscribe(res => {
+      this.unapproved_late_mark_data=res;
+      this.rerender();
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  userLateMarkList(template: TemplateRef<any>, l)
+  {
+    this.modalRef = this.modalService.show(template);
+    var start_date=moment(this.unapprovedLateMarkFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedLateMarkFormData.end_date).format('DD/MM/YYYY');
+    this.user_id = l.user_id
+    this.api.getAllUnApprovedSpecificSubordinateLateMarks(start_date,end_date, this.user_id).subscribe(res => {
+      this.user_unapproved_late_mark_data=res;
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  validateRecordLateMarkResponseForm()
+  {
+   var unapproved_late_marks = []
+    $('.checkbox:checked').each(function() {
+      var id = $(this).attr('name');
+      unapproved_late_marks.push(id);
+      });
+    var postdata = { "late_mark_ids":  unapproved_late_marks, reason: this.updateLateMarksData.comment}
+    if(unapproved_late_marks != undefined && unapproved_late_marks.length > 0)
+    {
+      this.api.sendForBulkLateMarksRejection(postdata).subscribe(res => {
+        unapproved_late_marks = [];
+        this.refreshData();
+        this.refreshList(this.user_id);
+        this.updateLateMarksForm.reset();
+        this.notification.showSuccess('Late mark Rejected successfully');
         }, (err) => {
           this.notification.showError(err.error);
           });
@@ -72,7 +148,9 @@ export class UnapprovedLateMarksComponent implements OnInit {
 
   refreshData()
   {
-    this.api.getAllUnapprovedSubordinateLateMarks().subscribe(res => {
+    var start_date=moment(this.unapprovedLateMarkFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedLateMarkFormData.end_date).format('DD/MM/YYYY');
+    this.api.getAllUnapprovedSubordinateLateMarks(start_date, end_date).subscribe(res => {
       this.unapproved_late_mark_data=res;
       $('.check-box').prop('checked', false);
       this.rerender();
@@ -80,6 +158,19 @@ export class UnapprovedLateMarksComponent implements OnInit {
         this.notification.showError(err.error);
         });
   }
+
+  refreshList(user_id){
+    var start_date=moment(this.unapprovedLateMarkFormData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.unapprovedLateMarkFormData.end_date).format('DD/MM/YYYY');
+    this.user_id = user_id
+    this.api.getAllUnApprovedSpecificSubordinateLateMarks(start_date,end_date, this.user_id).subscribe(res => {
+      this.user_unapproved_late_mark_data=res;
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+
+  }
+
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
@@ -88,5 +179,26 @@ export class UnapprovedLateMarksComponent implements OnInit {
       this.leaveTableTrigger.next();
       });
   }
+
+  approveSingleLateMark(l){
+    this.api.sendForSingleLateMarksApproval(l).subscribe(res => {
+    this.refreshData();
+    this.refreshList(this.user_id)
+    this.notification.showSuccess('Late mark Approved successfully');
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
+  rejectSigleLateMark(l){
+    this.api.sendForSingleLateMarksRejection(l).subscribe(res => {
+    this.refreshData();
+    this.refreshList(this.user_id)
+    this.notification.showSuccess('Late mark Rejected successfully');
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
 
 }

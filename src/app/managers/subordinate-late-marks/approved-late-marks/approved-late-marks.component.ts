@@ -1,10 +1,12 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Observable,Subject} from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { ApprovedLateMarksService } from './approved-late-marks.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { MonthYearService } from '../../../shared/service/month-year.service';
 import * as moment from 'moment';
 
@@ -19,12 +21,14 @@ export class ApprovedLateMarksComponent implements OnInit {
   approvedLateMarksForm: FormGroup;
   approvedLateMarkData={start_date:'',end_date:''};
   approved_late_mark_data:any; showDataTable:Boolean;
+  user_approved_late_mark_data:any;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   leaveTableOptions: DataTables.Settings = {};
+  modalRef: BsModalRef;
   leaveTableTrigger: Subject<any> = new Subject();
 
-  constructor(private router:Router,private api:ApprovedLateMarksService,private monthandyear:MonthYearService, private notification: NotificationService) {
+  constructor(private router:Router,private api:ApprovedLateMarksService,private monthandyear:MonthYearService, private notification: NotificationService, private modalService: BsModalService) {
     var filteredData=monthandyear.getFilterData();
     this.approvedLateMarkData.start_date = filteredData[0].firstDay;
     this.approvedLateMarkData.end_date = filteredData[0].lastDay;
@@ -61,6 +65,19 @@ export class ApprovedLateMarksComponent implements OnInit {
     });
   }
 
+  userLateMarkList(template: TemplateRef<any>, l)
+  {
+    this.modalRef = this.modalService.show(template);
+    var start_date=moment(this.approvedLateMarkData.start_date).format('DD/MM/YYYY');
+    var end_date=moment(this.approvedLateMarkData.end_date).format('DD/MM/YYYY');
+    var user_id = l.user_id
+    this.api.getAllApprovedSpecificSubordinateLateMarks(start_date,end_date, user_id).subscribe(res => {
+      this.user_approved_late_mark_data=res;
+    }, (err) => {
+      this.notification.showError(err.error);
+    });
+  }
+
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
@@ -69,5 +86,6 @@ export class ApprovedLateMarksComponent implements OnInit {
       this.leaveTableTrigger.next();
     });
   }
+
 
 }

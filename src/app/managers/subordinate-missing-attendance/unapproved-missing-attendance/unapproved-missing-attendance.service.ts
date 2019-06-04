@@ -9,14 +9,53 @@ export class UnapprovedMissingAttendanceService {
 
   constructor(private http:HttpClient) { }
 
-  getAllUnapprovedMissingAttendaces(){
-    return this.http.get(environment.baseUrl+ "attendance_missings/manager/unapproved",
+  getAllUnapprovedMissingAttendances(start_date, end_date){
+    return this.http.get(environment.baseUrl+ "managers/attendance_missings/unapproved?start_date="+start_date+"&end_date="+end_date,
+      { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'})})
+  }
+s
+  getAllUnApprovedSpecificSubordinateAttendanceMissing(user_id, start_date, end_date) {
+    return this.http.get(environment.baseUrl+ "managers/attendance_missings/users/"+user_id+"/unapproved?start_date="+start_date+"&end_date="+end_date,
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
 
   sendForMissingAttendaceApproval(params){
     return this.http.post(environment.baseUrl+ "attendance_missings/manager/unapproved",params, {
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
+
+  sendForSingleAttendanceMissingApproval(attendance_missing_id){
+    return this.http.post(environment.baseUrl+ "managers/attendance_missings/"+attendance_missing_id+"/approve",attendance_missing_id, {
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
+
+  sendForSingleAttendanceMissingRejection(attendance_missing_id){
+    return this.http.delete(environment.baseUrl+ "managers/attendance_missings/"+attendance_missing_id+"/reject",
+      { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'})})
+  }
+
+  sendForBulkAttendanceMissingRejection(params){
+    return this.http.post(environment.baseUrl+ "managers/attendance_missings/bulk_reject",params,{
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
+
+  sendForBulkAttendanceMissingApproval(params){
+    return this.http.post(environment.baseUrl+ "managers/attendance_missings/bulk_approve",params,{
       headers: {
         "Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'

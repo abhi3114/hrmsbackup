@@ -1,70 +1,81 @@
 <div class="wrapper">
   <div class="content-wrapper">
+    <ol class="breadcrumb">
+      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li class="active">Unapproved Missing Attendance</li>
+    </ol>
     <section class="content-header">
-      <h1 class="title" style="margin-bottom: 20px;">Unapproved Missing Attendance</h1>
       <form (ngSubmit)="validateMissingAttendanceForm()" [formGroup]="missingAttendanceForm" autocomplete="off" novalidate="off">
-        <div class="" id="collapseBasic" [collapse]="isCollapsed" style="">
-          <div>
-            <div class="col-md-12" >
-              <label class="filter-label">Add Filter</label>
-               <div class="lo-btn">
-             <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="missingAttendanceData.start_date" formControlName="start_date" required [class.error1]="!missingAttendanceForm.controls.start_date.valid && missingAttendanceForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date" style="width: 100%"  />
-             <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
-             <div *ngIf="( missingAttendanceForm.get('start_date').hasError('minlength') || missingAttendanceForm.get('start_date').hasError('pattern') || missingAttendanceForm.get('start_date').hasError('required') ) && missingAttendanceForm.get('start_date').touched">
-              <div class="error" *ngIf="(missingAttendanceForm.get('start_date').hasError('required') && missingAttendanceForm.get('start_date').touched)">
-                This field is mandatory
+      <a (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR ALL UNAPPROVED ATTENDANCE</h4>
+      </a>
+      <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+        <div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
+              <input name="bnknm" type='text' class="form-control"[(ngModel)]="missingAttendanceData.start_date" formControlName="start_date" required [class.error1]="!missingAttendanceForm.controls.start_date.valid && missingAttendanceForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
+              <div *ngIf="( missingAttendanceForm.get('start_date').hasError('minlength') || missingAttendanceForm.get('start_date').hasError('pattern') || missingAttendanceForm.get('start_date').hasError('required') ) && missingAttendanceForm.get('start_date').touched">
+                <div class="error" *ngIf="(missingAttendanceForm.get('start_date').hasError('required') && missingAttendanceForm.get('start_date').touched)">
+                  This field is mandatory
+                </div>
               </div>
             </div>
           </div>
-            <div class="lo-btn">
-            <input name="endDate" type='text' class="form-control d-inline" [(ngModel)]="missingAttendanceData.end_date" formControlName="end_date" required [class.error1]="!missingAttendanceForm.controls.end_date.valid && missingAttendanceForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date" style="width: 100%"  />
-            <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
-            <div *ngIf="( missingAttendanceForm.get('end_date').hasError('minlength') || missingAttendanceForm.get('end_date').hasError('pattern') || missingAttendanceForm.get('end_date').hasError('required') ) && missingAttendanceForm.get('end_date').touched">
-              <div class="error" *ngIf="(missingAttendanceForm.get('end_date').hasError('required') && missingAttendanceForm.get('end_date').touched)">
-                This field is mandatory
+          <div class="col-md-2">
+            <div class="form-group">
+              <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
+              <input name="endDate" type='text' class="form-control" [(ngModel)]="missingAttendanceData.end_date" formControlName="end_date" required [class.error1]="!missingAttendanceForm.controls.end_date.valid && missingAttendanceForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
+              <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
+              <div *ngIf="( missingAttendanceForm.get('end_date').hasError('minlength') || missingAttendanceForm.get('end_date').hasError('pattern') || missingAttendanceForm.get('end_date').hasError('required') ) && missingAttendanceForm.get('end_date').touched">
+                <div class="error" *ngIf="(missingAttendanceForm.get('end_date').hasError('required') && missingAttendanceForm.get('end_date').touched)">
+                  This field is mandatory
+                </div>
               </div>
             </div>
           </div>
-             <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="missingAttendanceForm.invalid"><!-- <i class="fa fa-filter" aria-hidden="true"></i>  -->Apply</button>
-           </div>
-           
+          <div class="col-md-2" style="margin-top: 24px;">
+            <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="missingAttendanceForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </form>
-</section>
-<section class="content">
-  <div class="">
-    <div class="box-body">
-      <div>
-        <table class="table table-striped table-hover" datatable  [dtOptions]="missingAttendanceTableOptions"
-        [dtTrigger]="missingAttendanceTableTrigger">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Approved</th>
-            <th>Approval Date</th>
-            <th>Punch</th>
-            <th>Reason</th>
-            <th>Record Reason</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let l of missingattendanceData">
-            <td >{{l.date}}</td>
-            <td *ngIf="l.approved==false">No</td>
-            <td *ngIf="l.approved==true">Yes</td>
-            <td> {{l.approved_on  | date: 'dd/MM/yyyy'|  nullData}}</td>
-            <td>{{l.punch}}</td>
-            <td>{{l.reason}}</td>
-            <td><button (click)="updateMissingAttendance(updateMissingAttendanceTemplate,l.id,l.reason)" type="button" class="add-dynamic-button" [attr.data-maId]="'#' + l.id"><i class="fa fa-custom" aria-hidden="true"><img src="assets/images/edit-icon.png"></i></button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      </form>
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="box-body">
+          <div>
+            <table class="table  table-bordered table-striped table-hover" datatable  [dtOptions]="missingAttendanceTableOptions"
+            [dtTrigger]="missingAttendanceTableTrigger">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Approved</th>
+                  <th>Approval Date</th>
+                  <th>Punch</th>
+                  <th>Reason</th>
+                  <th>Record Reason</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of missingattendanceData">
+                  <td >{{l.date}}</td>
+                  <td *ngIf="l.approved==false">No</td>
+                  <td *ngIf="l.approved==true">Yes</td>
+                  <td> {{l.approved_on  | date: 'dd/MM/yyyy'|  nullData}}</td>
+                  <td>{{l.punch}}</td>
+                  <td>{{l.reason}}</td>
+                  <td><button (click)="updateMissingAttendance(updateMissingAttendanceTemplate,l.id,l.reason)" type="button" class="add-dynamic-button" [attr.data-maId]="'#' + l.id"><i class="fa fa-edit" aria-hidden="true"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
-</div>
-</section>
-</div>
 </div>
 <ng-template #updateMissingAttendanceTemplate>
   <div class="modal-header">
@@ -72,31 +83,26 @@
   </div>
   <div class="modal-body">
     <form  novalidate  (ngSubmit)="validateUpdateMissingAttendanceForm()" [formGroup]="updateMissingAttendanceForm" autocomplete="off">
-      <div class="">
-        <div>
-          <div class="col-md-12">
-            <div class="form-group">
-              <label>Reason<sup style="color:red;">*</sup></label>
-              <input name="puropse" type='text' class="form-control"[(ngModel)]="updateMissingAttendanceData.reason"  formControlName="comment" required [class.error1]="!updateMissingAttendanceForm.controls.comment.valid && updateMissingAttendanceForm.controls.comment.dirty" />
-              <div *ngIf="( updateMissingAttendanceForm.get('comment').hasError('required') ) && updateMissingAttendanceForm.get('comment').touched">
-               <div class="error" *ngIf="updateMissingAttendanceForm.get('comment').hasError('required') && updateMissingAttendanceForm.get('comment').touched">
+    <div class="">
+      <div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Reason<sup style="color:red;">*</sup></label>
+            <input name="puropse" type='text' class="form-control"[(ngModel)]="updateMissingAttendanceData.reason"  formControlName="comment" required [class.error1]="!updateMissingAttendanceForm.controls.comment.valid && updateMissingAttendanceForm.controls.comment.dirty" />
+            <div *ngIf="( updateMissingAttendanceForm.get('comment').hasError('required') ) && updateMissingAttendanceForm.get('comment').touched">
+              <div class="error" *ngIf="updateMissingAttendanceForm.get('comment').hasError('required') && updateMissingAttendanceForm.get('comment').touched">
                 This field is mandatory
               </div>
             </div>
           </div>
         </div>
       </div>
-
-        <div class="" style="    margin-left: 5px;">
-            <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
-            <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">Cancel
-            </button>
-          </div>
-
-   </div>
- </form>
-</div>
+      <div class="" style="    margin-left: 5px;">
+        <button type="submit" class="btn btn-primary btn-submit" [disabled]="updateMissingAttendanceForm.invalid" [ladda]="isLoading">Submit</button>
+        <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="modalRef.hide()">Cancel
+        </button>
+      </div>
+    </div>
+    </form>
+  </div>
 </ng-template>
-
-
-

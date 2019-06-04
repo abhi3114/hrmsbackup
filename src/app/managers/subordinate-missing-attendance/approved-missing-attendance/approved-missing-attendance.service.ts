@@ -10,7 +10,13 @@ export class ApprovedMissingAttendanceService {
 
   constructor(private http:HttpClient) { }
   getallapprovedMissingAttendances(start_date, end_date){
-    return this.http.get(environment.baseUrl+ "attendance_missings/manager/approved?start_date="+start_date+"&end_date="+end_date,
+    return this.http.get(environment.baseUrl+ "managers/attendance_missings/approved?start_date="+start_date+"&end_date="+end_date,
+      { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'})})
+  }
+
+  getAllApprovedSpecificSubordinateOutdoors(start_date,end_date, user_id) {
+    return this.http.get(environment.baseUrl+ "managers/attendance_missings/users/"+user_id+"/approved?start_date="+start_date+"&end_date="+end_date,
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
