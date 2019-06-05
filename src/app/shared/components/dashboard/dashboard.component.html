@@ -239,7 +239,9 @@
 </div>
 <ng-template #leaveTemplate>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Apply for Leave</h4>
+    <div class="row">
+      <h4 class="modal-title pull-left">Apply for Leave</h4>
+    </div>
   </div>
   <div class="modal-body">
     <form novalidate (ngSubmit)="validateApplyLeaveForm()" [formGroup]="applyLeaveForm" autocomplete="off">
@@ -310,10 +312,9 @@
 </ng-template>
 <ng-template #outdoorDutiesTemplate>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Apply for Outdoor Duty</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeODModal()">
-    <span aria-hidden="true">&times;</span>
-    </button>
+    <div class="row">
+      <h4 class="modal-title pull-left">Apply for Outdoor Duty</h4>
+    </div>
   </div>
   <div class="modal-body">
     <form novalidate (ngSubmit)="validateApplyOutdoorDutiesForm()" [formGroup]="applyOutdoorDutiesForm" autocomplete="off">
@@ -402,10 +403,9 @@
 </ng-template>
 <ng-template #lateMarkTemplate >
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Apply for Late Mark</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeLMModal()">
-    <span aria-hidden="true">&times;</span>
-    </button>
+    <div class="row">
+      <h4 class="modal-title pull-left">Apply for Late Mark</h4>
+    </div>
   </div>
   <div class="modal-body">
     <form  novalidate (ngSubmit)="validateLateMarkForm()" [formGroup]="applyLateMarksForm" autocomplete="off">
@@ -445,10 +445,9 @@
 </ng-template>
 <ng-template #missingAttendanceTemplate>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Apply for Missing Attendance</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeMAModal()">
-    <span aria-hidden="true">&times;</span>
-    </button>
+    <div class="row">
+      <h4 class="modal-title pull-left">Apply for Missing Attendance</h4>
+    </div>
   </div>
   <div class="modal-body">
     <form  novalidate (ngSubmit)="validateMissingAttendanceForm()" [formGroup]="applyMissingAttendanceForm" autocomplete="off">
@@ -504,10 +503,9 @@
 </ng-template>
 <ng-template #userSalarySliptemplate>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Download Salary Slip</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeDownloadSalary()">
-    <span aria-hidden="true">&times;</span>
-    </button>
+    <div class="row">
+      <h4 class="modal-title pull-left">Download Salary Slip</h4>
+    </div>
   </div>
   <div class="modal-body">
     <form  novalidate (ngSubmit)="validateSalarySlipForm()" [formGroup]="salarySlipDownloadForm" autocomplete="off">
@@ -555,10 +553,9 @@
 </ng-template>
 <ng-template #updateMissingAttendanceTemplate>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Record Reason for Missing Attendance</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-    <span aria-hidden="true">&times;</span>
-    </button>
+    <div class="row">
+      <h4 class="modal-title pull-left">Record Reason for Missing Attendance</h4>
+    </div>
   </div>
   <div class="modal-body">
     <form  novalidate  (ngSubmit)="validateUpdateMissingAttendanceForm()" [formGroup]="updateMissingAttendanceForm" autocomplete="off">
@@ -585,10 +582,9 @@
 </ng-template>
 <ng-template #recordLateMarkResponse>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Record Reason for Missing Attendance</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-    <span aria-hidden="true">&times;</span>
-    </button>
+    <div class="row">
+      <h4 class="modal-title pull-left">Record Reason for Missing Attendance</h4>
+    </div>
   </div>
   <div class="modal-body">
     <form  novalidate  (ngSubmit)="validateRecordLateMarkResponseForm()" [formGroup]="updateLateMarksForm" autocomplete="off">
@@ -615,10 +611,9 @@
 </ng-template>
 <ng-template #recordMentorshipResponse>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Record Mentorship Feedback</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeMentorshipModal()">
-    <span aria-hidden="true">&times;</span>
-    </button>
+    <div class="row">
+      <h4 class="modal-title pull-left">Record Mentorship Feedback</h4>
+    </div>
   </div>
   <div class="modal-body">
     <div class="">
