@@ -1,109 +1,104 @@
 <div class="wrapper">
   <div class="content-wrapper">
-    <ol class="breadcrumb">
-      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-      <li class="active">Requested Stationery</li>
-    </ol>
     <section class="content-header">
-      <button type="button" class="btn bg-orange btn-flat" (click)="request(requestTemplate)">Request</button>
+      <h1 class="title pull-left">Requested Stationery</h1>
+      <button type="button" class="btn bg-orange btn-flat btn-request pull-right" (click)="request(requestTemplate)" style="margin-left: 10px;    margin-right: 10px;">Request</button>
     </section>
     <section class="content">
-      <div class="row">
-        <div class="box-body">
-          <div>
-            <table datatable [dtOptions]="stationeryTableOptions" [dtTrigger]="stationeryTableTrigger" class="table table-bordered table-striped table-hover" >
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                  <th>Comment</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let s of stationeries">
-                  <td>{{s.item}}</td>
-                  <td>{{s.quantity}}</td>
-                  <td>{{s.comment | nullData}}</td>
-                  <td>
-                    <button class="add-dynamic-button" type="button" (click)="deleteRequest(deleteTemplate,s.id)">
-                      <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    </button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+      <div class="box-body">
+        <div>
+          <table datatable [dtOptions]="stationeryTableOptions" [dtTrigger]="stationeryTableTrigger" class="table table-striped table-hover" >
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Comment</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of stationeries">
+              <td>{{s.item}}</td>
+              <td>{{s.quantity}}</td>
+              <td>{{s.comment | nullData}}</td>
+              <td>
+                <button class="add-dynamic-button" type="button" (click)="deleteRequest(deleteTemplate,s.id)">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+          </table>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </div>
-  <ng-template #requestTemplate>
-    <div class="modal-header">
+</div>
+<ng-template #requestTemplate>
+  <div class="modal-header">
+    <div class="row">
       <h4 class="modal-title pull-left">Request for Stationery</h4>
     </div>
-    <div class="modal-body">
-      <form  novalidate (ngSubmit)="validateRequestForm()" [formGroup]="stationeryForm" autocomplete="off">
-        <div class="row">
-          <div class="col-md-12">
-           <div class="col-md-6">
-            <div class="form-group">
-              <label>Items<sup style="color:red;">*</sup></label>
-              <select name="leavType" class="select2 form-control d-inline fd-inline" style="width: 100%; height: 35px;" [(ngModel)]="stationeryData.selecteditem" formControlName="item" [class.error1]="!stationeryForm.controls.item.valid && stationeryForm.controls.item.dirty" required >
-                <option value="" disabled="disabled">Select item</option>
-                <option *ngFor="let s of stationery_data" value="{{s.id}}">{{s.name}}</option>
-              </select>
-              <div *ngIf="( stationeryForm.get('item').hasError('required') ) && stationeryForm.get('item').touched">
-                <div class="error" *ngIf="stationeryForm.get('item').hasError('required') && stationeryForm.get('item').touched">
-                  This field is mandatory
-                </div>
-              </div>
+  </div>
+  <div class="modal-body">
+    <form  novalidate (ngSubmit)="validateRequestForm()" [formGroup]="stationeryForm" autocomplete="off">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Items<sup style="color:red;">*</sup></label>
+          <select name="leavType" class="select2 form-control d-inline fd-inline" style="width: 100%; height: 35px;" [(ngModel)]="stationeryData.selecteditem" formControlName="item" [class.error1]="!stationeryForm.controls.item.valid && stationeryForm.controls.item.dirty" required >
+          <option value="" disabled="disabled">Select item</option>
+          <option *ngFor="let s of stationery_data" value="{{s.id}}">{{s.name}}</option>
+          </select>
+          <div *ngIf="( stationeryForm.get('item').hasError('required') ) && stationeryForm.get('item').touched">
+            <div class="error" *ngIf="stationeryForm.get('item').hasError('required') && stationeryForm.get('item').touched">
+              This field is mandatory
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Quantity<sup style="color:red;">*</sup></label>
-              <input name="endDate" type='number' class="form-control"  [(ngModel)]="stationeryData.quantity" formControlName="quantity"  [class.error1]="!stationeryForm.controls.quantity.valid && stationeryForm.controls.quantity.dirty"
-              required min="1" />
-              <div *ngIf="( stationeryForm.get('quantity').hasError('required') ) && stationeryForm.get('quantity').touched">
-                <div class="error" *ngIf="stationeryForm.get('quantity').hasError('required') && stationeryForm.get('quantity').touched">
-                  This field is mandatory
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label>Comment</label>
-              <textarea type='text' name="leavereason" class="form-control"  [(ngModel)]="stationeryData.comment" [ngModelOptions]="{standalone: true}"></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12" style="margin-top: 10px;">
-
-          <div class="" style="margin-left: 5px;">
-            <button type="submit" class="btn btn-primary btn-submit" [disabled]="stationeryForm.invalid" [ladda]="isLoading">Submit</button>
-            <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeRequestModal()">Cancel
-            </button>
           </div>
         </div>
       </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Quantity<sup style="color:red;">*</sup></label>
+          <input name="endDate" type='number' class="form-control"  [(ngModel)]="stationeryData.quantity" formControlName="quantity"  [class.error1]="!stationeryForm.controls.quantity.valid && stationeryForm.controls.quantity.dirty"
+          required min="1" />
+          <div *ngIf="( stationeryForm.get('quantity').hasError('required') ) && stationeryForm.get('quantity').touched">
+            <div class="error" *ngIf="stationeryForm.get('quantity').hasError('required') && stationeryForm.get('quantity').touched">
+              This field is mandatory
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Comment</label>
+          <textarea type='text' name="leavereason" class="form-control"  [(ngModel)]="stationeryData.comment" [ngModelOptions]="{standalone: true}"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" style="margin-top: 10px; margin-left: 5px; text-align: center;">
+        <button type="submit" class="btn btn-primary btn-submit" [disabled]="stationeryForm.invalid" [ladda]="isLoading">Submit</button>
+        <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeRequestModal()">Cancel
+        </button>
+      </div>
+    </div>
     </form>
   </div>
 </ng-template>
 <ng-template #deleteTemplate>
- <!-- <div class="modal-header">
-   <p class="modal-title pull-left" style="font-size: 18px;">Delete Stationary Request</p>
-   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div> -->
-<div class="modal-body text-center" style="margin-bottom: 30px;">
- <!--  <h3></h3> -->
-  <h3>Are you sure? <br>You won't be able to revert this</h3>
-  <button type="button" class="btn btn-primary btn-submit ladda-button" (click)="confirm()"  style="" [ladda]="deleteLoader">Yes Process</button>
-  <button type="button" class="btn  btn-cancel" (click)="decline()" style="">Cancel</button>
-</div>
+  <!-- <div class="modal-header">
+    <p class="modal-title pull-left" style="font-size: 18px;">Delete Stationary Request</p>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+     <span aria-hidden="true">&times;</span>
+    </button>
+    </div> -->
+  <div class="modal-body text-center" style="margin-bottom: 30px;">
+    <!--  <h3></h3> -->
+    <h3>Are you sure? <br>You won't be able to revert this</h3>
+    <button type="button" class="btn btn-primary btn-submit ladda-button" (click)="confirm()"  style="" [ladda]="deleteLoader">Yes Process</button>
+    <button type="button" class="btn  btn-cancel" (click)="decline()" style="">Cancel</button>
+  </div>
 </ng-template>
