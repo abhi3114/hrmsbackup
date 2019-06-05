@@ -1008,3 +1008,13 @@ button.btn.bg-orange.btn-flat{
          margin-top:5px;
     }
 }
+.modal-content {
+  width: 600px !important;
+}
+.round{
+  width: 25px;
+  height: 25px;
+  padding: 3px 7px !important;
+  background-color: rgb(249, 152, 0);
+  border-radius: 50%;
+}
