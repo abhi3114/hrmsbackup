@@ -8,7 +8,7 @@
           <div class="col-md-12">
             <label class="filter-label">Add Filter</label>
             <div class="lo-btn">
-              <input name="bnknm" type='text' class="form-control d-inline"[(ngModel)]="rejectedLeavesData.start_date" formControlName="start_date" required [class.error1]="!rejectedLeavesForm.controls.start_date.valid && rejectedLeavesForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date" style="width: 100%" />
+              <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="rejectedLeavesData.start_date" formControlName="start_date" required [class.error1]="!rejectedLeavesForm.controls.start_date.valid && rejectedLeavesForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date" style="width: 100%" />
               <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
               <div *ngIf="( rejectedLeavesForm.get('start_date').hasError('minlength') || rejectedLeavesForm.get('start_date').hasError('pattern') || rejectedLeavesForm.get('start_date').hasError('required') ) && rejectedLeavesForm.get('start_date').touched">
                 <div class="error" *ngIf="(rejectedLeavesForm.get('start_date').hasError('required') && rejectedLeavesForm.get('start_date').touched)">
