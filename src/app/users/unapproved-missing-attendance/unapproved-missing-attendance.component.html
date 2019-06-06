@@ -38,22 +38,22 @@
         <thead>
           <tr>
             <th>Date</th>
-            <th>Approved</th>
-            <th>Approval Date</th>
             <th>Punch</th>
             <th>Reason</th>
             <th>Record Reason</th>
+            <th>Approved</th>
+            <th>Approval Date</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let l of missingattendanceData">
             <td >{{l.date}}</td>
-            <td *ngIf="l.approved==false">No</td>
-            <td *ngIf="l.approved==true">Yes</td>
-            <td> {{l.approved_on  | date: 'dd/MM/yyyy'|  nullData}}</td>
             <td>{{l.punch}}</td>
             <td>{{l.reason}}</td>
             <td><button (click)="updateMissingAttendance(updateMissingAttendanceTemplate,l.id,l.reason)" type="button" class="add-dynamic-button" [attr.data-maId]="'#' + l.id"><i class="fa fa-edit" aria-hidden="true"></i></button></td>
+            <td *ngIf="l.approved==false">No</td>
+            <td *ngIf="l.approved==true">Yes</td>
+            <td> {{l.approved_on  | date: 'dd/MM/yyyy'|  nullData}}</td>
           </tr>
         </tbody>
         </table>
