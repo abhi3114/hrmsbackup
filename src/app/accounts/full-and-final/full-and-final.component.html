@@ -1,34 +1,26 @@
 <div class="wrapper">
   <div class="content-wrapper">
-    <ol class="breadcrumb">
-      <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-      <li class="active">Full and Final Section</li>
-    </ol>
     <section class="content-header">
+      <h1 class="title" style="margin-bottom: 20px;">Full and Final Section</h1>
       <form>
         <div class="row">
           <div class="col-md-12">
-            <div class="col-md-2">
-              <div class="form-group">
-                <label >Month<sup style="color:red;">*</sup></label>
-                <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth" style="width: 100%;" required>
-                <option  value="" disabled="">Select Month</option>
+            <div class="col-md-12">
+              <label class="filter-label">Add Filter</label>
+              <div class="lo-btn">
+                <select name="bnknm" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedmonth" style="width: 100%;" required>
+                <option value="" disabled="">Select Month</option>
                 <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
                 </select>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Year<sup style="color:red;">*</sup></label>
-                <select name="endDate" class="form-control select2 building-select" [(ngModel)]="salary_filter.selectedyear" style="width: 100%;" required>
-                <option  value="" disabled="">Select Year</option>
+              <div class="lo-btn">
+                <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear" style="width: 100%;" required>
+                <option value="" disabled="">Select Year</option>
                 <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
                 </select>
               </div>
-            </div>
-            <div class="col-md-2" style="margin-top: 25px;">
-              <button type="button" class="btn bg-orange btn-flat" (click)="process(processingTemplate)" >
-              <i class="fa fa-cogs" aria-hidden="true"></i> Process Salary
+              <button type="button" class="btn bg-orange btn-flat btn-salary" (click)="process(processingTemplate)" >
+              Process Salary
               </button>
             </div>
           </div>
@@ -36,56 +28,49 @@
       </form>
     </section>
     <section class="content">
-      <div class="row">
-        <div class="box-body">
-          <div class="">
-            <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="salaryTableOptions" [dtTrigger]="salaryTableTrigger">
-            <thead>
-              <tr>
-                <th><input id='checkAll' type='checkbox' class='check-box' (click)="checkALL()" /></th>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Role</th>
-                <th>Pan No.</th>
-                <th>Salary</th>
-                <th>Last working day</th>
-                <th>Edit</th>
-                <th>Download</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let i of user_data">
-                <td><input class="checkbox" name="{{i.id}}"  type="checkbox" /></td>
-                <td>{{i.name}}</td>
-                <td>{{i.department}}</td>
-                <td>{{i.role }}</td>
-                <td>{{i.pan_number | nullData}}</td>
-                <td><i class="fa fa-inr" aria-hidden="true"></i> {{i.salary | indianCurrency}}</td>
-                <td>{{i.last_working_date | date:'dd/MM/yyyy'}}</td>
-                <td  align="center"><a target="_blank"
-                  style="border-radius: 20px; background-color: #dd4b39;font-size: 10px;  padding: 5px 15px 5px 15px; color: white;" [routerLink]="['/home/users',i.id,'payments']" [queryParams]="{month:salary_filter.selectedmonth,year:salary_filter.selectedyear}">EDIT</a>
-                </td>
-                <td  align="center"><button type="button" class="btn bg-purple" (click)="downloadSalarySlip(i.id,i.name)" style="border-radius: 20px;font-size: 10px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> DOWNLOAD</button></td>
-              </tr>
-            </tbody>
-            </table>
-          </div>
-        </div>
+      <div class="box-body">
+        <table class="table table-striped table-hover" datatable [dtOptions]="salaryTableOptions" [dtTrigger]="salaryTableTrigger">
+        <thead>
+          <tr>
+            <th>
+              <label class="check-holder"><input id='checkAll' type='checkbox' class='check-box' (click)="checkALL()" />
+              <span class="checkmark"></span>
+              </label>
+            </th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Role</th>
+            <th>Pan No.</th>
+            <th>Salary</th>
+            <th>Last working day</th>
+            <th>Edit</th>
+            <th>Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of user_data">
+            <td style="padding: 5px 15px;"><label class="check-holder"><input class="checkbox" name="{{i.id}}"  type="checkbox" />  <span class="checkmark"></span></label> </td>
+            <td>{{i.name}}</td>
+            <td>{{i.department}}</td>
+            <td>{{i.role }}</td>
+            <td>{{i.pan_number | nullData}}</td>
+            <td><i class="fa fa-inr" aria-hidden="true"></i> {{i.salary | indianCurrency}}</td>
+            <td>{{i.last_working_date | date:'dd/MM/yyyy'}}</td>
+            <td  align="center"><a target="_blank"
+              style="" [routerLink]="['/home/users',i.id,'payments']" [queryParams]="{month:salary_filter.selectedmonth,year:salary_filter.selectedyear}"><i class="fa fa-custom" aria-hidden="true"><img src="assets/images/edit-icon.png"></i></a>
+            </td>
+            <td  align="center"><button type="button" class="btn " (click)="downloadSalarySlip(i.id,i.name)" style="border-radius: 20px;font-size: 10px;background: transparent;border: none"><i class="fa fa-custom" aria-hidden="true"><img src="assets/images/download-icon.png"></i></button></td>
+          </tr>
+        </tbody>
+        </table>
       </div>
     </section>
   </div>
 </div>
 <ng-template #processingTemplate>
-  <div class="modal-header">
-    <p class="modal-title pull-left" style="font-size: 18px;">Process Salary</p>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-    <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body text-center">
-    <h3>Are you sure?</h3>
-    <h3>You won't be able to revert this</h3>
-    <button type="button" class="btn btn-default btn-success" (click)="confirm()"  style="margin-right: 5px; font-size: 18px; color: #fff;" [ladda]="isLoading">Yes Process</button>
-    <button type="button" class="btn btn-default btn-danger" (click)="decline()" style="margin-right: 5px; font-size: 18px; color: #fff;">Cancel</button>
-  </div>
+<div class="modal-body text-center" style="padding-bottom: 30px;">
+  <h3 style="margin-bottom: 15px;">Are you sure you want to process salary? <br>You won't be able to revert this</h3>
+   <button type="button" class="btn btn-default btn-submit" (click)="confirm()"  style=" font-size: 18px; color: #fff; padding: 12px 15px!important" [ladda]="isLoading">Yes Process</button>
+  <button type="button" class="btn btn-default btn-danger btn-cancel" (click)="decline()" style="margin-right: 5px; font-size: 18px; color: #fff;">Cancel</button>
+</div>
 </ng-template>
