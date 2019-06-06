@@ -593,17 +593,16 @@ span.multiselect-selected-text {
                 margin-left: 6px;
                 border-radius: 20px;
               }
-              input.checkbox {
+              /* input.checkbox {
                 font-size: 24px;
                 vertical-align: middle;
                 margin-left: 4px;
                 position: absolute;
-                opacity: 0;
                 cursor: pointer;
                 height: 0;
                 width: 0;
 
-              }
+              } */
               .check-holder{position: relative;}
 
               .checkmark {
