@@ -8,18 +8,21 @@ import { ManagersModule } from './managers/managers.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { MyInterceptor } from './request-interceptors';
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './shared/shared.module';
+
 @NgModule({
   declarations: [
-  AppComponent
+    AppComponent
   ],
   imports: [
-  BrowserModule,
-  HttpClientModule,
-  CoreModule,
-  UsersModule,
-  ManagersModule,
-  AccountsModule,
-  AppRoutingModule
+    SharedModule,
+    BrowserModule,
+    HttpClientModule,
+    CoreModule,
+    UsersModule,
+    ManagersModule,
+    AccountsModule,
+    AppRoutingModule
   ],
   providers: [    {
     provide: HTTP_INTERCEPTORS,

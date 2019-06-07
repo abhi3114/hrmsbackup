@@ -4,10 +4,7 @@ import { DashboardComponent } from './shared/components/dashboard/dashboard.comp
 
 
 const routes: Routes = [
-  {
-    path: "**",
-    redirectTo: "/home/dashboard"
-  },
+  { path: 'subords', loadChildren: "./managers/managers.module#ManagersModule" }
 ];
 
 @NgModule({
