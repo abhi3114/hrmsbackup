@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import {Observable,Subject} from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { NotificationService } from '../../../shared/service/notification.service';
-import { ApprovedOutdoorDutyService } from './approved-outdoor-duty.service';
+import { ApprovedOutdoorDutyService } from './approved-outdoor-duties.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { MonthYearService } from '../../../shared/service/month-year.service';

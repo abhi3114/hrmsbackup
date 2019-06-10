@@ -189,9 +189,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a [routerLink]="['users/outdoor_duties/approved']"><i class="fa fa-check" aria-hidden="true"></i>Approved</a></li>
-            <li><a [routerLink]="['users/outdoor_duties/unapproved']"><i class="fa fa-question" aria-hidden="true"></i>Unapproved</a></li>
-            <li><a [routerLink]="['users/outdoor_duties/rejected']"><i class="fa fa-times" aria-hidden="true"></i>Rejected</a></li>
+            <li><a [routerLink]="['/subords/outdoor-duties/approved']"><i class="fa fa-check" aria-hidden="true"></i>Approved</a></li>
+            <li><a [routerLink]="['/subords/outdoor-duties/unapproved']"><i class="fa fa-question" aria-hidden="true"></i>Unapproved</a></li>
+            <li><a [routerLink]="['/subords/outdoor-duties/rejected']"><i class="fa fa-times" aria-hidden="true"></i>Rejected</a></li>
          </ul>
        </li>
        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="can_access_manager" style="cursor: pointer;">

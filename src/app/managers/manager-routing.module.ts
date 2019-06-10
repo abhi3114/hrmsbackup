@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
     // path: 'home', component: MasterComponent
-  { path: 'leaves', loadChildren: "./subords-leaves/subords-leaves.module#SubordsLeavesModule" }
+  { path: 'leaves', loadChildren: "./subords-leaves/subords-leaves.module#SubordsLeavesModule" },
+  { path: 'outdoor-duties', loadChildren: "./subords-outdoor-duties/subords-outdoor-duties.module#SubordsOutdoorDutiesModule" }
 ];
 
 @NgModule({
