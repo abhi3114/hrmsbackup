@@ -7,8 +7,6 @@ import { SubordsOutdoorDutiesModule } from './subords-outdoor-duties/subords-out
 @NgModule({
     imports: [
       ManagerRoutingModule,
-      SubordsLeavesModule,
-      SubordsOutdoorDutiesModule,
       SharedModule
     ],
     declarations: [
