@@ -11,42 +11,21 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
   styleUrls: ['./policies.component.css']
   })
 export class PoliciesComponent implements OnInit {
-  isLoading:boolean=false; //pdfSrc: string = '/leavepolicy.pdf';
-  showLeavePolicy: boolean =true;showAttendancePolicy:boolean =false;
-  showSHPolicy:boolean=false;
-  config = {
-    animated:true,
-    keyboard: false,
-    backdrop: true,
-    ignoreBackdropClick: true,
-    class:'modal-lg'
-  };
-  constructor(private router:Router,private api:PoliciesService,public toastr: NotificationService)
-  {
+  docSrc: string = "/assets/files/leavepolicy.pdf";
+  constructor(private router:Router,private api:PoliciesService,public toastr: NotificationService) {
 
   }
 
   ngOnInit() {
   }
-  downloadLeavePolicy()
-  {
-    this.showLeavePolicy=true;
-    this.showAttendancePolicy=false;
-    this.showSHPolicy=false;
-    //this.api.downloadLeavePolicy();
-  }
-  downloadattendancePolicy()
-  {
-    this.showLeavePolicy=false;
-    this.showAttendancePolicy=true;
-    this.showSHPolicy=false;
-  }
-  downloadSHPolicy()
-  {
-    this.showLeavePolicy=false;
-    this.showAttendancePolicy=false;
-    this.showSHPolicy=true;
-  }
 
-
+  getDocSrc(docType) {
+    if(docType == "leavepolicy") {
+      this.docSrc = "/assets/files/leavepolicy.pdf";
+    } else if (docType == "attendancepolicy") {
+      this.docSrc = "/assets/files/attendancepolicy.pdf"
+    } else {
+      this.docSrc = "/assets/files/SHpolicy.pdf"
+    }
+  }
 }
