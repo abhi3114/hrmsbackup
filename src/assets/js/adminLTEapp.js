@@ -169,11 +169,11 @@ $(function () {
 
   //Add slimscroll to navbar dropdown
   if (o.navbarMenuSlimscroll && typeof $.fn.slimscroll != 'undefined') {
-    $(".navbar .menu").slimscroll({
-      height: o.navbarMenuHeight,
-      alwaysVisible: false,
-      size: o.navbarMenuSlimscrollWidth
-    }).css("width", "100%");
+    // $(".navbar .menu").slimscroll({
+    //   height: o.navbarMenuHeight,
+    //   alwaysVisible: false,
+    //   size: o.navbarMenuSlimscrollWidth
+    // }).css("width", "100%");
   }
 
   //Activate sidebar push menu
@@ -278,26 +278,26 @@ function _init() {
     fixSidebar: function () {
       //Make sure the body tag has the .fixed class
       if (!$("body").hasClass("fixed")) {
-        if (typeof $.fn.slimScroll != 'undefined') {
-          $(".sidebar").slimScroll({destroy: true}).height("auto");
-        }
-        return;
+        // if (typeof $.fn.slimScroll != 'undefined') {
+        //   $(".sidebar").slimScroll({destroy: true}).height("auto");
+        // }
+        // return;
       } else if (typeof $.fn.slimScroll == 'undefined' && window.console) {
         window.console.error("Error: the fixed layout requires the slimscroll plugin!");
       }
       //Enable slimscroll for fixed layout
-      if ($.AdminLTE.options.sidebarSlimScroll) {
-        if (typeof $.fn.slimScroll != 'undefined') {
-          //Destroy if it exists
-          $(".sidebar").slimScroll({destroy: true}).height("auto");
-          //Add slimscroll
-          $(".sidebar").slimscroll({
-            height: ($(window).height() - $(".main-header").height()) + "px",
-            color: "rgba(0,0,0,0.2)",
-            size: "3px"
-          });
-        }
-      }
+      // if ($.AdminLTE.options.sidebarSlimScroll) {
+      //   if (typeof $.fn.slimScroll != 'undefined') {
+      //     //Destroy if it exists
+      //     $(".sidebar").slimScroll({destroy: true}).height("auto");
+      //     //Add slimscroll
+      //     $(".sidebar").slimscroll({
+      //       height: ($(window).height() - $(".main-header").height()) + "px",
+      //       color: "rgba(0,0,0,0.2)",
+      //       size: "3px"
+      //     });
+      //   }
+      // }
     }
   };
 
