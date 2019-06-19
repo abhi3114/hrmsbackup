@@ -100,38 +100,36 @@
   </section>
   <div class="modal-body">
     <section class="content">
-      <div class="row">
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover" >
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>User</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>No. of Days</th>
-                  <th>Leave Type</th>
-                  <th>Reason</th>
-                  <th>Approve</th>
-                  <th>Reject</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let l of user_unapproved_leaves_data">
-                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
-                  <td>{{l.user_name}}</td>
-                  <td>{{l.start_date}}</td>
-                  <td>{{l.end_date}}</td>
-                  <td>{{l.no_of_days}}</td>
-                  <td>{{l.leave_type}}</td>
-                  <td>{{l.reason}}</td>
-                  <td><a style="cursor: pointer;" (click)="approveSingleLeave(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
-                  <td><a style="cursor: pointer;" (click)="rejectSingleLeave(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover" >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>No. of Days</th>
+                <th>Leave Type</th>
+                <th>Reason</th>
+                <th>Approve</th>
+                <th>Reject</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let l of user_unapproved_leaves_data">
+                <td><input class="checkbox" name="{{l.id}}" type="checkbox" /></td>
+                <td>{{l.user_name}}</td>
+                <td>{{l.start_date}}</td>
+                <td>{{l.end_date}}</td>
+                <td>{{l.no_of_days}}</td>
+                <td>{{l.leave_type}}</td>
+                <td>{{l.reason}}</td>
+                <td><a style="cursor: pointer;" (click)="approveSingleLeave(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
+                <td><a style="cursor: pointer;" (click)="rejectSingleLeave(l.id, updateLeavesData.comment)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>

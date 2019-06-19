@@ -99,38 +99,36 @@
   </section>
   <div class="modal-body">
     <section class="content">
-      <div class="row">
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover" >
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Client Name</th>
-                  <th>Project Name</th>
-                  <th>Reason</th>
-                  <th>Location</th>
-                  <th>Approve</th>
-                  <th>Reject</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let l of user_unapproved_outdoor_data">
-                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
-                  <td>{{l.start_date}}</td>
-                  <td>{{l.end_date}}</td>
-                  <td>{{l.client_name}}</td>
-                  <td>{{l.project_name}}</td>
-                  <td>{{l.reason}}</td>
-                  <td>{{l.location}}</td>
-                  <td><a style="cursor: pointer;" (click)="approveSingleOutdoor(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
-                  <td><a style="cursor: pointer;" (click)="rejectSigleOutdoor(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover" >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Client Name</th>
+                <th>Project Name</th>
+                <th>Reason</th>
+                <th>Location</th>
+                <th>Approve</th>
+                <th>Reject</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let l of user_unapproved_outdoor_data">
+                <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
+                <td>{{l.start_date}}</td>
+                <td>{{l.end_date}}</td>
+                <td>{{l.client_name}}</td>
+                <td>{{l.project_name}}</td>
+                <td>{{l.reason}}</td>
+                <td>{{l.location}}</td>
+                <td><a style="cursor: pointer;" (click)="approveSingleOutdoor(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
+                <td><a style="cursor: pointer;" (click)="rejectSigleOutdoor(l.id, updateOutdoorsData.comment)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>

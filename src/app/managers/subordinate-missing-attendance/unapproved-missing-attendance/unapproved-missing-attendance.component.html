@@ -99,34 +99,32 @@
   </section>
   <div class="modal-body">
     <section class="content">
-      <div class="row">
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover" >
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Date</th>
-                  <th>Punch</th>
-                  <th>Reason</th>
-                  <th>Mark Approved</th>
-                  <th>Mark Rejected</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let l of user_unapproved_attendance_missing_data">
-                  <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
-                  <td>{{l.user_name}}</td>
-                  <td>{{l.date}}</td>
-                  <td>{{l.punch_type}}</td>
-                  <td>{{l.reason}}</td>
-                  <td><a style="cursor: pointer;" (click)="approveSingleAttendanceMissing(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
-                  <td><a style="cursor: pointer;" (click)="rejectSigleAttendanceMissing(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover" >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Punch</th>
+                <th>Reason</th>
+                <th>Mark Approved</th>
+                <th>Mark Rejected</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let l of user_unapproved_attendance_missing_data">
+                <td><input class="checkbox" name="{{l.id}}"  type="checkbox" /></td>
+                <td>{{l.user_name}}</td>
+                <td>{{l.date}}</td>
+                <td>{{l.punch_type}}</td>
+                <td>{{l.reason}}</td>
+                <td><a style="cursor: pointer;" (click)="approveSingleAttendanceMissing(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
+                <td><a style="cursor: pointer;" (click)="rejectSigleAttendanceMissing(l.id, updateAttendanceMissingsData.comment)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
