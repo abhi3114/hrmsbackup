@@ -96,7 +96,7 @@
                 <td>{{l.punch_type}}</td>
                 <td>{{l.reason}}</td>
                 <td><a style="cursor: pointer;" (click)="approveSingleAttendanceMissing(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
-                <td><a style="cursor: pointer;" (click)="rejectSigleAttendanceMissing(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+                <td><a style="cursor: pointer;" (click)="rejectSigleAttendanceMissing(l.id, updateAttendanceMissingsData.comment)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
               </tr>
             </tbody>
           </table>

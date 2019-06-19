@@ -190,14 +190,19 @@ export class UnapprovedLateMarksComponent implements OnInit {
     });
   }
 
-  rejectSigleLateMark(l){
-    this.api.sendForSingleLateMarksRejection(l).subscribe(res => {
-    this.refreshData();
-    this.refreshList(this.user_id)
-    this.notification.showSuccess('Late mark Rejected successfully');
-    }, (err) => {
-      this.notification.showError(err.error);
-    });
+  rejectSigleLateMark(l, comment){
+    if (comment == undefined || comment == "") {
+      this.notification.CustomErrorMessage("Please enter rejection rejection");
+    } else {
+      this.api.sendForSingleLateMarksRejection(l, comment).subscribe(res => {
+      this.refreshData();
+      this.refreshList(this.user_id);
+      this.updateLateMarksForm.reset();
+      this.notification.showSuccess('Late mark Rejected successfully');
+      }, (err) => {
+        this.notification.showError(err.error);
+      });
+    }
   }
 
 

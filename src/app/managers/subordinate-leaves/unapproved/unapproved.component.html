@@ -100,7 +100,7 @@
                 <td>{{l.leave_type}}</td>
                 <td>{{l.reason}}</td>
                 <td><a style="cursor: pointer;" (click)="approveSingleLeave(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
-                <td><a style="cursor: pointer;" (click)="rejectSingleLeave(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+                <td><a style="cursor: pointer;" (click)="rejectSingleLeave(l.id, updateLeavesData.comment)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
               </tr>
             </tbody>
           </table>

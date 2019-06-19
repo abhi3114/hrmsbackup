@@ -95,7 +95,7 @@
               <td>{{l.date}}</td>
               <td>{{l.comment| nullData}}</td>
               <td><a style="cursor: pointer;" (click)="approveSingleLateMark(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
-              <td><a style="cursor: pointer;" (click)="rejectSigleLateMark(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+              <td><a style="cursor: pointer;" (click)="rejectSigleLateMark(l.id, updateLateMarksData.comment)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
             </tr>
           </tbody>
         </table>
