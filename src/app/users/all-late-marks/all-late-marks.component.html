@@ -64,7 +64,7 @@
             <td *ngIf="l.status!='Unapproved'">{{l.comment}}</td>
             <td>{{l.status}}</td>
             <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
-            <td>{{l.approved_by}}</td>
+            <td>{{l.approved_by | nullData}}</td>
           </tr>
         </tbody>
       </table>

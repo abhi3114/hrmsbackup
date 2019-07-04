@@ -48,7 +48,7 @@
     <div class="box-body">
       <div>
       <table datatable [dtOptions]="outdoorDutyTableOptions" [dtTrigger]="outdoorDutyTableTrigger" class="table table-bordered table-striped table-hover" >
-                  <thead>
+                <thead>
                 <tr>
                   <th>Start Date</th>
                   <th>End Date</th>
@@ -58,7 +58,7 @@
                   <th>Purpose</th>
                   <th>Status</th>
                   <th>Approval Date</th>
-                  <<th>Approved By</th>
+                  <th>Approved By</th>
                 </tr>
               </thead>
               <tbody>
@@ -71,7 +71,7 @@
                   <td> {{l.reason}}</td>
                   <td>{{l.status}}</td>
                   <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
-                  <td>{{l.approved_by}}</td>
+                  <td>{{l.approved_by | nullData}}</td>
                 </tr>
               </tbody>
             </table>
