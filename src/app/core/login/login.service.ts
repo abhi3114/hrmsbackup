@@ -19,4 +19,8 @@ export class LoginService {
     })
   }
 
+  sendResetPasswordLink(email){
+    return this.http.post(environment.baseUrl + 'users/forgot_password', email)
+  }
+
 }
