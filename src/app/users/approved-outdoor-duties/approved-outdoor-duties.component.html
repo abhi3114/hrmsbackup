@@ -58,6 +58,7 @@
                   <th>Purpose</th>
                   <th>Approved</th>
                   <th>Approval Date</th>
+                  <<th>Approved By</th>
                 </tr>
               </thead>
               <tbody>
@@ -71,6 +72,7 @@
                   <td *ngIf="l.approved==true">Yes</td>
                   <td *ngIf="l.approved==false">No</td>
                   <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
+                  <td>{{l.approved_by}}</td>
                 </tr>
               </tbody>
             </table>
@@ -80,5 +82,3 @@
 </section>
 </div>
 </div>
-
-

@@ -56,6 +56,7 @@
                 <th>Reason</th>
                 <th>Status</th>
                 <th>Approval Date</th>
+                <<th>Approved By</th>
               </tr>
             </thead>
             <tbody>
@@ -66,6 +67,7 @@
                 <td>{{l.reason}}</td>
                 <td>{{l.status}}</td>
                 <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
+                <td>{{l.approved_by}}</td>
               </tr>
             </tbody>
             </table>
