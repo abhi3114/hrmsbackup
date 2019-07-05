@@ -59,15 +59,14 @@ export class LoginComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
-  resetPassword(){
-    {
-    this.api.sendResetPasswordLink(this.resetPasswordData.email).subscribe(res => {
+  resetUserPassword(){
+    this.api.sendResetPasswordLink(this.resetPasswordData).subscribe(res => {
       this.user_data=res;
       this.modalRef.hide();
-      this.toastr.showSuccess('Reset Password Link Has been Sent to your Email');
+      this.toastr.successToastr('Reset Password Link Has been Sent to your Email', '', {  position: 'top-center'});
       this.resetPasswordForm.reset();
       }, (err) => {
-      this.toastr.showError(err.error)
+      this.showError(err.error);
       this.modalRef.hide();
       this.resetPasswordForm.reset();
     });
