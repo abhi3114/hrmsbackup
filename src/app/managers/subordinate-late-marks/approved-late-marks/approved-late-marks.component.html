@@ -1,12 +1,12 @@
-  <div class="wrapper">
-    <div class="content-wrapper">
-      <ol class="breadcrumb">
-        <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-        <li class="active">Subordinate (Approved Late Marks)</li>
-      </ol>
-      <section class="content-header">
-        <form (ngSubmit)="validateApprovedLateMarksForm()" [formGroup]="approvedLateMarksForm" autocomplete="off" novalidate="off">
-          <a (click)="isCollapsed = !isCollapsed"
+<div class="wrapper">
+  <div class="content-wrapper">
+    <ol class="breadcrumb">
+      <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li class="active">Subordinate (Approved Late Marks)</li>
+    </ol>
+    <section class="content-header">
+      <form (ngSubmit)="validateApprovedLateMarksForm()" [formGroup]="approvedLateMarksForm" autocomplete="off" novalidate="off">
+        <a (click)="isCollapsed = !isCollapsed"
           [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
           <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">Filter for Approved Late Marks</h4>
         </a>
@@ -86,6 +86,7 @@
                   <th>Date</th>
                   <th>Comment</th>
                   <th>Approval Date</th>
+                  <th>Approved By</th>
                 </tr>
               </thead>
               <tbody>
@@ -94,6 +95,7 @@
                   <td>{{l.date}}</td>
                   <td>{{l.comment}}</td>
                   <td>{{l.approved_on | nullData}}</td>
+                  <td>{{l.approved_by | nullData}}</td>
                 </tr>
               </tbody>
             </table>

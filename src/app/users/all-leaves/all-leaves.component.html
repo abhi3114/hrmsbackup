@@ -6,41 +6,41 @@
     </ol>
     <section class="content-header">
       <form (ngSubmit)="validateAllLeavesForm()" [formGroup]="allLeavesForm" autocomplete="off" novalidate="off">
-      <a (click)="isCollapsed = !isCollapsed"
-      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR ALL LEAVES</h4>
-      </a>
-      <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
-        <div>
-          <div class="col-md-2">
-            <div class="form-group">
-              <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
-              <input name="bnknm" type='text' class="form-control"[(ngModel)]="allLeavesData.start_date" formControlName="start_date" required [class.error1]="!allLeavesForm.controls.start_date.valid && allLeavesForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
-              <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
-              <div *ngIf="( allLeavesForm.get('start_date').hasError('minlength') || allLeavesForm.get('start_date').hasError('pattern') || allLeavesForm.get('start_date').hasError('required') ) && allLeavesForm.get('start_date').touched">
-                <div class="error" *ngIf="(allLeavesForm.get('start_date').hasError('required') && allLeavesForm.get('start_date').touched)">
-                  This field is mandatory
+        <a (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+          <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR ALL LEAVES</h4>
+        </a>
+        <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+          <div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
+                <input name="bnknm" type='text' class="form-control"[(ngModel)]="allLeavesData.start_date" formControlName="start_date" required [class.error1]="!allLeavesForm.controls.start_date.valid && allLeavesForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
+                <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
+                <div *ngIf="( allLeavesForm.get('start_date').hasError('minlength') || allLeavesForm.get('start_date').hasError('pattern') || allLeavesForm.get('start_date').hasError('required') ) && allLeavesForm.get('start_date').touched">
+                  <div class="error" *ngIf="(allLeavesForm.get('start_date').hasError('required') && allLeavesForm.get('start_date').touched)">
+                    This field is mandatory
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-2">
-            <div class="form-group">
-              <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
-              <input name="endDate" type='text' class="form-control" [(ngModel)]="allLeavesData.end_date" formControlName="end_date" required [class.error1]="!allLeavesForm.controls.end_date.valid && allLeavesForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
-              <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
-              <div *ngIf="( allLeavesForm.get('end_date').hasError('minlength') || allLeavesForm.get('end_date').hasError('pattern') || allLeavesForm.get('end_date').hasError('required') ) && allLeavesForm.get('end_date').touched">
-                <div class="error" *ngIf="(allLeavesForm.get('end_date').hasError('required') && allLeavesForm.get('end_date').touched)">
-                  This field is mandatory
+            <div class="col-md-2">
+              <div class="form-group">
+                <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
+                <input name="endDate" type='text' class="form-control" [(ngModel)]="allLeavesData.end_date" formControlName="end_date" required [class.error1]="!allLeavesForm.controls.end_date.valid && allLeavesForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
+                <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
+                <div *ngIf="( allLeavesForm.get('end_date').hasError('minlength') || allLeavesForm.get('end_date').hasError('pattern') || allLeavesForm.get('end_date').hasError('required') ) && allLeavesForm.get('end_date').touched">
+                  <div class="error" *ngIf="(allLeavesForm.get('end_date').hasError('required') && allLeavesForm.get('end_date').touched)">
+                    This field is mandatory
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-2" style="margin-top: 24px;">
-            <button type="submit" class="btn bg-orange btn-flat" [disabled]="allLeavesForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
+            <div class="col-md-2" style="margin-top: 24px;">
+              <button type="submit" class="btn bg-orange btn-flat" [disabled]="allLeavesForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
+            </div>
           </div>
         </div>
-      </div>
       </form>
     </section>
     <section class="content">
@@ -48,26 +48,28 @@
         <div class="box-body">
           <div>
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
-            <thead>
-              <tr>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Leave Type</th>
-                <th>Reason</th>
-                <th>Status</th>
-                <th>Approval Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let l of leavesData">
-                <td>{{l.start_date | date: 'dd/MM/yyyy'}}</td>
-                <td>{{l.end_date | date: 'dd/MM/yyyy'}}</td>
-                <td>{{l.leave_type}}</td>
-                <td>{{l.reason}}</td>
-                <td>{{l.status}}</td>
-                <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
-              </tr>
-            </tbody>
+              <thead>
+                <tr>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Leave Type</th>
+                  <th>Reason</th>
+                  <th>Status</th>
+                  <th>Approval Date</th>
+                  <th>Approved By</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of leavesData">
+                  <td>{{l.start_date | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{l.end_date | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{l.leave_type}}</td>
+                  <td>{{l.reason}}</td>
+                  <td>{{l.status}}</td>
+                  <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
+                  <td>{{l.approved_by | nullData}}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
