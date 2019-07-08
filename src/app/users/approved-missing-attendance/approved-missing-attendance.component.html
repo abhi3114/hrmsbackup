@@ -57,6 +57,7 @@
             <th>Punch</th>
             <th>Reason</th>
             <th>Record Reason</th>
+            <th>Approved By</th>
           </tr>
         </thead>
         <tbody>
@@ -68,6 +69,7 @@
             <td>{{l.punch}}</td>
             <td>{{l.reason}}</td>
             <td><button (click)="updateMissingAttendance(updateMissingAttendanceTemplate,l.id,l.reason)" type="button" class="add-dynamic-button" [attr.data-maId]="'#' + l.id"><i class="fa fa-edit" aria-hidden="true"></i></button></td>
+            <td>{{l.action_taken_by | nullData}}</td>
           </tr>
         </tbody>
       </table>
@@ -108,5 +110,3 @@
  </form>
 </div>
 </ng-template>
-
-

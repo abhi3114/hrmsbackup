@@ -46,7 +46,7 @@
     <section class="content">
       <div class="row">
         <div class="box-body">
-          <div>
+          <div class="table-responsive">
             <table datatable [dtOptions]="outdoorDutyTableOptions" [dtTrigger]="outdoorDutyTableTrigger" class="table table-bordered table-striped table-hover" >
             <thead>
               <tr>
@@ -72,7 +72,7 @@
                 <td *ngIf="l.approved==true">Yes</td>
                 <td *ngIf="l.approved==false">No</td>
                 <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
-                <td>{{l.approved_by | nullData}}</td>
+                <td>{{l.action_taken_by | nullData}}</td>
               </tr>
             </tbody>
             </table>

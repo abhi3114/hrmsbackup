@@ -46,7 +46,7 @@
     <section class="content">
       <div class="row">
         <div class="box-body">
-          <div>
+          <div class="table-responsive">
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
               <thead>
                 <tr>
@@ -56,7 +56,7 @@
                   <th>Reason</th>
                   <th>Status</th>
                   <th>Approval Date</th>
-                  <th>Approved By</th>
+                  <th>Action Taken By</th>
                 </tr>
               </thead>
               <tbody>
@@ -67,7 +67,7 @@
                   <td>{{l.reason}}</td>
                   <td>{{l.status}}</td>
                   <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
-                  <td>{{l.approved_by | nullData}}</td>
+                  <td>{{l.action_taken_by | nullData}}</td>
                 </tr>
               </tbody>
             </table>

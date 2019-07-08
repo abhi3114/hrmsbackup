@@ -54,6 +54,7 @@
                 <th>Punch</th>
                 <th>Reason</th>
                 <th>Rejection Reason</th>
+                <th>Rejected By</th>
               </tr>
             </thead>
             <tbody>
@@ -62,6 +63,7 @@
                 <td>{{l.punch}}</td>
                 <td>{{l.reason}}</td>
                 <th>{{l.review_reason}}</th>
+                <td>{{l.action_taken_by | nullData}}</td>
               </tr>
             </tbody>
             </table>
