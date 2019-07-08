@@ -69,7 +69,7 @@
             <td>{{l.punch}}</td>
             <td>{{l.reason}}</td>
             <td><button (click)="updateMissingAttendance(updateMissingAttendanceTemplate,l.id,l.reason)" type="button" class="add-dynamic-button" [attr.data-maId]="'#' + l.id"><i class="fa fa-edit" aria-hidden="true"></i></button></td>
-            <td>{{l.action_taken_by | nullData}}</td>
+            <td>{{l.reviewer_name | nullData}}</td>
           </tr>
         </tbody>
       </table>

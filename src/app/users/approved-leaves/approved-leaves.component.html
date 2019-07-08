@@ -68,7 +68,7 @@
                   <td *ngIf="l.approved==false">No</td>
                   <td *ngIf="l.approved==true">Yes</td>
                   <td>{{l.approved_on  | date: 'dd/MM/yyyy'}}</td>
-                  <td>{{l.action_taken_by | nullData}}</td>
+                  <td>{{l.reviewer_name | nullData}}</td>
                 </tr>
               </tbody>
             </table>
