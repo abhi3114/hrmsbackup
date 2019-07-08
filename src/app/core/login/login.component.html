@@ -62,7 +62,7 @@
           </div>
         </div>
         <div class="" style="margin-top: 23px; text-align: center;">
-          <button type="submit" class="btn btn-primary" [disabled]="resetPasswordForm.invalid">Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="resetPasswordForm.invalid" [ladda]="isLoadingResetPassword">Submit</button>
         </div>
       </div>
     </form>

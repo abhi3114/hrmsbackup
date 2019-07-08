@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   loginData = { email:'', password:'' };
   resetPasswordForm:FormGroup;
   resetPasswordData={email:''};
-  user_data:any;isLoading: boolean = false;
+  user_data:any;isLoading: boolean = false; isLoadingResetPassword: boolean = false;
   modalRef: BsModalRef;
   constructor(private router:Router,private api:LoginService,public toastr: ToastrManager, private modalService: BsModalService) {
     this.signupform = new FormGroup({
@@ -60,8 +60,9 @@ export class LoginComponent implements OnInit {
   }
 
   resetUserPassword(){
+    this.isLoadingResetPassword = true;
     this.api.sendResetPasswordLink(this.resetPasswordData).subscribe(res => {
-      this.user_data=res;
+      this.isLoadingResetPassword = false;
       this.modalRef.hide();
       this.toastr.successToastr('Reset Password Link Has been Sent to your Email', '', {  position: 'top-center'});
       this.resetPasswordForm.reset();
