@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, TemplateRef, OnInit } from '@angular/core';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import {Observable} from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -13,11 +15,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   signupform: FormGroup;
   loginData = { email:'', password:'' };
-  user_data:any;isLoading: boolean = false;
-  constructor(private router:Router,private api:LoginService,public toastr: ToastrManager) {
+  resetPasswordForm:FormGroup;
+  resetPasswordData={email:''};
+  user_data:any;isLoading: boolean = false; isLoadingResetPassword: boolean = false;
+  modalRef: BsModalRef;
+  constructor(private router:Router,private api:LoginService,public toastr: ToastrManager, private modalService: BsModalService) {
     this.signupform = new FormGroup({
       password: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+[a-zA-Z\s0-9._-]+@[a-zA-Z\sa-z0-9-]+\.[a-zA-Z\s.]{2,20}$/i)]),
+      });
+    this.resetPasswordForm = new FormGroup({
+      email: new FormControl('', [Validators.required])
       });
   }
 
@@ -45,6 +53,27 @@ export class LoginComponent implements OnInit {
         this.isLoading=false;
         });
   }
+
+  updatePasswordResponse(template: TemplateRef<any>)
+  {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  resetUserPassword(){
+    this.isLoadingResetPassword = true;
+    this.api.sendResetPasswordLink(this.resetPasswordData).subscribe(res => {
+      this.isLoadingResetPassword = false;
+      this.modalRef.hide();
+      this.toastr.successToastr('Reset Password Link Has been Sent to your Email', '', {  position: 'top-center'});
+      this.resetPasswordForm.reset();
+      }, (err) => {
+      this.showError(err.error);
+      this.modalRef.hide();
+      this.resetPasswordForm.reset();
+    });
+  }
+
+
   showError(e,position: any = 'top-center') {
     this.toastr.errorToastr(e.message, 'Oops Some went wrong!',{  position: position});
   }

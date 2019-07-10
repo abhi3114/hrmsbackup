@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 
 export class LoginService {
 
- constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
   login(credentails) {
     return this.http.post(environment.baseUrl + 'users/login', credentails)
   }
@@ -17,6 +17,10 @@ export class LoginService {
       "Content-Type": 'application/json'
      })
     })
+  }
+
+  sendResetPasswordLink(email){
+    return this.http.post(environment.baseUrl + 'users/forgot_password', email)
   }
 
 }

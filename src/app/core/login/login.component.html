@@ -27,12 +27,46 @@
       </div>
       <div class="row">
         <div class="col-sm-4">
-          <button type="submit" class="btn bg-orange btn-flat ladda-button" [disabled]="signupform.invalid" [ladda]="isLoading">Login</button>
+          <button type="submit" class="btn bg-orange btn-flat ladda-button" [disabled]="signupform.invalid" [ladda]="isLoading">login</button>
         </div>
         <!-- /.col -->
       </div>
       </form>
+      <div style="margin-top: 5px; text-align: center;">
+        <a data-toggle="modal" data-target="#resetpass" style="cursor: pointer;" (click)="updatePasswordResponse(resetPassword)">Forgot Password?</a>
+      </div>
     </div>
   </div>
 </div>
+<ng-template #resetPassword>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Enter Your Email</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form  novalidate  (ngSubmit)="resetUserPassword()" [formGroup]="resetPasswordForm" autocomplete="off">
+      <div class="row">
+        <div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Enter Your Email<sup style="color:red;">*</sup></label>
+              <input name="puropse" type='text' class="form-control"[(ngModel)]="resetPasswordData.email"  formControlName="email" required [class.error1]="!resetPasswordForm.controls.email.valid && resetPasswordForm.controls.email.dirty" />
+              <div *ngIf="( resetPasswordForm.get('email').hasError('required') ) && resetPasswordForm.get('email').touched">
+                <div class="error" *ngIf="resetPasswordForm.get('email').hasError('required') && resetPasswordForm.get('email').touched">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="" style="margin-top: 23px; text-align: center;">
+          <button type="submit" class="btn btn-primary" [disabled]="resetPasswordForm.invalid" [ladda]="isLoadingResetPassword">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
 
