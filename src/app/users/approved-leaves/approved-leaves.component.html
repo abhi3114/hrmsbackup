@@ -46,7 +46,7 @@
     <section class="content">
       <div class="row">
         <div class="box-body">
-          <div>
+          <div class="table-responsive">
             <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
               <thead>
                 <tr>
@@ -68,7 +68,7 @@
                   <td *ngIf="l.approved==false">No</td>
                   <td *ngIf="l.approved==true">Yes</td>
                   <td>{{l.approved_on  | date: 'dd/MM/yyyy'}}</td>
-                  <td>{{l.approved_by | nullData}}</td>
+                  <td>{{l.reviewer_name | nullData}}</td>
                 </tr>
               </tbody>
             </table>

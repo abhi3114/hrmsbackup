@@ -57,6 +57,7 @@
             <th>Record Reason</th>
             <th>Status</th>
             <th>Approval Date</th>
+            <th>Action Taken By</th>
           </tr>
         </thead>
         <tbody>
@@ -67,6 +68,7 @@
             <td><button (click)="updateMissingAttendance(updateMissingAttendanceTemplate,l.id,l.reason)" type="button" class="add-dynamic-button" [attr.data-maId]="'#' + l.id"><i class="fa fa-edit" aria-hidden="true"></i></button></td>
             <td>{{l.status}}</td>
             <td> {{l.approved_on  | date: 'dd/MM/yyyy'|  nullData}}</td>
+            <td>{{l.reviewer_name | nullData}}</td>
           </tr>
         </tbody>
       </table>

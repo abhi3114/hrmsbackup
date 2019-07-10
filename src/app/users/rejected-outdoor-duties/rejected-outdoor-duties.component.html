@@ -57,6 +57,7 @@
                   <th>Location</th>
                   <th> Reason</th>
                   <th>Review Reason</th>
+                  <th>Rejected By</th>
                 </tr>
               </thead>
               <tbody>
@@ -68,6 +69,7 @@
                   <td>{{l.location}}</td>
                   <td> {{l.reason}}</td>
                   <td> {{l.review_reason}}</td>
+                  <td>{{l.reviewer_name | nullData}}</td>
                 </tr>
               </tbody>
             </table>

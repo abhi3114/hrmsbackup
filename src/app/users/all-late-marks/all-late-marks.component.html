@@ -46,7 +46,7 @@
     <section class="content">
       <div class="row">
         <div class="box-body">
-          <div>
+          <div class="table-responsive">
             <table class="table  table-bordered table-striped table-hover" datatable [dtOptions]="lateMarkTableOptions"  [dtTrigger]="lateMarkTableTableTrigger">
               <thead>
                 <tr>
@@ -54,7 +54,7 @@
                   <th>Comment</th>
                   <th>Status</th>
                   <th>Approval Date</th>
-                  <th>Approved By</th>
+                  <th>Action Taken By</th>
                 </tr>
               </thead>
               <tbody>
@@ -64,7 +64,7 @@
                   <td *ngIf="l.status!='Unapproved'">{{l.comment}}</td>
                   <td>{{l.status}}</td>
                   <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
-                  <td>{{l.approved_by | nullData}}</td>
+                  <td>{{l.reviewer_name | nullData}}</td>
                 </tr>
               </tbody>
             </table>
