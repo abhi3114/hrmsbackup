@@ -56,7 +56,7 @@ export class CustomPdfService {
       }
       if(salData.details.notes.length >0)
       {
-        noteDetails.push({text:+'* NOTE', style: 'subheader',alignment: 'left'})
+        noteDetails.push({text:'*NOTE', style: 'subheader',alignment: 'left'})
         _.each(salData.details.notes,function(d){
           noteDetails.push({text:d+'\n', style: 'tableContent',alignment: 'left'})
           })
