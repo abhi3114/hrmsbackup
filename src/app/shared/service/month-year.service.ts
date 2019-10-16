@@ -28,7 +28,8 @@ export class MonthYearService {
   getFilterData()
   {
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
-    var firstDay = new Date(y, m, 1);var lastDay = new Date(y, m + 1, 0);
+    var firstDay = new Date(y, m, 1);
+    var lastDay = new Date(y, m + 1, 0);
     var filterData=[];filterData.push({firstDay:firstDay,lastDay:lastDay});
     return filterData;
   }

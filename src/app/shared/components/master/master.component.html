@@ -212,6 +212,30 @@
           <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/my_booster_sessions.png"></i><span>Booster Session</span>
         </a>
       </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  style="cursor: pointer;">
+        <a><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/help-lifeguard-symbol.svg"></i>
+          <span>Support</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-down pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a [routerLink]="['agent_helpdesk']"><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/bill.svg" style="width: 25px;height:25px"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;Assigned To Me</span>
+          </a></li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a [routerLink]="['help_desk']">
+              <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/help-lifeguard-symbol.svg"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;My Tickets</span>
+            </a>
+          </li>
+    </ul>
+     </li>
+  
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a [routerLink]="['agent_helpdesk']">
+          <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/bill.svg" style="width: 25px;height:25px"></i><span>My Tickets</span>
+        </a>
+      </li>
+
       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <a [routerLink]="['policies']">
           <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/policy.png"></i><span>Policies</span>

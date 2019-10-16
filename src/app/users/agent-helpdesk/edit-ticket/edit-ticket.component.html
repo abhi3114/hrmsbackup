@@ -1,0 +1,95 @@
+
+<div class="modal-header" style="background-color:#344AB1;color: whitesmoke;">
+  <h4 class="modal-title pull-left" >Edit Ticket</h4>
+  <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body" >
+    <div class="ticket-details col-md-12">
+        <div class="row">
+          <div class="col-md-8 pull-left">
+          <label> Ticket#:&nbsp;&nbsp;</label> 
+          <span>{{ticket.id}}</span>
+          </div>
+          <div class="col-md-4 pull-right">
+            <label>Category:&nbsp;&nbsp;</label>
+            <span>{{ticket.category}}</span>
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+        <div class="col-md-6 pull-left">
+            <label>Attachment:&nbsp;&nbsp;</label>
+            <button *ngIf="ticket.attachments" type="submit" tooltip="View" placement="top" show-delay="500" class="btn bg-orange"  (click)="viewAttachment(ticket.attachments)">View</button>
+            <span   *ngIf="!ticket.attachments" >-</span>
+         </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6 pull-left">
+                <label>Comments:&nbsp;&nbsp;</label>
+                <span>{{ticket.comments}}</span>
+            </div>
+         </div>
+        
+    </div>
+  <form  novalidate (ngSubmit)="callsaveApi()" [formGroup]="responseForm" autocomplete="off">
+    <div class="row ">
+      <div class="col-md-12">
+        <div class="col-md-4 panel-one">
+          <div class="form-group">
+            <label>Status<sup style="color:red;">*</sup></label>
+            <br/>
+            <select name="leavType" [(ngModel)]="responseData.response" formControlName="response"  class="select2 form-control" style="width: 100%; height: 35px;" [class.error1]="!responseForm.controls.response.valid && responseForm.controls.response.dirty" required >
+              <option value="" disabled="disabled">Select item</option>
+              <option *ngFor="let s of categories" value="{{s}}">{{s}}</option>
+            </select>
+             <div *ngIf="(responseForm.get('response').hasError('required') ) && responseForm.get('response').touched">
+               <div class="error" *ngIf="responseForm.get('response').hasError('required') && responseForm.get('response').touched">
+                This field is mandatory
+               </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 panel-two">
+            <div class="form-group ">
+              <label>Next Action Date<sup style="color:red;">*</sup></label>
+              <div class="lo-btn">
+                 <input name="bnknm" type='text' class="form-control d-inline lo-btn" [(ngModel)]="responseData.start_date" formControlName="start_date" required [class.error1]="!responseForm.controls.start_date.valid && responseForm.controls.start_date.dirty" [owlDateTime]="ticket_date" [owlDateTimeTrigger]="ticket_date"  style="width: 100%" />
+                 <owl-date-time  [pickerType]="'calendar'" #ticket_date></owl-date-time>
+                 <div *ngIf="( responseForm.get('start_date').hasError('minlength') || responseForm.get('start_date').hasError('pattern') || responseForm.get('start_date').hasError('required') ) && responseForm.get('start_date').touched">
+                   <div class="error" *ngIf="(responseForm.get('start_date').hasError('required') && responseForm.get('start_date').touched)">
+                     This field is mandatory
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+        </div>
+      </div>
+         <div class="row">
+            <div class="col-md-12 panel-three">
+                <div class="form-group">
+                 <label>Comment<sup style="color:red;">*</sup></label>
+                 <textarea type='textarea' class="form-control"  [(ngModel)]="responseData.comment" formControlName="comment"  [class.error1]="!responseForm.controls.comment.valid && responseForm.controls.comment.dirty"></textarea>
+                 <div *ngIf="( responseForm.get('comment').hasError('required') ) && responseForm.get('comment').touched">
+                 <div class="error" *ngIf="responseForm.get('comment').hasError('required') && responseForm.get('comment').touched">
+                    This field is mandatory
+                  </div>
+                </div>
+              </div>
+           </div>
+         </div>
+      </form>  
+ </div>
+
+
+<div class="modal-footer" style="text-align: center; background-color: whitesmoke;">
+        <button type="submit"  class="btn btn-primary" [disabled]="responseForm.invalid" [ladda]="isLoading" (click)="callsaveApi()">Submit</button>&nbsp;&nbsp;
+        <a role="button" class="btn btn-warning" (click)="closeModal()" >Cancel</a>
+      </div>
+ 
+

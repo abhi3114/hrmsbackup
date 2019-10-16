@@ -1,0 +1,125 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+    <ol class="breadcrumb">
+      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+      <li class="active">Helpdesk</li>
+    </ol>
+    <section class="content-header">
+      <h4>Helpdesk Details</h4>
+     <button type="submit" (click)="recordResponse(responseTemplate)" class="btn bg-orange btn-flat btn-request" ><i class="fa fa-submit" aria-hidden="true"></i>Raise Ticket</button>
+     </section>
+   <section class="content">
+    <div class="row">
+      <div class="box-body">
+        <div class="table-responsive">
+            <div class="row">
+                <div class="col-md-12">
+                  <ul class="nav nav-tabs">
+                    <li [ngClass]="{ 'active': openTickets==true }">
+                      <a  id = "labelColor" role="button" (click)="getOpenTickets()">Open Tickets</a>
+                    </li>
+                    <li [ngClass]="{ 'active': closedTickets==true }">
+                      <a  id = "labelColor" role="button" (click)="getClosedTickets()">Closed Tickets</a>
+                    </li>
+                     <li [ngClass]="{ 'active': allTickets==true }">
+                      <a  id = "labelColor" role="button" (click)="getAllTickets()">All Tickets</a>
+                    </li>
+      
+                  </ul>
+                </div>
+      
+              </div>
+          <table id="DataTables"  class="table  table-bordered table-striped table-hover" datatable [dtOptions]="boosterSessionTableOptions"  [dtTrigger]="boosterSessionTableTrigger" >
+            <thead>
+              <tr>
+                <th>Sr.NO</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Body</th>
+                <th>Attatchment</th>
+                <th>Assigned To</th>
+                <th>Comment</th>
+                <th>Next Action Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+             <tr *ngFor="let i of user_data;let i_count = index">
+                <td>{{i_count+1}}</td>
+                <td>{{i.date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{i.ticket_type | nullData}}</td> <!--Category-->
+                <td>{{i.description | nullData}}</td> <!--Body-->
+                <td>
+                   <button *ngIf="i.attachment"  tooltip="View" placement="top" show-delay="500" class="btn bg-orange btn-flat btn-request" type="button" (click)="viewAttachment(i.attachment)">View</button>
+                   <span *ngIf="!i.attachment">-</span>
+                </td>
+                <td>{{i.assigned_to | nullData}}</td> <!--assignedto-->
+                <td>{{i.comment | nullData}}</td> <!--comment-->
+                <td>{{i.ncd | nullData}}</td> <!--next action date-->
+                <td>{{i.status | nullData}}</td>
+            <td *ngIf="openTickets == true">
+              <div  style="display:flex; flex-direction: row; justify-content: left; align-items: center">
+                <button  tooltip="Delete" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponseDelete(deleteTemplate,i.uuid)" style="margin-right: 21px;">
+                <i class="my-icon fa fa-custom" aria-hidden="true"><img  class="my-icon" src="assets/images/rubbish-bin.svg"></i>
+                </button>
+                <div  [tooltip]="!i.should_escalate? 'Can Escalate Only After 24 Hours':'Escalate'" placement="top" show-delay="500" style="padding-bottom: 10px;">
+                 <button  class="add-dynamic-button" type="button"  (click)="recordResponseDelete(escalateTemplate,i.uuid)"  [disabled]="!i.should_escalate" >
+                 <i class="my-icon fa fa-custom" aria-hidden="true"><img [ngClass]="!i.should_escalate?'icon-disabled':'my-icon'" src="assets/images/outbox.svg"></i>
+                 </button>
+                </div>
+              </div>
+              </td> 
+             <td *ngIf="openTickets == false">
+              <button  tooltip="Edit" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponse(responseTemplate,i.uuid)" style="margin-right: 21px;">
+                <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/eye.svg" style="width: 25px;height:25px"></i>
+                </button>
+             </td><!--action-->
+             </tr>
+           </tbody>
+         </table>
+       </div>
+     </div>
+   </div>
+ </section>
+</div>
+</div>
+<ng-template #responseTemplate >
+  <app-add-ticket [template]="modalRef" (closeModalAndRefresh)='refreshOpenTicketData($event)'></app-add-ticket>
+</ng-template>
+
+<ng-template #deleteTemplate >
+    <div class="modal-header" style="background-color:#344AB1;color: whitesmoke;">
+        <h4 class="modal-title pull-left" >Delete Ticket</h4>
+        <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+                <div class="modal-body">
+                   <h4>Are you Sure you want to delete the ticket?</h4>
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <a class="btn btn-danger" data-dismiss="modal" [ladda]="isLoading" (click)="deleteTicket(toDeleteId)">Delete</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()">Cancel</button>
+                   
+                </div>
+          
+  </ng-template>
+
+  <ng-template #escalateTemplate >
+      <div class="modal-header" style="background-color:#344AB1;color: whitesmoke;">
+          <h4 class="modal-title pull-left" >Escalate Ticket</h4>
+          <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+                  <div class="modal-body">
+                     <h4>Are you Sure you want to escalate the ticket?</h4>
+                  </div>
+                  <div class="modal-footer" style="text-align: center;">
+                      <a class="btn btn-danger" data-dismiss="modal" [ladda]="isLoading" (click)="escalateTicket(toDeleteId)">Escalate</a>
+                      <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()">Cancel</button>
+                     
+                  </div>
+    </ng-template>
+
