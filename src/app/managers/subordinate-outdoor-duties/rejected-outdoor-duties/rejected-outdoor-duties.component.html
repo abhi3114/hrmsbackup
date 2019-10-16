@@ -1,113 +1,96 @@
 <div class="wrapper">
-  <div class="content-wrapper">
-    <ol class="breadcrumb">
-      <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-      <li class="active">Manager (Rejected Outdoor Duties)</li>
-    </ol>
-    <section class="content-header">
-      <form (ngSubmit)="validateRejectedOutDoorDutyForm()" [formGroup]="rejectedOutDoorDutyForm" autocomplete="off" novalidate="off">
-        <a (click)="isCollapsed = !isCollapsed"
-        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-        <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">Filter for Rejected Outdoor Duties</h4>
-        </a>
-        <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
-          <div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
-                <input name="bnknm" type='text' class="form-control"[(ngModel)]="rejectedOutDoorDutyData.start_date" formControlName="start_date" required [class.error1]="!rejectedOutDoorDutyForm.controls.start_date.valid && rejectedOutDoorDutyForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
-                <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
-                <div *ngIf="(rejectedOutDoorDutyForm.get('start_date').hasError('minlength') || rejectedOutDoorDutyForm.get('start_date').hasError('pattern') || rejectedOutDoorDutyForm.get('start_date').hasError('required') ) && rejectedOutDoorDutyForm.get('start_date').touched">
-                  <div class="error" *ngIf="(rejectedOutDoorDutyForm.get('start_date').hasError('required') && rejectedOutDoorDutyForm.get('start_date').touched)">
-                    This field is mandatory
-                  </div>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1 class="title">Rejected Outdoor Duties (Subordinates)</h1>
+            <form (ngSubmit)="validateRejectedOutDoorDutyForm()" [formGroup]="rejectedOutDoorDutyForm" autocomplete="off" novalidate="off">
+                <div class="holder-filter" id="collapseBasic" [collapse]="isCollapsed">
+                    <div class="col-md-12">
+                        <label class="filter-label">Add Filter</label>
+                        <div class="lo-btn">
+                            <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="rejectedOutDoorDutyData.start_date" formControlName="start_date" required [class.error1]="!rejectedOutDoorDutyForm.controls.start_date.valid && rejectedOutDoorDutyForm.controls.start_date.dirty"
+                                [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date" style="width: 100%" />
+                            <owl-date-time [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
+                            <div *ngIf="(rejectedOutDoorDutyForm.get('start_date').hasError('minlength') || rejectedOutDoorDutyForm.get('start_date').hasError('pattern') || rejectedOutDoorDutyForm.get('start_date').hasError('required') ) && rejectedOutDoorDutyForm.get('start_date').touched">
+                                <div class="error" *ngIf="(rejectedOutDoorDutyForm.get('start_date').hasError('required') && rejectedOutDoorDutyForm.get('start_date').touched)">
+                                    This field is mandatory
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lo-btn">
+                            <input name="endDate" type='text' class="form-control d-inline" [(ngModel)]="rejectedOutDoorDutyData.end_date" formControlName="end_date" required [class.error1]="!rejectedOutDoorDutyForm.controls.end_date.valid && rejectedOutDoorDutyForm.controls.end_date.dirty"
+                                [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date" style="width: 100%" />
+                            <owl-date-time [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
+                            <div *ngIf="(rejectedOutDoorDutyForm.get('end_date').hasError('minlength') || rejectedOutDoorDutyForm.get('end_date').hasError('pattern') || rejectedOutDoorDutyForm.get('end_date').hasError('required') ) && rejectedOutDoorDutyForm.get('end_date').touched">
+                                <div class="error" *ngIf="(rejectedOutDoorDutyForm.get('end_date').hasError('required') && rejectedOutDoorDutyForm.get('end_date').touched)">
+                                    This field is mandatory
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="rejectedOutDoorDutyForm.invalid">Apply</button>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
-                <input name="endDate" type='text' class="form-control" [(ngModel)]="rejectedOutDoorDutyData.end_date" formControlName="end_date" required [class.error1]="!rejectedOutDoorDutyForm.controls.end_date.valid && rejectedOutDoorDutyForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
-                <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
-                <div *ngIf="(rejectedOutDoorDutyForm.get('end_date').hasError('minlength') || rejectedOutDoorDutyForm.get('end_date').hasError('pattern') || rejectedOutDoorDutyForm.get('end_date').hasError('required') ) && rejectedOutDoorDutyForm.get('end_date').touched">
-                  <div class="error" *ngIf="(rejectedOutDoorDutyForm.get('end_date').hasError('required') && rejectedOutDoorDutyForm.get('end_date').touched)">
-                    This field is mandatory
-                  </div>
+            </form>
+        </section>
+        <section class="content">
+            <div class="box-body">
+                <div>
+                    <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Rejected Outdoor Duties Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let l of rejected_outdoor_duty_data">
+                                <td>{{l.user_name}}</td>
+                                <td><a (click)="userOutdoorsList(userOutdoorListtemp, l)">{{l.outdoors_count}}</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-              </div>
             </div>
-            <div class="col-md-2" style="margin-top: 24px;">
-              <button type="submit" class="btn bg-orange btn-flat" [disabled]="rejectedOutDoorDutyForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </section>
-    <section class="content">
-      <div class="row">
-        <div class="box-body">
-          <div>
-            <table datatable [dtOptions]="leaveTableOptions" [dtTrigger]="leaveTableTrigger" class="table table-bordered table-striped table-hover" >
-              <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Rejected Outdoor Duties Count</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let l of rejected_outdoor_duty_data">
-                  <td>{{l.user_name}}</td>
-                  <td><a (click)="userOutdoorsList(userOutdoorListtemp, l)">{{l.outdoors_count}}</a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+        </section>
+    </div>
 </div>
 <ng-template #userOutdoorListtemp>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Rejected Outdoor Duties</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-    <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <section class="content">
-      <div class="row">
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover" >
-              <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Client Name</th>
-                  <th>Project Name</th>
-                  <th>Reason</th>
-                  <th>Location</th>
-                  <th>Rejected By</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let l of user_rejected_outdoor_data">
-                  <td>{{l.user_name}}</td>
-                  <td>{{l.start_date}}</td>
-                  <td>{{l.end_date}}</td>
-                  <td>{{l.client_name}}</td>
-                  <td>{{l.project_name}}</td>
-                  <td>{{l.reason}}</td>
-                  <td>{{l.location}}</td>
-                  <td>{{l.reviewer_name | nullData}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Rejected Outdoor Duties</h4>
+    </div>
+    <div class="modal-body">
+        <section class="content">
+            <div class="row">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Client Name</th>
+                                    <th>Project Name</th>
+                                    <th>Reason</th>
+                                    <th>Location</th>
+                                    <th>Rejected By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let l of user_rejected_outdoor_data">
+                                    <td>{{l.user_name}}</td>
+                                    <td>{{l.start_date}}</td>
+                                    <td>{{l.end_date}}</td>
+                                    <td>{{l.client_name}}</td>
+                                    <td>{{l.project_name}}</td>
+                                    <td>{{l.reason}}</td>
+                                    <td>{{l.location}}</td>
+                                    <td>{{l.reviewer_name | nullData}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </ng-template>

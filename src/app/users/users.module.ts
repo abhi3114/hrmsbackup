@@ -35,7 +35,11 @@ import { RejectedLateMarksComponent } from './rejected-late-marks/rejected-late-
 import { RejectedLeavesComponent } from './rejected-leaves/rejected-leaves.component';
 import { RejectedMissingAttendancesComponent } from './rejected-missing-attendances/rejected-missing-attendances.component';
 import { RejectedOutdoorDutiesComponent } from './rejected-outdoor-duties/rejected-outdoor-duties.component';
-
+import {HelpdeskComponent} from './helpdesk/helpdesk.component' 
+import {AddTicketComponent} from './helpdesk/add-ticket/add-ticket.component'
+import { TooltipModule } from 'ng2-tooltip-directive';
+import {AgentHelpdeskComponent} from './agent-helpdesk/agent-helpdesk.component';
+import { EditTicketComponent } from './agent-helpdesk/edit-ticket/edit-ticket.component'
 
 @NgModule({
   imports: [
@@ -53,7 +57,8 @@ import { RejectedOutdoorDutiesComponent } from './rejected-outdoor-duties/reject
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
   SharedModule,
-  PdfViewerModule
+  PdfViewerModule,
+  TooltipModule
   ],
   declarations: [
   ApprovedLeavesComponent,
@@ -79,7 +84,12 @@ import { RejectedOutdoorDutiesComponent } from './rejected-outdoor-duties/reject
   RejectedLateMarksComponent,
   RejectedLeavesComponent,
   RejectedMissingAttendancesComponent,
-  RejectedOutdoorDutiesComponent
+  RejectedOutdoorDutiesComponent,
+  HelpdeskComponent,
+  AddTicketComponent,
+  AgentHelpdeskComponent,
+  EditTicketComponent
+  
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })

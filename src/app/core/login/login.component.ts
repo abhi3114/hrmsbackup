@@ -77,4 +77,8 @@ export class LoginComponent implements OnInit {
   showError(e,position: any = 'top-center') {
     this.toastr.errorToastr(e.message, 'Oops Some went wrong!',{  position: position});
   }
+  viewPassword()
+  {
+    this.show = !this.show;
+  }
 }

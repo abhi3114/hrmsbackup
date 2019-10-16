@@ -1,71 +1,61 @@
 <div class="wrapper">
-  <div class="content-wrapper">
-    <ol class="breadcrumb">
-      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-      <li class="active" style="text-align: center;">Rejected Late Marks</li>
-    </ol>
-    <section class="content-header">
-      <form (ngSubmit)="getFilteredRejectedLateMarks()" [formGroup]="rejectedLateMarksForm" autocomplete="off" novalidate="off">
-      <a (click)="isCollapsed = !isCollapsed"
-      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR REJECTED LATE MARKS</h4>
-      </a>
-      <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
-        <div>
-          <div class="col-md-2">
-            <div class="form-group">
-              <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
-              <input name="bnknm" type='text' class="form-control"[(ngModel)]="rejectedLateMarksData.start_date" formControlName="start_date" required [class.error1]="!rejectedLateMarksForm.controls.start_date.valid && rejectedLateMarksForm.controls.start_date.dirty" [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date"  />
-              <owl-date-time  [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
-              <div *ngIf="( rejectedLateMarksForm.get('start_date').hasError('minlength') || rejectedLateMarksForm.get('start_date').hasError('pattern') || rejectedLateMarksForm.get('start_date').hasError('required') ) && rejectedLateMarksForm.get('start_date').touched">
-                <div class="error" *ngIf="(rejectedLateMarksForm.get('start_date').hasError('required') && rejectedLateMarksForm.get('start_date').touched)">
-                  This field is mandatory
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1 class="title">Rejected Late Marks</h1>
+            <form (ngSubmit)="getFilteredRejectedLateMarks()" [formGroup]="rejectedLateMarksForm" autocomplete="off" novalidate="off">
+                <div class="holder-filter" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+                    <div>
+                        <div class="col-md-12">
+                            <label class="filter-label">Add Filter</label>
+                            <div class="lo-btn">
+                                <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="rejectedLateMarksData.start_date" formControlName="start_date" required [class.error1]="!rejectedLateMarksForm.controls.start_date.valid && rejectedLateMarksForm.controls.start_date.dirty"
+                                    [owlDateTime]="all_leaves_start_date" [owlDateTimeTrigger]="all_leaves_start_date" style="width: 100%" />
+                                <owl-date-time [pickerType]="'calendar'" #all_leaves_start_date></owl-date-time>
+                                <div *ngIf="( rejectedLateMarksForm.get('start_date').hasError('minlength') || rejectedLateMarksForm.get('start_date').hasError('pattern') || rejectedLateMarksForm.get('start_date').hasError('required') ) && rejectedLateMarksForm.get('start_date').touched">
+                                    <div class="error" *ngIf="(rejectedLateMarksForm.get('start_date').hasError('required') && rejectedLateMarksForm.get('start_date').touched)">
+                                        This field is mandatory
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lo-btn">
+                                <input name="endDate" type='text' class="form-control d-inline" [(ngModel)]="rejectedLateMarksData.end_date" formControlName="end_date" required [class.error1]="!rejectedLateMarksForm.controls.end_date.valid && rejectedLateMarksForm.controls.end_date.dirty"
+                                    [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date" style="width: 100%" />
+                                <owl-date-time [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
+                                <div *ngIf="( rejectedLateMarksForm.get('end_date').hasError('minlength') || rejectedLateMarksForm.get('end_date').hasError('pattern') || rejectedLateMarksForm.get('end_date').hasError('required') ) && rejectedLateMarksForm.get('end_date').touched">
+                                    <div class="error" *ngIf="(rejectedLateMarksForm.get('end_date').hasError('required') && rejectedLateMarksForm.get('end_date').touched)">
+                                        This field is mandatory
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="rejectedLateMarksForm.invalid">Apply</button>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="form-group">
-              <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
-              <input name="endDate" type='text' class="form-control" [(ngModel)]="rejectedLateMarksData.end_date" formControlName="end_date" required [class.error1]="!rejectedLateMarksForm.controls.end_date.valid && rejectedLateMarksForm.controls.end_date.dirty" [owlDateTime]="all_leaves_end_date" [owlDateTimeTrigger]="all_leaves_end_date"  />
-              <owl-date-time  [pickerType]="'calendar'" #all_leaves_end_date></owl-date-time>
-              <div *ngIf="( rejectedLateMarksForm.get('end_date').hasError('minlength') || rejectedLateMarksForm.get('end_date').hasError('pattern') || rejectedLateMarksForm.get('end_date').hasError('required') ) && rejectedLateMarksForm.get('end_date').touched">
-                <div class="error" *ngIf="(rejectedLateMarksForm.get('end_date').hasError('required') && rejectedLateMarksForm.get('end_date').touched)">
-                  This field is mandatory
+            </form>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="box-body">
+                    <div>
+                        <table class="table  table-bordered table-striped table-hover" datatable [dtOptions]="lateMarkTableOptions" [dtTrigger]="lateMarkTableTableTrigger">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Rejection Reason</th>
+                                    <th>Rejected By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let l of rejectedLatemarks">
+                                    <td>{{l.date}}</td>
+                                    <td>{{l.rejection_reason}} </td>
+                                    <td>{{l.reviewer_name | nullData}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <div class="col-md-2" style="margin-top: 24px;">
-            <button type="submit" class="btn bg-orange btn-flat" [disabled]="rejectedLateMarksForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
-          </div>
-        </div>
-      </div>
-      </form>
-    </section>
-    <section class="content">
-      <div class="row">
-        <div class="box-body">
-          <div>
-            <table class="table  table-bordered table-striped table-hover" datatable [dtOptions]="lateMarkTableOptions"  [dtTrigger]="lateMarkTableTableTrigger">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Rejection Reason</th>
-                <th>Rejected By</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let l of rejectedLatemarks">
-                <td>{{l.date}}</td>
-                <td>{{l.rejection_reason}} </td>
-                <td>{{l.reviewer_name | nullData}}</td>
-              </tr>
-            </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+        </section>
+    </div>
 </div>

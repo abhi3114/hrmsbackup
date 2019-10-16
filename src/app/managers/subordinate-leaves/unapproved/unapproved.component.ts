@@ -186,14 +186,18 @@ export class UnapprovedComponent implements OnInit {
     });
   }
 
-  rejectSingleLeave(l){
-    this.api.sendForSingleLeaveRejection(l).subscribe(res => {
-    this.refreshData();
-    this.refreshList(this.user_id)
-    this.notification.showSuccess('Leave is rejected successfully');
-    }, (err) => {
-      this.notification.showError(err.error);
-    });
+  rejectSingleLeave(l, comment) {
+    if (comment == undefined || comment == "") {
+      this.notification.CustomErrorMessage("Please enter rejection rejection");
+    } else {
+      this.api.sendForSingleLeaveRejection(l, comment).subscribe(res => {
+      this.refreshData();
+      this.refreshList(this.user_id);
+      this.updateLeavesForm.reset();
+      this.notification.showSuccess('Leave is rejected successfully');
+      }, (err) => {
+        this.notification.showError(err.error);
+      });
+    }
   }
-
 }

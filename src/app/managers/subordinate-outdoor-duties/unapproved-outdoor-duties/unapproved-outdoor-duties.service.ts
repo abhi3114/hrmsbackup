@@ -24,8 +24,8 @@ export class UnapprovedOutdoorDutiesService {
     })
   }
 
-  sendForSingleOutdoorRejection(outdoor_id){
-    return this.http.delete(environment.baseUrl+ "managers/outdoor_duties/"+outdoor_id+"/reject",
+  sendForSingleOutdoorRejection(outdoor_id, reason){
+    return this.http.delete(environment.baseUrl+ "managers/outdoor_duties/"+outdoor_id+"/reject?review_reason=" + reason,
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }

@@ -30,7 +30,7 @@ export class StationeryComponent implements OnInit {
     keyboard: false,
     backdrop: true,
     ignoreBackdropClick: true,
-    class:'modal-lg'
+    class:'modal-md'
   };
   constructor(private router:Router,private api:StationeryService,private monthandyear:MonthYearService,public toastr: NotificationService,private modalService: BsModalService)
   {

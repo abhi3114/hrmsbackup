@@ -1,81 +1,71 @@
 <div class="wrapper">
-  <div class="content-wrapper">
-    <ol class="breadcrumb">
-      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-      <li class="active" style="text-align: center;">Rejected OUTDOOR DUTIES</li>
-    </ol>
-    <section class="content-header">
-      <form (ngSubmit)="getFilteredRejectedOutDoorDuties()" [formGroup]="rejectedoutDoorDutiesForm" autocomplete="off" novalidate="off">
-      <a (click)="isCollapsed = !isCollapsed"
-      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-      <h4 class="modal-title" id="H1" style="background: #FF9800;border-radius: 10px; padding: 5px; cursor: pointer;color: black;">FILTER FOR REJECTED DOORDUTIES</h4>
-      </a>
-      <div class="row" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
-        <div>
-          <div class="col-md-2">
-            <div class="form-group">
-              <label style="color:white;">Start Date<sup style="color:red;">*</sup></label>
-              <input name="bnknm" type='text' class="form-control"[(ngModel)]="rejectedoutDoorDutiesData.start_date" formControlName="start_date" required [class.error1]="!rejectedoutDoorDutiesForm.controls.start_date.valid && rejectedoutDoorDutiesForm.controls.start_date.dirty" [owlDateTime]="all_MissingAttendances_start_date" [owlDateTimeTrigger]="all_MissingAttendances_start_date"  />
-              <owl-date-time  [pickerType]="'calendar'" #all_MissingAttendances_start_date></owl-date-time>
-              <div *ngIf="( rejectedoutDoorDutiesForm.get('start_date').hasError('minlength') || rejectedoutDoorDutiesForm.get('start_date').hasError('pattern') || rejectedoutDoorDutiesForm.get('start_date').hasError('required') ) && rejectedoutDoorDutiesForm.get('start_date').touched">
-                <div class="error" *ngIf="(rejectedoutDoorDutiesForm.get('start_date').hasError('required') && rejectedoutDoorDutiesForm.get('start_date').touched)">
-                  This field is mandatory
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1 class="title">Rejected Outdoor Duties</h1>
+            <form (ngSubmit)="getFilteredRejectedOutDoorDuties()" [formGroup]="rejectedoutDoorDutiesForm" autocomplete="off" novalidate="off">
+                <div class="holder-filter" id="collapseBasic" [collapse]="isCollapsed" style="margin-left: 1px;margin-right: 1px; background: #353535;border-radius: 10px">
+                    <div>
+                        <div class="col-md-12">
+                            <label class="filter-label">Add Filter</label>
+                            <div class="lo-btn">
+                                <input name="bnknm" type='text' class="form-control d-inline" [(ngModel)]="rejectedoutDoorDutiesData.start_date" formControlName="start_date" required [class.error1]="!rejectedoutDoorDutiesForm.controls.start_date.valid && rejectedoutDoorDutiesForm.controls.start_date.dirty"
+                                    [owlDateTime]="all_MissingAttendances_start_date" [owlDateTimeTrigger]="all_MissingAttendances_start_date" style="width: 100%" />
+                                <owl-date-time [pickerType]="'calendar'" #all_MissingAttendances_start_date></owl-date-time>
+                                <div *ngIf="( rejectedoutDoorDutiesForm.get('start_date').hasError('minlength') || rejectedoutDoorDutiesForm.get('start_date').hasError('pattern') || rejectedoutDoorDutiesForm.get('start_date').hasError('required') ) && rejectedoutDoorDutiesForm.get('start_date').touched">
+                                    <div class="error" *ngIf="(rejectedoutDoorDutiesForm.get('start_date').hasError('required') && rejectedoutDoorDutiesForm.get('start_date').touched)">
+                                        This field is mandatory
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lo-btn">
+                                <input name="endDate" type='text' class="form-control d-inline" [(ngModel)]="rejectedoutDoorDutiesData.end_date" formControlName="end_date" required [class.error1]="!rejectedoutDoorDutiesForm.controls.end_date.valid && rejectedoutDoorDutiesForm.controls.end_date.dirty"
+                                    [owlDateTime]="all_MissingAttendances_end_date" [owlDateTimeTrigger]="all_MissingAttendances_end_date" style="width: 100%" />
+                                <owl-date-time [pickerType]="'calendar'" #all_MissingAttendances_end_date></owl-date-time>
+                                <div *ngIf="( rejectedoutDoorDutiesForm.get('end_date').hasError('minlength') || rejectedoutDoorDutiesForm.get('end_date').hasError('pattern') || rejectedoutDoorDutiesForm.get('end_date').hasError('required') ) && rejectedoutDoorDutiesForm.get('end_date').touched">
+                                    <div class="error" *ngIf="(rejectedoutDoorDutiesForm.get('end_date').hasError('required') && rejectedoutDoorDutiesForm.get('end_date').touched)">
+                                        This field is mandatory
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="rejectedoutDoorDutiesForm.invalid">Apply</button>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="form-group">
-              <label style="color: white;">End Date<sup style="color:red;">*</sup></label>
-              <input name="endDate" type='text' class="form-control" [(ngModel)]="rejectedoutDoorDutiesData.end_date" formControlName="end_date" required [class.error1]="!rejectedoutDoorDutiesForm.controls.end_date.valid && rejectedoutDoorDutiesForm.controls.end_date.dirty" [owlDateTime]="all_MissingAttendances_end_date" [owlDateTimeTrigger]="all_MissingAttendances_end_date"  />
-              <owl-date-time  [pickerType]="'calendar'" #all_MissingAttendances_end_date></owl-date-time>
-              <div *ngIf="( rejectedoutDoorDutiesForm.get('end_date').hasError('minlength') || rejectedoutDoorDutiesForm.get('end_date').hasError('pattern') || rejectedoutDoorDutiesForm.get('end_date').hasError('required') ) && rejectedoutDoorDutiesForm.get('end_date').touched">
-                <div class="error" *ngIf="(rejectedoutDoorDutiesForm.get('end_date').hasError('required') && rejectedoutDoorDutiesForm.get('end_date').touched)">
-                  This field is mandatory
+            </form>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="box-body">
+                    <div>
+                        <table datatable [dtOptions]="outdoorDutyTableOptions" [dtTrigger]="outdoorDutyTableTrigger" class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Project/Firm Name</th>
+                                    <th>Client/Broker Name</th>
+                                    <th>Location</th>
+                                    <th> Reason</th>
+                                    <th>Review Reason</th>
+                                    <th>Rejected By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let l of rejectedoutDoorDuties">
+                                    <td> {{l.start_date}} </td>
+                                    <td> {{l.end_date}} </td>
+                                    <td> {{l.project_name}} </td>
+                                    <td> {{l.client_name}}</td>
+                                    <td>{{l.location}}</td>
+                                    <td> {{l.reason}}</td>
+                                    <td> {{l.review_reason}}</td>
+                                    <td>{{l.reviewer_name | nullData}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <div class="col-md-2" style="margin-top: 24px;">
-            <button type="submit" class="btn bg-orange btn-flat" [disabled]="rejectedoutDoorDutiesForm.invalid"><i class="fa fa-filter" aria-hidden="true"></i> Apply Filter</button>
-          </div>
-        </div>
-      </div>
-      </form>
-    </section>
-    <section class="content">
-      <div class="row">
-        <div class="box-body">
-          <div>
-            <table datatable [dtOptions]="outdoorDutyTableOptions" [dtTrigger]="outdoorDutyTableTrigger" class="table table-bordered table-striped table-hover" >
-                  <thead>
-                <tr>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Project/Firm Name</th>
-                  <th>Client/Broker Name</th>
-                  <th>Location</th>
-                  <th> Reason</th>
-                  <th>Review Reason</th>
-                  <th>Rejected By</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let l of rejectedoutDoorDuties">
-                  <td> {{l.start_date}} </td>
-                  <td> {{l.end_date}} </td>
-                  <td> {{l.project_name}} </td>
-                  <td> {{l.client_name}}</td>
-                  <td>{{l.location}}</td>
-                  <td> {{l.reason}}</td>
-                  <td> {{l.review_reason}}</td>
-                  <td>{{l.reviewer_name | nullData}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+        </section>
+    </div>
 </div>
