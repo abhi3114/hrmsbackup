@@ -67,7 +67,7 @@
               </div>
               </td> 
              <td *ngIf="openTickets == false">
-              <button  tooltip="Edit" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponse(responseTemplate,i.uuid)" style="margin-right: 21px;">
+              <button  tooltip="Edit" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponse(viewTemplate,i.uuid)" style="margin-right: 21px;">
                 <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/eye.svg" style="width: 25px;height:25px"></i>
                 </button>
              </td><!--action-->
@@ -84,3 +84,6 @@
   <app-edit-ticket [template]="modalRef" [Id]="toEditId" (closeModalAndRefresh)='refreshOpenTicketData($event)'></app-edit-ticket>
 </ng-template>
 
+<ng-template #viewTemplate >
+    <app-view-ticket [template]="modalRef" [Id]="toEditId" (closeModalAndRefresh)='refreshOpenTicketData($event)'></app-view-ticket>
+  </ng-template>

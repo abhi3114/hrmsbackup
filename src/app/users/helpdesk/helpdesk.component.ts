@@ -64,14 +64,14 @@ export class HelpdeskComponent implements OnInit {
   
     recordResponse(template: TemplateRef<any>,id:any) {
       console.log('is the ID here',id);
-      this.toDeleteId = id;
+      this.toEditId = id;
       this.modalRef = this.modalService.show(template, this.config);
     }
 
 
     recordResponseDelete(template: TemplateRef<any>,id:any) {
       console.log('is the ID here',id);
-      this.toDeleteId = id;
+      this.toEditId = id;
       this.modalRef= this.modalService.show(template, this.config);
     }
     closeModal()

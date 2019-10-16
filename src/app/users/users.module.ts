@@ -39,7 +39,8 @@ import {HelpdeskComponent} from './helpdesk/helpdesk.component'
 import {AddTicketComponent} from './helpdesk/add-ticket/add-ticket.component'
 import { TooltipModule } from 'ng2-tooltip-directive';
 import {AgentHelpdeskComponent} from './agent-helpdesk/agent-helpdesk.component';
-import { EditTicketComponent } from './agent-helpdesk/edit-ticket/edit-ticket.component'
+import { EditTicketComponent } from './agent-helpdesk/edit-ticket/edit-ticket.component';
+import { ViewTicketComponent } from './agent-helpdesk/view-ticket/view-ticket.component'
 
 @NgModule({
   imports: [
@@ -88,7 +89,8 @@ import { EditTicketComponent } from './agent-helpdesk/edit-ticket/edit-ticket.co
   HelpdeskComponent,
   AddTicketComponent,
   AgentHelpdeskComponent,
-  EditTicketComponent
+  EditTicketComponent,
+  ViewTicketComponent
   
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
