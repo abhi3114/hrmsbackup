@@ -67,14 +67,14 @@
                                     <td *ngIf="openTickets == true">
                                         <div style="display:flex; flex-direction: row; justify-content: left; align-items: center">
                                             <button tooltip="Edit" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponse(responseTemplate,i.uuid)" style="margin-right: 21px;">
-                <i class="fa fa-edit fa-2x" style="color: black;" aria-hidden="true"></i>
+                <i class="fa fa-edit fa-2x " style="color: black;" aria-hidden="true"></i>
                 </button>
 
                                         </div>
                                     </td>
                                     <td *ngIf="openTickets == false">
                                         <button tooltip="Edit" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponse(viewTemplate,i.uuid)" style="margin-right: 21px;">
-                <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/eye.svg" style="width: 25px;height:25px"></i>
+                <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/eye.svg" style="width: 25px;height:25px; opacity: .6;"></i>
                 </button>
                                     </td>
                                     <!--action-->

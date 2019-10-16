@@ -1356,7 +1356,7 @@ table.dataTable td.dataTables_empty {
     display: inline-block;
     width: 160px;
     margin-right: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .filter-label {
@@ -1424,6 +1424,10 @@ button.btn.bg-orange.btn-flat {
     padding-top: 0;
 }
 
+.ticket-popup {
+    padding: 20px 20px 0;
+}
+
 .ticket-popup.modal-body .form-control {
     border-radius: 5px;
 }
@@ -1435,15 +1439,94 @@ button.btn.bg-orange.btn-flat {
 
 .ticket-popup-header .close {
     opacity: 1;
+    font-weight: 100;
 }
 
 .modal-header.ticket-popup-header {
     background: #344ab1;
-    border-radius: 5px 5px 0 0;
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
 }
 
 .helpdesk_wrapper .dataTables_wrapper .dataTables_paginate .paginate_button {
     border: 1px solid #dfdfdf!important;
+}
+
+.my-icon {
+    opacity: .7;
+}
+
+.modal-content {
+    border-radius: 22px;
+}
+
+.modal-footer {
+    border-radius: 0 0 22px 22px;
+}
+
+.ticket-details {
+    background: #F5F6FB;
+    padding: 30px 20px!important;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.ticket-margin {
+    margin: 20px 0;
+}
+
+.helpdesk_wrapper .fa-edit {
+    font-size: 14px;
+    padding: 10px 0;
+}
+
+button.btn.bg-orange.btn-flat {
+    padding: 4px 15px!important;
+}
+
+.helpdesk_wrapper img {
+    width: 20px!important;
+    height: 20px!important;
+    opacity: 0.6!important;
+}
+
+.ticket-details .bg-orange {
+    padding: 5px 15px;
+    background: transparent linear-gradient(180deg, #E8E8E8 0%, #F3F3F3 13%, #D1D1D1 89%, #E3E3E3 100%) 0% 0% no-repeat;
+}
+
+.d-inline-form {
+    display: inline!important;
+    margin-bottom: 10px;
+}
+
+.mb-p0 {
+    padding-bottom: 0;
+}
+
+.ticketl-border {
+    border-left: 4px solid #344ab1;
+}
+
+ul.treeview-menu img {
+    width: 18px!important;
+    height: 18px!important;
+}
+
+.ticket-popup h4 {
+    margin-bottom: 30px;
+}
+
+.policies-wrapper .tab-content {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #dfdfdf;
+    border-top: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    border-radius: 0!important;
 }
 
 
