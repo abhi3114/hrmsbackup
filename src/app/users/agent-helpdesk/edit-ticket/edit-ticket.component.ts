@@ -85,6 +85,7 @@ closeModal()
           this.ticket.category = res.ticket.ticket_type;
           this.ticket.attachments = res.ticket.attachment;
           this.responseData.response = res.ticket.status;
+          this.responseData.comment = res.ticket.comment;
           console.log('Ticket Modal',this.ticket)
           var data = res.ticket.ncd.split("-");
           console.log('My Data is',data)
@@ -127,7 +128,7 @@ async callsaveApi()
     "ticket" : {
     "status" :this.responseData.response,
     "ncd" : moment(this.responseData.start_date).format('DD-MM-YYYY'),
-    "comments" : this.responseData.comment
+    "comment" : this.responseData.comment
     }
   }
   this.api.updateTicket(payload,this.Id).subscribe((res:any) => {

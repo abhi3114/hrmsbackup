@@ -137,7 +137,7 @@ export class AddTicketComponent implements OnInit {
       "ticket" : {
       "ticket_type" :this.responseData.response,
       "problem" : this.responseData.comment,
-      "name_file_attached": this.mySelectedFiles[0].name,
+      "name_file_attached": this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
       "attachment_base64":  this.base64
       }
     }
