@@ -71,7 +71,7 @@ export class HelpdeskComponent implements OnInit {
 
     recordResponseDelete(template: TemplateRef<any>,id:any) {
       console.log('is the ID here',id);
-      this.toEditId = id;
+      this.toDeleteId = id;
       this.modalRef= this.modalService.show(template, this.config);
     }
     closeModal()
@@ -161,8 +161,9 @@ export class HelpdeskComponent implements OnInit {
       this.api.deleteTicket(id).subscribe((res:any)=>{
         if(res.status){
         this.closeModal();
+        this.getOpenTickets();
         this.toastr.showSuccess('Ticket Deleted');
-        this.refreshData();
+        
         }
       },
       (err)=>{
@@ -175,6 +176,7 @@ export class HelpdeskComponent implements OnInit {
       this.api.escalateTicket(id).subscribe((res:any)=>{
       if(res.status){
         this.closeModal();
+        this.getOpenTickets();
        this.toastr.showSuccess('Ticket Escalated');
       }
       },
