@@ -16,14 +16,14 @@
     <link href="assets/css/jquery.dataTables.css" rel="stylesheet" />
     <link href="assets/css/picker.min.css" rel="stylesheet" />
     <style>
-        /* .sidebar {
+        .sidebar {
             overflow: auto;
             max-height: 600px;
             width: auto;
-        } */
+        }
         
         .sidebar::-webkit-scrollbar {
-            width: 0px;
+            width: 3px;
         }
         
         .sidebar::-webkit-scrollbar-track {
@@ -36,7 +36,7 @@
         }
         
         .sidebar:hover::-webkit-scrollbar-thumb {
-            background-color: #808080;
+            background-color: rgba(128, 128, 128, 0.3);
         }
         
         .pull-right-container {
@@ -52,7 +52,10 @@
     <script src="assets/js/jquery.dataTables.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/jquery.slimscroll.min.js"></script>
+
+
     <script src="assets/js/adminLTEapp.js"></script>
+
     <app-root></app-root>
     <script>
         $(document).on('click', '.sidebar-menu li', function() {
