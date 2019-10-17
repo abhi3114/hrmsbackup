@@ -28,7 +28,6 @@
             <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="approvedOutDoorDutyForm.invalid">Apply</button>
           </div>
         </div>
-      </div>
       </form>
     </section>
     <section class="content">
@@ -73,6 +72,7 @@
                   <th>Reason</th>
                   <th>Location</th>
                   <th>Approval Date</th>
+                  <th>Approved By</th>
                 </tr>
               </thead>
               <tbody>
@@ -85,6 +85,7 @@
                   <td>{{l.reason}}</td>
                   <td>{{l.location}}</td>
                   <td>{{l.approved_on | nullData}}</td>
+                  <td>{{l.reviewer_name | nullData}}</td>
                 </tr>
               </tbody>
             </table>

@@ -7,9 +7,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LaddaModule } from 'angular2-ladda';
+import { PasswordComponent } from './password/password.component';
 const routes: Routes = [
 { path: '', redirectTo: 'login', pathMatch: 'full' },
-{ path: 'login',component: LoginComponent }
+{ path: 'login',component: LoginComponent },
+{ path: 'password/edit', component: PasswordComponent }
 ];
 
 @NgModule({
@@ -23,7 +25,7 @@ const routes: Routes = [
   HttpClientModule,
   LaddaModule,
   ],
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, PasswordComponent],
   exports: [
   LoginComponent,
   RouterModule

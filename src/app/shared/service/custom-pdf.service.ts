@@ -56,7 +56,7 @@ export class CustomPdfService {
       }
       if(salData.details.notes.length >0)
       {
-        noteDetails.push({text:'NOTE', style: 'subheader',alignment: 'left'})
+        noteDetails.push({text:'*NOTE', style: 'subheader',alignment: 'left'})
         _.each(salData.details.notes,function(d){
           noteDetails.push({text:d+'\n', style: 'tableContent',alignment: 'left'})
           })
@@ -175,14 +175,14 @@ export class CustomPdfService {
 
                           {text: '', style: 'tableheadContent',border: [true, false, true, false]}, {text: '', style: 'tableheadContent', alignment: 'right',border: [true, false, true, false]}],
 
-                          [{text: 'Total', style: 'tableHeader',border: [true, true, false, false]}, {text: 'Gross Earnings: '+this.convertAmountintoCurrency(Earnings), style: 'grossContent', alignment: 'right',border: [false, true, true, false]},
+                          [{text: 'Total', style: 'tableHeader',border: [true, true, false, false]}, {text: 'Gross Earnings: '+this.convertAmountintoCurrency(Earnings)+'*', style: 'grossContent', alignment: 'right',border: [false, true, true, false]},
 
                           {text: 'Total', style: 'tableHeader',border: [true, true, false, false]}, {text:'Gross Deductions: '+this.convertAmountintoCurrency(Deductions) , style: 'grossContent', alignment: 'right',border: [false, true, true, false]}],
 
                           [{text: 'Net Salary Payable', style: 'tableHeader',colSpan: 2, alignment: 'left'}, {},
                           {text:this.convertAmountintoCurrency(salData.amount), style: 'grossContent',colSpan: 2, alignment: 'right',border: [false, true, true, false]}, {}],
 
-                          [{text: 'Net Salary Payable in Words', style: 'tableHeader',colSpan: 2, alignment: 'left'}, {},{text:this.convertAmountintoCurrency(salData.amount), style: 'grossContent',colSpan: 2, alignment: 'right'}, {}],
+                          [{text: 'Net Salary Payable in Words', style: 'tableHeader',colSpan: 2, alignment: 'left'}, {},{text:this.convertAmountintoCurrency(salData.amount), style: 'grossContent',colSpan: 2, alignment: 'right',}, {} ],
 
                           ]
                           },

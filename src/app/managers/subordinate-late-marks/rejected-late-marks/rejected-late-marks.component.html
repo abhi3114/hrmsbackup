@@ -65,6 +65,7 @@
                 <th>User</th>
                 <th>Date</th>
                 <th>Rejection Reason</th>
+                <th>Rejected By</th>
               </tr>
             </thead>
             <tbody>
@@ -72,6 +73,7 @@
                 <td>{{l.user_name}}</td>
                 <td>{{l.date}}</td>
                 <td>{{l.reason| nullData}}</td>
+                <td>{{l.reviewer_name | nullData}}</td>
               </tr>
             </tbody>
           </table>

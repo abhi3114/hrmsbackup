@@ -68,6 +68,7 @@
                 <th>No. of Days</th>
                 <th>Leave Type</th>
                 <th>Reason</th>
+                <th>Rejected By</th>
               </tr>
             </thead>
             <tbody>
@@ -78,6 +79,7 @@
                 <td>{{l.no_of_days}}</td>
                 <td>{{l.leave_type}}</td>
                 <td>{{l.reason}}</td>
+                <td>{{l.reviewer_name | nullData}}</td>
               </tr>
             </tbody>
           </table>

@@ -40,6 +40,7 @@
             <th>Comment</th>
             <th>Status</th>
             <th>Approval Date</th>
+            <th>Action Taken By</th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +50,7 @@
             <td *ngIf="l.status!='Unapproved'">{{l.comment}}</td>
             <td>{{l.status}}</td>
             <td>{{l.approved_on | date: 'dd/MM/yyyy' | nullData}}</td>
+            <td>{{l.reviewer_name | nullData}}</td>
           </tr>
         </tbody>
         </table>
@@ -74,6 +76,9 @@
               This field is mandatory
             </div>
           </div>
+        </div>
+        <div class="" style="margin-top: 23px; text-align: center;">
+          <button type="submit" class="btn btn-primary" [disabled]="updateLateMarksForm.invalid">Submit</button>
         </div>
       </div>
     </div>

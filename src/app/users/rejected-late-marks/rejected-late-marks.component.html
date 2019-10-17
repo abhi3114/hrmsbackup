@@ -39,12 +39,14 @@
             <tr>
               <th>Date</th>
               <th>Rejection Reason</th>
+              <th>Rejected By</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let l of rejectedLatemarks">
               <td>{{l.date}}</td>
               <td>{{l.rejection_reason}} </td>
+              <td>{{l.reviewer_name | nullData}}</td>
             </tr>
           </tbody>
           </table>

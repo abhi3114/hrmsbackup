@@ -28,7 +28,6 @@
             <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="approvedLeavesForm.invalid">Apply</button>
           </div>
         </div>
-      </div>
       </form>
     </section>
     <section class="content">
@@ -71,6 +70,7 @@
                 <th>Leave Type</th>
                 <th>Reason</th>
                 <th>Approval Date</th>
+                <th>Approved By</th>
               </tr>
             </thead>
             <tbody>
@@ -82,6 +82,7 @@
                 <td>{{l.leave_type}}</td>
                 <td>{{l.reason}}</td>
                 <td>{{l.approved_on | nullData}}</td>
+                <td>{{l.reviewer_name | nullData}}</td>
               </tr>
             </tbody>
           </table>

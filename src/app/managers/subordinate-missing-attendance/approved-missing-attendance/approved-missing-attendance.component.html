@@ -70,6 +70,7 @@
                   <th>Punch</th>
                   <th>Reason</th>
                   <th>Approved On</th>
+                  <th>Approved By</th>
                 </tr>
               </thead>
               <tbody>
@@ -79,6 +80,7 @@
                   <td>{{l.punch_type}}</td>
                   <td>{{l.reason}}</td>
                   <td>{{l.approved_on}}</td>
+                  <td>{{l.reviewer_name | nullData}}</td>
                 </tr>
               </tbody>
             </table>
