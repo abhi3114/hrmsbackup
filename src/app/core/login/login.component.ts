@@ -47,6 +47,9 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('is_on_probation',this.user_data.data.is_on_probation);
       localStorage.setItem('can_access_manager', this.user_data.data.can_access_manager_section);
       localStorage.setItem('can_access_accounts', this.user_data.data.can_access_accounts);
+      localStorage.setItem('can_access_accounts', this.user_data.data.can_access_accounts);
+      localStorage.setItem('can_access_assigned_tickets', this.user_data.data.can_access_assigned_tickets);
+      
       this.router.navigateByUrl('/home/dashboard');
       this.isLoading=false;
       },(err) => {

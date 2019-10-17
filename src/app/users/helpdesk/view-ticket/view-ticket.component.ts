@@ -8,13 +8,14 @@ import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MonthYearService } from 'src/app/shared/service/month-year.service';
 import { AllLeavesService } from '../../all-leaves/all-leaves.service';
+import { Helpdeskservice } from '../helpdesk.service';
 
 @Component({
-  selector: 'app-view-ticket',
-  templateUrl: './view-ticket.component.html',
-  styleUrls: ['./view-ticket.component.css']
+  selector: 'app-view-tickets',
+  templateUrl: './view-tickets.component.html',
+  styleUrls: ['./view-tickets.component.css']
 })
-export class ViewTicketComponent implements OnInit {
+export class ViewTicketsComponent implements OnInit {
 
   @ViewChild('mySingleFileUpload') mySingleFileUpload: ElementRef;
   @Output() closeModalAndRefresh = new EventEmitter<boolean>();
@@ -43,7 +44,7 @@ export class ViewTicketComponent implements OnInit {
   errorInvalidFile: boolean = false;
   errorLargeFile: boolean = false;
   
-  constructor(private apis:AllLeavesService,private monthandyear:MonthYearService,private api : AgentHelpdeskservice,public toastr: NotificationService,private router : Router ,private route: ActivatedRoute) { 
+  constructor(private apis:AllLeavesService,private monthandyear:MonthYearService,private api : Helpdeskservice,public toastr: NotificationService,private router : Router ,private route: ActivatedRoute) { 
     //console.log('the Modal template',this.template)
     
     
@@ -121,29 +122,7 @@ export class ViewTicketComponent implements OnInit {
   }
   
   
-  async callsaveApi()
-  { 
-    this.isLoading=true;
-    var payload = 
-    {
-      "ticket" : {
-      "status" :this.responseData.response,
-      "ncd" : moment(this.responseData.start_date).format('DD-MM-YYYY'),
-      "comments" : this.responseData.comment
-      }
-    }
-    this.api.updateTicket(payload,this.Id).subscribe((res:any) => {
-      this.isLoading=false;
-      if(res.status){
-        this.closeModal();
-        this.closeModalAndRefresh.emit(true);
-        this.toastr.showSuccess('Ticket Updated Successfully');
-      }
-    }, 
-    (err) => {
-      this.toastr.showError(err.error)
-    });
-  }
+ 
   
   
 }

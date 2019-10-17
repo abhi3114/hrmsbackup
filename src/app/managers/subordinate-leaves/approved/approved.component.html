@@ -3,7 +3,7 @@
     <section class="content-header">
       <h1 class="title">Approved Leaves (Subordinates)</h1>
       <form (ngSubmit)="validateApprovedLeavesForm()" [formGroup]="approvedLeavesForm" autocomplete="off" novalidate="off">
-      <div class="holder-filter" id="collapseBasic" [collapse]="isCollapsed" style="">
+      <div class="holder-filter" id="collapseBasic" [collapse]="isCollapsed">
         <div>
           <div class="col-md-12" >
             <label class="filter-label">Add Filter</label>
@@ -27,6 +27,7 @@
             </div>
             <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="approvedLeavesForm.invalid">Apply</button>
           </div>
+        </div>
         </div>
       </form>
     </section>

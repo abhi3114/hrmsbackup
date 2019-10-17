@@ -97,7 +97,7 @@
 
 
 <ng-template #viewTemplate>
-    <app-view-ticket [template]="modalRef" [Id]="toEditId" (closeModalAndRefresh)='refreshOpenTicketData($event)'></app-view-ticket>
+    <app-view-tickets [template]="modalRef" [Id]="toEditId" (closeModalAndRefresh)='refreshOpenTicketData($event)'></app-view-tickets>
 </ng-template>
 
 <ng-template #deleteTemplate>
