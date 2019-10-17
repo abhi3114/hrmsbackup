@@ -158,14 +158,19 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
     });
   }
 
-  rejectSigleAttendanceMissing(l){
-    this.api.sendForSingleAttendanceMissingRejection(l).subscribe(res => {
-    this.refreshData();
-    this.refreshList(this.user_id)
-    this.notification.showSuccess('Missing attendance is rejected successfully');
-    }, (err) => {
-      this.notification.showError(err.error);
-    });
+  rejectSigleAttendanceMissing(l, comment) {
+    if (comment == undefined || comment == "") {
+      this.notification.CustomErrorMessage("Please enter rejection rejection");
+    } else {
+      this.api.sendForSingleAttendanceMissingRejection(l, comment).subscribe(res => {
+      this.refreshData();
+      this.refreshList(this.user_id);
+      this.updateAttendanceMissingsForm.reset();
+      this.notification.showSuccess('Missing attendance is rejected successfully');
+      }, (err) => {
+        this.notification.showError(err.error);
+      });
+    }
   }
 
   validateRecordAttendanceMissingResponseForm() {

@@ -1,0 +1,97 @@
+<div class="wrapper">
+    <div class="content-wrapper">
+        <!-- <ol class="breadcrumb">
+            <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
+            <li class="active">Helpdesk</li>
+        </ol> -->
+        <section class="content-header">
+            <h4>Agent HelpDesk</h4>
+
+        </section>
+        <section class="content helpdesk_wrapper">
+            <div class="row">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="nav nav-tabs">
+                                    <li [ngClass]="{ 'active': openTickets==true }">
+                                        <a id="labelColor" role="button" (click)="getOpenTickets()">Open Tickets</a>
+                                    </li>
+                                    <li [ngClass]="{ 'active': closedTickets==true }">
+                                        <a id="labelColor" role="button" (click)="getClosedTickets()">Closed Tickets</a>
+                                    </li>
+                                    <li [ngClass]="{ 'active': allTickets==true }">
+                                        <a id="labelColor" role="button" (click)="getAllTickets()">All Tickets</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                        <table id="DataTables" class="table  table-bordered table-striped table-hover" datatable [dtOptions]="boosterSessionTableOptions" [dtTrigger]="boosterSessionTableTrigger">
+                            <thead>
+                                <tr>
+                                    <th>Sr.NO</th>
+                                    <th>Date</th>
+                                    <th>Category</th>
+                                    <th>Body</th>
+                                    <th>Attatchment</th>
+                                    <th>Assigned To</th>
+                                    <th>Comment</th>
+                                    <th>Next Action Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let i of user_data;let i_count = index">
+                                    <td>{{i_count+1}}</td>
+                                    <td>{{i.date | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{i.ticket_type | nullData}}</td>
+                                    <!--Category-->
+                                    <td>{{i.description | nullData}}</td>
+                                    <!--Body-->
+                                    <td>
+                                        <button *ngIf="i.attachment" tooltip="View" placement="top" show-delay="500" class="btn bg-orange btn-flat btn-request" type="button" (click)="viewAttachment(i.attachment)">View</button>
+                                        <span *ngIf="!i.attachment">-</span>
+                                    </td>
+                                    <td>{{i.assigned_to | nullData}}</td>
+                                    <!--assignedto-->
+                                    <td>{{i.comment | nullData}}</td>
+                                    <!--comment-->
+                                    <td>{{i.ncd | nullData}}</td>
+                                    <!--next action date-->
+                                    <td>{{i.status | nullData}}</td>
+                                    <!--status-->
+                                    <td *ngIf="openTickets == true">
+                                        <div style="display:flex; flex-direction: row; justify-content: left; align-items: center">
+                                            <button tooltip="Edit" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponse(responseTemplate,i.uuid)" style="margin-right: 21px;">
+                <i class="fa fa-edit fa-2x " style="color: black;" aria-hidden="true"></i>
+                </button>
+
+                                        </div>
+                                    </td>
+                                    <td *ngIf="openTickets == false">
+                                        <button tooltip="Edit" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponse(viewTemplate,i.uuid)" style="margin-right: 21px;">
+                <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/eye.svg" style="width: 25px;height:25px; opacity: .6;"></i>
+                </button>
+                                    </td>
+                                    <!--action-->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<ng-template #responseTemplate>
+    <app-edit-ticket [template]="modalRef" [Id]="toEditId" (closeModalAndRefresh)='refreshOpenTicketData($event)'></app-edit-ticket>
+</ng-template>
+
+
+<ng-template #viewTemplate>
+    <app-view-ticket [template]="modalRef" [Id]="toEditId" (closeModalAndRefresh)='refreshOpenTicketData($event)'></app-view-ticket>
+</ng-template>

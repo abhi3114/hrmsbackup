@@ -1,34 +1,99 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>HRMS | ERP Tool</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-  rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2">
-  <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.8/css/AdminLTE.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.8/css/skins/skin-blue.css" />
-  <link href="assets/css/jquery.dataTables.css" rel="stylesheet" />
-  <link href="assets/css/picker.min.css" rel="stylesheet" />
-</head>
-<body class="hold-transition skin-blue fixed sidebar-mini">
-  <script src="assets/js/jquery-3.1.1.min.js"></script>
-  <script src="assets/js/jquery.dataTables.js"></script>
-  <script src="assets/js/jquery.slimscroll.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/adminLTEapp.js"></script>
-  <app-root></app-root>
-  <script>
-    $(document).on('click', '.sidebar-menu li', function() {
-     $(".sidebar-menu li").removeClass("active");
-     $(this).addClass("active");
-   });
- </script>
-</body>
-</html>
 
+<head>
+    <meta charset="utf-8">
+    <title>HRMS | ERP Tool</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.8/css/AdminLTE.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.8/css/skins/skin-blue.css" />
+    <link href="assets/css/jquery.dataTables.css" rel="stylesheet" />
+    <link href="assets/css/picker.min.css" rel="stylesheet" />
+    <style>
+        .sidebar {
+            overflow: auto;
+            max-height: 600px;
+            width: auto;
+        }
+        
+        .sidebar::-webkit-scrollbar {
+            width: 3px;
+        }
+        
+        .sidebar::-webkit-scrollbar-track {
+            /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+            background-color: transparent;
+        }
+        
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: transparent;
+        }
+        
+        .sidebar:hover::-webkit-scrollbar-thumb {
+            background-color: rgba(128, 128, 128, 0.3);
+        }
+        
+        .pull-right-container {
+            margin-right: -10px !important;
+        }
+    </style>
+    <!--   <script src="assets/css/responsive.css"></script>
+ -->
+</head>
+
+<body class="hold-transition skin-blue fixed sidebar-mini">
+    <script src="assets/js/jquery-3.1.1.min.js"></script>
+    <script src="assets/js/jquery.dataTables.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.slimscroll.min.js"></script>
+
+
+    <script src="assets/js/adminLTEapp.js"></script>
+
+    <app-root></app-root>
+    <script>
+        $(document).on('click', '.sidebar-menu li', function() {
+            $(".sidebar-menu li").removeClass("active");
+            $(this).addClass("active");
+        });
+        window.onload = function() {
+
+            if (!$("body").hasClass("fixed")) {
+                if (typeof $.fn.slimScroll != 'undefined') {
+                    $(".sidebar").slimScroll({
+                        destroy: true
+                    }).height("auto");
+                }
+                return;
+            } else if (typeof $.fn.slimScroll == 'undefined' && window.console) {
+                window.console.error("Error: the fixed layout requires the slimscroll plugin!");
+            }
+            if ($.AdminLTE.options.sidebarSlimScroll) {
+                if (typeof $.fn.slimScroll != 'undefined') {
+                    $(".sidebar").slimScroll({
+                        destroy: true
+                    }).height("auto");
+                    $(".sidebar").slimScroll({
+                        height: ($(window).height() - $(".main-header").height()) + "px",
+                        color: "rgba(0,0,0,0.2)",
+                        size: "3px"
+                    });
+                }
+            } else {
+
+                $(".sidebar").css({
+                    height: ($(window).height() - $(".main-header").height()) + "px",
+                    'overflow-y': 'scroll'
+                });
+            }
+        };
+    </script>
+</body>
+
+</html>

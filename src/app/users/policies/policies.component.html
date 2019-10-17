@@ -1,74 +1,27 @@
-<div class="wrapper">
-  <div class="content-wrapper">
-    <ol class="breadcrumb">
-      <li><a [routerLink]="['../']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-      <li class="active">Policies</li>
-    </ol>
-    <section class="content-header">
-     <h4>Policies Details</h4>
-<!--      <button type="button" class="btn bg-orange btn-flat" [ngClass]="{'active-policy-button': showLeavePolicy}"(click)="downloadLeavePolicy(policyTemplate)" style="margin-right: 5px;">View Leave Policy</button>
-     <button type="button" class="btn bg-orange btn-flat" [ngClass]="{'active-policy-button': showAttendancePolicy}"(click)="downloadattendancePolicy(policyTemplate)" style="margin-right: 5px;">View Attendance Policy</button>
-     <button type="button" class="btn bg-orange btn-flat" [ngClass]="{'active-policy-button': showSHPolicy}"(click)="downloadSHPolicy(policyTemplate)" style="margin-right: 5px;">View Women Empowerment Policy
-     </button> -->
-     <ul class="nav nav-tabs">
-      <li class="policy-list active">
-      <a data-toggle="tab" href="#leavepolicy" (click)="downloadLeavePolicy()" class="policy-links">Leave Policy Details
-        </a>
-      </li>
-      <li class="policy-list">
-        <a data-toggle="tab" href="#attendancepolicy" (click)="downloadattendancePolicy()" class="policy-links">Attendance Policy Details
-        </a>
-      </li>
-      <li class="policy-list">
-        <a data-toggle="tab" href="#womenempowermentpolicy" (click)="downloadSHPolicy()" class="policy-links">Women Empowerment Policy Details
-        </a>
-      </li>
-    </ul>
-  </section>
-  <section class="content">
-    <div class="row">
-      <div class="box-body">
-        <div class="tab-content">
-          <div id="leavepolicy" class="tab-pane fade in active">
-            <h4 style="text-align:center;">Leave Policy Details</h4>
-            <pdf-viewer [src]="'/assets/files/leavepolicy.pdf'"[render-text]="true"></pdf-viewer>
-          </div>
-          <div id="attendancepolicy" class="tab-pane fade">
-            <h4 style="text-align:center;">Attendance Policy Details</h4>
-            <pdf-viewer [src]="'/assets/files/attendancepolicy.pdf'" [render-text]="true" *ngIf="showAttendancePolicy"></pdf-viewer>
-          </div>
-          <div id="womenempowermentpolicy" class="tab-pane fade">
-            <h4 style="text-align:center;">Women Empowerment Policy Details</h4>
-            <pdf-viewer [src]="'/assets/files/SHpolicy.pdf'" [render-text]="true" *ngIf="showSHPolicy"></pdf-viewer>
-          </div>
-        </div>
-      </div>
-<!--       <div class="box-body" *ngIf="showLeavePolicy">
-        <h4 style="text-align:center;">Leave Policy Details</h4>
-        <pdf-viewer [src]="'../src/assets/files/leavepolicy.pdf'"[render-text]="true"></pdf-viewer>
-      </div> -->
+<div class="wrapper policies-wrapper">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1 class="title">Policies</h1>
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#leavepolicy" (click)="getDocSrc('leavepolicy')" aria-controls="leavepolicy" role="tab" data-toggle="tab">Leave Policy Details</a></li>
+                <li role="presentation"><a href="#attendancepolicy" (click)="getDocSrc('attendancepolicy')" aria-controls="attendancepolicy" role="tab" data-toggle="tab">Attendance Policy Details</a></li>
+                <li role="presentation"><a href="#womenempowermentpolicy" (click)="getDocSrc('womenempowermentpolicy')" aria-controls="womenempowermentpolicy" role="tab" data-toggle="tab">Women Empowerment Policy Details</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="leavepolicy">
+                    <h4 style="text-align:center;">Leave Policy Details</h4>
+                    <pdf-viewer [src]="docSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="attendancepolicy">
+                    <h4 style="text-align:center;">Attendance Policy Details</h4>
+                    <pdf-viewer [src]="docSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="womenempowermentpolicy">
+                    <h4 style="text-align:center;">Women Empowerment Policy Details</h4>
+                    <pdf-viewer [src]="docSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+                </div>
+            </div>
+        </section>
     </div>
-<!--     <div class="row">
-      <div class="box-body" *ngIf="showAttendancePolicy">
-        <h4 style="text-align:center;">Attendance Policy Details</h4>
-        <pdf-viewer [src]="'/assets/files/attendancepolicy.pdf'"
-        [render-text]="true"
-        style="display: block;"
-        ></pdf-viewer>
-        <pdf-viewer [src]="'../src/assets/files/attendancepolicy.pdf'" [render-text]="true"></pdf-viewer>
-      </div>
-    </div>
-    <div class="row">
-      <div class="box-body" *ngIf="showSHPolicy">
-        <h4 style="text-align:center;">SH Policy Details</h4>
-        <pdf-viewer [src]="'/assets/files/SHpolicy.pdf'"
-        [render-text]="true"
-        style="display: block;"
-        ></pdf-viewer>
-        <h4 style="text-align:center;">Women Empowerment Policy Details</h4>
-        <pdf-viewer [src]="'../src/assets/files/SHpolicy.pdf'" [render-text]="true"></pdf-viewer>
-      </div>
-    </div> -->
-  </section>
-</div>
 </div>

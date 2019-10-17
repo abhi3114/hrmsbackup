@@ -1,68 +1,56 @@
 <div class="wrapper">
-  <div class="content-wrapper">
-    <ol class="breadcrumb">
-      <li><a [routerLink]="['/home/dashboard']"><i class="fa fa-dashboard"></i> My Dashboard</a></li>
-      <li class="active">Salary Import</li>
-    </ol>
-    <section class="content-header">
-      <div class="row">
-        <div class="col-md-2">
-          <div class="form-group">
-            <label >Month<sup style="color:red;">*</sup></label>
-            <select name="bnknm" class="form-control select2 building-select"  [(ngModel)]="salary_filter.selectedmonth" style="width: 100%;" required>
-              <option  value="" disabled="">Select Month</option>
-              <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
-            </select>
-          </div>
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1 class="title" style="margin-bottom: 20px;" >Salary Import</h1>
+    <div class="">
+      <div class="col-md-12">
+        <label class="filter-label">Add Filter</label>
+        <div class="lo-btn">
+          <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth" style="" required style="width: 100%;">
+          <option  value="" disabled="">Select Month</option>
+          <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
+          </select>
         </div>
-        <div class="col-md-2">
-          <div class="form-group">
-            <label>Year<sup style="color:red;">*</sup></label>
-            <select name="endDate" class="form-control select2 building-select" [(ngModel)]="salary_filter.selectedyear" style="width: 100%;" required>
-              <option  value="" disabled="">Select Year</option>
-              <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
-            </select>
-          </div>
+        <div class="lo-btn">
+          <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear" style="" required style="width: 100%;">
+          <option  value="" disabled="">Select Year</option>
+          <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
+          </select>
         </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>Import File<sup style="color:red;">*</sup></label>
-            <input type="file" class="form-control" id="csv-file" name="files" ng-model="dataFile" />
-          </div>
+        <div class="lo-btn inputf-holder">
+          <input type="file" class="form-control in-file" id="csv-file" name="files" ng-model="dataFile"  style="" />
         </div>
-        <div class="col-md-2" style="margin-top: 25px;">
-          <button type="submit" class="btn bg-orange btn-flat" (click)="importCsv()" [ladda]="isLoading" style="padding: 6px 10px;">Import</button>&nbsp;
-          <button type="button" class="btn bg-orange btn-flat" (click)="resetCsv()">Reset</button>
-        </div>
+        <button type="submit" class="btn bg-orange btn-flat btn-salary" (click)="importCsv()" [ladda]="isLoading" style="padding: 6px 10px;">Import</button>&nbsp;
+        <button type="button" class="btn bg-orange btn-flat btn-salary" (click)="resetCsv()">Reset</button>
       </div>
-    </section>
-    <section class="content">
-     <ng-container *ngIf="canShowtable">
-      <div class="panel box box-primary" ng-show="showTables">
-        <div class="box-header with-border" style="background: red!important">
-          <h4 class="box-title">
-            <a data-toggle="collapse" data-target="#clienttDetails" style="cursor: pointer; color: #fff;">
-             <h4 class="modal-title" id="H3">FAILED LIST</h4>
-           </a>
-         </h4>
-       </div>
-       <div id="clienttDetails" class="panel-collapse collapse in">
-         <div class="box-body">
+    </div>
+  </section>
+<section class="content">
+  <ng-container *ngIf="canShowtable">
+    <div class="panel box box-primary" ng-show="showTables">
+      <div class="box-header with-border" style="background: red!important">
+        <h4 class="box-title">
+          <a data-toggle="collapse" data-target="#clienttDetails" style="cursor: pointer; color: #fff;">
+            <h6 class="modal-title" id="H3">Failed List</h6>
+          </a>
+        </h4>
+      </div>
+      <div id="clienttDetails" class="panel-collapse collapse in">
+        <div class="box-body">
           <div>
-
-            <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="FailedTableOptions" [dtTrigger]="FailedTableTrigger">
-              <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Message</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let l of failedData">
-                  <td> {{l.user}}</td>
-                  <td> {{l.message}}</td>
-                </tr>
-              </tbody>
+            <table class="table table-striped table-hover" datatable [dtOptions]="FailedTableOptions" [dtTrigger]="FailedTableTrigger">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let l of failedData">
+                <td>{{l.user}}</td>
+                <td>{{l.message}}</td>
+              </tr>
+            </tbody>
             </table>
           </div>
         </div>
@@ -75,29 +63,29 @@
     <div class="box-header with-border" style="background: green!important">
       <h4 class="box-title">
         <a data-toggle="collapse" style="cursor: pointer; color: #fff;">
-          <h4 class="modal-title" id="H3">SUCCESS LIST</h4>
+          <h6 class="modal-title" id="H3">Success List</h6>
         </a>
       </h4>
     </div>
     <div class="row">
       <div class="box-body">
         <div class="">
-          <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="SuccessTableOptions" [dtTrigger]="SuccessTableTrigger">
-            <thead>
-              <tr>
-                <th>User</th>
-                <th>Message</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let l of successData">
-                <td> {{l.user}}</td>
-                <td> {{l.message}}</td>
-              </tr>
-            </tbody>
+          <table class="table table-striped table-hover" datatable [dtOptions]="SuccessTableOptions" [dtTrigger]="SuccessTableTrigger">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let l of successData">
+              <td>{{l.user}}</td>
+              <td>{{l.message}}</td>
+            </tr>
+          </tbody>
           </table>
         </div>
       </div>
     </div>
-    </ng-container>
-  </section>
+  </ng-container>
+</section>

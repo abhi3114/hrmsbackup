@@ -8,9 +8,13 @@ import { ManagersModule } from './managers/managers.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { MyInterceptor } from './request-interceptors';
 import { AppRoutingModule } from './app-routing.module';
+
+
 @NgModule({
   declarations: [
-  AppComponent
+  AppComponent,
+  
+  
   ],
   imports: [
   BrowserModule,

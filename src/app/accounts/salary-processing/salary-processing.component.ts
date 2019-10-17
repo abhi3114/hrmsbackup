@@ -1,4 +1,4 @@
-import { Component, OnInit,TemplateRef } from '@angular/core';
+import { Component, OnInit,TemplateRef,ViewChild } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import {Observable,Subject} from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -8,6 +8,7 @@ import { NotificationService } from '../../shared/service/notification.service';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import * as _ from 'underscore';
+import { DataTableDirective } from 'angular-datatables';
 import { SalaryProcessingService } from './salary-processing.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
 import { CustomPdfService } from '../../shared/service/custom-pdf.service';
@@ -22,7 +23,9 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export class SalaryProcessingComponent implements OnInit {
   user_data:any;leavesData:any;process_data:any;salary_data:any;pdf:any;pdfObj:any;
   salarySlipToggleForm:FormGroup;
-  salaryTableOptions: DataTables.Settings = {};
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  salaryTableOptions: any = {};
   salaryTableTrigger: Subject<any> = new Subject();
   monthArray:any;yearArray:any;filteredData:any;
   salary_filter={selectedmonth:'',selectedyear:''};
@@ -46,7 +49,8 @@ export class SalaryProcessingComponent implements OnInit {
       pagingType: 'full_numbers',
       lengthMenu: [[-1,50, 100, 150, 200],
       ["All",50, 100, 150, 200 ]],
-      order: [[ 1, 'asc' ]]
+      order: [[ 1, 'asc' ]],
+      aoColumnDefs: [{ bSortable: false, aTargets: [0,7,8] }]
     };
     this.api.getallUser().subscribe(res => {
       this.user_data=res;
@@ -91,6 +95,9 @@ export class SalaryProcessingComponent implements OnInit {
         this.toastr.showSuccess('Salary Processed');
         this.modalRef.hide();
         this.getAllUser();this.isLoading=false;
+        if ($('.check-box:checked').length > 0)
+        {$('.checkbox').prop('checked', false);}
+
         }, (err) =>
         {
           this.toastr.showError(err.error);this.isLoading=false;
@@ -118,6 +125,7 @@ export class SalaryProcessingComponent implements OnInit {
   {
     this.api.getallUser().subscribe(res => {
       this.user_data=res;
+      this.rerender();
       }, (err) => {
         this.toastr.showError(err.error);
         });
@@ -191,5 +199,12 @@ export class SalaryProcessingComponent implements OnInit {
   ngOnInit()
   {
 
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.salaryTableTrigger.next();
+      });
   }
 }

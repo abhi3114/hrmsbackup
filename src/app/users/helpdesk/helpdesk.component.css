@@ -1,0 +1,14 @@
+.my-icon {
+    width: 20px;
+    height: 20px;
+    color:red;
+   
+}
+
+.icon-disabled{
+    width: 20px;
+    height: 20px;
+    opacity: 0.65; 
+    cursor: not-allowed;
+}
+

@@ -1,0 +1,71 @@
+<div class="modal-header ticket-popup-header">
+    <h4 class=" modal-title pull-left">Raise Ticket</h4>
+    <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body ticket-popup">
+    <form novalidate (ngSubmit)="callsaveApi()" [formGroup]="responseForm" autocomplete="off">
+        <div class="row">
+            <div class="col-md-4 clearfix">
+                <div class="form-group">
+                    <label>Category<sup style="color:red;">*</sup></label>
+                    <select name="leavType" [(ngModel)]="responseData.response" formControlName="response" class="select2 form-control" style="width: 100%; height: 35px;" [class.error1]="!responseForm.controls.response.valid && responseForm.controls.response.dirty" required>
+                  <option value="" disabled="disabled">Select item</option>
+                  <option *ngFor="let s of categories" value="{{s}}">{{s}}</option>
+                </select>
+                    <div *ngIf="(responseForm.get( 'response').hasError( 'required') ) && responseForm.get( 'response').touched">
+                        <div class="error" *ngIf="responseForm.get( 'response').hasError( 'required') && responseForm.get( 'response').touched">
+                            This field is mandatory
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="">
+                    <div class="form-group">
+                        <label>Comment<sup style="color:red;">*</sup></label>
+                        <textarea type='textarea' class="form-control" [(ngModel)]="responseData.comment" formControlName="comment" [class.error1]="!responseForm.controls.comment.valid && responseForm.controls.comment.dirty"></textarea>
+                        <div *ngIf="( responseForm.get( 'comment').hasError( 'required') ) && responseForm.get( 'comment').touched">
+                            <div class="error" *ngIf="responseForm.get( 'comment').hasError( 'required') && responseForm.get( 'comment').touched">
+                                This field is mandatory
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 ">
+
+                <div class="form-group">
+
+                    <label class="d-inline-form">Attatchments&nbsp;&nbsp;&nbsp;</label>
+                    <input type="file" #mySingleFileUpload id="mySingleFileUpload" formControlName="file" (change)="handleFileInput($event.target.files)" class="d-inline-form">
+                    <span i style="text-decoration:none">
+                    <span class="error" >
+                        <p *ngIf="errorInvalidFile">Invalid File Format</p>
+                    </span>
+                    <span class="error">
+                        <p *ngIf="errorLargeFile">Limit Exceeded (MAX 5 MB)</p>
+                    </span>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="col-md-11" *ngIf="mySelectedFiles.length> 0">
+                <div *ngFor="let file of mySelectedFiles;let i = index">
+                    <span>{{file.name}}</span>
+                    <a role="button" (click)="removeFile(file)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="modal-footer clearfix" style="text-align: center; clear: both; background: whitesmoke;">
+                <button type="submit" class="btn btn-primary" [disabled]="responseForm.invalid" [ladda]="isLoading">Submit</button>&nbsp;&nbsp;
+                <a role="button" class="btn btn-warning" (click)="closeModal()">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>

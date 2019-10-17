@@ -11,7 +11,7 @@ import { CommonSalaryService } from '../../shared/service/common-salary.service'
   styleUrls: ['./missing-salary.component.css']
   })
 export class MissingSalaryComponent implements OnInit {
-  salaryTableOptions: DataTables.Settings = {};
+  salaryTableOptions: any = {};
   salaryTableTrigger: Subject<any> = new Subject();
   monthArray:any;yearArray:any;filteredData:any;
   salary_filter={selectedmonth:'',selectedyear:''};
@@ -22,7 +22,8 @@ export class MissingSalaryComponent implements OnInit {
       pagingType: 'full_numbers',
       lengthMenu: [[-1,50, 100, 150, 200],
       ["All",50, 100, 150, 200 ]],
-      order: [[ 0, 'asc' ]]
+      order: [[ 0, 'asc' ]],
+      aoColumnDefs: [{ bSortable: false, aTargets: [6] }]
     };
     this.api.getallUser().subscribe(res => {
       this.user_data=res;

@@ -39,8 +39,8 @@ s
     })
   }
 
-  sendForSingleAttendanceMissingRejection(attendance_missing_id){
-    return this.http.delete(environment.baseUrl+ "managers/attendance_missings/"+attendance_missing_id+"/reject",
+  sendForSingleAttendanceMissingRejection(attendance_missing_id, reason){
+    return this.http.delete(environment.baseUrl+ "managers/attendance_missings/"+attendance_missing_id+"/reject?review_reason=" + reason,
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }

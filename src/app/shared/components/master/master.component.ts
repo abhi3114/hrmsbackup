@@ -14,6 +14,7 @@ export class MasterComponent implements OnInit {
   user_data:any;
   can_access_manager:boolean = false;
   can_access_accounts:boolean = false;
+  can_access_assigned_tickets: boolean;
   constructor(private router:Router,private api:MasterService,public toastr: NotificationService)
   {
     console.log('master called');
@@ -24,6 +25,7 @@ export class MasterComponent implements OnInit {
     this.employee_role=localStorage.getItem('employee_role');
     this.can_access_manager = (localStorage.getItem('can_access_manager') === 'true')
     this.can_access_accounts = (localStorage.getItem('can_access_accounts') === 'true')
+    this.can_access_assigned_tickets = (localStorage.getItem('can_access_assigned_tickets') === 'true')
   }
 
   signOut()
