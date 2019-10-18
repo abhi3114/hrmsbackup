@@ -2,7 +2,7 @@
   <div class="col-md-6 left-login-box"><img src="assets/images/bg-logins.png" alt=""  class="img-responsive"></div>
   <div class="col-md-6 right-login-box"> <div class="login-box" id="content" >
     <div class="login-logo" >
-      <img src="assets/images/lock-loginicon.png" class="img-responsive  lock-img" >
+      <img src="assets/images/lock-loginic.png" class="img-responsive  lock-img" >
       <img src="assets/images/logo.png" class="logo-pp">
       <p class="login-box-msg-he" >HRMS</p>
     </div>
@@ -37,6 +37,10 @@
       <div class="row">
         <div class="col-sm-12">
           <button type="submit" class="btn bg-orange btn-flat ladda-button" [disabled]="signupform.invalid" [ladda]="isLoading">Login</button>
+          <div style="margin-top: 5px; text-align: center;">
+            <a data-toggle="modal" data-target="#resetpass" style="cursor: pointer;" (click)="recordResponse(resetPassword)">Forgot Password?</a>
+          </div>
+
         </div>
         <!-- /.col -->
       </div>
@@ -44,3 +48,36 @@
   </div>
 </div></div>
 </div>
+
+<ng-template #resetPassword>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Enter Your Email</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form  novalidate  (ngSubmit)="resetUserPassword()" [formGroup]="resetPasswordForm" autocomplete="off">
+      <div class="row">
+        <div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Enter Your Email<sup style="color:red;">*</sup></label>
+              <input name="puropse" type='text' class="form-control"[(ngModel)]="resetPasswordData.email"  formControlName="email" required [class.error1]="!resetPasswordForm.controls.email.valid && resetPasswordForm.controls.email.dirty" />
+              <div *ngIf="( resetPasswordForm.get('email').hasError('required') ) && resetPasswordForm.get('email').touched">
+                <div class="error" *ngIf="resetPasswordForm.get('email').hasError('required') && resetPasswordForm.get('email').touched">
+                  This field is mandatory
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="" style="margin-top: 23px; text-align: center;">
+          <button type="submit" class="btn btn-primary" [disabled]="resetPasswordForm.invalid" [ladda]="isLoadingResetPassword">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+
