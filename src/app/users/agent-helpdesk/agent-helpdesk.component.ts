@@ -49,8 +49,8 @@ export class AgentHelpdeskComponent implements OnInit {
       this.getOpenTickets();
       this.boosterSessionTableOptions = {
         pagingType: 'full_numbers',
-        lengthMenu: [[5, 10, 20, 50,-1],
-        [5, 10, 20, 50,"All" ]]
+        lengthMenu: [[ 10, 20, 50,-1],
+        [ 10, 20, 50,"All" ]]
       };
      
       this.responseForm = new FormGroup({

@@ -42,15 +42,15 @@ export class HelpdeskComponent implements OnInit {
     backdrop: true,
     ignoreBackdropClick: true
   };
-  max: number = 5;
+  max: number = 10;
   isReadonly: boolean = false; status:any; booster_id:any;api_data:any;isLoading:boolean=false;
     constructor(private router:Router,private modalService: BsModalService,public toastr: NotificationService,private api : Helpdeskservice)
     {
       this.getOpenTickets();
       this.boosterSessionTableOptions = {
         pagingType: 'full_numbers',
-        lengthMenu: [[5, 10, 20, 50,-1],
-        [5, 10, 20, 50,"All" ]]
+        lengthMenu: [[10, 20, 50,-1],
+        [ 10, 20, 50,"All" ]]
       };
      
       this.responseForm = new FormGroup({
