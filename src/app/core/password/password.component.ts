@@ -14,12 +14,22 @@ export class PasswordComponent implements OnInit {
   resetPasswordData = { password:'', password_confirmation:'', reset_password_token: '' };
   resetPasswordForm: FormGroup;
   isLoading: boolean;
+  show: boolean;
+  showConfirm: any;
 
   constructor(private route: ActivatedRoute, private router:Router,private api:PasswordService,public toastr: ToastrManager) {
     this.resetPasswordForm = new FormGroup({
       password: new FormControl('', [Validators.required]),
       password_confirmation:  new FormControl('', [Validators.required])
     });
+  }
+
+  viewConfirmPassword(){
+    this.showConfirm = !this.showConfirm
+  }
+
+  viewPassword(){
+    this.show = !this.show;
   }
 
   ngOnInit() {

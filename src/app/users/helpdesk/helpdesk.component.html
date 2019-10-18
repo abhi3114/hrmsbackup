@@ -36,7 +36,7 @@
                                     <th>Date</th>
                                     <th>Category</th>
                                     <th>Body</th>
-                                    <th>Attatchment</th>
+                                    <th>Attachment</th>
                                     <th>Assigned To</th>
                                     <th>Comment</th>
                                     <th>Next Action Date</th>
@@ -68,7 +68,7 @@
                                             <button tooltip="Delete" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponseDelete(deleteTemplate,i.uuid)" style="margin-right: 21px;">
                 <i class="my-icon fa fa-custom" aria-hidden="true"><img  class="my-icon" src="assets/images/rubbish-bin.svg" ></i>
                 </button>
-                                            <div [tooltip]="!i.should_escalate? 'Can Escalate Only After 24 Hours':'Escalate'" placement="top" show-delay="500" style="padding-bottom: 10px;">
+                                            <div [tooltip]="!i.should_escalate? 'Can Escalate Only After 48 Hours':'Escalate'" placement="top" show-delay="500" style="padding-bottom: 10px;">
                                                 <button class="add-dynamic-button" type="button" (click)="recordResponseDelete(escalateTemplate,i.uuid)" [disabled]="!i.should_escalate">
                  <i class="my-icon fa fa-custom" aria-hidden="true"><img [ngClass]="!i.should_escalate?'icon-disabled':'my-icon'" src="assets/images/outbox.svg"></i>
                  </button>

@@ -34,9 +34,10 @@
                                 <tr>
                                     <th>Sr.NO</th>
                                     <th>Date</th>
+                                    <th>User</th>
                                     <th>Category</th>
                                     <th>Body</th>
-                                    <th>Attatchment</th>
+                                    <th>Attachment</th>
                                     <th>Assigned To</th>
                                     <th>Comment</th>
                                     <th>Next Action Date</th>
@@ -48,6 +49,7 @@
                                 <tr *ngFor="let i of user_data;let i_count = index">
                                     <td>{{i_count+1}}</td>
                                     <td>{{i.date | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{i.user_name | nullData}}</td>
                                     <td>{{i.ticket_type | nullData}}</td>
                                     <!--Category-->
                                     <td>{{i.description | nullData}}</td>

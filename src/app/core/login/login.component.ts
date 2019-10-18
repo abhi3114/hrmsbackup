@@ -19,6 +19,12 @@ export class LoginComponent implements OnInit {
   resetPasswordData={email:''};
   user_data:any;isLoading: boolean = false;show: boolean; isLoadingResetPassword: boolean = false;
   modalRef: BsModalRef;
+  config = {
+    animated:true,
+    keyboard: false,
+    backdrop: true,
+    ignoreBackdropClick: true
+  };
   constructor(private router:Router,private api:LoginService,public toastr: ToastrManager, private modalService: BsModalService) {
     this.signupform = new FormGroup({
       password: new FormControl('', [Validators.required]),
@@ -31,6 +37,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  recordResponse(template: TemplateRef<any>) {
+   this.modalRef = this.modalService.show(template, this.config);
   }
 
   validateLoginForm()
@@ -71,6 +81,7 @@ export class LoginComponent implements OnInit {
       this.toastr.successToastr('Reset Password Link Has been Sent to your Email', '', {  position: 'top-center'});
       this.resetPasswordForm.reset();
       }, (err) => {
+      this.isLoadingResetPassword = false;
       this.showError(err.error);
       this.modalRef.hide();
       this.resetPasswordForm.reset();
