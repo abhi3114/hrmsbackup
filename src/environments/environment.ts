@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl:"http://996bb9cc.ngrok.io/api/"
+  baseUrl:"http://staging.hrms.property-pistol.in/api/"
 };
 
 /*
