@@ -1,7 +1,7 @@
 <div class="modal-header" style="background-color:#344AB1;color: whitesmoke;">
     <h4 class="modal-title pull-left">View Ticket</h4>
     <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
-      <span aria-hidden="true">&times;</span>
+        <span aria-hidden="true">&times;</span>
     </button>
 </div>
 
@@ -17,15 +17,16 @@
                 <span>{{ticket.category | nullData}}</span>
             </div>
         </div>
-        <br/>
+        <br />
         <div class="row">
             <div class="col-md-6 pull-left">
                 <label>Attachment:&nbsp;&nbsp;</label>
-                <button *ngIf="ticket.attachments" type="submit" tooltip="View" placement="top" show-delay="500" class="btn bg-orange" (click)="viewAttachment(ticket.attachments)">View</button>
+                <button *ngIf="ticket.attachments" type="submit" tooltip="View" placement="top" show-delay="500"
+                    class="btn bg-orange" (click)="viewAttachment(ticket.attachments)">View</button>
                 <span *ngIf="!ticket.attachments">-</span>
             </div>
         </div>
-        <br/>
+        <br />
         <div class="row">
             <div class="col-md-6 pull-left">
                 <label>Comments:&nbsp;&nbsp;</label>
@@ -33,7 +34,7 @@
             </div>
         </div>
     </div>
-    <br/><br/>
+    <br /><br />
     <div class="ticket-details col-md-12 ticketl-border">
         <div class="row">
             <div class="col-md-8 pull-left">
@@ -41,7 +42,7 @@
                 <span>{{ticket.date | nullData}}</span>
             </div>
         </div>
-        <br/>
+        <br />
         <div class="row">
             <div class="col-md-6 pull-left">
                 <label>Resolution:&nbsp;&nbsp;</label>
