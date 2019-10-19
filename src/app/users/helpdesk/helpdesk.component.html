@@ -62,7 +62,7 @@
                                     <!--comment-->
                                     <td>{{i.ncd | nullData}}</td>
                                     <!--next action date-->
-                                    <td>{{i.status | nullData}}</td>
+                                    <td>{{i.status | nullData}}&nbsp;&nbsp;{{(i.closed_on) ? (i.closed_on | date: 'dd/MM/yyyy') : ('')}}</td>
                                     <td *ngIf="openTickets == true">
                                         <div style="display:flex; flex-direction: row; justify-content: left; align-items: center">
                                             <button tooltip="Delete" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponseDelete(deleteTemplate,i.uuid)" style="margin-right: 21px;">
@@ -75,11 +75,23 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td *ngIf="openTickets == false">
-                                        <button tooltip="View" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponse(viewTemplate,i.uuid)" style="margin-right: 21px;">
+                                    <td *ngIf="openTickets == false && closedTickets == true">
+                                            <div style="display:flex; flex-direction: row; justify-content: left; align-items: center">
+                                        <button tooltip="View" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponse(viewTemplate,i.uuid)" style="margin-right: 10px;">
                 <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/eye.svg" style="width: 25px;height:25px; opacity: .5;"></i>
                 </button>
+                <div [tooltip]="i.can_reopen? 'Reopen':'This Ticket is not available for Reopen'" placement="top" show-delay="500" style="padding-bottom: 10px;">
+                <button [ngClass]="{'add-dynamic-button': true, 'icon-disabled':!i.can_reopen }"  type="button" (click)="recordResponse(reopenTemplate,i.uuid)" style="margin-right: 21px;" [disabled]="!i.can_reopen">
+                        <i class="fa fa-repeat fa-lg" style="color: black;" aria-hidden="true"></i>
+                </button>
+                   </div>
+                   </div>
                                     </td>
+                                    <td *ngIf="openTickets == false && closedTickets == false">
+                                            <button tooltip="View" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponse(viewTemplate,i.uuid)" style="margin-right: 21px;">
+                    <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/eye.svg" style="width: 25px;height:25px; opacity: .5;"></i>
+                    </button>
+                                        </td>
                                     <!--action-->
                                 </tr>
                             </tbody>
@@ -135,3 +147,22 @@
 
     </div>
 </ng-template>
+
+<ng-template #reopenTemplate>
+
+        <div class="modal-header ticket-popup-header" style="background-color:#344AB1;color: whitesmoke;">
+            <h4 class="modal-title pull-left">Reopen Ticket #{{toEditId}}</h4>
+            <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body ticket-popup">
+            <h4 class="">Are you Sure you want to reopen the ticket?</h4>
+        </div>
+        <div class="modal-footer" style="text-align: center; background-color: whitesmoke;">
+            <a class="btn btn-danger" data-dismiss="modal" [ladda]="isLoading" (click)="reopenTicket(toEditId)">Reopen</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()">Cancel</button>
+    
+        </div>
+    
+    </ng-template>

@@ -8,8 +8,10 @@ import { DataTableDirective } from 'angular-datatables';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { NotificationService } from '../../shared/service/notification.service';
 import { AgentHelpdeskservice } from '../agent-helpdesk/agent-helpdesk.service';
-
+import * as moment from 'moment';
 import { async } from '@angular/core/testing';
+import { forEach } from '@angular/router/src/utils/collection';
+
 
 @Component({
   selector: 'app-agent-helpdesk',
@@ -23,6 +25,7 @@ export class AgentHelpdeskComponent implements OnInit {
   this.mySingleFileUploads = content;
  }
  toEditId;
+ closedOn:String = '';
   user_data:any = [];booster_session_data:any;
   isDataPresent:boolean = false
   @ViewChild(DataTableDirective)
@@ -121,6 +124,7 @@ export class AgentHelpdeskComponent implements OnInit {
       this.user_data = [];
       $('#DataTables').DataTable().destroy();
       this.api.getAllClosedAdminTickets().subscribe(res => {
+      console.log('Closed',res)
       this.user_data=res;
       this.user_data.length>0?this.isDataPresent=true:this.isDataPresent=false;
       this.closedTickets = true;
@@ -131,6 +135,22 @@ export class AgentHelpdeskComponent implements OnInit {
       (err) => {
         this.toastr.showError(err.error)
       });
+    }
+
+    closeTicket(id:any){
+      this.isLoading = true;
+      this.api.closeTicket(id).subscribe(
+        (res:any) =>{
+          if(res.status){
+            this.isLoading = false;
+            this.closeModal();
+            this.getOpenTickets();
+            this.toastr.showSuccess('Ticket Closed Successfully');
+           }
+          },
+          (err)=>{
+            this.toastr.showError(err.error)
+          });
     }
 
     getAllTickets(){

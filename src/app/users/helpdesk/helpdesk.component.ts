@@ -171,6 +171,23 @@ export class HelpdeskComponent implements OnInit {
       });
     }
 
+    reopenTicket(id:any){
+      this.isLoading = true;
+      this.api.reopenTicket(id).subscribe(
+        (res:any) =>{
+          if(res.status){
+            this.isLoading = false;
+            this.closeModal();
+            this.getOpenTickets();
+            this.toastr.showSuccess('Ticket reopend Successfully');
+           }
+          },
+          (err)=>{
+            this.isLoading = false;
+            this.toastr.showError(err.error)
+          });
+    }
+
     //Ticket Escalated
     escalateTicket(id){
       this.api.escalateTicket(id).subscribe((res:any)=>{

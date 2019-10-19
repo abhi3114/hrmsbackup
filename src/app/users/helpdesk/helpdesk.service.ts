@@ -58,11 +58,18 @@ export class Helpdeskservice {
 	}
 
 	getTicketInfo(id){
-		console.log('this is my URL',environment.baseUrl+ 'users/tickets/'+id)
+		
 		return this.http.get(environment.baseUrl+ 'users/tickets/'+id,
 			{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
 				"Content-Type": 'application/json'})})
 	}
+	reopenTicket(id){
+	
+		return this.http.post(environment.baseUrl+ 'users/tickets/'+id+'/reopen',null,
+			{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+		"Content-Type": 'application/json'})})
+	}
+
 
 
 }
