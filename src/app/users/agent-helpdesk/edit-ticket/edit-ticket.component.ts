@@ -51,7 +51,7 @@ export class EditTicketComponent implements OnInit {
 
     //instantiate the form
     this.responseForm = new FormGroup({
-      response: new FormControl('', [Validators.required]),
+    
       comment: new FormControl('', [Validators.required]),
       start_date: new FormControl('', [Validators.required]),
     });
