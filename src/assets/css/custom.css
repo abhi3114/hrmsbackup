@@ -1453,7 +1453,7 @@ button.btn.bg-orange.btn-flat {
 }
 
 .my-icon {
-    opacity: .7;
+    
 }
 
 .modal-content {
@@ -1487,7 +1487,8 @@ button.btn.bg-orange.btn-flat {
 .helpdesk_wrapper img {
     width: 20px!important;
     height: 20px!important;
-    opacity: 0.6!important;
+    color: #474747!important;
+   
 }
 
 .ticket-details .bg-orange {

@@ -31,8 +31,8 @@ export class UnapprovedService {
     })
   }
 
-  sendForSingleLeaveRejection(leave_id, reason) {
-    return this.http.delete(environment.baseUrl+ "managers/leaves/"+leave_id+"/reject?review_reason=" + reason,
+  sendForSingleLeaveRejection(leave_id) {
+    return this.http.delete(environment.baseUrl+ "managers/leaves/"+leave_id+"/reject",
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }

@@ -47,8 +47,8 @@ export class UnapprovedLateMarksService {
     })
   }
 
-  sendForSingleLateMarksRejection(late_mark_id, reason){
-    return this.http.delete(environment.baseUrl+ "managers/late_marks/"+late_mark_id+"/reject?review_reason=" + reason,
+  sendForSingleLateMarksRejection(late_mark_id){
+    return this.http.delete(environment.baseUrl+ "managers/late_marks/"+late_mark_id+"/reject",
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }

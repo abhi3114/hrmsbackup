@@ -61,11 +61,10 @@ export class AgentHelpdeskComponent implements OnInit {
       comment: new FormControl('', []),
       reason: new FormControl('', [])
     });
-    this.responseData.response = "yes";
+    
   }
 
   recordResponse(template: TemplateRef<any>, id: any) {
-    console.log('is the ID here', id);
     this.toEditId = id;
     this.modalRef = this.modalService.show(template, this.config);
   }
@@ -80,17 +79,15 @@ export class AgentHelpdeskComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    console.log(this.mySingleFileUpload)
+   
   }
 
   viewAttachment(url) {
-    console.log('this is url', url)
+  
     window.open(url, '_blank');
   }
 
   clickedTextBox() {
-    console.log('clicked', this.mySingleFileUploads.nativeElement)
     setTimeout(() => {
       const el: HTMLElement = this.mySingleFileUploads.nativeElement as HTMLElement;
       el.click();
@@ -98,13 +95,11 @@ export class AgentHelpdeskComponent implements OnInit {
   }
 
   getOpenTickets() {
-    console.log('Open');
+   
     this.user_data = [];
     $('#DataTables').DataTable().destroy();
     this.api.getAllOpenAdminTickets().subscribe(res => {
-      console.log('Open', res);
       this.user_data = res;
-      console.log('This is length', this.user_data.length)
       this.user_data.length > 0 ? this.isDataPresent = true : this.isDataPresent = false;
       this.openTickets = true;
       this.closedTickets = false;
@@ -117,11 +112,10 @@ export class AgentHelpdeskComponent implements OnInit {
   }
 
   getClosedTickets() {
-    console.log('Closed');
+   
     this.user_data = [];
     $('#DataTables').DataTable().destroy();
     this.api.getAllClosedAdminTickets().subscribe(res => {
-      console.log('Closed', res)
       this.user_data = res;
       this.user_data.length > 0 ? this.isDataPresent = true : this.isDataPresent = false;
       this.closedTickets = true;
@@ -151,7 +145,7 @@ export class AgentHelpdeskComponent implements OnInit {
   }
 
   getAllTickets() {
-    console.log('All');
+    
     this.user_data = [];
     $('#DataTables').DataTable().destroy();
     this.api.getAllAdminTickets().subscribe(res => {

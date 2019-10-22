@@ -78,18 +78,14 @@ export class EditTicketComponent implements OnInit {
   async getTicketInfo() {
     this.api.getTicketInfo(this.Id).subscribe(
       (res: any) => {
-        console.log('response-->', res);
         this.ticket.id = res.ticket.uuid;
         this.ticket.comments = res.ticket.description;
         this.ticket.category = res.ticket.ticket_type;
         this.ticket.attachments = res.ticket.attachment;
         this.responseData.response = res.ticket.status;
         this.responseData.comment = res.ticket.comment;
-        console.log('Ticket Modal', this.ticket)
         var data = res.ticket.ncd.split("-");
-        console.log('My Data is', data)
         var date = new Date(Number(data[2]), Number(data[1]) - 1, Number(data[0]))
-        console.log('Please be the date', date);
         var filterData = [];
         filterData.push({ firstDay: date });
         this.responseData.start_date = filterData[0].firstDay;

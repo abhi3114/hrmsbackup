@@ -43,13 +43,7 @@ export class ViewTicketComponent implements OnInit {
   errorInvalidFile: boolean = false;
   errorLargeFile: boolean = false;
 
-  constructor(private apis: AllLeavesService, private monthandyear: MonthYearService, private api: AgentHelpdeskservice, public toastr: NotificationService, private router: Router, private route: ActivatedRoute) {
-    //console.log('the Modal template',this.template)
-
-
-
-
-    //instantiate the form
+  constructor(private apis: AllLeavesService,  private api: AgentHelpdeskservice, public toastr: NotificationService, private router: Router, private route: ActivatedRoute) {
     this.responseForm = new FormGroup({
       response: new FormControl('', [Validators.required]),
       comment: new FormControl('', [Validators.required]),
@@ -58,9 +52,7 @@ export class ViewTicketComponent implements OnInit {
   }
 
   async ngOnInit() {
-
-    await this.getCategories();
-    await this.getTicketInfo();
+   await this.getTicketInfo();
   }
 
   closeModal() {
@@ -68,17 +60,13 @@ export class ViewTicketComponent implements OnInit {
     this.responseForm.reset();
   }
 
-
   viewAttachment(url) {
-    console.log('this is url', url)
-    window.open(url, '_blank');
+   window.open(url, '_blank');
   }
-
-
+  
   async getTicketInfo() {
     this.api.getTicketInfo(this.Id).subscribe(
       (res: any) => {
-        console.log('response-->', res);
         this.ticket.id = res.ticket.uuid;
         this.ticket.comments = res.ticket.description;
         this.ticket.category = res.ticket.ticket_type;
@@ -86,15 +74,11 @@ export class ViewTicketComponent implements OnInit {
         this.ticket.date = res.ticket.ncd;
         this.ticket.resolution = res.ticket.comment;
         this.responseData.response = res.ticket.status;
-        console.log('Ticket Modal', this.ticket)
         var data = res.ticket.ncd.split("-");
-        console.log('My Data is', data)
         var date = new Date(Number(data[2]), Number(data[1]) - 1, Number(data[0]))
-        console.log('Please be the date', date);
         var filterData = [];
         filterData.push({ firstDay: date });
         this.responseData.start_date = filterData[0].firstDay;
-
       },
       (err) => {
         this.toastr.showError(err.error);
@@ -102,22 +86,6 @@ export class ViewTicketComponent implements OnInit {
 
     )
   }
-
-
-  async getCategories() {
-    this.api.getCategory().subscribe(
-      (res: any) => {
-        if (res) {
-          this.categories = res.categories
-        }
-      },
-      (err) => {
-        this.toastr.showError(err.error);
-      }
-
-    )
-  }
-
 
   async callsaveApi() {
     this.isLoading = true;

@@ -41,11 +41,13 @@ export class ViewTicketsComponent implements OnInit {
   }
   @Input() template: any;
   @Input() Id: any;
+  @Input() allTickets: any; 
+  @Input() buttonState: any; 
   errorInvalidFile: boolean = false;
   errorLargeFile: boolean = false;
 
   constructor(private apis: AllLeavesService, private monthandyear: MonthYearService, private api: Helpdeskservice, public toastr: NotificationService, private router: Router, private route: ActivatedRoute) {
-    //console.log('the Modal template',this.template)
+    console.log('the Modal template',this.buttonState)
 
 
 
@@ -73,6 +75,22 @@ export class ViewTicketsComponent implements OnInit {
   viewAttachment(url) {
     console.log('this is url', url)
     window.open(url, '_blank');
+  }
+
+  reopenTicket(id: any) {
+    this.isLoading = true;
+    this.api.reopenTicket(id).subscribe(
+      (res: any) => {
+        if (res.status) {
+          this.isLoading = false;
+          this.closeModal();
+          this.toastr.showSuccess('Ticket reopend Successfully');
+        }
+      },
+      (err) => {
+        this.isLoading = false;
+        this.toastr.showError(err.error)
+      });
   }
 
 

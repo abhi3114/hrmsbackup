@@ -20,6 +20,7 @@ export class UnapprovedComponent implements OnInit {
 
   isCollapsed = false;
   leaveids = [];
+  isBulkSelected : boolean = false;
   unapprovedLeavesForm: FormGroup;
   unapprovedLeavesData={start_date:'',end_date:''};
   unapproved_leaves_data:any;user_id:any; showDataTable:Boolean;
@@ -75,6 +76,7 @@ export class UnapprovedComponent implements OnInit {
       var id = $(this).attr('name');
       unapproved_leave_ids.push(id);
       });
+      unapproved_leave_ids.length > 1 ? this.isBulkSelected = true : this.isBulkSelected;
     var postdata = { "leave_ids":  unapproved_leave_ids, reason: this.updateLeavesData.comment}
     if(unapproved_leave_ids != undefined && unapproved_leave_ids.length > 0)
     {
@@ -187,10 +189,10 @@ export class UnapprovedComponent implements OnInit {
   }
 
   rejectSingleLeave(l, comment) {
-    if (comment == undefined || comment == "") {
-      this.notification.CustomErrorMessage("Please enter rejection rejection");
-    } else {
-      this.api.sendForSingleLeaveRejection(l, comment).subscribe(res => {
+    // if (comment == undefined || comment == "") {
+    //   this.notification.CustomErrorMessage("Please enter rejection rejection");
+    // } else {
+      this.api.sendForSingleLeaveRejection(l).subscribe(res => {
       this.refreshData();
       this.refreshList(this.user_id);
       this.updateLeavesForm.reset();
@@ -198,6 +200,6 @@ export class UnapprovedComponent implements OnInit {
       }, (err) => {
         this.notification.showError(err.error);
       });
-    }
+    //}
   }
 }

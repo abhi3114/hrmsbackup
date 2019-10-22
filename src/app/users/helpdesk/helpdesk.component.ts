@@ -20,6 +20,7 @@ export class HelpdeskComponent implements OnInit {
   mySingleFileUploads: ElementRef;
   toEditId: any;
   toDeleteId: any;
+  canReopenButtonEnabled: BsModalRef;
   @ViewChild('responseTemplate') set mySingleFileUpload(content: ElementRef) {
     this.mySingleFileUploads = content;
   }
@@ -61,9 +62,10 @@ export class HelpdeskComponent implements OnInit {
     this.responseData.response = "yes";
   }
 
-  recordResponse(template: TemplateRef<any>, id: any) {
+  recordResponse(template: TemplateRef<any>, id: any,canReopen :any) {
     console.log('is the ID here', id);
     this.toEditId = id;
+    this.canReopenButtonEnabled = canReopen;
     this.modalRef = this.modalService.show(template, this.config);
   }
 
