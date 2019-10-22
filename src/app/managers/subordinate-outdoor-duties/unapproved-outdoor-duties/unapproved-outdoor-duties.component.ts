@@ -200,11 +200,9 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
     });
   }
 
-  rejectSigleOutdoor(l, comment) {
-    if (comment == undefined || comment == "") {
-      this.notification.CustomErrorMessage("Please enter rejection rejection");
-    } else {
-      this.api.sendForSingleOutdoorRejection(l, comment).subscribe(res => {
+  rejectSigleOutdoor(l) {
+    
+      this.api.sendForSingleOutdoorRejection(l).subscribe(res => {
       this.refreshData();
       this.refreshList(this.user_id);
       this.updateOutdoorsForm.reset();
@@ -212,6 +210,6 @@ export class UnapprovedOutdoorDutiesComponent implements OnInit {
       }, (err) => {
         this.notification.showError(err.error);
       });
-    }
+    
   }
 }

@@ -59,7 +59,7 @@
       <div class="col-md-12">
         <div class="form-group">
           <label>Reason<sup style="color:red;">*</sup></label>
-          <input name="puropse" type='text' class="form-control" [(ngModel)]="updateLeavesData.comment"  formControlName="comment" required [class.error1]="!updateLeavesForm.controls.comment.valid && updateLeavesForm.controls.comment.dirty" />
+          <input name="puropse" type='text' class="form-control" [(ngModel)]="updateLeavesData.comment"  formControlName="comment" [required]="isBulkSelected ? '' : null" [class.error1]="!updateLeavesForm.controls.comment.valid && updateLeavesForm.controls.comment.dirty" />
           <div *ngIf="(updateLeavesForm.get('comment').hasError('required')) && updateLeavesForm.get('comment').touched">
             <div class="error" *ngIf="updateLeavesForm.get('comment').hasError('required') && updateLeavesForm.get('comment').touched">
               This field is mandatory
@@ -100,7 +100,7 @@
                 <td>{{l.leave_type}}</td>
                 <td>{{l.reason}}</td>
                 <td><a style="cursor: pointer;" (click)="approveSingleLeave(l.id)"><i class="fa fa-check" style="font-size:35px;color:green" aria-hidden="true"></i></a></td>
-                <td><a style="cursor: pointer;" (click)="rejectSingleLeave(l.id, updateLeavesData.comment)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
+                <td><a style="cursor: pointer;" (click)="rejectSingleLeave(l.id)"><i class="fa fa-close" style="font-size:35px;color:red"></i></a></td>
               </tr>
             </tbody>
           </table>

@@ -159,10 +159,8 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
   }
 
   rejectSigleAttendanceMissing(l, comment) {
-    if (comment == undefined || comment == "") {
-      this.notification.CustomErrorMessage("Please enter rejection rejection");
-    } else {
-      this.api.sendForSingleAttendanceMissingRejection(l, comment).subscribe(res => {
+  
+      this.api.sendForSingleAttendanceMissingRejection(l).subscribe(res => {
       this.refreshData();
       this.refreshList(this.user_id);
       this.updateAttendanceMissingsForm.reset();
@@ -170,7 +168,7 @@ export class UnapprovedMissingAttendanceComponent implements OnInit {
       }, (err) => {
         this.notification.showError(err.error);
       });
-    }
+    
   }
 
   validateRecordAttendanceMissingResponseForm() {

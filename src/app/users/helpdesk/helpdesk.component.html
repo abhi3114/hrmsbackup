@@ -6,7 +6,9 @@
         </ol> -->
         <section class="content-header">
             <h4>Helpdesk Details</h4>
-            <button type="submit" (click)="recordResponse(responseTemplate,0)" class="btn bg-orange btn-flat btn-request"><i class="fa fa-submit" aria-hidden="true"></i>Raise Ticket</button>
+            <button type="submit" (click)="recordResponse(responseTemplate,0)"
+                class="btn bg-orange btn-flat btn-request"><i class="fa fa-submit" aria-hidden="true"></i>Raise
+                Ticket</button>
         </section>
         <section class="content helpdesk_wrapper">
             <div class="row">
@@ -29,7 +31,8 @@
                             </div>
 
                         </div>
-                        <table id="DataTables" class="table  table-bordered table-striped table-hover" datatable [dtOptions]="boosterSessionTableOptions" [dtTrigger]="boosterSessionTableTrigger">
+                        <table id="DataTables" class="table  table-bordered table-striped table-hover" datatable
+                            [dtOptions]="boosterSessionTableOptions" [dtTrigger]="boosterSessionTableTrigger">
                             <thead>
                                 <tr>
                                     <th>Sr.NO</th>
@@ -53,7 +56,9 @@
                                     <td>{{i.description | nullData}}</td>
                                     <!--Body-->
                                     <td>
-                                        <button *ngIf="i.attachment" tooltip="View" placement="top" show-delay="500" class="btn bg-orange btn-flat btn-request" type="button" (click)="viewAttachment(i.attachment)">View</button>
+                                        <button *ngIf="i.attachment" tooltip="View" placement="top" show-delay="500"
+                                            class="btn bg-orange btn-flat btn-request" type="button"
+                                            (click)="viewAttachment(i.attachment)">View</button>
                                         <span *ngIf="!i.attachment">-</span>
                                     </td>
                                     <td>{{i.assigned_to | nullData}}</td>
@@ -62,23 +67,60 @@
                                     <!--comment-->
                                     <td>{{i.ncd | nullData}}</td>
                                     <!--next action date-->
-                                    <td>{{i.status | nullData}}</td>
+                                    <td>{{i.status | nullData}}&nbsp;&nbsp;<span *ngIf="i.closed_on">(</span>{{(i.closed_on) ? (i.closed_on | date: 'dd/MM/yyyy') : ('')}}<span *ngIf="i.closed_on">)</span>
                                     <td *ngIf="openTickets == true">
-                                        <div style="display:flex; flex-direction: row; justify-content: left; align-items: center">
-                                            <button tooltip="Delete" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponseDelete(deleteTemplate,i.uuid)" style="margin-right: 21px;">
-                <i class="my-icon fa fa-custom" aria-hidden="true"><img  class="my-icon" src="assets/images/rubbish-bin.svg" ></i>
-                </button>
-                                            <div [tooltip]="!i.should_escalate? 'Can Escalate Only After 48 Hours':'Escalate'" placement="top" show-delay="500" style="padding-bottom: 10px;">
-                                                <button class="add-dynamic-button" type="button" (click)="recordResponseDelete(escalateTemplate,i.uuid)" [disabled]="!i.should_escalate">
-                 <i class="my-icon fa fa-custom" aria-hidden="true"><img [ngClass]="!i.should_escalate?'icon-disabled':'my-icon'" src="assets/images/outbox.svg"></i>
-                 </button>
+                                        <div
+                                            style="display:flex; flex-direction: row; justify-content: left; align-items: center">
+                                            <button tooltip="Delete" placement="top" show-delay="500"
+                                                class="add-dynamic-button" type="button"
+                                                (click)="recordResponseDelete(deleteTemplate,i.uuid)"
+                                                style="margin-right: 21px;">
+                                                <i class="my-icon fa fa-custom" aria-hidden="true"><img class="my-icon"
+                                                        src="assets/images/rubbish-bin.svg"></i>
+                                            </button>
+                                            <div [tooltip]="!i.should_escalate? 'Can Escalate Only After 48 Hours':'Escalate'"
+                                                placement="top" show-delay="500" style="padding-bottom: 10px;">
+                                                <button  [ngClass]="{'add-dynamic-button': true, 'icon-disabled':!i.should_escalate }" type="button"
+                                                    (click)="recordResponseDelete(escalateTemplate,i.uuid)"
+                                                    [disabled]="!i.should_escalate">
+                                                    <i class="my-icon fa fa-custom" aria-hidden="true"><img
+                                                          src="assets/images/outbox.svg"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </td>
-                                    <td *ngIf="openTickets == false">
-                                        <button tooltip="View" placement="top" show-delay="500" class="add-dynamic-button" type="button" (click)="recordResponse(viewTemplate,i.uuid)" style="margin-right: 21px;">
-                <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/eye.svg" style="width: 25px;height:25px; opacity: .5;"></i>
-                </button>
+                                    <td *ngIf="openTickets == false && closedTickets == true">
+                                        <div
+                                            style="display:flex; flex-direction: row; justify-content: left; align-items: center">
+                                            <button tooltip="View" placement="top" show-delay="500"
+                                                class="add-dynamic-button" type="button"
+                                                (click)="recordResponse(viewTemplate,i.uuid,i.can_reopen)"
+                                                style="margin-right: 10px;">
+                                                <i class="fa custom-icon" aria-hidden="true"><img
+                                                        src="assets/images/eye.svg"
+                                                        style="width: 25px;height:25px;"></i>
+                                            </button>
+                                            <div [tooltip]="i.can_reopen? 'Reopen':'This Ticket is not available for Reopen'"
+                                                placement="top" show-delay="500" style="padding-bottom: 10px;">
+                                                <button
+                                                    [ngClass]="{'add-dynamic-button': true, 'icon-disabled':!i.can_reopen }"
+                                                    type="button" (click)="recordResponse(reopenTemplate,i.uuid)"
+                                                    style="margin-right: 21px;" [disabled]="!i.can_reopen">
+                                                    <i class="fa custom-icon" aria-hidden="true"><img
+                                                        src="assets/images/reload3.svg"
+                                                        style="width: 40px;height:40px;"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="openTickets == false && closedTickets == false">
+                                        <button tooltip="View" placement="top" show-delay="500"
+                                            class="add-dynamic-button" type="button"
+                                            (click)="recordResponse(viewTemplate,i.uuid)" style="margin-right: 21px;">
+                                            <i class="fa custom-icon" aria-hidden="true"><img
+                                                    src="assets/images/eye.svg"
+                                                    style="width: 25px;height:25px;"></i>
+                                        </button>
                                     </td>
                                     <!--action-->
                                 </tr>
@@ -97,7 +139,8 @@
 
 
 <ng-template #viewTemplate>
-    <app-view-tickets [template]="modalRef" [Id]="toEditId" (closeModalAndRefresh)='refreshOpenTicketData($event)'></app-view-tickets>
+    <app-view-tickets [template]="modalRef" [Id]="toEditId" [allTickets]="allTickets" [buttonState]="canReopenButtonEnabled" (closeModalAndRefresh)='refreshOpenTicketData($event)'>
+    </app-view-tickets>
 </ng-template>
 
 <ng-template #deleteTemplate>
@@ -105,7 +148,7 @@
     <div class="modal-header ticket-popup-header" style="background-color:#344AB1;color: whitesmoke;">
         <h4 class="modal-title pull-left">Delete Ticket</h4>
         <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body ticket-popup">
@@ -124,14 +167,34 @@
         <h4 class="modal-title pull-left">Escalate Ticket</h4>
         <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
             <span aria-hidden="true">&times;</span>
-          </button>
+        </button>
     </div>
     <div class="modal-body ticket-popup">
         <h4>Are you Sure you want to escalate the ticket?</h4>
     </div>
     <div class="modal-footer" style="text-align: center;  background-color: whitesmoke;">
-        <a class="btn btn-danger" data-dismiss="modal" [ladda]="isLoading" (click)="escalateTicket(toDeleteId)">Escalate</a>
+        <a class="btn btn-danger" data-dismiss="modal" [ladda]="isLoading"
+            (click)="escalateTicket(toDeleteId)">Escalate</a>
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()">Cancel</button>
 
     </div>
+</ng-template>
+
+<ng-template #reopenTemplate>
+
+    <div class="modal-header ticket-popup-header" style="background-color:#344AB1;color: whitesmoke;">
+        <h4 class="modal-title pull-left">Reopen Ticket</h4>
+        <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ticket-popup">
+        <h4 class="">Are you Sure you want to reopen the ticket?</h4>
+    </div>
+    <div class="modal-footer" style="text-align: center; background-color: whitesmoke;">
+        <a class="btn btn-danger" data-dismiss="modal" [ladda]="isLoading" (click)="reopenTicket(toEditId)">Reopen</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()">Cancel</button>
+
+    </div>
+
 </ng-template>

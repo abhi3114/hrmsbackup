@@ -47,8 +47,14 @@ export class AgentHelpdeskservice {
 				"Content-Type": 'application/json'})})
 	}
 	getTicketInfo(id){
-		console.log('this is my URL',environment.baseUrl+ 'admin/tickets/'+id)
+	
 		return this.http.get(environment.baseUrl+ 'admin/tickets/'+id,
+			{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+				"Content-Type": 'application/json'})})
+	}
+
+	closeTicket(id){
+		return this.http.post(environment.baseUrl+ 'admin/tickets/'+id+'/close',null,
 			{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
 				"Content-Type": 'application/json'})})
 	}
