@@ -54,8 +54,7 @@
                                        <div style="display:flex; flex-direction: row; justify-content: left; align-items: center">
                                             {{i.user_name | nullData}}
                                             <button style="margin-left: 21px;" *ngIf="openTickets && isMobile==false" [tooltip]="i.user_contact" trigger="click"
-                                            class="add-dynamic-button pull-right" type="button" (click)="alertCopyMessage()"
-                                              [cbContent]="i.user_contact" ngxClipboard>
+                                            class="add-dynamic-button pull-right" type="button" >
                                             <i class="fa custom-icon pull-left" aria-hidden="true"><img src="assets/images/call-answer.svg" style="width: 16px!important;height:16px!important; justify-content: right;"></i>
                                         </button>
                                         <a [href]="'tel:' + i.user_contact" role="button" style="margin-left: 21px;" *ngIf="openTickets && isMobile==true" [tooltip]="i.user_contact" trigger="click" class="add-dynamic-button pull-right">
