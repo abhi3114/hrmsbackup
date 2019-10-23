@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { async } from '@angular/core/testing';
 import { forEach } from '@angular/router/src/utils/collection';
 
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-agent-helpdesk',
@@ -21,6 +22,8 @@ import { forEach } from '@angular/router/src/utils/collection';
 export class AgentHelpdeskComponent implements OnInit {
 
   mySingleFileUploads: ElementRef;
+ 
+  isMobile: boolean = false;
   @ViewChild('responseTemplate') set mySingleFileUpload(content: ElementRef) {
     this.mySingleFileUploads = content;
   }
@@ -29,6 +32,7 @@ export class AgentHelpdeskComponent implements OnInit {
   user_data: any = []; booster_session_data: any;
   isDataPresent: boolean = false
   @ViewChild(DataTableDirective)
+  
   isDtInitialized: boolean = false
   dtElement: DataTableDirective;
   openTickets: boolean = false;
@@ -47,7 +51,11 @@ export class AgentHelpdeskComponent implements OnInit {
   };
   max: number = 5;
   isReadonly: boolean = false; status: any; booster_id: any; api_data: any; isLoading: boolean = false;
-  constructor(private router: Router, private modalService: BsModalService, public toastr: NotificationService, private api: AgentHelpdeskservice) {
+  constructor(private router: Router, private modalService: BsModalService, public toastr: NotificationService, private api: AgentHelpdeskservice,private device : DeviceDetectorService) {
+     if(this.device.isMobile()){
+      console.log('This is a mobile',this.device.isMobile())
+       this.isMobile = true;
+    }
     this.getOpenTickets();
     this.boosterSessionTableOptions = {
       pagingType: 'full_numbers',
@@ -73,6 +81,11 @@ export class AgentHelpdeskComponent implements OnInit {
     this.modalRef.hide();
     this.responseForm.reset();
   }
+  alertCopyMessage(){
+    alert('The Phone Number is Copied to the Clipboard')
+  }
+
+
 
   refreshOpenTicketData() {
     this.getOpenTickets();
