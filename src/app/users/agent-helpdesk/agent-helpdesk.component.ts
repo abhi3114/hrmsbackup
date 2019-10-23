@@ -81,11 +81,6 @@ export class AgentHelpdeskComponent implements OnInit {
     this.modalRef.hide();
     this.responseForm.reset();
   }
-  alertCopyMessage(){
-    alert('The Phone Number is Copied to the Clipboard')
-  }
-
-
 
   refreshOpenTicketData() {
     this.getOpenTickets();
