@@ -50,7 +50,19 @@
                                 <tr *ngFor="let i of user_data;let i_count = index">
                                     <td>{{i_count+1}}</td>
                                     <td>{{i.date | date: 'dd/MM/yyyy'}}</td>
-                                    <td>{{i.user_name | nullData}}</td>
+                                    <td>
+                                       <div style="display:flex; flex-direction: row; justify-content: left; align-items: center">
+                                            {{i.user_name | nullData}}
+                                            <button style="margin-left: 21px;" *ngIf="openTickets && isMobile==false" [tooltip]="i.user_contact" trigger="click"
+                                            class="add-dynamic-button pull-right" type="button" >
+                                            <i class="fa custom-icon pull-left" aria-hidden="true"><img src="assets/images/call-answer.svg" style="width: 16px!important;height:16px!important; justify-content: right;"></i>
+                                        </button>
+                                        <a [href]="'tel:' + i.user_contact" role="button" style="margin-left: 21px;" *ngIf="openTickets && isMobile==true" [tooltip]="i.user_contact" trigger="click" class="add-dynamic-button pull-right">
+                                           <i class="fa custom-icon pull-left" aria-hidden="true"><img src="assets/images/call-answer.svg" style="width: 16px!important;height:16px!important; justify-content: right;"></i>
+                                        </a>
+                                        </div>
+                                       
+                                     </td>
                                     <td>{{i.ticket_type | nullData}}</td>
                                     <!--Category-->
                                     <td>{{i.description | nullData}}</td>
@@ -110,6 +122,7 @@
         </section>
     </div>
 </div>
+
 <ng-template #responseTemplate>
     <app-edit-ticket [template]="modalRef" [Id]="toEditId" (closeModalAndRefresh)='refreshOpenTicketData($event)'>
     </app-edit-ticket>

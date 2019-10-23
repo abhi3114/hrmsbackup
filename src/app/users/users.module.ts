@@ -42,6 +42,9 @@ import {AgentHelpdeskComponent} from './agent-helpdesk/agent-helpdesk.component'
 import { EditTicketComponent } from './agent-helpdesk/edit-ticket/edit-ticket.component';
 import { ViewTicketComponent } from './agent-helpdesk/view-ticket/view-ticket.component';
 import { ViewTicketsComponent } from './helpdesk/view-ticket/view-ticket.component';
+import { ClipboardModule } from 'ngx-clipboard';
+import { DeviceDetectorModule } from 'ngx-device-detector';
+
 
 @NgModule({
   imports: [
@@ -60,8 +63,10 @@ import { ViewTicketsComponent } from './helpdesk/view-ticket/view-ticket.compone
   OwlNativeDateTimeModule,
   SharedModule,
   PdfViewerModule,
-  TooltipModule
-  ],
+  TooltipModule,
+  ClipboardModule,
+  DeviceDetectorModule.forRoot()
+],
   declarations: [
   ApprovedLeavesComponent,
   UnapprovedLeavesComponent,
