@@ -211,6 +211,7 @@
           </h4>
         </div>
         <div id="clienttDetails" class="panel-collapse collapse in">
+            <button type="button" class="btn bg-orange btn-flat" (click)="recordMentorshipFeeback(recordMentorshipResponse)">Record your response</button>
           <div class="box-body">
             <div>
               <table class="table table-striped table-sm row-border hover" datatable [dtOptions]="mentorshipTableOptions"  [dtTrigger]="mentorshipTableTrigger">
@@ -632,42 +633,42 @@
                 <td>1</td>
                 <td *ngIf="mentorormentee=='mentor'">My mentee regularly communicated with me</td>
                 <td *ngIf="mentorormentee=='mentee'">The mentor was attentive and focussed during the program</td>
-                <td> <rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating1" class="form-control" style="border: none;"></rating></td>
+                <td class="ratings-adjusted"> <rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating1" class="form-control" style="border: none;"></rating></td>
                 <td><input name="comment1" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment1" /></td>
               </tr>
               <tr>
                 <td>2</td>
                 <td *ngIf="mentorormentee=='mentor'">My mentee was a quick learner and curious towards work</td>
                 <td *ngIf="mentorormentee=='mentee'">The mentor communicated with me on regular basis</td>
-                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating2" class="form-control" style="border: none;"></rating></td>
+                <td class="ratings-adjusted"><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating2" class="form-control" style="border: none;"></rating></td>
                 <td><input name="comment2" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment2"   /></td>
               </tr>
               <tr>
                 <td>3</td>
                 <td *ngIf="mentorormentee=='mentor'">My mentee was concerned about challenges during assigned tasks and was keen to overcome it</td>
                 <td *ngIf="mentorormentee=='mentee'">The mentor provided me appropriate, relevant and handful information</td>
-                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating3" class="form-control" style="border: none;"></rating></td>
+                <td class="ratings-adjusted"><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating3" class="form-control" style="border: none;"></rating></td>
                 <td><input name="comment3" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment3"   /></td>
               </tr>
               <tr>
                 <td>4</td>
                 <td *ngIf="mentorormentee=='mentor'">My mentee demonstrated a reasonable interest/concern towards me in my quest to offer assistance</td>
                 <td *ngIf="mentorormentee=='mentee'">I am aware about the resources and tools</td>
-                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating4" class="form-control" style="border: none;"></rating></td>
+                <td class="ratings-adjusted"><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating4" class="form-control" style="border: none;"></rating></td>
                 <td><input name="comment4" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment4"  /></td>
               </tr>
               <tr>
                 <td>5</td>
                 <td *ngIf="mentorormentee=='mentor'">My mentee's attitude and behaviour was professional and courteous</td>
                 <td *ngIf="mentorormentee=='mentee'">The mentor was supportive and encouraged me to make decisions that will lead to success</td>
-                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating5" class="form-control" style="border: none;"></rating></td>
+                <td class="ratings-adjusted"><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating5" class="form-control" style="border: none;"></rating></td>
                 <td><input name="comment5" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment5"   /></td>
               </tr>
               <tr>
                 <td>6</td>
                 <td *ngIf="mentorormentee=='mentor'">I recommend my mentee for future mentor program</td>
                 <td *ngIf="mentorormentee=='mentee'">I would recommend my mentor for further mentorship program</td>
-                <td><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating6" class="form-control" style="border: none;"></rating></td>
+                <td class="ratings-adjusted"><rating  [max]="max" [readonly]="isReadonly" [(ngModel)]="recordMentorshipData.rating6" class="form-control" style="border: none;"></rating></td>
                 <td><input name="comment6" type='text' class="form-control" [(ngModel)]="recordMentorshipData.comment6" /></td>
               </tr>
             </tbody>
