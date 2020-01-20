@@ -27,6 +27,7 @@ import { RejectedMissingAttendancesComponent } from './rejected-missing-attendan
 import { HelpdeskComponent } from './helpdesk/helpdesk.component';
 import { AddTicketComponent } from './helpdesk/add-ticket/add-ticket.component';
 import { AgentHelpdeskComponent } from './agent-helpdesk/agent-helpdesk.component';
+import { ReimbursementComponent } from './reimbursement/reimbursement.component';
 
 
 
@@ -54,6 +55,7 @@ const routes: Routes = [
   {path: 'missing_attendance/unapproved', component: UnapprovedMissingAttendanceComponent},
   {path: 'missing_attendance/rejected', component: RejectedMissingAttendancesComponent},
   {path: 'booster_sessions', component: BoosterSessionComponent},
+  {path: 'reimbursement',component:ReimbursementComponent},
   {path: 'help_desk', component: HelpdeskComponent,
   children: [
     {path: 'add_ticket', component: AddTicketComponent},
