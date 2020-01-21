@@ -1,7 +1,32 @@
 <div class="wrapper">
   <div class="content-wrapper">
+    <section class="content-header">
+      <h4>Reimbursement</h4>
+      <button type="submit" 
+        class="btn bg-orange btn-flat btn-request" (click)="recordResponse(responseTemplate,false)"><i class="fa fa-submit" aria-hidden="true"></i>New Claim</button>
+      <form>
+        <div class="holder-filter" id="collapseBasic" [collapse]="isCollapsed" style="">
+          <div>
+            <div class="col-md-12" >
+              <label class="filter-label">Add Filter</label>  
+              <select>
+                <option>Select Month</option>
+                <option>January</option>
+                <option></option>
+              </select>
+              <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="">Apply</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
     <div class="box-body">
-      <h1><p>reimbursement works!</p></h1>
+      <h1>
+        <p>reimbursement works!</p>
+      </h1>
     </div>
   </div>
 </div>
+<ng-template #responseTemplate>
+    <app-new-claim [template]="modalRef" (closeModalAndRefresh)='refreshOpenTicketData($event)'></app-new-claim>
+</ng-template>

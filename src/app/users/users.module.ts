@@ -45,6 +45,7 @@ import { ViewTicketsComponent } from './helpdesk/view-ticket/view-ticket.compone
 import { ClipboardModule } from 'ngx-clipboard';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { ReimbursementComponent } from './reimbursement/reimbursement.component';
+import { NewClaimComponent } from './reimbursement/new-claim/new-claim.component';
 
 
 @NgModule({
@@ -99,8 +100,8 @@ import { ReimbursementComponent } from './reimbursement/reimbursement.component'
   EditTicketComponent,
   ViewTicketComponent,
   ViewTicketsComponent,
-  ReimbursementComponent
-  
+  ReimbursementComponent,
+  NewClaimComponent
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })

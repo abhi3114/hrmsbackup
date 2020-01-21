@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,TemplateRef } from '@angular/core';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+
 
 @Component({
   selector: 'app-reimbursement',
@@ -7,9 +10,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReimbursementComponent implements OnInit {
 
-  constructor() { }
+  modalRef: BsModalRef;
+  config = {
+    animated: true,
+    keyboard: false,
+    backdrop: true,
+    ignoreBackdropClick: true
+  };
 
-  ngOnInit() {
+  constructor(private modalService: BsModalService) 
+  {}
+
+  ngOnInit() 
+  {}
+
+  recordResponse(template: TemplateRef<any>,canReopen :any)
+  {    
+    //this.canReopenButtonEnabled = canReopen;
+    this.modalRef = this.modalService.show(template, this.config);
   }
+
+  refreshOpenTicketData()
+  {
+    //this.getOpenTickets();
+  }
+
 
 }
