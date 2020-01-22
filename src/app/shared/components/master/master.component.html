@@ -77,6 +77,18 @@
             <li><a [routerLink]="['leaves/rejected']"><i class="fa fa-times" aria-hidden="true"></i>Rejected </a></li>
           </ul>
         </li>
+         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
+          <a><i class="fa custom-icon" aria-hidden="true"><img src=""></i>
+          <span>Reimbursement</span>
+          <span class="pull-right-container">
+          <i class="fa fa-angle-down pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a [routerLink]="['reimbursement']"><i class="" aria-hidden="true"></i>Assigned to me </a></li>
+            <li><a [routerLink]="['reimbursement']"><i class="" aria-hidden="true"></i>My claims</a></li>
+          </ul>
+        </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
           <a><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/my_outdoor_duties.png"></i>
           <span>My Outdoor Duties</span>
@@ -211,18 +223,6 @@
           <a [routerLink]="['booster_sessions']">
           <i class="fa custom-icon" aria-hidden="true"><img src="assets/images/my_booster_sessions.png"></i><span>Booster Session</span>
           </a>
-        </li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
-          <a><i class="fa custom-icon" aria-hidden="true"><img src=""></i>
-          <span>Reimbursement</span>
-          <span class="pull-right-container">
-          <i class="fa fa-angle-down pull-right"></i>
-          </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a [routerLink]="['reimbursement']"><i class="" aria-hidden="true"></i>Assigned to me </a></li>
-            <li><a [routerLink]="['reimbursement']"><i class="" aria-hidden="true"></i>My claims</a></li>
-          </ul>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
           <a><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/help-lifeguard-symbol.svg" style=" opacity: .4"></i>

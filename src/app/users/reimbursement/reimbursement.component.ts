@@ -1,6 +1,7 @@
 import { Component, OnInit,TemplateRef } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import {Reimbursementservice} from './reimbursement.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class ReimbursementComponent implements OnInit {
     ignoreBackdropClick: true
   };
 
-  constructor(private modalService: BsModalService) 
+  constructor(private modalService: BsModalService,private remService:Reimbursementservice)
   {}
 
   ngOnInit() 
@@ -26,13 +27,13 @@ export class ReimbursementComponent implements OnInit {
 
   recordResponse(template: TemplateRef<any>,canReopen :any)
   {    
-    //this.canReopenButtonEnabled = canReopen;
+    
     this.modalRef = this.modalService.show(template, this.config);
   }
 
   refreshOpenTicketData()
   {
-    //this.getOpenTickets();
+    
   }
 
 
