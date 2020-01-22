@@ -21,6 +21,7 @@ import { RejectedLateMarksComponent } from './subordinate-late-marks/rejected-la
 import { RejectedOutdoorDutiesComponent } from './subordinate-outdoor-duties/rejected-outdoor-duties/rejected-outdoor-duties.component';
 import { RejectedMissingAttendanceComponent } from './subordinate-missing-attendance/rejected-missing-attendance/rejected-missing-attendance.component';
 import { RejectedComponent } from './subordinate-leaves/rejected/rejected.component';
+import { ReimbursementComponent } from './reimbursement/reimbursement.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { RejectedComponent } from './subordinate-leaves/rejected/rejected.compon
     RejectedOutdoorDutiesComponent,
     RejectedMissingAttendanceComponent,
     RejectedComponent,
+    ReimbursementComponent,
 
     ]
     })

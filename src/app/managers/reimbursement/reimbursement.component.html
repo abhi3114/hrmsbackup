@@ -1,0 +1,73 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h4>Rembursement (Subordinate)</h4>
+      <div class="row">
+        <div class="col-md-4" >
+          <label class="filter-label">Add Filter</label>  
+          <select>
+            <option>Select Month</option>
+            <option>January</option>
+            <option>February</option>
+            <option>March</option>
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            <option>July</option>
+            <option>August</option>
+            <option>September</option>
+            <option>October</option>
+            <option>November</option>
+            <option>December</option>
+          </select>
+          <button type="submit" class="btn bg-orange btn-flat btn-apply" (click)="getData()">Apply</button>
+        </div>
+      </div>
+    </section>
+    <section class="content helpdesk_wrapper">
+      <div class="row">
+        <div class="box-body">
+          <div class="table-responsive">
+            <div class="row">
+              <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                  <li [ngClass]="{ 'active': openTickets==true }">
+                    <a id="labelColor" role="button" (click)="getOpenTickets()">All</a>
+                  </li>
+                  <li [ngClass]="{ 'active': closedTickets==true }">
+                    <a id="labelColor" role="button" (click)="getClosedTickets()">Approved</a>
+                  </li>
+                  <li [ngClass]="{ 'active': allTickets==true }">
+                    <a id="labelColor" role="button" (click)="getAllTickets()">Rejected</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <table id="DataTables" class="table  table-bordered table-striped table-hover" datatable>
+              <thead>
+                <tr>
+                  <th>Sr.No</th>
+                  <th>Name</th>
+                  <th>Month</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Purpose</th>
+                  <th>Manager Comment</th>
+                  <th>Amount</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of leavesData">
+                  <td>{{l.start_date}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

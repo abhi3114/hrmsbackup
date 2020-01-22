@@ -105,9 +105,9 @@ export class NewClaimComponent implements OnInit {
      this.fromhs=false;
      this.tohs=false;
      this.vehiclehs=false;
-     this.kilometerhs=false;          
+     this.kilometerhs=false;
      this.commenths=false;
-     this.clienths=false;            
+     this.clienths=false;
     }
     if(selectedValue==="Mobile Bill")
     {
@@ -129,13 +129,13 @@ export class NewClaimComponent implements OnInit {
      this.fromhs=true;
      this.tohs=true;
      this.amounths=true;
-     this.purposehs=true;     
+     this.purposehs=true;
      this.commenths=false;
      this.forhs=false;
      this.vehiclehs=false;
      this.kilometerhs=false;
      this.datehs=false;
-     this.clienths=false;          
+     this.clienths=false;
     }
     if(selectedValue==="Food")
     {
@@ -143,13 +143,13 @@ export class NewClaimComponent implements OnInit {
      this.amounths=true;
      this.commenths=true;
      this.purposehs=false;
-     this.forhs=false;     
-     this.hotelhs=false;      
+     this.forhs=false;
+     this.hotelhs=false;
      this.fromhs=false;
      this.tohs=false;
      this.vehiclehs=false;
      this.kilometerhs=false;
-     this.clienths=false;               
+     this.clienths=false; 
     }
     if(selectedValue==="Electricity")
     {
