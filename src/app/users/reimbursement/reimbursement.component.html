@@ -2,13 +2,13 @@
   <div class="content-wrapper">
     <section class="content-header">
       <h4>Reimbursement</h4>
-      <button type="submit" 
+      <button type="submit"
         class="btn bg-orange btn-flat btn-request" (click)="recordResponse(responseTemplate,false)"><i class="fa fa-submit" aria-hidden="true"></i>New Claim</button>
       <form>
         <div class="holder-filter" id="collapseBasic" [collapse]="isCollapsed" style="">
           <div>
             <div class="col-md-12" >
-              <label class="filter-label">Add Filter</label>  
+              <label class="filter-label">Add Filter</label>
               <select>
                 <option>Select Month</option>
                 <option>January</option>
@@ -28,5 +28,30 @@
   </div>
 </div>
 <ng-template #responseTemplate>
-    <app-new-claim [template]="modalRef" (closeModalAndRefresh)='refreshOpenTicketData($event)'></app-new-claim>
+  <div class="modal-header ticket-popup-header">
+  <h4 class=" modal-title pull-left">New Reimbursement Claim</h4>
+  <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
+  <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+  <div class="modal-body ticket-popup">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Category<sup style="color:red;">*</sup></label>
+        <select (change)="enableFormAccordingToCategory($event)" class="form-control">
+        <option value="1">Ola/Uber</option>
+        <option value="2">Local Travel</option>
+        <option value="3">Mobile Bill</option>
+        <option value="4">Hotel Stay</option>
+        <option value="5">Food</option>
+        <option value="6">Electricity</option>
+        <option value="7">Petrol/CNG</option>
+        <option value="8">Flight Tickets</option>
+        <option value="9">Miscellaneous</option>
+        </select>
+      </div>
+    </div>
+    <formly-form  [form]="form" [fields]="fields" [model]="model"></formly-form>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </div>
 </ng-template>

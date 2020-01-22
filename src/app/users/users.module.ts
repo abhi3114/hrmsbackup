@@ -8,6 +8,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { OwlDateTimeModule, OwlNativeDateTimeModule,OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { UserRoutingModule } from './user-routing.module';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
+import {FormlyModule} from '@ngx-formly/core';
+import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
 import { MasterComponent } from '../shared/components/master/master.component';
 import { LaddaModule } from 'angular2-ladda';
 import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
@@ -35,7 +37,7 @@ import { RejectedLateMarksComponent } from './rejected-late-marks/rejected-late-
 import { RejectedLeavesComponent } from './rejected-leaves/rejected-leaves.component';
 import { RejectedMissingAttendancesComponent } from './rejected-missing-attendances/rejected-missing-attendances.component';
 import { RejectedOutdoorDutiesComponent } from './rejected-outdoor-duties/rejected-outdoor-duties.component';
-import {HelpdeskComponent} from './helpdesk/helpdesk.component' 
+import {HelpdeskComponent} from './helpdesk/helpdesk.component'
 import {AddTicketComponent} from './helpdesk/add-ticket/add-ticket.component'
 import { TooltipModule } from 'ng2-tooltip-directive';
 import {AgentHelpdeskComponent} from './agent-helpdesk/agent-helpdesk.component';
@@ -52,6 +54,8 @@ import { NewClaimComponent } from './reimbursement/new-claim/new-claim.component
   imports: [
   CommonModule,
   DataTablesModule,
+  FormlyModule.forRoot(),
+  FormlyBootstrapModule,
   UserRoutingModule,
   ModalModule.forRoot(),
   BsDatepickerModule.forRoot(),
