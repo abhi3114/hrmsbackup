@@ -2,60 +2,119 @@
   <div class="content-wrapper">
     <section class="content-header">
       <h4>Reimbursement</h4>
-      <button type="submit"
-        class="btn bg-orange btn-flat btn-request" (click)="recordResponse(responseTemplate,false)"><i class="fa fa-submit" aria-hidden="true"></i>New Claim</button>
-      <form>
-        <div class="holder-filter" id="collapseBasic" [collapse]="isCollapsed" style="">
-          <div>
-            <div class="col-md-12" >
-              <label class="filter-label">Add Filter</label>
-              <select>
-                <option>Select Month</option>
-                <option>January</option>
-                <option></option>
-              </select>
-              <button type="submit" class="btn bg-orange btn-flat btn-apply" [disabled]="">Apply</button>
-            </div>
+      <div>
+        <button type="submit"
+          class="btn bg-orange btn-flat btn-request" (click)="recordResponse(responseTemplate,false)"><i class="fa fa-submit" aria-hidden="true"></i>New Claim</button>
+      </div>
+      <div class="container">
+        <div class="row">
+          <form (ngSubmit)="getData()" [formGroup]="reimbursementform">
+          <div class="col-md-1">             
+            <label class="filter-label">Add Filter</label>  
           </div>
+          <div class="col-md-3">
+            <select class="form-control" name="month" formControlName="month">
+              <option value="" disabled="disabled">Select Month</option>
+              <option *ngFor="let m of months" value="{{m.month_id}}">{{m.month_name}}</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-control" name="year" formControlName="year">
+              <option value="" disabled="disabled">Select Year</option>
+              <option *ngFor="let y of years" value="{{y}}">{{y}}</option>
+            </select>
+          </div>
+          <button type="submit" class="btn bg-orange btn-flat btn-apply">Apply</button>        
+          </form>
         </div>
-      </form>
+      </div>
     </section>
-    <div class="box-body">
-      <h1>
-        <p>reimbursement works!</p>
-      </h1>
-    </div>
-  </div>
-</div>
-<ng-template #responseTemplate>
-  <div class="modal-header ticket-popup-header">
-  <h4 class=" modal-title pull-left">New Reimbursement Claim</h4>
-  <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
-  <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-  <div class="modal-body ticket-popup">
-    <form [formGroup]="form" (ngSubmit)="submit(model)">
-      <div class="form-group">
-        <label>Category<sup style="color:red;">*</sup></label>
-        <select name="category" (change)="enableFormAccordingToCategory($event)"
-        class="select2 form-control" style="width: 100%; height: 35px;" [class.error1]="!form.controls.category.valid && form.controls.category.dirty"
-        required>
-        <option value="" disabled="disabled">Select item</option>
-        <option *ngFor="let s of categoriesArray" value="{{s.id}}">{{s.value}}</option>
-        </select>
-        <div
-          *ngIf="(form.get( 'category').hasError( 'required') ) && form.get( 'category').touched">
-          <div class="error"
-            *ngIf="form.get( 'category').hasError( 'category') && form.get( 'category').touched">
-            This field is mandatory
+    <section class="content helpdesk_wrapper">
+      <div class="row">
+        <div class="box-body">
+          <div class="table-responsive">
+            <div class="row">
+              <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                  <li [ngClass]="{ 'active': openapproved==true }">
+                    <a id="labelColor" role="button" (click)="getApprovedData()">Approved</a>
+                  </li>
+                  <li [ngClass]="{ 'active': openunapproved==true }">
+                    <a id="labelColor" role="button" (click)="getUnapprovedData()">Unapproved</a>
+                  </li>
+                  <li [ngClass]="{ 'active': openrejected==true }">
+                    <a id="labelColor" role="button" (click)="getRejectedData()">Rejected</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <table id="DataTables" class="table  table-bordered table-striped table-hover" datatable>
+              <thead>
+                <tr>
+                  <th>Sr.No</th>
+                  <th>Name</th>
+                  <th>Month</th>
+                  <th>Category</th>
+                  <th>Date</th>                
+                  <th>Purpose</th>
+                  <th>Manager Comment</th>
+                  <th>Amount</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let l of rembursement_api_data">
+                  <td>{{l.id}}</td>
+                  <td></td>
+                  <td></td>
+                  <td>{{l.category_name}}</td> 
+                  <td>{{l.display_date}}</td>                 
+                  <td>{{l.purpose}}</td>
+                  <td></td>
+                  <td>{{l.amount}}</td>
+                  <td>{{l.status}}</td>                
+                  
+                  <!-- <span *ngfor="let d of l.data"></span> 
+                  <td>d.claim_from</td>
+                  <td>d.claim_to</td>    -->             
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <formly-form [model]="model" [fields]="fields">
-
-        <button type="submit" class="btn btn-default">Submit</button>
-      </formly-form>
-    </form>
+    </section>
   </div>
+</div>
+<ng-template #responseTemplate>
+ <div class="modal-header ticket-popup-header">
+ <h4 class=" modal-title pull-left">New Reimbursement Claim</h4>
+ <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
+ <span aria-hidden="true">&times;</span>
+ </button>
+</div>
+ <div class="modal-body ticket-popup">
+   <form [formGroup]="form" (ngSubmit)="submit(model)">
+     <div class="form-group">
+       <label>Category<sup style="color:red;">*</sup></label>
+       <select name="category" (change)="enableFormAccordingToCategory($event)"
+       class="select2 form-control" style="width: 100%; height: 35px;" [class.error1]="!form.controls.category.valid && form.controls.category.dirty"
+       required>
+       <option value="" disabled="disabled">Select item</option>
+       <option *ngFor="let s of categoriesArray" value="{{s.id}}">{{s.value}}</option>
+       </select>
+       <div
+         *ngIf="(form.get( 'category').hasError( 'required') ) && form.get( 'category').touched">
+         <div class="error"
+           *ngIf="form.get( 'category').hasError( 'category') && form.get( 'category').touched">
+           This field is mandatory
+         </div>
+       </div>
+     </div>
+     <formly-form [model]="model" [fields]="fields">
+
+       <button type="submit" class="btn btn-default">Submit</button>
+     </formly-form>
+   </form>
+ </div>
 </ng-template>
