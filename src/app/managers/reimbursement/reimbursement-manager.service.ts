@@ -12,9 +12,11 @@ export class ReimbursementManagerService
   
   constructor(private http:HttpClient) { }
 
-  getApproved()
+  getApproved(month,year)
   {
-    return this.http.get(environment.baseUrl+"reimbursements/approved?start_month=1&start_year=2020",
+    //console.log(month,year);
+    console.log(environment.baseUrl+ "approved?start_date="+month+"&end_date="+year)
+    return this.http.get(environment.baseUrl+"reimbursements/approved?start_month="+month+"&start_year="+year,
     { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
      "Content-Type": 'application/json'})})
   }
@@ -28,10 +30,9 @@ export class ReimbursementManagerService
 
   getRejected()
   {
-    return this.http.get(environment.baseUrl+"reimbursements/unapproved?start_month=1&start_year=2020",
+    return this.http.get(environment.baseUrl+"reimbursements/rejected?start_month=1&start_year=2020",
     { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
       "Content-Type": 'application/json'})})
   }
-
-
+  
 }
