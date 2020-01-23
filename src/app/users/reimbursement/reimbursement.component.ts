@@ -14,11 +14,12 @@ import {FormlyFieldConfig} from '@ngx-formly/core';
 
 export class ReimbursementComponent implements OnInit {
   form = new FormGroup({});
-  model = { email: 'email@gmail.com' };
+  model = { expense_for: '', title: '' };
   fields: FormlyFieldConfig[]
   api_data:any;
   canShowFormAttribute:boolean=false;
   form_fields:any=[];
+  categoriesArray:any=[];
   reimbursementform:FormGroup;
   modalRef: BsModalRef;
   config = {
@@ -29,7 +30,14 @@ export class ReimbursementComponent implements OnInit {
   };
 
   constructor(private modalService: BsModalService,private remService:Reimbursementservice)
-  {}
+  {
+    this.form = new FormGroup({
+      category: new FormControl('', [Validators.required])
+    });
+
+    this.categoriesArray = [{"id": 1, "value": 'Ola/Uber'}, {"id": 2, "value": 'Local Travel'}, {"id":3, "value": 'Mobile Bill'}, {"id" :4, "value": 'Hotel Stay'}, {"id": 5, "value": 'Food'}, {"id": 6, "value": 'Electricity'}, {"id": 7, "value": 'Petrol/CNG'}, {"id" : 8, "value": 'Flight Tickets'} , {"id": 9, "value": 'Miscellaneous'}]
+
+  }
 
   ngOnInit(){
     this.fields = []
@@ -50,28 +58,24 @@ export class ReimbursementComponent implements OnInit {
     console.log(model);
   }
 
-  configureFields(){
-    this.form_fields = [];
-    this.remService.getAllFormAttribute().subscribe(res => {
-      this.api_data=res;
-      this.api_data.forEach(data => {
-        var type = (data.data_type == 'date' || data.data_type == 'select') ? 'input' : data.data_type
-        this.form_fields.push(
-          {
-            key: data.title,
-            type: 'input',
-            templateOptions: {
-              label: data.label,
-              placeholder: data.label,
-              required: data.required
-            },
-            options: [],
-          }
-        )
-      });
-    },(err) => {
+  configureFields(selectedCategory){
+  this.form_fields = [];
+  this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
+    this.api_data=res;
+    this.api_data.forEach(data => {
+      var type = (data.data_type == 'date' || data.data_type == 'select') ? 'input' : data.data_type
+      this.form_fields.push({
+        key: data.title,
+        type: 'input',
+        templateOptions: {
+          label: data.label,
+          placeholder: data.label,
+          required: data.required,
+        }}
+      )
     });
-    return this.form_fields;
+  },(err) => {
+  });
   }
 
   closeModal()
@@ -79,8 +83,39 @@ export class ReimbursementComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  enableFormAccordingToCategory(){
-    this.fields = this.configureFields();
+  enableFormAccordingToCategory($event){
+    let selectedCategory = $event.target.value;
+    let common_fields = [
+      {
+        key: 'amount',
+        type: 'input',
+        templateOptions: {
+          label: 'Amount',
+          placeholder: 'Enter Amount',
+          required: true,
+        }
+      },
+      {
+        key: 'purpose',
+        type: 'textarea',
+        templateOptions: {
+          label: 'Purpose',
+          placeholder: '',
+          required: true,
+        }
+      },
+      {
+        key: 'file',
+        type: 'file',
+        templateOptions: {
+          label: 'Attach Bill'
+        }
+      }
+    ]
+    this.configureFields(selectedCategory);
+     setTimeout(()=>{
+      this.fields = [...this.form_fields, ...common_fields];
+    }, 1000);
   }
 
 

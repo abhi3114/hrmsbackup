@@ -48,13 +48,13 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { ReimbursementComponent } from './reimbursement/reimbursement.component';
 import { NewClaimComponent } from './reimbursement/new-claim/new-claim.component';
+import { FormlyFieldFile } from './reimbursement/file-type.component';
 
 
 @NgModule({
   imports: [
   CommonModule,
   DataTablesModule,
-  FormlyModule.forRoot(),
   FormlyBootstrapModule,
   UserRoutingModule,
   ModalModule.forRoot(),
@@ -71,7 +71,12 @@ import { NewClaimComponent } from './reimbursement/new-claim/new-claim.component
   PdfViewerModule,
   TooltipModule,
   ClipboardModule,
-  DeviceDetectorModule.forRoot()
+  DeviceDetectorModule.forRoot(),
+  FormlyModule.forRoot({
+    types: [
+      { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
+    ],
+  }),
 ],
   declarations: [
   ApprovedLeavesComponent,
@@ -105,7 +110,8 @@ import { NewClaimComponent } from './reimbursement/new-claim/new-claim.component
   ViewTicketComponent,
   ViewTicketsComponent,
   ReimbursementComponent,
-  NewClaimComponent
+  NewClaimComponent,
+  FormlyFieldFile
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })

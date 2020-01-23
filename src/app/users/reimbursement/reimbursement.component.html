@@ -35,24 +35,25 @@
   </button>
 </div>
   <div class="modal-body ticket-popup">
-    <div class="col-md-4">
+    <form [formGroup]="form" (ngSubmit)="submit(model)">
       <div class="form-group">
         <label>Category<sup style="color:red;">*</sup></label>
-        <select (change)="enableFormAccordingToCategory($event)">
-        <option value="1">Ola/Uber</option>
-        <option value="2">Local Travel</option>
-        <option value="3">Mobile Bill</option>
-        <option value="4">Hotel Stay</option>
-        <option value="5">Food</option>
-        <option value="6">Electricity</option>
-        <option value="7">Petrol/CNG</option>
-        <option value="8">Flight Tickets</option>
-        <option value="9">Miscellaneous</option>
+        <select name="category" (change)="enableFormAccordingToCategory($event)"
+        class="select2 form-control" style="width: 100%; height: 35px;" [class.error1]="!form.controls.category.valid && form.controls.category.dirty"
+        required>
+        <option value="" disabled="disabled">Select item</option>
+        <option *ngFor="let s of categoriesArray" value="{{s.id}}">{{s.value}}</option>
         </select>
+        <div
+          *ngIf="(form.get( 'category').hasError( 'required') ) && form.get( 'category').touched">
+          <div class="error"
+            *ngIf="form.get( 'category').hasError( 'category') && form.get( 'category').touched">
+            This field is mandatory
+          </div>
+        </div>
       </div>
-    </div>
-    <form [formGroup]="form" (ngSubmit)="submit(model)">
       <formly-form [model]="model" [fields]="fields">
+
         <button type="submit" class="btn btn-default">Submit</button>
       </formly-form>
     </form>

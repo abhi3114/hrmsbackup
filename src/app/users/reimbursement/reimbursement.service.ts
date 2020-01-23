@@ -8,8 +8,8 @@ import { environment } from '../../../environments/environment';
 export class Reimbursementservice
 {
  constructor(private http: HttpClient) { }
-  getAllFormAttribute(){
-    return this.http.get(environment.baseUrl+ "reimbursements/categories/"+1+"/data",
+  getAllFormAttribute(selectedCategory){
+    return this.http.get(environment.baseUrl+ "reimbursements/categories/"+selectedCategory+"/data",
       { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }

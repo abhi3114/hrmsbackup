@@ -9,7 +9,7 @@ import { NotificationService } from '../../shared/service/notification.service';
   templateUrl: './reimbursement.component.html',
   styleUrls: ['./reimbursement.component.css']
 })
-export class ReimbursementComponent implements OnInit 
+export class ReimbursementComponent implements OnInit
 {
   leaves_data:any;
   leavesData:any;
@@ -17,7 +17,7 @@ export class ReimbursementComponent implements OnInit
   closedTickets: boolean = false;
   allTickets: boolean = false;
   leaveTableTrigger: Subject<any> = new Subject();
-  constructor(private api : ReimbursementManagerService,public toastr: NotificationService) 
+  constructor(private api : ReimbursementManagerService,public toastr: NotificationService)
   {
   this.getOpenTickets();
   }
@@ -39,11 +39,11 @@ export class ReimbursementComponent implements OnInit
         this.toastr.showError(err.error);
         });
    }
-   getClosedTickets() 
+   getClosedTickets()
    {
     this.closedTickets = true;
     this.openTickets = false;
-    this.allTickets = false;    
+    this.allTickets = false;
     this.api.getUnapproved().subscribe(res => {
       this.leaves_data=res;
       console.log(this.leaves_data);
@@ -54,7 +54,7 @@ export class ReimbursementComponent implements OnInit
         });
 
    }
-   getAllTickets() 
+   getAllTickets()
    {
     this.allTickets = true;
     this.openTickets = false;
@@ -69,8 +69,8 @@ export class ReimbursementComponent implements OnInit
         });
    }
   getData()
-   {    
-    
+   {
+
    }
 
 }
