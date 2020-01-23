@@ -22,7 +22,7 @@ export class ReimbursementComponent implements OnInit {
   canShowFormAttribute:boolean=false;
   form_fields:any=[];
   categoriesArray:any=[];
-  reimbursementform:FormGroup;  
+  reimbursementform:FormGroup;
   reimbursementformdata={month:'',year:''};
   rembursement_api_data:any;
   modalRef: BsModalRef;
@@ -80,7 +80,13 @@ export class ReimbursementComponent implements OnInit {
   }
 
   submit(model) {
-    console.log(model);
+    this.remService.createReimbursement(model).subscribe(res => {
+      }, (err) => {
+      this.toastr.showError(err.error);
+      this.modalRef.hide();
+      this.form.reset();
+    });
+
   }
 
   configureFields(selectedCategory){
@@ -98,16 +104,21 @@ export class ReimbursementComponent implements OnInit {
           )
         })
       }
-      this.form_fields.push({
+      var commonHash = {
         key: data.title,
         type: type,
         templateOptions: {
           label: data.label,
           placeholder: data.label,
           required: data.required,
-          options: optionArr
-        }}
-      )
+          options: optionArr,
+          change: (field, $event)=>{
+
+          },
+        }
+      }
+      this.form_fields.push(commonHash)
+      this.form_fields;
     });
   },(err) => {
   });
@@ -163,7 +174,7 @@ export class ReimbursementComponent implements OnInit {
    {
     this.openunapproved = true;
     this.openapproved = false;
-    this.openrejected = false;    
+    this.openrejected = false;
     this.remService.getUnapproved().subscribe(res => {
       this.rembursement_api_data=res;
       console.log(this.rembursement_api_data);
@@ -174,7 +185,7 @@ export class ReimbursementComponent implements OnInit {
         });
 
    }
-   getRejectedData() 
+   getRejectedData()
    {
     this.openrejected = true;
     this.openapproved = false;
@@ -204,6 +215,10 @@ export class ReimbursementComponent implements OnInit {
       }, (err) => {
         this.toastr.showError(err.error);
         });
+    }
+
+    triggerOnChange(){
+      console.log('hello')
     }
 
 }
