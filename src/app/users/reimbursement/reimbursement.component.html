@@ -38,7 +38,7 @@
     <div class="col-md-4">
       <div class="form-group">
         <label>Category<sup style="color:red;">*</sup></label>
-        <select (change)="enableFormAccordingToCategory($event)" class="form-control">
+        <select (change)="enableFormAccordingToCategory($event)">
         <option value="1">Ola/Uber</option>
         <option value="2">Local Travel</option>
         <option value="3">Mobile Bill</option>
@@ -51,7 +51,10 @@
         </select>
       </div>
     </div>
-    <formly-form  [form]="form" [fields]="fields" [model]="model"></formly-form>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <form [formGroup]="form" (ngSubmit)="submit(model)">
+      <formly-form [model]="model" [fields]="fields">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </formly-form>
+    </form>
   </div>
 </ng-template>

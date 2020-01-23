@@ -32,6 +32,7 @@ export class ReimbursementComponent implements OnInit {
   {}
 
   ngOnInit(){
+    this.fields = []
   }
 
   recordResponse(template: TemplateRef<any>,canReopen :any)
@@ -50,6 +51,7 @@ export class ReimbursementComponent implements OnInit {
   }
 
   configureFields(){
+    this.form_fields = [];
     this.remService.getAllFormAttribute().subscribe(res => {
       this.api_data=res;
       this.api_data.forEach(data => {
@@ -62,7 +64,8 @@ export class ReimbursementComponent implements OnInit {
               label: data.label,
               placeholder: data.label,
               required: data.required
-            }
+            },
+            options: [],
           }
         )
       });
