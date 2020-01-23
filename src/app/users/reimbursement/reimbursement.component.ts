@@ -60,17 +60,27 @@ export class ReimbursementComponent implements OnInit {
 
   configureFields(selectedCategory){
   this.form_fields = [];
+  var optionArr = [];
+  var hashObject = {}
   this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
     this.api_data=res;
     this.api_data.forEach(data => {
-      var type = (data.data_type == 'date' || data.data_type == 'select') ? 'input' : data.data_type
+      var type = (data.data_type == 'date') ? 'input' : data.data_type
+      if (data.options != undefined){
+        data.options.forEach(option => {
+          optionArr.push(
+            {label: option, value: option}
+          )
+        })
+      }
       this.form_fields.push({
         key: data.title,
-        type: 'input',
+        type: type,
         templateOptions: {
           label: data.label,
           placeholder: data.label,
           required: data.required,
+          options: optionArr
         }}
       )
     });
