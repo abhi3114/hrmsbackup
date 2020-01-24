@@ -29,6 +29,8 @@ export class ReimbursementComponent implements OnInit {
   openapproved: boolean = false;
   openunapproved: boolean = false;
   openrejected: boolean = false;
+  reimbursementTableTableTrigger: Subject<any> = new Subject();
+  // to change
   months=[{"month_id":1,"month_name":'January'},
           {"month_id":2,"month_name":'February'},
           {"month_id":3,"month_name":'March'},
@@ -175,10 +177,12 @@ export class ReimbursementComponent implements OnInit {
     this.openunapproved = true;
     this.openapproved = false;
     this.openrejected = false;
-    this.remService.getUnapproved().subscribe(res => {
-      this.rembursement_api_data=res;
+    var year=this.reimbursementform.controls.year.value;
+    var month=this.reimbursementform.controls.month.value;
+    this.remService.getUnapproved(month,year).subscribe((res:any) =>{
+      this.rembursement_api_data=res.reimbursements;
       console.log(this.rembursement_api_data);
-      //this.leavesData=this.leaves_data.leaves_data;
+      this.reimbursementTableTableTrigger.next();
       //this.leaveTableTrigger.next();
       }, (err) => {
         this.toastr.showError(err.error);
@@ -190,11 +194,13 @@ export class ReimbursementComponent implements OnInit {
     this.openrejected = true;
     this.openapproved = false;
     this.openunapproved = false;
-    this.remService.getRejected().subscribe(res => {
-      this.rembursement_api_data=res;
+    var year=this.reimbursementform.controls.year.value;
+    var month=this.reimbursementform.controls.month.value;
+    this.remService.getRejected(month,year).subscribe((res:any) => {
+      this.rembursement_api_data=res.reimbursements;
       console.log(this.rembursement_api_data);
+      this.reimbursementTableTableTrigger.next();
       //this.leavesData=this.leaves_data.leaves_data;
-      //this.leaveTableTrigger.next();
       }, (err) => {
         this.toastr.showError(err.error);
         });
@@ -206,11 +212,8 @@ export class ReimbursementComponent implements OnInit {
      var month=this.reimbursementform.controls.month.value;
      //console.log(year,month);
      this.remService.getApproved(month,year).subscribe((res:any) => {
-      this.rembursement_api_data=res.reimbursements;
-     /* for(let i=0;i<this.reimbursements.api)
-      {}*/
+     this.rembursement_api_data=res.reimbursements;
       console.log(this.rembursement_api_data);
-      //this.leavesData=this.leaves_data.leaves_data;
       //this.leaveTableTrigger.next();
       }, (err) => {
         this.toastr.showError(err.error);

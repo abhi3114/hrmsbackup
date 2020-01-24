@@ -17,22 +17,22 @@ export class Reimbursementservice
     getApproved(month,year)
   {
     console.log(month,year);
-    console.log(environment.baseUrl+ "leaves?start_date="+month+"&end_date="+year)
+    //console.log(environment.baseUrl+ "leaves?start_date="+month+"&end_date="+year)
     return this.http.get(environment.baseUrl+"reimbursements/approved?start_month="+month+"&start_year="+year,
     { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
      "Content-Type": 'application/json'})})
   }
 
-  getUnapproved()
+  getUnapproved(month,year)
   {
-    return this.http.get(environment.baseUrl+"reimbursements/unapproved?start_month=1&start_year=2020",
+    return this.http.get(environment.baseUrl+"reimbursements/unapproved?start_month="+month+"&start_year="+year,
     { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
     "Content-Type": 'application/json'})})
   }
 
-  getRejected()
+  getRejected(month,year)
   {
-    return this.http.get(environment.baseUrl+"reimbursements/rejected?start_month=1&start_year=2020",
+    return this.http.get(environment.baseUrl+"reimbursements/rejected?start_month="+month+"&start_year="+year,
     { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
       "Content-Type": 'application/json'})})
   }

@@ -55,17 +55,18 @@
                   <th>Name</th>
                   <th>Month</th>
                   <th>Category</th>
-                  <th>Date</th>                
+                  <th>Date</th>
                   <th>Purpose</th>
                   <th>Manager Comment</th>
                   <th>Amount</th>
+                  <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let l of rembursement_api_data">
                   <td>{{l.id}}</td>
-                  <td></td>
+                  <td>{{employee_name}}</td>
                   <td></td>
                   <td>{{l.category_name}}</td> 
                   <td>{{l.display_date}}</td>                 
@@ -73,7 +74,7 @@
                   <td></td>
                   <td>{{l.amount}}</td>
                   <td>{{l.status}}</td>                
-                  
+                  <td></td>
                   <!-- <span *ngfor="let d of l.data"></span> 
                   <td>d.claim_from</td>
                   <td>d.claim_to</td>    -->             
