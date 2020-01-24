@@ -16,6 +16,7 @@ import { NotificationService } from '../../shared/service/notification.service';
 
 export class ReimbursementComponent implements OnInit {
   form = new FormGroup({});
+  today = new Date();
   model = { expense_for: '', title: '' };
   fields: FormlyFieldConfig[]
   api_data:any;
@@ -98,7 +99,7 @@ export class ReimbursementComponent implements OnInit {
   this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
     this.api_data=res;
     this.api_data.forEach(data => {
-      var type = (data.data_type == 'date') ? 'input' : data.data_type
+      var type = (data.data_type == 'date') ? 'date' : data.data_type
       if (data.options != undefined){
         data.options.forEach(option => {
           optionArr.push(
@@ -114,9 +115,9 @@ export class ReimbursementComponent implements OnInit {
           placeholder: data.label,
           required: data.required,
           options: optionArr,
-          change: (field, $event)=>{
-
-          },
+          expressionProperties: {
+            'templateOptions.min': 'formState.limitDate ? ${this.today} : null'
+          }
         }
       }
       this.form_fields.push(commonHash)

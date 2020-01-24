@@ -49,6 +49,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { ReimbursementComponent } from './reimbursement/reimbursement.component';
 import { NewClaimComponent } from './reimbursement/new-claim/new-claim.component';
 import { FormlyFieldFile } from './reimbursement/file-type.component';
+import { DatePickerComponent } from './reimbursement/date-picker/date-picker.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { FormlyFieldFile } from './reimbursement/file-type.component';
   FormlyModule.forRoot({
     types: [
       { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
+      { name: 'date', component: DatePickerComponent }
     ],
   }),
 ],
@@ -111,7 +113,8 @@ import { FormlyFieldFile } from './reimbursement/file-type.component';
   ViewTicketsComponent,
   ReimbursementComponent,
   NewClaimComponent,
-  FormlyFieldFile
+  FormlyFieldFile,
+  DatePickerComponent
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })
