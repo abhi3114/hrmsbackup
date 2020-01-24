@@ -7,6 +7,7 @@ import { NotificationService } from '../../shared/service/notification.service';
 import { AllLeavesService } from './all-leaves.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
 import * as moment from 'moment';
+
 @Component({
   selector: 'app-all-leaves',
   templateUrl: './all-leaves.component.html',
@@ -21,6 +22,7 @@ export class AllLeavesComponent implements OnInit {
   dtElement: DataTableDirective;
   leaveTableOptions: DataTables.Settings = {};
   leaveTableTrigger: Subject<any> = new Subject();
+ 
   constructor(private router:Router,private api:AllLeavesService,private monthandyear:MonthYearService,public toastr: NotificationService)
   {
     var filteredData=monthandyear.getFilterData();

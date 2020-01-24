@@ -13,14 +13,14 @@
             <label class="filter-label">Add Filter</label>  
           </div>
           <div class="col-md-3">
-            <select class="form-control" name="month" formControlName="month">
-              <option value="" disabled="disabled">Select Month</option>
+            <select class="form-control" name="month" formControlName="month" required="true">
+              <option enabled>{{currentmonth}}</option>
               <option *ngFor="let m of months" value="{{m.month_id}}">{{m.month_name}}</option>
             </select>
           </div>
           <div class="col-md-3">
-            <select class="form-control" name="year" formControlName="year">
-              <option value="" disabled="disabled">Select Year</option>
+            <select class="form-control" name="year" formControlName="year" required="true">
+              <option enabled>{{currentyear}}</option>
               <option *ngFor="let y of years" value="{{y}}">{{y}}</option>
             </select>
           </div>
@@ -36,23 +36,23 @@
             <div class="row">
               <div class="col-md-12">
                 <ul class="nav nav-tabs">
-                  <li [ngClass]="{ 'active': openapproved==true }">
-                    <a id="labelColor" role="button" (click)="getApprovedData()">Approved</a>
-                  </li>
                   <li [ngClass]="{ 'active': openunapproved==true }">
                     <a id="labelColor" role="button" (click)="getUnapprovedData()">Unapproved</a>
                   </li>
+                  <li [ngClass]="{ 'active': openapproved==true }">
+                    <a id="labelColor" role="button" (click)="getApprovedData()">Approved</a>
+                  </li>                  
                   <li [ngClass]="{ 'active': openrejected==true }">
                     <a id="labelColor" role="button" (click)="getRejectedData()">Rejected</a>
                   </li>
                 </ul>
               </div>
             </div>
-            <table id="DataTables" class="table  table-bordered table-striped table-hover" datatable>
+            <table id="RembursementDataTables" class="table  table-bordered table-striped table-hover" datatable
+            [dtOptions]="rembursementTableOptions" [dtTrigger]="reimbursementTableTrigger">
               <thead>
                 <tr>
-                  <th>Sr.No</th>
-                  <th>Name</th>
+                  <th>Sr.No</th>                  
                   <th>Month</th>
                   <th>Category</th>
                   <th>Date</th>
@@ -65,8 +65,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let l of rembursement_api_data">
-                  <td>{{l.id}}</td>
-                  <td>{{employee_name}}</td>
+                  <td>{{l.id}}</td>                  
                   <td></td>
                   <td>{{l.category_name}}</td> 
                   <td>{{l.display_date}}</td>                 
