@@ -57,7 +57,7 @@ export class ReimbursementComponent implements OnInit {
     ignoreBackdropClick: true
   };
     componentmonth:any;
-    componentyear:any;  
+    componentyear:any;
 
   constructor(private modalService: BsModalService,private remService:Reimbursementservice,public toastr: NotificationService)
   {
@@ -71,7 +71,7 @@ export class ReimbursementComponent implements OnInit {
 
     this.categoriesArray = [{"id": 1, "value": 'Ola/Uber'}, {"id": 2, "value": 'Local Travel'}, {"id":3, "value": 'Mobile Bill'}, {"id" :4, "value": 'Hotel Stay'}, {"id": 5, "value": 'Food'}, {"id": 6, "value": 'Electricity'}, {"id": 7, "value": 'Petrol/CNG'}, {"id" : 8, "value": 'Flight Tickets'} , {"id": 9, "value": 'Miscellaneous'}];
     //this.getApprovedData();
-    
+
     this.reimbursementform.controls.year.value == "" || this.reimbursementform.controls.month.value == ""  ? this.getUnapprovedData(this.currentyear,this.cmonth) : this.getUnapprovedData(this.reimbursementform.controls.year.value,this.reimbursementform.controls.month.value)
     if(this.reimbursementform.controls.year.value == "" || this.reimbursementform.controls.month.value == "")
     {
@@ -106,6 +106,8 @@ export class ReimbursementComponent implements OnInit {
   submit(model) {
     console.log(model);
     this.remService.createReimbursement(model).subscribe(res => {
+      this.modalRef.hide();
+      this.toastr.showSuccess('Response Recorded');
       }, (err) => {
       this.toastr.showError(err.error);
       this.modalRef.hide();
@@ -155,8 +157,12 @@ export class ReimbursementComponent implements OnInit {
   }
 
   enableFormAccordingToCategory($event){
-    let selectedCategory = $event.target.value;
+    var selectedCategory = $event.target.value;
     let common_fields = [
+      {
+        key: 'category_id',
+        defaultValue: selectedCategory
+      },
       {
         key: 'amount',
         type: 'input',
@@ -199,7 +205,7 @@ export class ReimbursementComponent implements OnInit {
    {
     this.openunapproved = true;
     this.openapproved = false;
-    this.openrejected = false;    
+    this.openrejected = false;
     // var year=this.reimbursementform.controls.year.value;
     // var month=this.reimbursementform.controls.month.value;
     this.remService.getUnapproved(month,year).subscribe((res:any) =>{

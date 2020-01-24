@@ -9,8 +9,8 @@
       <div class="container">
         <div class="row">
           <form (ngSubmit)="getData()" [formGroup]="reimbursementform">
-          <div class="col-md-1">             
-            <label class="filter-label">Add Filter</label>  
+          <div class="col-md-1">
+            <label class="filter-label">Add Filter</label>
           </div>
           <div class="col-md-3">
             <select class="form-control" name="month" formControlName="month">
@@ -24,7 +24,7 @@
               <option *ngFor="let y of years" value="{{y}}">{{y}}</option>
             </select>
           </div>
-          <button type="submit" class="btn bg-orange btn-flat btn-apply">Apply</button>        
+          <button type="submit" class="btn bg-orange btn-flat btn-apply">Apply</button>
           </form>
         </div>
       </div>
@@ -68,16 +68,16 @@
                   <td>{{l.id}}</td>
                   <td>{{employee_name}}</td>
                   <td></td>
-                  <td>{{l.category_name}}</td> 
-                  <td>{{l.display_date}}</td>                 
+                  <td>{{l.category_name}}</td>
+                  <td>{{l.display_date}}</td>
                   <td>{{l.purpose}}</td>
                   <td></td>
                   <td>{{l.amount}}</td>
-                  <td>{{l.status}}</td>                
+                  <td>{{l.status}}</td>
                   <td></td>
-                  <!-- <span *ngfor="let d of l.data"></span> 
+                  <!-- <span *ngfor="let d of l.data"></span>
                   <td>d.claim_from</td>
-                  <td>d.claim_to</td>    -->             
+                  <td>d.claim_to</td>    -->
                 </tr>
               </tbody>
             </table>
