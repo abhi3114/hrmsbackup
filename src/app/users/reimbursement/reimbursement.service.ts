@@ -39,7 +39,7 @@ export class Reimbursementservice
   }
 
   createReimbursement(formData){
-     return this.http.post(environment.baseUrl+'reimbursement/',formData,{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+     return this.http.post(environment.baseUrl+'reimbursements/',formData,{ headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
       "Content-Type": 'application/json'})})
   }
 

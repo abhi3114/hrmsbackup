@@ -58,23 +58,38 @@ export class ReimbursementComponent implements OnInit {
     ignoreBackdropClick: true
   };
 
+  componentmonth:any;
+  componentyear:any;
+
   constructor(private modalService: BsModalService,private remService:Reimbursementservice,public toastr: NotificationService)
   {
     this.form = new FormGroup({
       category: new FormControl('', [Validators.required])
     });
-    
+
     this.rembursementTableOptions = {
       pagingType: 'full_numbers',
       lengthMenu: [[10, 20, 50, -1],
       [10, 20, 50, "All"]]
     };
-    
+
     this.reimbursementform = new FormGroup({
       month: new FormControl('', [Validators.required]),
       year: new FormControl('', [Validators.required]),
     });
 
+    this.reimbursementform.controls.year.value == "" || this.reimbursementform.controls.month.value == ""  ? this.getUnapprovedData(this.currentyear,this.cmonth) : this.getUnapprovedData(this.reimbursementform.controls.year.value,this.reimbursementform.controls.month.value)
+    if(this.reimbursementform.controls.year.value == "" || this.reimbursementform.controls.month.value == "")
+    {
+         this.componentyear=this.currentyear;
+         this.componentmonth=this.cmonth;
+    }
+    else
+    {
+      this.componentyear=this.reimbursementform.controls.year.value;
+      this.componentmonth=this.reimbursementform.controls.month.value;
+    }
+      console.log(this.componentyear,this.componentmonth)
     this.categoriesArray = [{"id": 1, "value": 'Ola/Uber'}, {"id": 2, "value": 'Local Travel'}, {"id":3, "value": 'Mobile Bill'}, {"id" :4, "value": 'Hotel Stay'}, {"id": 5, "value": 'Food'}, {"id": 6, "value": 'Electricity'}, {"id": 7, "value": 'Petrol/CNG'}, {"id" : 8, "value": 'Flight Tickets'} , {"id": 9, "value": 'Miscellaneous'}]
     this.getUnapprovedData();
     //console.log(this.cmonth,this.currentyear)
@@ -83,7 +98,7 @@ export class ReimbursementComponent implements OnInit {
   }
 
   ngOnInit(){
-   
+
     this.fields = []
     //console.log(this.reimbursementform.controls.month.value);
   }
@@ -102,6 +117,8 @@ export class ReimbursementComponent implements OnInit {
   submit(model) {
     console.log(model);
     this.remService.createReimbursement(model).subscribe(res => {
+      this.modalRef.hide();
+      this.toastr.showSuccess('Response Recorded');
       }, (err) => {
       this.toastr.showError(err.error);
       this.modalRef.hide();
@@ -151,8 +168,12 @@ export class ReimbursementComponent implements OnInit {
   }
 
   enableFormAccordingToCategory($event){
-    let selectedCategory = $event.target.value;
+    var selectedCategory = $event.target.value;
     let common_fields = [
+      {
+        key: 'category_id',
+        defaultValue: selectedCategory
+      },
       {
         key: 'amount',
         type: 'input',
@@ -209,10 +230,10 @@ export class ReimbursementComponent implements OnInit {
     var year;var month;
     this.openunapproved = true;
     this.openapproved = false;
-    this.openrejected = false;  
+    this.openrejected = false;
     this.rembursement_api_data=[];
     console.log( this.reimbursementform.controls.year.value)
-    $('#RembursementDataTables').DataTable().destroy();  
+    $('#RembursementDataTables').DataTable().destroy();
     this.reimbursementform.controls.year.value == "" ? year = this.currentyear : year =
      this.reimbursementform.controls.year.value
     this.reimbursementform.controls.month.value == "" ? month = this.cmonth : month = this.reimbursementform.controls.month.value
@@ -244,8 +265,7 @@ export class ReimbursementComponent implements OnInit {
    }
 
    getData()
-   {
-     
+   {     
     this.openrejected ? this.getRejectedData() : this.openapproved ? this.getApprovedData() :
     this.getUnapprovedData();
    
