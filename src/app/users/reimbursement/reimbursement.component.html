@@ -14,7 +14,7 @@
           </div>
           <div class="col-md-3">
             <select class="form-control" name="month" formControlName="month" required="true">
-              <option enabled>{{currentmonth}}</option>
+              <option value="{{cmonth}}" [selected]="true">{{currentmonth}}</option>
               <option *ngFor="let m of months" value="{{m.month_id}}">{{m.month_name}}</option>
             </select>
           </div>
@@ -52,8 +52,7 @@
             [dtOptions]="rembursementTableOptions" [dtTrigger]="reimbursementTableTrigger">
               <thead>
                 <tr>
-                  <th>Sr.No</th>                  
-                  <th>Month</th>
+                  <th>Sr.No</th>
                   <th>Category</th>
                   <th>Date</th>
                   <th>Purpose</th>
@@ -66,7 +65,6 @@
               <tbody>
                 <tr *ngFor="let l of rembursement_api_data">
                   <td>{{l.id}}</td>                  
-                  <td></td>
                   <td>{{l.category_name}}</td> 
                   <td>{{l.display_date}}</td>                 
                   <td>{{l.purpose}}</td>

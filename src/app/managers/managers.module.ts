@@ -22,6 +22,9 @@ import { RejectedOutdoorDutiesComponent } from './subordinate-outdoor-duties/rej
 import { RejectedMissingAttendanceComponent } from './subordinate-missing-attendance/rejected-missing-attendance/rejected-missing-attendance.component';
 import { RejectedComponent } from './subordinate-leaves/rejected/rejected.component';
 import { ReimbursementComponent } from './reimbursement/reimbursement.component';
+import { ApprovedReimbursementComponent } from './reimbursement/approved-reimbursement/approved-reimbursement.component';
+import { UnapprovedReimbursementComponent } from './reimbursement/unapproved-reimbursement/unapproved-reimbursement.component';
+import { RejectedReimbursementComponent } from './reimbursement/rejected-reimbursement/rejected-reimbursement.component';
 
 
 @NgModule({
@@ -53,6 +56,9 @@ import { ReimbursementComponent } from './reimbursement/reimbursement.component'
     RejectedMissingAttendanceComponent,
     RejectedComponent,
     ReimbursementComponent,
+    ApprovedReimbursementComponent,
+    UnapprovedReimbursementComponent,
+    RejectedReimbursementComponent,
 
     ]
     })

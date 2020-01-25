@@ -15,6 +15,10 @@ import { UnapprovedMissingAttendanceComponent } from './subordinate-missing-atte
 import { RejectedMissingAttendanceComponent } from './subordinate-missing-attendance/rejected-missing-attendance/rejected-missing-attendance.component';
 import { MasterComponent } from '../shared/components/master/master.component';
 import { ReimbursementComponent } from './reimbursement/reimbursement.component';
+import { ApprovedReimbursementComponent } from './reimbursement/approved-reimbursement/approved-reimbursement.component';
+import { UnapprovedReimbursementComponent } from './reimbursement/unapproved-reimbursement/unapproved-reimbursement.component';
+import { RejectedReimbursementComponent } from './reimbursement/rejected-reimbursement/rejected-reimbursement.component';
+
 
 const routes: Routes = [
   {
@@ -32,7 +36,9 @@ const routes: Routes = [
       {path: 'users/missing_attendances/approved', component: ApprovedMissingAttendanceComponent },
       {path: 'users/missing_attendances/unapproved', component: UnapprovedMissingAttendanceComponent },
       {path: 'users/missing_attendances/rejected', component: RejectedMissingAttendanceComponent },
-      {path: 'users/missing_attendances/reimbursement', component: ReimbursementComponent }
+      {path: 'users/reimbursement/approved', component: ApprovedReimbursementComponent },
+      {path: 'users/reimbursement/unapproved', component: UnapprovedReimbursementComponent },
+      {path: 'users/reimbursement/rejected', component: RejectedReimbursementComponent }
     ]
   }
 ];

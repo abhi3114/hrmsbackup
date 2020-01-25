@@ -217,13 +217,19 @@
             <li><a [routerLink]="['users/missing_attendances/rejected']"><i class="fa fa-times" aria-hidden="true"></i>Rejected</a></li>
           </ul>
           </li>
-            <li routerLinkActive="active" [routerLink]="['users/missing_attendances/reimbursement']" style="cursor: pointer;">
-          <a><i class="fa fa-calendar-times-o" aria-hidden="true"></i>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="can_access_manager" style="cursor: pointer;">
+          <a><i aria-hidden="true"></i>
           <span>Reimbursement</span>
           <span class="pull-right-container">
           <i class="fa fa-angle-down pull-right"></i>
           </span>
-          </a></li>
+          </a>
+          <ul class="treeview-menu">
+            <li><a [routerLink]="['users/reimbursement/approved']"><i class="fa fa-check" aria-hidden="true"></i>Approved</a></li>
+            <li><a [routerLink]="['users/reimbursement/unapproved']"><i class="fa fa-question" aria-hidden="true"></i>Unapproved</a></li>
+            <li><a [routerLink]="['users/reimbursement/rejected']"><i class="fa fa-times" aria-hidden="true"></i>Rejected</a></li>
+          </ul>
+          </li>
         </ul>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">

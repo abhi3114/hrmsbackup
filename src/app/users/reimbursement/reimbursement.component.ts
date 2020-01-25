@@ -198,9 +198,7 @@ export class ReimbursementComponent implements OnInit {
     this.reimbursementform.controls.month.value == "" ? month = this.cmonth : month = this.reimbursementform.controls.month.value
      this.remService.getApproved(month,year).subscribe((res:any) => {
      this.rembursement_api_data=res.reimbursements;
-      console.log(this.rembursement_api_data);
        this.reimbursementTableTrigger.next();
-      //this.leaveTableTrigger.next();
       }, (err) => {
         this.toastr.showError(err.error);
         });
@@ -220,9 +218,7 @@ export class ReimbursementComponent implements OnInit {
     this.reimbursementform.controls.month.value == "" ? month = this.cmonth : month = this.reimbursementform.controls.month.value
     this.remService.getUnapproved(month,year).subscribe((res:any) =>{
       this.rembursement_api_data=res.reimbursements;
-      console.log(this.rembursement_api_data);
       this.reimbursementTableTrigger.next();
-      //this.leaveTableTrigger.next();
       }, (err) => {
         this.toastr.showError(err.error);
         });
@@ -239,12 +235,9 @@ export class ReimbursementComponent implements OnInit {
      this.reimbursementform.controls.year.value == "" ? year = this.currentyear : year =
      this.reimbursementform.controls.year.value
     this.reimbursementform.controls.month.value == "" ? month = this.cmonth : month = this.reimbursementform.controls.month.value
-    console.log('my params',month,year)
     this.remService.getRejected(month,year).subscribe((res:any) => {
-      this.rembursement_api_data=res.reimbursements;
-      console.log(this.rembursement_api_data);
+      this.rembursement_api_data=res.reimbursements; 
       this.reimbursementTableTrigger.next();
-      //this.leavesData=this.leaves_data.leaves_data;
       }, (err) => {
         this.toastr.showError(err.error);
         });
@@ -253,14 +246,10 @@ export class ReimbursementComponent implements OnInit {
    getData()
    {
      
-
     this.openrejected ? this.getRejectedData() : this.openapproved ? this.getApprovedData() :
     this.getUnapprovedData();
-
-
-     //console.log(year,month);
    
-    }
+   }
 
     triggerOnChange(){
       console.log('hello')
