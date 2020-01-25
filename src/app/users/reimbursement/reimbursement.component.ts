@@ -78,17 +78,8 @@ export class ReimbursementComponent implements OnInit {
       year: new FormControl('', [Validators.required]),
     });
 
-    this.reimbursementform.controls.year.value == "" || this.reimbursementform.controls.month.value == ""  ? this.getUnapprovedData(this.currentyear,this.cmonth) : this.getUnapprovedData(this.reimbursementform.controls.year.value,this.reimbursementform.controls.month.value)
-    if(this.reimbursementform.controls.year.value == "" || this.reimbursementform.controls.month.value == "")
-    {
-         this.componentyear=this.currentyear;
-         this.componentmonth=this.cmonth;
-    }
-    else
-    {
-      this.componentyear=this.reimbursementform.controls.year.value;
-      this.componentmonth=this.reimbursementform.controls.month.value;
-    }
+   
+  
       console.log(this.componentyear,this.componentmonth)
     this.categoriesArray = [{"id": 1, "value": 'Ola/Uber'}, {"id": 2, "value": 'Local Travel'}, {"id":3, "value": 'Mobile Bill'}, {"id" :4, "value": 'Hotel Stay'}, {"id": 5, "value": 'Food'}, {"id": 6, "value": 'Electricity'}, {"id": 7, "value": 'Petrol/CNG'}, {"id" : 8, "value": 'Flight Tickets'} , {"id": 9, "value": 'Miscellaneous'}]
     this.getUnapprovedData();
