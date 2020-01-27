@@ -16,8 +16,10 @@ export class ApprovedReimbursementComponent implements OnInit {
 
   
   approvedreimbursementform:FormGroup;
+  rejectReimbursementForm:FormGroup;
   rembursement_api_data:any=[];
   user_approved_reimbursement_data:any[];
+  single_user_data:any[];
   currentmonth=moment().format('MMMM');
   cmonth=moment().month(this.currentmonth).format("M");
   currentyear=moment().format('YYYY');
@@ -46,6 +48,10 @@ export class ApprovedReimbursementComponent implements OnInit {
       year: new FormControl('', [Validators.required]),
     });
 
+      this.rejectReimbursementForm = new FormGroup({
+          comment: new FormControl('', [Validators.required]),
+        });
+
       this.reimbursementapprovedTableOptions = {
       pagingType: 'full_numbers',
       lengthMenu: [[10, 20, 50, -1],
@@ -55,8 +61,32 @@ export class ApprovedReimbursementComponent implements OnInit {
     this.getfilterData();
   }
 
-  ngOnInit() {
-    
+  ngOnInit() {}
+
+  rejectallreimbursement()
+  {
+    console.log(this.rejectReimbursementForm.controls.comment.value)
+    var rejectcheckstore = [];
+    $('.checkbox:checked').each(function() {
+      var id = $(this).attr('name');
+      rejectcheckstore.push(id);
+      });
+    var postdata = { "reimbursement_ids":  rejectcheckstore, reason: this.rejectReimbursementForm.controls.comment.value}    
+    if(rejectcheckstore != undefined && rejectcheckstore.length > 0)
+    {
+      this.api.sendForBulkReimbursementRejected(postdata).subscribe(res => {
+        rejectcheckstore = []; 
+        this.toastr.showSuccess('Reimbursement Rejected successfully');
+        this.rejectReimbursementForm.reset();
+        }, (err) => {
+        //$('.modal').remove();
+        this.toastr.showError(err.error);
+      });
+    }
+    else
+    {
+      this.toastr.CustomErrorMessage('Please check atleast one Late Mark');
+    } 
   }
 
   getfilterData()
@@ -89,10 +119,25 @@ export class ApprovedReimbursementComponent implements OnInit {
       //console.log(this.user_approved_reimbursement_data);
          }, (err) => {
       this.toastr.showError(err.error);
-         });
-     
-     
+         });        
 
+  }
+
+  rejectSinglereimbursement(r)
+  {
+      //console.log(r);
+      this.api.sendForSingleReimbursementRejection(r).subscribe(res => {
+        this.toastr.showSuccess('Reimbursement Rejected successfully');
+      }, (err) => {
+        this.toastr.showError(err.error);
+      });
+  }
+
+  approveviewreimbursement(template: TemplateRef<any>, r)
+  {
+    this.modalRef = this.modalService.show(template);
+    this.single_user_data=r;
+    console.log(this.single_user_data)    
   }
 
 }

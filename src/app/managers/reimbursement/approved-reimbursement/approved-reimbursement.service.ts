@@ -24,5 +24,23 @@ export class approvedReimbursementService
         "Content-Type": 'application/json'})})
   }
 
+  sendForSingleReimbursementRejection(reimbursement_id)
+  {    
+    return this.http.put(environment.baseUrl+ "managers/reimbursements/"+reimbursement_id+"/reject",reimbursement_id,
+    { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+      "Content-Type": 'application/json'})})
+  }
+
+   sendForBulkReimbursementRejected(params)
+  {  
+
+    console.log(params)
+    return this.http.put(environment.baseUrl+ "managers/reimbursements/bulk_reject",params,{
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
 
 }

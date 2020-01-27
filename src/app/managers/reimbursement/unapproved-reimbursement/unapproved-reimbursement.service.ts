@@ -22,5 +22,38 @@ export class unApprovedReimbursementService{
       {headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
         "Content-Type": 'application/json'})})
   }
+
+  sendForSingleReimbursementApproval(reimbursement_id)
+  {    
+    return this.http.put(environment.baseUrl+ "managers/reimbursements/"+reimbursement_id+"/approve",reimbursement_id,{
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'}})
+  }
+
+  sendForSingleReimbursementRejection(reimbursement_id)
+  {    
+    return this.http.put(environment.baseUrl+ "managers/reimbursements/"+reimbursement_id+"/reject",reimbursement_id,
+      { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'})})
+  }
   
+  sendForBulkReimbursementApproval(params)
+  {      
+    return this.http.put(environment.baseUrl+ "managers/reimbursements/bulk_approve",params,{
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
+  sendForBulkReimbursementRejected(params)
+  {     
+    return this.http.put(environment.baseUrl+ "managers/reimbursements/bulk_reject",params,{
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'
+      }
+    })
+  }
 }

@@ -18,6 +18,7 @@ export class UnapprovedReimbursementComponent implements OnInit
   rembursement_api_data:any=[];
   user_unapproved_reimbursement_data:any[];
   unapprovedreimbursementform:FormGroup;
+  approverejectreimbursementform:FormGroup;
   currentmonth=moment().format('MMMM');
   cmonth=moment().month(this.currentmonth).format("M");
   currentyear=moment().format('YYYY');
@@ -45,6 +46,9 @@ export class UnapprovedReimbursementComponent implements OnInit
       year: new FormControl('', [Validators.required]),
     });
     this.getfilterData();
+    this.approverejectreimbursementform = new FormGroup({
+      comment: new FormControl('', [Validators.required])
+    });
   }
 
   ngOnInit() {}
@@ -54,8 +58,8 @@ export class UnapprovedReimbursementComponent implements OnInit
     var year;var month; 
     $('#UnapprovedRembursementDataTables').DataTable().destroy();   
     this.unapprovedreimbursementform.controls.year.value == "" ? year = this.currentyear : year =
-     this.unapprovedreimbursementform.controls.year.value
-     this.unapprovedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
+    this.unapprovedreimbursementform.controls.year.value
+    this.unapprovedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
     this.unapprovedreimbursementform.controls.month.value    
     this.api.getUnapprovedService(year,month).subscribe((res:any) => {
      this.rembursement_api_data=res;      
@@ -66,6 +70,55 @@ export class UnapprovedReimbursementComponent implements OnInit
     
   }
 
+  approveallreimbursement()
+  {
+    var approvecheckstore = [];
+    $('.checkbox:checked').each(function() {
+      var id = $(this).attr('name');
+      approvecheckstore.push(id);
+      });
+    var postdata = { "reimbursement_ids":  approvecheckstore, reason: this.approverejectreimbursementform.controls.comment.value}    
+    if(approvecheckstore != undefined && approvecheckstore.length > 0)
+    {
+      this.api.sendForBulkReimbursementApproval(postdata).subscribe(res => {
+        approvecheckstore = []; 
+        this.toastr.showSuccess('Reimbursement approved successfully');
+        this.approverejectreimbursementform.reset();
+        }, (err) => {
+        //$('.modal').remove();
+        this.toastr.showError(err.error);
+      });
+    }
+    else
+    {
+      this.toastr.CustomErrorMessage('Please check atleast one Late Mark');
+    } 
+  }
+
+  rejectallreimbursement()
+  { 
+    var rejectcheckstore = [];
+    $('.checkbox:checked').each(function() {
+      var id = $(this).attr('name');
+      rejectcheckstore.push(id);
+      });
+    var postdata = { "reimbursement_ids":  rejectcheckstore, reason: this.approverejectreimbursementform.controls.comment.value}    
+    if(rejectcheckstore != undefined && rejectcheckstore.length > 0)
+    {
+      this.api.sendForBulkReimbursementRejected(postdata).subscribe(res => {
+        rejectcheckstore = []; 
+        this.toastr.showSuccess('Reimbursement Rejected successfully');
+        this.approverejectreimbursementform.reset();
+        }, (err) => {
+        //$('.modal').remove();
+        this.toastr.showError(err.error);
+      });
+    }
+    else
+    {
+      this.toastr.CustomErrorMessage('Please check atleast one Late Mark');
+    } 
+  }
   userrembursementList(template: TemplateRef<any>, r)
     {
       this.modalRef = this.modalService.show(template);
@@ -82,7 +135,27 @@ export class UnapprovedReimbursementComponent implements OnInit
        }, (err) => {
          this.toastr.showError(err.error);
        });
-
     }
+
+  approveSinglereimbursement(r)
+  {
+      this.api.sendForSingleReimbursementApproval(r).subscribe(res => {
+        this.toastr.showSuccess('Reimbursement Approved successfully');
+    }, (err) => {
+      this.toastr.showError(err.error);
+    });
+  }
+
+  rejectSinglereimbursement(r)
+  {
+      //console.log(r);
+      this.api.sendForSingleReimbursementRejection(r).subscribe(res => {
+        this.toastr.showSuccess('Reimbursement Rejected successfully');
+      }, (err) => {
+        this.toastr.showError(err.error);
+      });
+  }
+
+  
 
 }

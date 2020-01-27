@@ -61,7 +61,7 @@
       <div class="col-md-12">
         <div class="form-group">
           <label>Reason<sup style="color:red;">*</sup></label>
-          <input name="puropse" type='text' class="form-control"[(ngModel)]="updateLateMarksData.comment"  formControlName="comment" required [class.error1]="!updateLateMarksForm.controls.comment.valid && updateLateMarksForm.controls.comment.dirty" />
+          <input name="purpose" type='text' class="form-control" [(ngModel)]="updateLateMarksData.comment"  formControlName="comment" required [class.error1]="!updateLateMarksForm.controls.comment.valid && updateLateMarksForm.controls.comment.dirty" />
           <div *ngIf="( updateLateMarksForm.get('comment').hasError('required') ) && updateLateMarksForm.get('comment').touched">
             <div class="error" *ngIf="updateLateMarksForm.get('comment').hasError('required') && updateLateMarksForm.get('comment').touched">
               This field is mandatory
