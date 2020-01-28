@@ -24,6 +24,8 @@ export class ReimbursementComponent implements OnInit {
   form_fields:any=[];
   categoriesArray:any=[];
   reimbursementform:FormGroup;
+  mySelectedFiles:any=[];
+  base64: any;
   reimbursementformdata={month:'',year:''};
   rembursement_api_data:any;
   modalRef: BsModalRef;
@@ -31,6 +33,9 @@ export class ReimbursementComponent implements OnInit {
   openunapproved: boolean = false;
   openrejected: boolean = false;
   rembursementTableOptions: DataTables.Settings = {};
+  responseData = { file: '' };
+  errorInvalidFile:boolean;
+  errorLargeFile:boolean;
   reimbursementTableTrigger: Subject<any> = new Subject();
   //moment data used while login
   currentmonth=moment().format('MMMM');
@@ -105,6 +110,8 @@ export class ReimbursementComponent implements OnInit {
     if ($('.client_name').val().toString().length > 0){
       model['client_name'] = $('.client_name').val()
     }
+    model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
+    model["attachment_base64"] =  this.base64
     console.log(this.model);
     this.remService.createReimbursement(model).subscribe(res => {
       this.modalRef.hide();
@@ -186,7 +193,8 @@ export class ReimbursementComponent implements OnInit {
         key: 'file',
         type: 'file',
         templateOptions: {
-          label: 'Attach Bill'
+          label: 'Attach Bill',
+          change: (field, $event) => this.handleFileInput($event.target.files)
         }
       }
     ]
@@ -265,8 +273,43 @@ export class ReimbursementComponent implements OnInit {
     console.warn(model);
   }
 
-    triggerOnChange(){
-      console.log('hello')
+  triggerOnChange(){
+    console.log('hello')
+  }
+
+  handleFileInput(file) {
+    if (file.length > 0) {
+      const extension = this.getFileExtension(file[0].name);
+      const size: number = (file[0].size / (1024 * 1024));
+      if (extension === 'jpg' || extension === 'png' || extension === 'jpeg' || extension === 'xlsx' || extension === 'pdf' || extension === 'xls' || extension === 'JPG' && size < 5.00) {
+        this.mySelectedFiles.push(file[0])
+        this.errorInvalidFile = false;
+        this.errorLargeFile = false;
+        this.responseData.file = this.mySelectedFiles[0];
+        console.log('File', this.responseData.file)
+        this.readThis(this.mySelectedFiles[0]);
+      }
+      else if (size > 5.00) {
+        this.errorInvalidFile = false;
+        this.errorLargeFile = true;
+      }
+      else {
+        this.errorInvalidFile = true;
+        this.errorLargeFile = false;
+      }
     }
+  }
+
+  getFileExtension(filename) {
+    return filename.slice((filename.lastIndexOf('.') - 1 >>> 0) + 2);
+  }
+
+  async readThis(inputValue: any) {
+    var myReader: FileReader = new FileReader();
+    myReader.readAsDataURL(inputValue);
+    myReader.onloadend = (e) => {
+      this.base64 = myReader.result;
+    }
+  }
 
 }

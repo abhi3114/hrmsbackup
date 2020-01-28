@@ -76,7 +76,7 @@ import { CustomFieldSelectComponent } from './reimbursement/custom-field-select/
   DeviceDetectorModule.forRoot(),
   FormlyModule.forRoot({
     types: [
-      { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
+      { name: 'file', component: FormlyFieldFile},
       { name: 'date', component: DatePickerComponent },
       { name: 'custom-select', component: CustomFieldSelectComponent }
     ],
