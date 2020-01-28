@@ -24,4 +24,12 @@ export class rejectedReimbursementService
         "Content-Type": 'application/json'})})
   } 
 
+  sendForSingleReimbursementApproval(reimbursement_id)
+  {
+    return this.http.put(environment.baseUrl+ "managers/reimbursements/"+reimbursement_id+"/approve",reimbursement_id,{
+      headers: {
+        "Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'}})
+  }
+
 }

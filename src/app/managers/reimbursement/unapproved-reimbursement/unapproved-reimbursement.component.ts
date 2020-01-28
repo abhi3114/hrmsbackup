@@ -17,6 +17,7 @@ export class UnapprovedReimbursementComponent implements OnInit
 
   rembursement_api_data:any=[];
   user_unapproved_reimbursement_data:any[];
+  single_user_data:any[];
   unapprovedreimbursementform:FormGroup;
   approverejectreimbursementform:FormGroup;
   currentmonth=moment().format('MMMM');
@@ -39,6 +40,7 @@ export class UnapprovedReimbursementComponent implements OnInit
  reimbursementunapprovedTableOptions: DataTables.Settings = {};
  reimbursementunapprovedTableTrigger: Subject<any> = new Subject();
  modalRef: BsModalRef;
+ splitmonthyear:any=[];
 
   constructor(private api:unApprovedReimbursementService,public toastr: NotificationService,private modalService: BsModalService) { 
     this.unapprovedreimbursementform = new FormGroup({
@@ -91,7 +93,7 @@ export class UnapprovedReimbursementComponent implements OnInit
     }
     else
     {
-      this.toastr.CustomErrorMessage('Please check atleast one Late Mark');
+      this.toastr.CustomErrorMessage('Please check atleast one Reimbursement');
     } 
   }
 
@@ -116,7 +118,7 @@ export class UnapprovedReimbursementComponent implements OnInit
     }
     else
     {
-      this.toastr.CustomErrorMessage('Please check atleast one Late Mark');
+      this.toastr.CustomErrorMessage('Please check atleast one Reimbursement');
     } 
   }
   userrembursementList(template: TemplateRef<any>, r)
@@ -154,6 +156,14 @@ export class UnapprovedReimbursementComponent implements OnInit
       }, (err) => {
         this.toastr.showError(err.error);
       });
+  }
+
+  unapproveviewreimbursement(template: TemplateRef<any>, r)
+  {
+      this.modalRef = this.modalService.show(template);
+      this.single_user_data=r;
+      var spiltmonthandyear=(r.display_month_year).split('-');
+      this.splitmonthyear=spiltmonthandyear;
   }
 
   

@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
+
 @Component({
   selector: 'app-approved-reimbursement',
   templateUrl: './approved-reimbursement.component.html',
@@ -16,7 +17,7 @@ export class ApprovedReimbursementComponent implements OnInit {
 
   
   approvedreimbursementform:FormGroup;
-  rejectReimbursementForm:FormGroup;
+  approvemodalform:FormGroup;
   rembursement_api_data:any=[];
   user_approved_reimbursement_data:any[];
   single_user_data:any[];
@@ -40,6 +41,8 @@ export class ApprovedReimbursementComponent implements OnInit {
  reimbursementapprovedTableOptions: DataTables.Settings = {};
  reimbursementapprovedTableTrigger: Subject<any> = new Subject();
  modalRef: BsModalRef;
+ splitmonthyear:any;
+
 
 
   constructor(private api:approvedReimbursementService,public toastr: NotificationService, private modalService: BsModalService) { 
@@ -48,96 +51,85 @@ export class ApprovedReimbursementComponent implements OnInit {
       year: new FormControl('', [Validators.required]),
     });
 
-      this.rejectReimbursementForm = new FormGroup({
-          comment: new FormControl('', [Validators.required]),
-        });
-
       this.reimbursementapprovedTableOptions = {
       pagingType: 'full_numbers',
       lengthMenu: [[10, 20, 50, -1],
       [10, 20, 50, "All"]]
     };
 
+      this.approvemodalform= new FormGroup({
+          comment: new FormControl('', [Validators.required]),
+        });
+
     this.getfilterData();
+
   }
 
   ngOnInit() {}
 
-  rejectallreimbursement()
-  {
-    console.log(this.rejectReimbursementForm.controls.comment.value)
-    var rejectcheckstore = [];
-    $('.checkbox:checked').each(function() {
-      var id = $(this).attr('name');
-      rejectcheckstore.push(id);
-      });
-    var postdata = { "reimbursement_ids":  rejectcheckstore, reason: this.rejectReimbursementForm.controls.comment.value}    
-    if(rejectcheckstore != undefined && rejectcheckstore.length > 0)
-    {
-      this.api.sendForBulkReimbursementRejected(postdata).subscribe(res => {
-        rejectcheckstore = []; 
-        this.toastr.showSuccess('Reimbursement Rejected successfully');
-        this.rejectReimbursementForm.reset();
-        }, (err) => {
-        //$('.modal').remove();
-        this.toastr.showError(err.error);
-      });
-    }
-    else
-    {
-      this.toastr.CustomErrorMessage('Please check atleast one Late Mark');
-    } 
-  }
+  
 
   getfilterData()
   {
     var year;var month;
     $('#ApprovedRembursementDataTables').DataTable().destroy();
     this.approvedreimbursementform.controls.year.value == "" ? year = this.currentyear : year =
-     this.approvedreimbursementform.controls.year.value
-     this.approvedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
-     this.approvedreimbursementform.controls.month.value     
-     this.api.getApprovedService(year,month).subscribe((res:any) => {
-     this.rembursement_api_data=res;      
-      this.reimbursementapprovedTableTrigger.next();       
-      }, (err) => {
-        this.toastr.showError(err.error);
-        });    
+    this.approvedreimbursementform.controls.year.value
+    this.approvedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
+    this.approvedreimbursementform.controls.month.value
+    this.api.getApprovedService(year,month).subscribe((res:any) => {
+    this.rembursement_api_data=res;
+    this.reimbursementapprovedTableTrigger.next();
+    }, (err) => {
+    this.toastr.showError(err.error);
+    });
   }
 
   userrembursementList(template: TemplateRef<any>, r)
   {
-     this.modalRef = this.modalService.show(template);
-     var year;var month;
-     this.approvedreimbursementform.controls.year.value == "" ? year = this.currentyear : year =
-     this.approvedreimbursementform.controls.year.value
-     this.approvedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
-     this.approvedreimbursementform.controls.month.value
-     var user_id=r.user_id;
-      this.api.getUserRembursementData(year,month, user_id).subscribe((res:any) => {
-      this.user_approved_reimbursement_data=res.reimbursements;  
+    this.modalRef = this.modalService.show(template);
+    var year;var month;
+    this.approvedreimbursementform.controls.year.value == "" ? year = this.currentyear : year =
+    this.approvedreimbursementform.controls.year.value
+    this.approvedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
+    this.approvedreimbursementform.controls.month.value
+    var user_id=r.user_id;
+    this.api.getUserRembursementData(year,month, user_id).subscribe((res:any) => {
+    this.user_approved_reimbursement_data=res.reimbursements;
       //console.log(this.user_approved_reimbursement_data);
-         }, (err) => {
-      this.toastr.showError(err.error);
-         });        
+    }, (err) => {
+    this.toastr.showError(err.error);
+    });
 
   }
 
   rejectSinglereimbursement(r)
   {
-      //console.log(r);
+      //console.log(r)
+   
+      var comment=this.approvemodalform.controls.comment.value;
       this.api.sendForSingleReimbursementRejection(r).subscribe(res => {
         this.toastr.showSuccess('Reimbursement Rejected successfully');
       }, (err) => {
         this.toastr.showError(err.error);
-      });
+      }); 
+
   }
 
   approveviewreimbursement(template: TemplateRef<any>, r)
   {
     this.modalRef = this.modalService.show(template);
     this.single_user_data=r;
-    console.log(this.single_user_data)    
+    var spiltmonthandyear=(r.display_month_year).split('-');
+    this.splitmonthyear=spiltmonthandyear;
+    
+  }
+
+  approvesavecomment()
+  {
+    console.log("hii")
+    /*if(approvecheckstore != undefined)
+    {}*/    
   }
 
 }

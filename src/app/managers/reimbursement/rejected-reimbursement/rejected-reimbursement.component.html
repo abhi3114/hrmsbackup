@@ -57,18 +57,20 @@
         <table class="table table-striped table-hover" >
           <thead>
             <tr>
+              <th>Id</th>
               <th>Name</th>
               <th>Month/Year</th>
               <th>Category</th>
               <th>Date</th>
               <th>Purpose</th>
-              <th>Manager_Comment</th>
+              <th>Manager Comment</th>
               <th>Amount</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let ur of user_rejected_reimbursement_data">
+              <td>{{ur.id}}</td>
               <td>{{ur.user_name}}</td>
               <td>{{ur.display_month_year}}</td>
               <td>{{ur.category_name}}</td>
@@ -76,11 +78,88 @@
               <td>{{ur.purpose}}</td>
               <td>{{ur.comment}}</td>
               <td>{{ur.amount}}</td>
-              <td></td>
+              <td>
+                <a style="cursor: pointer;"><i class="fa fa-eye field-icon toggle-password" aria-hidden="true" 
+                  (click)="rejectviewreimbursement(showrejectedrembursementdata,ur)"></i></a>
+                <!-- <a style="cursor: pointer;" (click)="approveSinglereimbursement(ur.id)"><i class="fa fa-check" aria-hidden="true"></i></a> -->
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
+</ng-template>
+<ng-template #showrejectedrembursementdata>
+  <div class="modal-content">
+    <form>
+      <div class="modal-header ticket-popup-header">
+        <h4 class="modal-title pull-left">Reimbursement Claim</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Name</label><br>
+            <span>{{single_user_data.user_name}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Employee Code</label><br>
+            <span>{{single_user_data.display_month_year}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Department</label><br>
+            <span>{{single_user_data.display_month_year}}</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Month</label><br>
+            <span>{{splitmonthyear[0]}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Year</label><br>
+            <span>{{splitmonthyear[1]}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Category</label><br>
+            <span>{{single_user_data.category_name}}</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Amount</label><br>
+            <span>{{single_user_data.amount}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Date</label><br>
+            <span>{{single_user_data.display_date}}</span>
+          </div>
+          <div class="form-group col-md-4">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Purpose</label><br>
+            <span>{{single_user_data.purpose}}</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Attached Bill:</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Comment:</label>
+            <textarea cols="75" rows="3" required="true"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" style="margin-top: 10px; margin-left: 5px; text-align: center;">
+            <button type="submit" class="btn btn-primary" (click)="approveSinglereimbursement(single_user_data.id)">Approve</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </ng-template>

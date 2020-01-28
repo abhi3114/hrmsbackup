@@ -18,6 +18,7 @@ export class RejectedReimbursementComponent implements OnInit {
   rejectedreimbursementform:FormGroup;
   rembursement_api_data:any=[];
   user_rejected_reimbursement_data:any[];
+  single_user_data:any=[];
   currentmonth=moment().format('MMMM');
   cmonth=moment().month(this.currentmonth).format("M");
   currentyear=moment().format('YYYY');
@@ -38,6 +39,7 @@ export class RejectedReimbursementComponent implements OnInit {
  reimbursementrejectedTableOptions: DataTables.Settings = {};
  reimbursementrejectedTableTrigger: Subject<any> = new Subject();
  modalRef: BsModalRef;
+ splitmonthyear:any;
 
   constructor(private api:rejectedReimbursementService,private toastr:NotificationService,private modalService: BsModalService) 
   {
@@ -89,6 +91,24 @@ export class RejectedReimbursementComponent implements OnInit {
     }, (err) => {
       this.toastr.showError(err.error);
     });
+   }
+
+   rejectviewreimbursement(template: TemplateRef<any>, r)
+   {
+      this.modalRef = this.modalService.show(template);
+      this.single_user_data=r;
+      var spiltmonthandyear=(r.display_month_year).split('-');
+      this.splitmonthyear=spiltmonthandyear;
+     //console.log(this.single_user_data)
+   }
+
+   approveSinglereimbursement(r)
+   {
+     this.api.sendForSingleReimbursementApproval(r).subscribe(res => {
+     this.toastr.showSuccess('Reimbursement Approved successfully');
+         }, (err) => {
+          this.toastr.showError(err.error);
+         });
    }
 
 }
