@@ -77,15 +77,9 @@ export class ReimbursementComponent implements OnInit {
       month: new FormControl('', [Validators.required]),
       year: new FormControl('', [Validators.required]),
     });
-
-   
-  
-      console.log(this.componentyear,this.componentmonth)
+    console.log(this.componentyear,this.componentmonth)
     this.categoriesArray = [{"id": 1, "value": 'Ola/Uber'}, {"id": 2, "value": 'Local Travel'}, {"id":3, "value": 'Mobile Bill'}, {"id" :4, "value": 'Hotel Stay'}, {"id": 5, "value": 'Food'}, {"id": 6, "value": 'Electricity'}, {"id": 7, "value": 'Petrol/CNG'}, {"id" : 8, "value": 'Flight Tickets'} , {"id": 9, "value": 'Miscellaneous'}]
     this.getUnapprovedData();
-    //console.log(this.cmonth,this.currentyear)
-    //this.getUnapprovedData(this.cmonth,this.currentyear);
-    //this.getRejectedData(this.cmonth,this.currentyear);
   }
 
   ngOnInit(){
@@ -110,6 +104,7 @@ export class ReimbursementComponent implements OnInit {
     this.remService.createReimbursement(model).subscribe(res => {
       this.modalRef.hide();
       this.toastr.showSuccess('Response Recorded');
+      this.getUnapprovedData();
       }, (err) => {
       this.toastr.showError(err.error);
       this.modalRef.hide();
@@ -248,7 +243,7 @@ export class ReimbursementComponent implements OnInit {
      this.reimbursementform.controls.year.value
     this.reimbursementform.controls.month.value == "" ? month = this.cmonth : month = this.reimbursementform.controls.month.value
     this.remService.getRejected(month,year).subscribe((res:any) => {
-      this.rembursement_api_data=res.reimbursements; 
+      this.rembursement_api_data=res.reimbursements;
       this.reimbursementTableTrigger.next();
       }, (err) => {
         this.toastr.showError(err.error);
@@ -256,10 +251,10 @@ export class ReimbursementComponent implements OnInit {
    }
 
    getData()
-   {     
+   {
     this.openrejected ? this.getRejectedData() : this.openapproved ? this.getApprovedData() :
     this.getUnapprovedData();
-   
+
    }
 
     triggerOnChange(){

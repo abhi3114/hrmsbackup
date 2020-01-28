@@ -40,7 +40,7 @@ export class ReimbursementComponent implements OnInit
   years=[2020,2019,2018,2017];
   /*unapprovedTableTrigger: Subject<any> = new Subject();
   rejectedTableTrigger: Subject<any> = new Subject();*/
-  constructor(private api : ReimbursementManagerService,public toastr: NotificationService) 
+  constructor(private api : ReimbursementManagerService,public toastr: NotificationService)
   {
   this.getApprovedData();
   }
@@ -70,7 +70,7 @@ export class ReimbursementComponent implements OnInit
    {
     this.openunapproved = true;
     this.openapproved = false;
-    this.openrejected = false;    
+    this.openrejected = false;
     this.api.getUnapproved().subscribe(res => {
       this.rembursement_api_data=res;
       console.log(this.rembursement_api_data);
@@ -81,7 +81,7 @@ export class ReimbursementComponent implements OnInit
         });
 
    }
-   getRejectedData() 
+   getRejectedData()
    {
     this.openrejected = true;
     this.openapproved = false;
@@ -96,26 +96,24 @@ export class ReimbursementComponent implements OnInit
         });
    }
    pushData()
-   {   
+   {
       //this.rembursementformdata.month=this.rembursementform.controls.month.value;
       //this.rembursementformdata.year=this.rembursementform.controls.year.value;
       //console.log(this.rembursementformdata.month,this.rembursementformdata.year);
       var year=this.rembursementform.controls.year.value;
       var month=this.rembursementform.controls.month.value;
-     
-      this.openapproved = true;
+
+    this.openapproved = true;
     this.openunapproved = false;
     this.openrejected = false;
     this.api.getApproved(month,year).subscribe((res:any) => {
-      
+
       this.rembursement_api_data=res;
       console.log(this.rembursement_api_data);
-      //this.leavesData=this.leaves_data.leaves_data;
-      //this.leaveTableTrigger.next();
-      }, (err) => {
-        this.toastr.showError(err.error);
-        });
-      
+    }, (err) => {
+      this.toastr.showError(err.error);
+    });
+
    }
 
 }
