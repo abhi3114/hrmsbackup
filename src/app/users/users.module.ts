@@ -50,6 +50,7 @@ import { ReimbursementComponent } from './reimbursement/reimbursement.component'
 import { NewClaimComponent } from './reimbursement/new-claim/new-claim.component';
 import { FormlyFieldFile } from './reimbursement/file-type.component';
 import { DatePickerComponent } from './reimbursement/date-picker/date-picker.component';
+import { CustomFieldSelectComponent } from './reimbursement/custom-field-select/custom-field-select.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { DatePickerComponent } from './reimbursement/date-picker/date-picker.com
   FormlyModule.forRoot({
     types: [
       { name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
-      { name: 'date', component: DatePickerComponent }
+      { name: 'date', component: DatePickerComponent },
+      { name: 'custom-select', component: CustomFieldSelectComponent }
     ],
   }),
 ],
@@ -114,7 +116,8 @@ import { DatePickerComponent } from './reimbursement/date-picker/date-picker.com
   ReimbursementComponent,
   NewClaimComponent,
   FormlyFieldFile,
-  DatePickerComponent
+  DatePickerComponent,
+  CustomFieldSelectComponent
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })

@@ -17,7 +17,7 @@ import * as moment from 'moment';
 export class ReimbursementComponent implements OnInit {
   form = new FormGroup({});
   today = new Date();
-  model = { expense_for: '', title: '' };
+  model = {};
   fields: FormlyFieldConfig[]
   api_data:any;
   canShowFormAttribute:boolean=false;
@@ -64,7 +64,8 @@ export class ReimbursementComponent implements OnInit {
   constructor(private modalService: BsModalService,private remService:Reimbursementservice,public toastr: NotificationService)
   {
     this.form = new FormGroup({
-      category: new FormControl('', [Validators.required])
+      category: new FormControl('', [Validators.required]),
+      client_name: new FormControl('', [Validators.required])
     });
 
     this.rembursementTableOptions = {
@@ -101,6 +102,10 @@ export class ReimbursementComponent implements OnInit {
 
   submit(model) {
     console.log(model);
+    if ($('.client_name').val().toString().length > 0){
+      model['client_name'] = $('.client_name').val()
+    }
+    console.log(this.model);
     this.remService.createReimbursement(model).subscribe(res => {
       this.modalRef.hide();
       this.toastr.showSuccess('Response Recorded');
@@ -120,29 +125,28 @@ export class ReimbursementComponent implements OnInit {
   this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
     this.api_data=res;
     this.api_data.forEach(data => {
-      var type = (data.data_type == 'date') ? 'date' : data.data_type
-      if (data.options != undefined){
-        data.options.forEach(option => {
-          optionArr.push(
-            {label: option, value: option}
-          )
-        })
-      }
-      var commonHash = {
-        key: data.title,
-        type: type,
-        templateOptions: {
-          label: data.label,
-          placeholder: data.label,
-          required: data.required,
-          options: optionArr,
-          expressionProperties: {
-            'templateOptions.min': 'formState.limitDate ? ${this.today} : null'
+      if (data.title != 'client_name'){
+        var type = (data.data_type == 'date') ? 'date' : ((data.title == 'expense_for') ? 'custom-select' : data.data_type)
+        if (data.options != undefined){
+          data.options.forEach(option => {
+            optionArr.push(
+              {label: option, value: option}
+            )
+          })
+        }
+        var commonHash = {
+          key: data.title,
+          type: type,
+          templateOptions: {
+            label: data.label,
+            placeholder: data.label,
+            required: data.required,
+            options: optionArr
           }
         }
+        this.form_fields.push(commonHash)
+        this.form_fields;
       }
-      this.form_fields.push(commonHash)
-      this.form_fields;
     });
   },(err) => {
   });
@@ -256,6 +260,10 @@ export class ReimbursementComponent implements OnInit {
     this.getUnapprovedData();
 
    }
+
+  modelChange(model) {
+    console.warn(model);
+  }
 
     triggerOnChange(){
       console.log('hello')
