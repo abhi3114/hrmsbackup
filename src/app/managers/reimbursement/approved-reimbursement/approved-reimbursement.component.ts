@@ -41,6 +41,7 @@ export class ApprovedReimbursementComponent implements OnInit {
  reimbursementapprovedTableOptions: DataTables.Settings = {};
  reimbursementapprovedTableTrigger: Subject<any> = new Subject();
  modalRef: BsModalRef;
+ modalRefchild: BsModalRef;
  splitmonthyear:any;
 
 
@@ -112,13 +113,14 @@ export class ApprovedReimbursementComponent implements OnInit {
         this.toastr.showSuccess('Reimbursement Rejected successfully');
       }, (err) => {
         this.toastr.showError(err.error);
-      }); 
+      });
+      this.modalRefchild.hide();
 
   }
 
   approveviewreimbursement(template: TemplateRef<any>, r)
   {
-    this.modalRef = this.modalService.show(template);
+    this.modalRefchild = this.modalService.show(template);
     this.single_user_data=r;
     var spiltmonthandyear=(r.display_month_year).split('-');
     this.splitmonthyear=spiltmonthandyear;

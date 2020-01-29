@@ -77,17 +77,14 @@
             <li><a [routerLink]="['leaves/rejected']"><i class="fa fa-times" aria-hidden="true"></i>Rejected </a></li>
           </ul>
         </li>
-         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
-          <a><i class="fa custom-icon" aria-hidden="true"><img src=""></i>
-          <span>Reimbursement</span>
-          <span class="pull-right-container">
-          <i class="fa fa-angle-down pull-right"></i>
-          </span>
+         <li routerLinkActive="active" [routerLink]="['reimbursement']" style="cursor: pointer;">
+          <a><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/reimbursement.png"></i>
+          <span>Reimbursement</span>        
           </a>
-          <ul class="treeview-menu">
+          <!-- <ul class="treeview-menu">
             <li><a [routerLink]="['reimbursement']"><i class="" aria-hidden="true"></i>Assigned to me </a></li>
             <li><a [routerLink]="['reimbursement']"><i class="" aria-hidden="true"></i>My claims</a></li>
-          </ul>
+          </ul> -->
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;">
           <a><i class="fa custom-icon" aria-hidden="true"><img src="assets/images/my_outdoor_duties.png"></i>
@@ -218,7 +215,7 @@
           </ul>
           </li>
           <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="can_access_manager" style="cursor: pointer;">
-          <a><i aria-hidden="true"></i>
+          <a><i class="fa fa-rupee" aria-hidden="true"></i>
           <span>Reimbursement</span>
           <span class="pull-right-container">
           <i class="fa fa-angle-down pull-right"></i>

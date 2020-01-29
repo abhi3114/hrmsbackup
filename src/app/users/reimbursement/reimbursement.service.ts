@@ -43,4 +43,12 @@ export class Reimbursementservice
       "Content-Type": 'application/json'})})
   }
 
+  deletesingledata(reimbursement_id)
+  {
+    console.log(reimbursement_id);
+    return this.http.delete(environment.baseUrl+ "reimbursements/"+reimbursement_id,
+      { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'})})
+  }
+
 }

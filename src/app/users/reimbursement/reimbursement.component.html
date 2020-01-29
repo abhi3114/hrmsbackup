@@ -41,42 +41,40 @@
                   </li>
                   <li [ngClass]="{ 'active': openapproved==true }">
                     <a id="labelColor" role="button" (click)="getApprovedData()">Approved</a>
-                  </li>                  
+                  </li>
                   <li [ngClass]="{ 'active': openrejected==true }">
                     <a id="labelColor" role="button" (click)="getRejectedData()">Rejected</a>
                   </li>
                 </ul>
               </div>
             </div>
-            <table id="RembursementDataTables" class="table  table-bordered table-striped table-hover" datatable
-            [dtOptions]="rembursementTableOptions" [dtTrigger]="reimbursementTableTrigger">
-              <thead>
-                <tr>
-                  <th>Sr.No</th>
-                  <th>Category</th>
-                  <th>Date</th>
-                  <th>Purpose</th>
-                  <th>Manager Comment</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let l of rembursement_api_data">
-                  <td>{{l.id}}</td>                  
-                  <td>{{l.category_name}}</td>
-                  <td>{{l.display_date}}</td>
-                  <td>{{l.purpose}}</td>
-                  <td></td>
-                  <td>{{l.amount}}</td>
-                  <td>{{l.status}}</td>
-                  <td></td>
-                  <!-- <span *ngfor="let d of l.data"></span>
-                  <td>d.claim_from</td>
-                  <td>d.claim_to</td>    -->
-                </tr>
-              </tbody>
+            <table id="RembursementDataTables" class="table table-bordered table-striped table-hover" datatable [dtOptions]="rembursementTableOptions" [dtTrigger]="reimbursementTableTrigger">
+            <thead>
+              <tr>
+                <th>Sr.No</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Purpose</th>
+                <th>Manager Comment</th>
+                <th>Amount</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let l of rembursement_api_data">
+                <td>{{l.id}}</td>
+                <td>{{l.display_date}}</td>
+                <td>{{l.category_name}}</td>
+                <td>{{l.purpose}}</td>
+                <td></td>
+                <td>{{l.amount}}</td>
+                <td>
+                  <a style="cursor: pointer;"><i class="fa fa-eye field-icon toggle-password" aria-hidden="true" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)"></i></a>&nbsp;
+                  <!-- <a style="cursor: pointer;" *ngIf="openunapproved || openrejected"><i class="fa fa-pencil" aria-hidden="true" (click)="editreimbursementclaim(editreimbursementclaimmodal,l)"></i></a>&nbsp; -->
+                  <a  data-confirm="Are you sure to delete this item?" *ngIf="openunapproved"><i class="fa fa-trash" (click)="deletereimbursementsingledata(l)"></i></a>           
+                </td>
+              </tr>
+            </tbody>
             </table>
           </div>
         </div>
@@ -85,34 +83,88 @@
   </div>
 </div>
 <ng-template #responseTemplate>
- <div class="modal-header ticket-popup-header">
- <h4 class=" modal-title pull-left">New Reimbursement Claim</h4>
- <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
- <span aria-hidden="true">&times;</span>
- </button>
-</div>
- <div class="modal-body ticket-popup">
-   <form [formGroup]="form" (ngSubmit)="submit(model)">
-     <div class="form-group">
-       <label>Category<sup style="color:red;">*</sup></label>
-       <select name="category" (change)="enableFormAccordingToCategory($event)"
-       class="select2 form-control" style="width: 100%; height: 35px;" [class.error1]="!form.controls.category.valid && form.controls.category.dirty"
-       required>
-       <option value="" disabled="disabled">Select item</option>
-       <option *ngFor="let s of categoriesArray" value="{{s.id}}">{{s.value}}</option>
-       </select>
-       <div
-         *ngIf="(form.get( 'category').hasError( 'required') ) && form.get( 'category').touched">
-         <div class="error"
-           *ngIf="form.get( 'category').hasError( 'category') && form.get( 'category').touched">
-           This field is mandatory
-         </div>
-       </div>
-     </div>
-     <formly-form [model]="model" [fields]="fields">
-
-       <button type="submit" class="btn btn-default">Submit</button>
-     </formly-form>
-   </form>
- </div>
+  <div class="modal-header ticket-popup-header">
+    <h4 class=" modal-title pull-left">New Reimbursement Claim</h4>
+    <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body ticket-popup">
+    <form [formGroup]="form" (ngSubmit)="submit(model)">
+    <div class="form-group">
+      <label>Category<sup style="color:red;">*</sup></label>
+      <select name="category" (change)="enableFormAccordingToCategory($event)"
+      class="select2 form-control" style="width: 100%; height: 35px;" [class.error1]="!form.controls.category.valid && form.controls.category.dirty"
+      required>
+      <option value="" disabled="disabled">Select item</option>
+      <option *ngFor="let s of categoriesArray" value="{{s.id}}">{{s.value}}</option>
+      </select>
+      <div
+        *ngIf="(form.get( 'category').hasError( 'required') ) && form.get( 'category').touched">
+        <div class="error"
+          *ngIf="form.get( 'category').hasError( 'category') && form.get( 'category').touched">
+          This field is mandatory
+        </div>
+      </div>
+    </div>
+    <formly-form [model]="model" [fields]="fields">
+    <button type="submit" class="btn btn-default">Submit</button>
+    </formly-form>
+    </form>
+  </div>
+</ng-template>
+<ng-template #viewrembursementsingledatamodal>
+  <div class="modal-content" >
+    <form>
+      <div class="modal-header ticket-popup-header">
+        <h4 class="modal-title pull-left">Reimbursement Claim</h4>
+        <a><span class="fa fa-times pull-right" style="color: white;cursor:pointer;" (click)="closerembursementsingledatamodal()"></span></a>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Month</label><br>
+            <span>{{splitmonthyear[0]}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Year</label><br>
+            <span>{{splitmonthyear[1]}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Category</label><br>
+            <span>{{single_user_data.category_name}}</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Amount</label><br>
+            <span>{{single_user_data.amount}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Date</label><br>
+            <span>{{single_user_data.display_date}}</span>
+          </div>
+          <div class="form-group col-md-4">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Purpose</label><br>
+            <span>{{single_user_data.purpose}}</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Attached Bill</label>&nbsp;            
+            <a href="{{single_user_data.receipt}}" target='_blank' class="btn btn-primary">View File</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" style="text-align: center;">
+            <button type="button" class="btn btn-warning" (click)="closerembursementsingledatamodal()">Close</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </ng-template>

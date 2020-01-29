@@ -39,6 +39,7 @@ export class RejectedReimbursementComponent implements OnInit {
  reimbursementrejectedTableOptions: DataTables.Settings = {};
  reimbursementrejectedTableTrigger: Subject<any> = new Subject();
  modalRef: BsModalRef;
+ modalRefchild: BsModalRef;
  splitmonthyear:any;
 
   constructor(private api:rejectedReimbursementService,private toastr:NotificationService,private modalService: BsModalService) 
@@ -95,7 +96,7 @@ export class RejectedReimbursementComponent implements OnInit {
 
    rejectviewreimbursement(template: TemplateRef<any>, r)
    {
-      this.modalRef = this.modalService.show(template);
+      this.modalRefchild= this.modalService.show(template);
       this.single_user_data=r;
       var spiltmonthandyear=(r.display_month_year).split('-');
       this.splitmonthyear=spiltmonthandyear;
@@ -109,6 +110,7 @@ export class RejectedReimbursementComponent implements OnInit {
          }, (err) => {
           this.toastr.showError(err.error);
          });
+     this.modalRefchild.hide();
    }
 
 }
