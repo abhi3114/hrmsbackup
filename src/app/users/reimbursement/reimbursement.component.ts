@@ -132,7 +132,7 @@ export class ReimbursementComponent implements OnInit {
   configureFields(selectedCategory){
   this.form_fields = [
     {
-      fieldGroupClassName: 'row',
+      // fieldGroupClassName: 'row',
       fieldGroup: []
     }
   ];
@@ -178,7 +178,7 @@ export class ReimbursementComponent implements OnInit {
     var selectedCategory = $event.target.value;
     let common_fields = [
       {
-        fieldGroupClassName: 'row',
+        // fieldGroupClassName: 'row',
         fieldGroup: [
           {
             key: 'category_id',
