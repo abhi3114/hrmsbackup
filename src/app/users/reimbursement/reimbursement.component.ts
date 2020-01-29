@@ -33,7 +33,7 @@ export class ReimbursementComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   modalRef: BsModalRef;
-  viewmodalRef:BsModalRef;  
+  viewmodalRef:BsModalRef;
   openapproved: boolean = false;
   openunapproved: boolean = false;
   openrejected: boolean = false;
@@ -67,7 +67,7 @@ export class ReimbursementComponent implements OnInit {
     backdrop: true,
     ignoreBackdropClick: true
   };
-  
+
 
   componentmonth:any;
   componentyear:any;
@@ -111,7 +111,7 @@ export class ReimbursementComponent implements OnInit {
 
   submit(model) {
     console.log(model);
-    if ($('.client_name').val().toString().length > 0){
+    if ($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
       model['client_name'] = $('.client_name').val()
     }
     model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
@@ -137,7 +137,7 @@ export class ReimbursementComponent implements OnInit {
     this.api_data=res;
     this.api_data.forEach(data => {
       if (data.title != 'client_name'){
-        var type = (data.data_type == 'date') ? 'date' : ((data.title == 'expense_for') ? 'custom-select' : data.data_type)
+        var type = (data.data_type == 'date') ? 'date' : ((data.title == 'expense_for') ? 'custom-select' : (data.data_type == 'integer' ? 'input' : data.data_type))
         if (data.options != undefined){
           data.options.forEach(option => {
             optionArr.push(
@@ -224,7 +224,7 @@ export class ReimbursementComponent implements OnInit {
        this.reimbursementTableTrigger.next();
       }, (err) => {
         this.toastr.showError(err.error);
-        });     
+        });
 
   }
   getUnapprovedData()
@@ -239,7 +239,7 @@ export class ReimbursementComponent implements OnInit {
      this.reimbursementform.controls.year.value
     this.reimbursementform.controls.month.value == "" ? month = this.cmonth : month = this.reimbursementform.controls.month.value
     this.remService.getUnapproved(month,year).subscribe((res:any) =>{
-      this.rembursement_api_data=res.reimbursements;      
+      this.rembursement_api_data=res.reimbursements;
       this.reimbursementTableTrigger.next();
       }, (err) => {
         this.toastr.showError(err.error);
@@ -318,22 +318,22 @@ export class ReimbursementComponent implements OnInit {
   {
       this.viewmodalRef=this.modalService.show(template);
       this.single_user_data=l;
-      var spiltmonthandyear=(l.display_month_year).split('-');      
-      this.splitmonthyear=spiltmonthandyear;      
+      var spiltmonthandyear=(l.display_month_year).split('-');
+      this.splitmonthyear=spiltmonthandyear;
   }
   closerembursementsingledatamodal()
   {
     this.viewmodalRef.hide();
   }
-  
+
 
   deletereimbursementsingledata(r)
   {
     if(confirm("Are you sure to delete ")) {
       var id=r.id;
       this.remService.deletesingledata(id).subscribe(res => {
-        this.toastr.showSuccess('Reimbursement delete successfully');  
-        this.getData();      
+        this.toastr.showSuccess('Reimbursement delete successfully');
+        this.getData();
       }, (err) => {
         this.toastr.showError(err.error);
       });
