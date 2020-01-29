@@ -50,6 +50,7 @@ import { ReimbursementComponent } from './reimbursement/reimbursement.component'
 import { NewClaimComponent } from './reimbursement/new-claim/new-claim.component';
 import { FormlyFieldFile } from './reimbursement/file-type.component';
 import { DatePickerComponent } from './reimbursement/date-picker/date-picker.component';
+import { FormlyHorizontalWrapper } from './reimbursement/horizontal-wrapper';
 import { CustomFieldSelectComponent } from './reimbursement/custom-field-select/custom-field-select.component';
 
 
@@ -75,6 +76,7 @@ import { CustomFieldSelectComponent } from './reimbursement/custom-field-select/
   ClipboardModule,
   DeviceDetectorModule.forRoot(),
   FormlyModule.forRoot({
+    wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper }],
     types: [
       { name: 'file', component: FormlyFieldFile},
       { name: 'date', component: DatePickerComponent },
@@ -117,7 +119,8 @@ import { CustomFieldSelectComponent } from './reimbursement/custom-field-select/
   NewClaimComponent,
   FormlyFieldFile,
   DatePickerComponent,
-  CustomFieldSelectComponent
+  CustomFieldSelectComponent,
+  FormlyHorizontalWrapper
   ],
   providers: [{provide: OWL_DATE_TIME_LOCALE, useValue: 'en-IN'}],
   })

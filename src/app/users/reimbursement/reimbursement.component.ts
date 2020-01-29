@@ -130,7 +130,12 @@ export class ReimbursementComponent implements OnInit {
   }
 
   configureFields(selectedCategory){
-  this.form_fields = [];
+  this.form_fields = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: []
+    }
+  ];
   var optionArr = [];
   var hashObject = {}
   this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
@@ -148,6 +153,7 @@ export class ReimbursementComponent implements OnInit {
         var commonHash = {
           key: data.title,
           type: type,
+          className: 'col-md-4',
           templateOptions: {
             label: data.label,
             placeholder: data.label,
@@ -155,7 +161,7 @@ export class ReimbursementComponent implements OnInit {
             options: optionArr
           }
         }
-        this.form_fields.push(commonHash)
+        this.form_fields[0].fieldGroup.push(commonHash)
         this.form_fields;
       }
     });
@@ -172,34 +178,42 @@ export class ReimbursementComponent implements OnInit {
     var selectedCategory = $event.target.value;
     let common_fields = [
       {
-        key: 'category_id',
-        defaultValue: selectedCategory
-      },
-      {
-        key: 'amount',
-        type: 'input',
-        templateOptions: {
-          label: 'Amount',
-          placeholder: 'Enter Amount',
-          required: true,
-        }
-      },
-      {
-        key: 'purpose',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Purpose',
-          placeholder: '',
-          required: true,
-        }
-      },
-      {
-        key: 'file',
-        type: 'file',
-        templateOptions: {
-          label: 'Attach Bill',
-          change: (field, $event) => this.handleFileInput($event.target.files)
-        }
+        fieldGroupClassName: 'row',
+        fieldGroup: [
+          {
+            key: 'category_id',
+            defaultValue: selectedCategory
+          },
+          {
+            key: 'amount',
+            type: 'input',
+            className: 'col-md-4',
+            templateOptions: {
+              label: 'Amount',
+              placeholder: 'Enter Amount',
+              required: true,
+            }
+          },
+          {
+            key: 'purpose',
+            type: 'textarea',
+            className: 'clearfix col-md-12',
+            templateOptions: {
+              label: 'Purpose',
+              placeholder: '',
+              required: true,
+            }
+          },
+          {
+            key: 'file',
+            type: 'file',
+            className: 'col-md-12',
+            templateOptions: {
+              label: 'Attach Bill',
+              change: (field, $event) => this.handleFileInput($event.target.files)
+            }
+          }
+        ]
       }
     ]
     this.configureFields(selectedCategory);

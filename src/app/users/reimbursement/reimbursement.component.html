@@ -71,7 +71,7 @@
                 <td>
                   <a style="cursor: pointer;font-size:24px"><i class="fa fa-eye field-icon toggle-password" aria-hidden="true" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)"></i></a>&nbsp;
                   <!-- <a style="cursor: pointer;" *ngIf="openunapproved || openrejected"><i class="fa fa-pencil" aria-hidden="true" (click)="editreimbursementclaim(editreimbursementclaimmodal,l)"></i></a>&nbsp; -->
-                  <a  data-confirm="Are you sure to delete this item?" *ngIf="openunapproved"><i class="fa fa-trash" (click)="deletereimbursementsingledata(l)"></i></a>           
+                  <a  data-confirm="Are you sure to delete this item?" *ngIf="openunapproved"><i class="fa fa-trash" (click)="deletereimbursementsingledata(l)"></i></a>
                 </td>
               </tr>
             </tbody>
@@ -108,7 +108,11 @@
       </div>
     </div>
     <formly-form [model]="model" [fields]="fields">
-    <button type="submit" class="btn btn-default">Submit</button>
+    <div class='clearfix'></div>
+    <div class='form-group'>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+    <div class='clearfix'></div>
     </formly-form>
     </form>
   </div>
@@ -155,7 +159,7 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label>Attached Bill</label>&nbsp;            
+            <label>Attached Bill</label>&nbsp;
             <a href="{{single_user_data.receipt}}" target='_blank' class="btn btn-primary">View File</a>
           </div>
         </div>
