@@ -57,12 +57,12 @@
       <div class="col-md-12">
         <div class="form-group">
           <label>Reason<sup style="color:red;">*</sup></label>
-          <input name="comment" type='text' class="form-control"  [(ngModel)]="approverejectreimbursementform.comment"  formControlName="comment" required [class.error1]="!approverejectreimbursementform.controls.comment.valid && approverejectreimbursementform.controls.comment.dirty"/>          
+          <input name="comment" type='text' class="form-control"  [(ngModel)]="approverejectreimbursementform.comment"  formControlName="comment" required [class.error1]="!approverejectreimbursementform.controls.comment.valid && approverejectreimbursementform.controls.comment.dirty"/>
         </div>
       </div>
     </div>
-    <button type="button" class="btn btn-primary" (click)="approveallreimbursement()" data-style="expand-right">Approve</button>
-    <button type="submit" class="btn btn-danger pull-right">Reject</button>   
+    <button [disabled]="approverejectreimbursementform.invalid" type="button" class="btn btn-primary" (click)="approveallreimbursement()" data-style="expand-right">Approve</button>
+    <button [disabled]="approverejectreimbursementform.invalid" type="submit" class="btn btn-danger pull-right">Reject</button>
     </form>
   </section>
   <div class="modal-body">
@@ -108,9 +108,9 @@
     </section>
   </div>
 </ng-template>
-<ng-template #showunapprovedrembursementdata>
+<ng-template #showunapprovedrembursementdata  >
   <div class="modal-content">
-    <form>
+    <form (ngSubmit)="approveSingleReimbursementData()" [formGroup]="monoUnapprovedReimbursementform">
       <div class="modal-header ticket-popup-header">
         <h4 class="modal-title pull-left">Reimbursement Claim</h4>
       </div>
@@ -167,13 +167,13 @@
         <div class="form-row">
           <div class="form-group col-md-12 clear-fix">
             <label>Comment:</label>
-            <textarea cols="75" rows="3" [required]="true"></textarea>
+            <input name="comment" type='text' class="form-control"  [(ngModel)]="monoUnapprovedReimbursementform.comment"  formControlName="comment" required [class.error1]="!monoUnapprovedReimbursementform.controls.comment.valid && monoUnapprovedReimbursementform.controls.comment.dirty"/>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12" style="margin-top: 10px; margin-left: 5px; text-align: center;">
-            <button type="submit" class="btn btn-primary" (click)="approveSinglereimbursement(single_user_data.id)">Approve</button>&nbsp;
-            <button type="button" class="btn btn-warning" (click)="rejectSinglereimbursement(single_user_data.id)">Reject</button>
+            <button [disabled]="monoUnapprovedReimbursementform.invalid" type="submit" class="btn btn-primary" (click)="approveSinglereimbursement(single_user_data.id)">Approve</button>&nbsp;
+            <button [disabled]="monoUnapprovedReimbursementform.invalid" type="button" class="btn btn-warning" (click)="rejectSinglereimbursement(single_user_data.id)">Reject</button>
           </div>
         </div>
       </div>
