@@ -140,6 +140,16 @@
           <li><a [routerLink]="['users/salaries/import']"><i class="fa fa-server" aria-hidden="true"></i> Salary Import</a></li>
           <li><a [routerLink]="['users/salaries/full_and_final']"><i class="fa fa-users"></i>Full and Final Section</a></li>
           <li><a [routerLink]="['users/salaries/missing']"><i class="fa fa-server" aria-hidden="true"></i> Missing Salary</a></li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a><i class="fa fa-rupee" aria-hidden="true"></i>
+        <span>Reimbursement</span>
+        <span class="pull-right-container">
+        <i class="fa fa-angle-down pull-right"></i>
+        </span></a>
+        <ul class="treeview-menu">
+          <li><a [routerLink]="['users/reimbursement/settled']">Settled</a></li>
+          <li><a [routerLink]="['users/reimbursement/unsettled']">Unsettled</a></li>
+        </ul>
+      </li>
         </ul>
         </li>
         <li *ngIf="can_access_accounts" style="cursor: pointer;">
