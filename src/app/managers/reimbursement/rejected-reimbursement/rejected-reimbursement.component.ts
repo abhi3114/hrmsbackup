@@ -105,12 +105,16 @@ export class RejectedReimbursementComponent implements OnInit {
 
    approveSinglereimbursement(r)
    {
+    if(confirm("Are you sure to Approve this reimbursement ")) 
+    {
+      $('#RejectedRembursementDataTables').DataTable().destroy();
      this.api.sendForSingleReimbursementApproval(r).subscribe(res => {
      this.toastr.showSuccess('Reimbursement Approved successfully');
+     this.reimbursementrejectedTableTrigger.next();
          }, (err) => {
           this.toastr.showError(err.error);
          });
      this.modalRefchild.hide();
-   }
-
+      }
+    }
 }

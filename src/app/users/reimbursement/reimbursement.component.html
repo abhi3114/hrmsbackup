@@ -69,9 +69,9 @@
                 <td></td>
                 <td>{{l.amount}}</td>
                 <td>
-                  <a style="cursor: pointer;font-size:24px"><i class="fa fa-eye field-icon toggle-password" aria-hidden="true" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)"></i></a>&nbsp;
+                  <a style="cursor: pointer;font-size:20px;color:#3333ff"><i class="fa fa-eye field-icon toggle-password" aria-hidden="true" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)"></i></a>&nbsp;
                   <!-- <a style="cursor: pointer;" *ngIf="openunapproved || openrejected"><i class="fa fa-pencil" aria-hidden="true" (click)="editreimbursementclaim(editreimbursementclaimmodal,l)"></i></a>&nbsp; -->
-                  <a  data-confirm="Are you sure to delete this item?" *ngIf="openunapproved"><i class="fa fa-trash" (click)="deletereimbursementsingledata(l)"></i></a>
+                  <a style="cursor: pointer;font-size:20px;color:#808080" data-confirm="Are you sure to delete this item?" *ngIf="openunapproved"><i class="fa fa-trash" (click)="deletereimbursementsingledata(l)"></i></a>
                 </td>
               </tr>
             </tbody>

@@ -107,15 +107,16 @@ export class ApprovedReimbursementComponent implements OnInit {
   rejectSinglereimbursement(r)
   {
       //console.log(r)
-   
+    if(confirm("Are you sure to Reject ")) 
+    {
       var comment=this.approvemodalform.controls.comment.value;
       this.api.sendForSingleReimbursementRejection(r).subscribe(res => {
-        this.toastr.showSuccess('Reimbursement Rejected successfully');
+      this.toastr.showSuccess('Reimbursement Rejected successfully');
       }, (err) => {
-        this.toastr.showError(err.error);
+      this.toastr.showError(err.error);
       });
       this.modalRefchild.hide();
-
+    }
   }
 
   approveviewreimbursement(template: TemplateRef<any>, r)
