@@ -4,7 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DataTableDirective } from 'angular-datatables';
 import {Reimbursementservice} from './reimbursement.service';
-import {FormlyFieldConfig} from '@ngx-formly/core';
+import {FormlyFormOptions, FormlyFieldConfig} from '@ngx-formly/core';
 import {Observable,Subject} from 'rxjs';
 import { NotificationService } from '../../shared/service/notification.service';
 import * as moment from 'moment';
@@ -16,10 +16,12 @@ import * as moment from 'moment';
 })
 
 export class ReimbursementComponent implements OnInit {
+  @ViewChild('formDirective') ngForm;
   form = new FormGroup({});
   today = new Date();
   model = {};
   fields: FormlyFieldConfig[]
+  options: FormlyFormOptions = {};
   api_data:any;
   canShowFormAttribute:boolean=false;
   form_fields:any=[];
@@ -117,14 +119,19 @@ export class ReimbursementComponent implements OnInit {
     model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
     model["attachment_base64"] =  this.base64
     console.log(this.model);
+    console.log(this.options);
     this.remService.createReimbursement(model).subscribe(res => {
       this.modalRef.hide();
       this.toastr.showSuccess('Response Recorded');
-      this.getUnapprovedData();
+      this.form.reset();
+      this.options.resetModel({ type: "" });
+      this.modalRef.hide();
+      this.getData();
       }, (err) => {
       this.toastr.showError(err.error);
+      this.options.resetModel({ type: "" });
       this.modalRef.hide();
-      this.form.reset();
+      this.ngForm.resetForm();
     });
 
   }
@@ -362,6 +369,9 @@ export class ReimbursementComponent implements OnInit {
     // Call the dtTrigger to rerender again
     this.reimbursementTableTrigger.next();
     });
+  }
+
+  resetModel() {
   }
 
 }
