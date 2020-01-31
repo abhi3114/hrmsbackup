@@ -17,7 +17,7 @@ export class UnsettledComponent implements OnInit {
 
   filterdataform:FormGroup;
   monthArray:any;yearArray:any;filteredData:any;
-  salary_filter={selectedmonth:'',selectedyear:''};
+  unsettled_filter={selectedmonth:'',selectedyear:''};
   unsettledOptions: DataTables.Settings = {};
   unsettledTableTrigger: Subject<any> = new Subject();
   unsettle_api_data:any=[];
@@ -39,8 +39,8 @@ export class UnsettledComponent implements OnInit {
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
     this.filteredData=this.commonsalary.getMonthandYear();
-    this.salary_filter.selectedmonth=this.filteredData.selectedmonth;
-    this.salary_filter.selectedyear= this.filteredData.selectedyear;
+    this.unsettled_filter.selectedmonth=this.filteredData.selectedmonth;
+    this.unsettled_filter.selectedyear= this.filteredData.selectedyear;
 
     this.filterdataform = new FormGroup({
       filtermonth: new FormControl('', [Validators.required]),
@@ -58,9 +58,9 @@ export class UnsettledComponent implements OnInit {
   {    
     var year;var month;
     $('#unsettledDataTables').DataTable().destroy();
-    this.filterdataform.controls.filteryear.value == "" ? year = this.salary_filter.selectedyear : year =
+    this.filterdataform.controls.filteryear.value == "" ? year = this.unsettled_filter.selectedyear : year =
     this.filterdataform.controls.filteryear.value    
-    this.filterdataform.controls.filtermonth.value == "" ? month = this.salary_filter.selectedmonth : month =
+    this.filterdataform.controls.filtermonth.value == "" ? month = this.unsettled_filter.selectedmonth : month =
     this.filterdataform.controls.filtermonth.value
     console.log(year,month)
     this.api.getUnSettledReimbursementUsers(year,month).subscribe((res:any) => {
@@ -77,9 +77,9 @@ export class UnsettledComponent implements OnInit {
   {
     this.userssetttledmodalRef = this.modalService.show(template);
     var year;var month;
-    this.filterdataform.controls.filteryear.value == "" ? year = this.salary_filter.selectedyear : year =
+    this.filterdataform.controls.filteryear.value == "" ? year = this.unsettled_filter.selectedyear : year =
     this.filterdataform.controls.filteryear.value    
-    this.filterdataform.controls.filtermonth.value == "" ? month = this.salary_filter.selectedmonth : month =
+    this.filterdataform.controls.filtermonth.value == "" ? month = this.unsettled_filter.selectedmonth : month =
     this.filterdataform.controls.filtermonth.value
     var user_id=s.user_id;
     this.api.getSinghleUserUnsettledData(year,month, user_id).subscribe((res:any) => {

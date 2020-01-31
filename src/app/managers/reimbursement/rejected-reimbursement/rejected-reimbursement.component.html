@@ -2,27 +2,25 @@
   <div class="content-wrapper">
     <section class="content-header">
       <h1 class="title" style="margin-bottom: 20px;">Rejected Reimbursement (Subordinates)</h1>
-      <form (ngSubmit)="getfilterData()" [formGroup]="rejectedreimbursementform">
-      <div class="holder-filter" style="">
-        <div>
+      <form (ngSubmit)="getfilterData()" >
+        <div class="row" [formGroup]="rejectedreimbursementform">
           <div class="col-md-12">
-            <label class="filter-label">Add Filter</label>
-            <div class="lo-btn">
-              <select class="form-control" name="month" formControlName="month">
-                <option value="{{cmonth}}" [selected]="true">{{currentmonth}}</option>
-                <option *ngFor="let m of months" value="{{m.month_id}}">{{m.month_name}}</option>
-              </select>
+            <div class="col-md-12">
+              <label class="filter-label">Add Filter</label>
+              <div class="lo-btn">
+                <select formControlName="month" class="form-control select2 building-select d-inline" [(ngModel)]="rejected_filter.selectedmonth" style="width: 100%;"  required>
+                <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
+                </select>
+              </div>
+              <div class="lo-btn">
+                <select formControlName="year" class="form-control select2 building-select d-inline" [(ngModel)]="rejected_filter.selectedyear" style="width: 100%;"  required>
+                <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
+                </select>
+              </div>
+              <button type="submit" class="btn bg-orange btn-flat btn-apply">Apply</button>
             </div>
-            <div class="lo-btn">
-              <select class="form-control" name="year" formControlName="year">
-                <option enabled>{{currentyear}}</option>
-                <option *ngFor="let y of years" value="{{y}}">{{y}}</option>
-              </select>
-            </div>
-            <button type="submit" class="btn bg-orange btn-flat btn-apply">Apply</button>
           </div>
         </div>
-      </div>
       </form>
     </section>
     <section class="content">
@@ -76,7 +74,7 @@
               <td>{{ur.category_name}}</td>
               <td>{{ur.display_date}}</td>
               <td>{{ur.purpose}}</td>
-              <td>{{ur.comment}}</td>
+              <td>{{ur.review_reason}}</td>
               <td>{{ur.amount}}</td>
               <td>
                 <a style="cursor: pointer;"><i class="fa fa-eye field-icon toggle-password" aria-hidden="true" 
@@ -92,7 +90,7 @@
 </ng-template>
 <ng-template #showrejectedrembursementdata>
   <div class="modal-content">
-    <form>
+    <form [formGroup]="rejectmodalform">
       <div class="modal-header ticket-popup-header">
         <h4 class="modal-title pull-left">Reimbursement Claim</h4>
       </div>
@@ -145,18 +143,19 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label>Attached Bill:</label>
+            <label>Attached Bill:</label>&nbsp;
+            <a href="{{single_user_data.receipt}}" target='_blank' class="btn btn-primary">View File</a>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
             <label>Comment:</label>
-            <textarea cols="75" rows="3" required="true"></textarea>
+            <textarea cols="75" rows="3" required="true" formControlName="comment" class="form-control" placeholder="Add comment"></textarea>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12" style="margin-top: 10px; margin-left: 5px; text-align: center;">
-            <button type="submit" class="btn btn-primary" (click)="approveSinglereimbursement(single_user_data.id)">Approve</button>
+            <button [disabled]="rejectmodalform.invalid" type="button" class="btn btn-primary" (click)="approveSinglereimbursement(single_user_data.id)">Approve</button>
           </div>
         </div>
       </div>

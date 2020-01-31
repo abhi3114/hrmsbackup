@@ -8,23 +8,25 @@
       </div>
       <div class="container">
         <div class="row">
-          <form (ngSubmit)="getData()" [formGroup]="reimbursementform">
-          <div class="col-md-1">
-            <label class="filter-label">Add Filter</label>
-          </div>
-          <div class="col-md-3">
-            <select class="form-control" name="month" formControlName="month" required="true">
-              <option value="{{cmonth}}" [selected]="true">{{currentmonth}}</option>
-              <option *ngFor="let m of months" value="{{m.month_id}}">{{m.month_name}}</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <select class="form-control" name="year" formControlName="year" required="true">
-              <option enabled>{{currentyear}}</option>
-              <option *ngFor="let y of years" value="{{y}}">{{y}}</option>
-            </select>
-          </div>
-          <button type="submit" class="btn bg-orange btn-flat btn-apply">Apply</button>
+          <form (ngSubmit)="getData()" >
+            <div class="row" [formGroup]="reimbursementform">
+              <div class="col-md-12">
+                <div class="col-md-12">
+                  <label class="filter-label">Add Filter</label>
+                  <div class="lo-btn">
+                    <select formControlName="month" class="form-control select2 building-select d-inline" [(ngModel)]="reimbursement_filter.selectedmonth" style="width: 100%;"  required>
+                    <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
+                    </select>
+                  </div>
+                  <div class="lo-btn">
+                    <select formControlName="year" class="form-control select2 building-select d-inline" [(ngModel)]="reimbursement_filter.selectedyear" style="width: 100%;"  required>
+                    <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn bg-orange btn-flat btn-apply">Apply</button>
+                </div>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -66,7 +68,7 @@
                 <td>{{l.display_date}}</td>
                 <td>{{l.category_name}}</td>
                 <td>{{l.purpose}}</td>
-                <td></td>
+                <td>{{l.review_reason}}</td>
                 <td>{{l.amount}}</td>
                 <td>
                   <a style="cursor: pointer;font-size:20px;color:#3333ff"><i class="fa fa-eye field-icon toggle-password" aria-hidden="true" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)"></i></a>&nbsp;
@@ -110,10 +112,10 @@
     <formly-form [model]="model" [fields]="fields" [options]="options">
     <div class='clearfix'></div>
     <div class="md-footer-btm">
-    <div class=''>
-      <button type="submit" class="btn btn-default btn-orange">Submit</button>
+      <div class=''>
+        <button type="submit" class="btn btn-default btn-orange">Submit</button>
+      </div>
     </div>
-  </div>
     <div class='clearfix'></div>
     </formly-form>
     </form>

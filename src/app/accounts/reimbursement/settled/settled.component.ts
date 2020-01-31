@@ -17,7 +17,7 @@ export class SettledComponent implements OnInit {
 
 	filterdataform:FormGroup;
   monthArray:any;yearArray:any;filteredData:any;
-  salary_filter={selectedmonth:'',selectedyear:''};
+  settled_filter={selectedmonth:'',selectedyear:''};
   settledOptions: DataTables.Settings = {};
   settledTableTrigger: Subject<any> = new Subject();
   settle_api_data:any=[];
@@ -38,8 +38,8 @@ export class SettledComponent implements OnInit {
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
     this.filteredData=this.commonsalary.getMonthandYear();
-    this.salary_filter.selectedmonth=this.filteredData.selectedmonth;
-    this.salary_filter.selectedyear= this.filteredData.selectedyear;
+    this.settled_filter.selectedmonth=this.filteredData.selectedmonth;
+    this.settled_filter.selectedyear= this.filteredData.selectedyear;
 
     this.filterdataform = new FormGroup({
       filtermonth: new FormControl('', [Validators.required]),
@@ -58,9 +58,9 @@ export class SettledComponent implements OnInit {
   {    
     var year;var month;
     $('#settledDataTables').DataTable().destroy();
-    this.filterdataform.controls.filteryear.value == "" ? year = this.salary_filter.selectedyear : year =
+    this.filterdataform.controls.filteryear.value == "" ? year = this.settled_filter.selectedyear : year =
     this.filterdataform.controls.filteryear.value    
-    this.filterdataform.controls.filtermonth.value == "" ? month = this.salary_filter.selectedmonth : month =
+    this.filterdataform.controls.filtermonth.value == "" ? month = this.settled_filter.selectedmonth : month =
     this.filterdataform.controls.filtermonth.value
     console.log(year,month)
     this.api.getSettledReimbursementUsers(year,month).subscribe((res:any) => {
@@ -76,9 +76,9 @@ export class SettledComponent implements OnInit {
   {
     this.userssetttledmodalRef = this.modalService.show(template);
     var year;var month;
-    this.filterdataform.controls.filteryear.value == "" ? year = this.salary_filter.selectedyear : year =
+    this.filterdataform.controls.filteryear.value == "" ? year = this.settled_filter.selectedyear : year =
     this.filterdataform.controls.filteryear.value    
-    this.filterdataform.controls.filtermonth.value == "" ? month = this.salary_filter.selectedmonth : month =
+    this.filterdataform.controls.filtermonth.value == "" ? month = this.settled_filter.selectedmonth : month =
     this.filterdataform.controls.filtermonth.value
     var user_id=s.user_id;
     this.api.getSinghleUserSettledData(year,month, user_id).subscribe((res:any) => {

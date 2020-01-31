@@ -2,6 +2,8 @@ import { Component, OnInit,TemplateRef} from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from '../../../shared/service/notification.service';
 import{ rejectedReimbursementService } from './rejected-reimbursement.service';
+import { MonthYearService } from '../../../shared/service/month-year.service';
+import { CommonSalaryService } from '../../../shared/service/common-salary.service';
 import {Observable,Subject} from 'rxjs';
 import * as moment from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -16,33 +18,22 @@ export class RejectedReimbursementComponent implements OnInit {
 
 
   rejectedreimbursementform:FormGroup;
+  rejectmodalform:FormGroup;
   rembursement_api_data:any=[];
   user_rejected_reimbursement_data:any[];
   single_user_data:any=[];
-  currentmonth=moment().format('MMMM');
-  cmonth=moment().month(this.currentmonth).format("M");
-  currentyear=moment().format('YYYY');
-  months=[{"month_id":1,"month_name":'January'},
-          {"month_id":2,"month_name":'February'},
-          {"month_id":3,"month_name":'March'},
-          {"month_id":4,"month_name":'April'},
-          {"month_id":5,"month_name":'May'},
-          {"month_id":6,"month_name":'June'},
-          {"month_id":7,"month_name":'July'},
-          {"month_id":8,"month_name":'August'},
-          {"month_id":9,"month_name":'September'},
-          {"month_id":10,"month_name":'October'},
-          {"month_id":11,"month_name":'November'},
-          {"month_id":12,"month_name":'December'}
-          ];
- years=[2020,2019,2018,2017];
- reimbursementrejectedTableOptions: DataTables.Settings = {};
- reimbursementrejectedTableTrigger: Subject<any> = new Subject();
- modalRef: BsModalRef;
- modalRefchild: BsModalRef;
- splitmonthyear:any;
+  monthArray:any;yearArray:any;filteredData:any;
+  rejected_filter={selectedmonth:'',selectedyear:''};
+  reimbursementrejectedTableOptions: DataTables.Settings = {};
+  reimbursementrejectedTableTrigger: Subject<any> = new Subject();
+  modalRef: BsModalRef;
+  modalRefchild: BsModalRef;
+  splitmonthyear:any;
+  user_id:any;
+  year:any;
+  month:any;
 
-  constructor(private api:rejectedReimbursementService,private toastr:NotificationService,private modalService: BsModalService) 
+  constructor(private api:rejectedReimbursementService,private toastr:NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService,private currentmonthandyear:CommonSalaryService) 
   {
       this.rejectedreimbursementform = new FormGroup({
       month: new FormControl('', [Validators.required]),
@@ -55,6 +46,17 @@ export class RejectedReimbursementComponent implements OnInit {
       [10, 20, 50, "All"]]
     };
 
+    this.rejectmodalform= new FormGroup({
+          comment: new FormControl('', [Validators.required]),
+        });
+
+    this.monthArray=this.monthandyear.populateMonth();
+    this.yearArray=this.monthandyear.populateYear();
+    this.filteredData=this.currentmonthandyear.getMonthandYear();
+    this.rejected_filter.selectedmonth=this.filteredData.selectedmonth;
+    this.rejected_filter.selectedyear= this.filteredData.selectedyear;
+    //console.log(this.rejected_filter.selectedyear,this.rejected_filter.selectedmonth)
+
     this.getfilterData();
 
    }
@@ -63,15 +65,14 @@ export class RejectedReimbursementComponent implements OnInit {
 
    getfilterData()
   {    
-    var year;var month;
     $('#RejectedRembursementDataTables').DataTable().destroy();
-    this.rejectedreimbursementform.controls.year.value == "" ? year = this.currentyear : year =
+    this.rejectedreimbursementform.controls.year.value == "" ? this.year = this.rejected_filter.selectedyear : this.year =
      this.rejectedreimbursementform.controls.year.value
-     this.rejectedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
-     this.rejectedreimbursementform.controls.month.value     
-     this.api.getRejectedService(year,month).subscribe((res:any) => {
-     this.rembursement_api_data=res;      
-       this.reimbursementrejectedTableTrigger.next();      
+     this.rejectedreimbursementform.controls.month.value == "" ? this.month = this.rejected_filter.selectedmonth : this.month =
+     this.rejectedreimbursementform.controls.month.value
+     this.api.getRejectedService(this.year,this.month).subscribe((res:any) => {
+     this.rembursement_api_data=res;
+       this.reimbursementrejectedTableTrigger.next();
       }, (err) => {
         this.toastr.showError(err.error);
         });
@@ -81,14 +82,14 @@ export class RejectedReimbursementComponent implements OnInit {
    userrembursementList(template: TemplateRef<any>, r)
     {
      this.modalRef = this.modalService.show(template);
-     var year;var month;
-     var user_id=r.user_id;
+     this.user_id=r.user_id;
+     this.rejectedreimbursementform.controls.year.value == "" ? this.year = this.rejected_filter.selectedyear : this.year =
      this.rejectedreimbursementform.controls.year.value
-     this.rejectedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
+     this.rejectedreimbursementform.controls.month.value == "" ? this.month = this.rejected_filter.selectedmonth : this.month =
      this.rejectedreimbursementform.controls.month.value
-     this.api.getUserRejectedData(year,month, user_id).subscribe((res:any) => {
-      this.user_rejected_reimbursement_data=res.reimbursements;  
-      //console.log(this.user_rejected_reimbursement_data);
+     this.api.getUserRejectedData(this.year,this.month,this.user_id).subscribe((res:any) => {
+     this.user_rejected_reimbursement_data=res.reimbursements;
+      console.log(this.user_rejected_reimbursement_data);
     }, (err) => {
       this.toastr.showError(err.error);
     });
@@ -105,16 +106,28 @@ export class RejectedReimbursementComponent implements OnInit {
 
    approveSinglereimbursement(r)
    {
-    if(confirm("Are you sure to Approve this reimbursement ")) 
-    {
-      $('#RejectedRembursementDataTables').DataTable().destroy();
-     this.api.sendForSingleReimbursementApproval(r).subscribe(res => {
-     this.toastr.showSuccess('Reimbursement Approved successfully');
-     this.reimbursementrejectedTableTrigger.next();
-         }, (err) => {
-          this.toastr.showError(err.error);
-         });
-     this.modalRefchild.hide();
+      if(confirm("Are you sure to Approve this reimbursement "))
+      {
+        var comment=this.rejectmodalform.controls.comment.value;
+        this.api.sendForSingleReimbursementApproval(r,comment).subscribe(res => {
+        this.getfilterData()
+        this.refreshReimbursementData()
+        this.modalRefchild.hide();
+        this.rejectmodalform.reset();
+       this.toastr.showSuccess('Reimbursement Approved successfully');
+           }, (err) => {
+            this.toastr.showError(err.error);
+            this.modalRefchild.hide();
+           this.rejectmodalform.reset();
+           });
       }
     }
+
+    refreshReimbursementData(){
+    this.api.getUserRejectedData(this.year,this.month,this.user_id).subscribe((res:any) => {
+    this.user_rejected_reimbursement_data=res.reimbursements;
+    }, (err) => {
+    this.toastr.showError(err.error);
+    });
+  }
 }
