@@ -34,7 +34,7 @@
     <section class="content helpdesk_wrapper">
       <div class="row">
         <div class="box-body">
-          <div class="table-responsive">
+          <div class="table-responsive" style="overflow-x:hidden;">
             <div class="row">
               <div class="col-md-12">
                 <ul class="nav nav-tabs">
@@ -72,7 +72,7 @@
                 <td>{{l.amount}}</td>
                 <td>
                   <a style="cursor: pointer;font-size:20px;color:#3333ff"><i class="fa fa-eye field-icon toggle-password" aria-hidden="true" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)"></i></a>&nbsp;
-                  <!-- <a style="cursor: pointer;" *ngIf="openunapproved || openrejected"><i class="fa fa-pencil" aria-hidden="true" (click)="editreimbursementclaim(editreimbursementclaimmodal,l)"></i></a>&nbsp; -->
+                  <a style="cursor: pointer;font-size:20px;color:#808080" *ngIf="openunapproved || openrejected"><i class="fa fa-pencil" aria-hidden="true" (click)="editrembursementsingledata(editrembursementsingledatamodal,l)"></i></a>&nbsp;
                   <a style="cursor: pointer;font-size:20px;color:#808080" data-confirm="Are you sure to delete this item?" *ngIf="openunapproved"><i class="fa fa-trash" (click)="deletereimbursementsingledata(l)"></i></a>
                 </td>
               </tr>
@@ -126,7 +126,7 @@
     <form>
       <div class="modal-header ticket-popup-header">
         <h4 class="modal-title pull-left">Reimbursement Claim</h4>
-        <a><span class="fa fa-times pull-right" style="color: white;cursor:pointer;" (click)="closerembursementsingledatamodal()"></span></a>
+        <a><span class="fa fa-times pull-right" style="color: white;cursor:pointer;" (click)="closeviewrembursementsingledatamodal()"></span></a>
       </div>
       <div class="modal-body">
         <div class="form-row">
@@ -169,10 +169,22 @@
         </div>
         <div class="row">
           <div class="col-md-12" style="text-align: center;">
-            <button type="button" class="btn btn-warning" (click)="closerembursementsingledatamodal()">Close</button>
+            <button type="button" class="btn btn-warning" (click)="closeviewrembursementsingledatamodal()">Close</button>
           </div>
         </div>
       </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #editrembursementsingledatamodal>
+  <div class="modal-header ticket-popup-header">
+    <h4 class=" modal-title pull-left">Edit Reimbursement Claim</h4>
+    <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeeditrembursementsingledatamodal()">
+    <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-content" >
+    <form>
     </form>
   </div>
 </ng-template>

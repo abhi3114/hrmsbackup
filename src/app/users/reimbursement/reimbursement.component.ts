@@ -38,6 +38,7 @@ export class ReimbursementComponent implements OnInit {
   dtElement: DataTableDirective;
   modalRef: BsModalRef;
   viewmodalRef:BsModalRef;
+  editmodalRef:BsModalRef;
   openapproved: boolean = false;
   openunapproved: boolean = false;
   openrejected: boolean = false;
@@ -333,9 +334,14 @@ export class ReimbursementComponent implements OnInit {
       var spiltmonthandyear=(l.display_month_year).split('-');
       this.splitmonthyear=spiltmonthandyear;
   }
-  closerembursementsingledatamodal()
+  closeviewrembursementsingledatamodal()
   {
     this.viewmodalRef.hide();
+  }
+
+  closeeditrembursementsingledatamodal()
+  {
+    this.editmodalRef.hide();
   }
 
 
@@ -351,6 +357,12 @@ export class ReimbursementComponent implements OnInit {
         this.toastr.showError(err.error);
       });
     }
+  }
+
+  editrembursementsingledata(template: TemplateRef<any>,l)
+  {
+      this.editmodalRef=this.modalService.show(template);
+      console.log(l)
   }
 
 

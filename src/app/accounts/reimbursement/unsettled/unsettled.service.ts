@@ -24,4 +24,14 @@ getSinghleUserUnsettledData(year,month,user_id)
     "Content-Type": 'application/json'})})
 }
 
+importCsvData(params)
+{
+	console.log(params)
+	return this.http.post(environment.baseUrl+"accounts/reimbursements/import_reimbursements/", params,
+      {
+      headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+        "Content-Type": 'application/json'})})
+
+}
+
 }

@@ -19,10 +19,10 @@
               </div>
               <button type="submit" class="btn bg-orange btn-flat btn-apply">Apply</button>
               <div class="lo-btn" style="margin-left: 215px;">
-                <input type="file" class="hidden" id="files"  accept=".xlsx">
+                <input type="file" class="hidden" id="files" (change)="importCsv()" accept=".csv">
               </div>
               <button type="button" class="btn btn-warning" style="margin-left:5px;">Export All</button>
-              <label for="files" style="margin-left:3px;background: white;padding: 7px;font-size: 14px;color: #3449b0;font-weight: 400;">Upload Excel</label>
+              <label for="files" style="margin-left:5px;background: white;padding: 7px;font-size: 14px;color: #3449b0;font-weight: 400;">Upload Excel</label>
             </div>
           </div>
         </div>
