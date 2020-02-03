@@ -26,7 +26,7 @@ getSinghleUserUnsettledData(year,month,user_id)
 
 importCsvData(params)
 {
-	console.log(params)
+	//console.log(params)
 	return this.http.post(environment.baseUrl+"accounts/reimbursements/import_reimbursements/", params,
       {
       headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),

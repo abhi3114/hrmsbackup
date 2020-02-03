@@ -1,4 +1,4 @@
-import { Component, OnInit,TemplateRef } from '@angular/core';
+import { Component, OnInit,TemplateRef,ViewChild,ElementRef } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable,Subject } from 'rxjs';
 import { MonthYearService } from '../../../shared/service/month-year.service';
@@ -8,6 +8,7 @@ import { UnsettledService } from './unsettled.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Papa } from 'ngx-papaparse';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-unsettled',
@@ -16,6 +17,7 @@ import { Papa } from 'ngx-papaparse';
 })
 export class UnsettledComponent implements OnInit {
 
+  @ViewChild('error_modal_of_import_csv_file') error_modal_of_csv_file: ElementRef;
   filterdataform:FormGroup;
   monthArray:any;yearArray:any;filteredData:any;
   unsettled_filter={selectedmonth:'',selectedyear:''};
@@ -25,12 +27,14 @@ export class UnsettledComponent implements OnInit {
   single_user_unsettled_data:any[];
   single_user_single_unsettled_data:any[];
   splitmonthyear:any=[];
+  csv_error:any=[];
   postdata:any=[];
   sheet_data:any;
-  importedData:any;
+  importedData:any=[];
 
   userssetttledmodalRef:BsModalRef;
   singleusersingledataModalRef:BsModalRef;
+  errormodalofcsv:BsModalRef;
 
 
   constructor(private monthandyear:MonthYearService,private commonsalary:CommonSalaryService,private api:UnsettledService,public toastr: NotificationService,private modalService: BsModalService, private papa:Papa) {
@@ -50,6 +54,7 @@ export class UnsettledComponent implements OnInit {
     this.filterdataform = new FormGroup({
       filtermonth: new FormControl('', [Validators.required]),
       filteryear: new FormControl('', [Validators.required]),
+      csvfilehidden: new FormControl(''),
     });
 
     this.getFilterData();
@@ -101,7 +106,7 @@ export class UnsettledComponent implements OnInit {
     //console.log(s.receipt)
     //console.log(s)
     var spiltmonthandyear=(s.display_month_year).split('-');
-    this.splitmonthyear=spiltmonthandyear;    
+    this.splitmonthyear=spiltmonthandyear;
   }
   closesingleusersingledatamodal()
   {
@@ -123,18 +128,16 @@ export class UnsettledComponent implements OnInit {
         this.papa.parse(file, {
           header: true,
           complete: (results) => {
-           /* this is for null check of csv data
-           results.data.forEach((result,index)=>{
-              if(result.Name==""){
-                results.data.splice(index,1);
-              }
-            });*/
+           //this is for null check of csv data
+           // results.data.forEach((result,index)=>{
+           //    if(result.ID==""){
+           //      results.data.splice(index,1);
+           //    }
+           //  });
             this.sheet_data = results.data
             this.callSaveApi(this.sheet_data);
-
-          }
+            }
           });
-
       }
       else
       {
@@ -147,16 +150,48 @@ export class UnsettledComponent implements OnInit {
   callSaveApi(parsedSheetData)
   {
     //console.log(parsedSheetData)
-    this.postdata = { "reimbursement_setteld_file": {'data':parsedSheetData,'month':this.unsettled_filter.selectedmonth,'year':this.unsettled_filter.selectedyear}};
-    //this.api.importCsvData(this.postdata);
-    this.api.importCsvData(this.postdata).subscribe(response => {
-    //this.importedData = response;
-    this.toastr.showSuccess(response);
+    this.postdata = {'data':parsedSheetData,'month':this.unsettled_filter.selectedmonth,'year':this.unsettled_filter.selectedyear};
+    this.api.importCsvData(this.postdata).subscribe((response:any) => {
+    this.importedData = response;
+      // response.forEach(function (item)=>{
+      //       if(item.status=="failed")
+      //       {
+      //        this.csv_error.push(this.item);
+      //       }
+      //  });
+      this.csv_error=[];
+      console.log(this.importedData)
+      for(let i=0;i<response.length;i++)
+      {
+        if(this.importedData[i].status=="failed")
+        {
+          this.csv_error.push(this.importedData[i])
+          console.log(this.importedData[i])
+        }
+      }
+      if(this.csv_error.length===0)
+      {
+        this.toastr.showSuccess("Successfully Uploaded!");
+      }
+      else
+      {
+        this.getErrorModal();
+      }
     },
     (error) => {
       this.toastr.showError('error due to Api');
-
       });
+  }
+
+  getErrorModal()
+  {
+    this.errormodalofcsv= this.modalService.show(this.error_modal_of_csv_file);
+    this.filterdataform.controls.csvfilehidden.reset();
+  }
+
+  close_error_modal()
+  {
+    this.errormodalofcsv.hide();
   }
 
 }
