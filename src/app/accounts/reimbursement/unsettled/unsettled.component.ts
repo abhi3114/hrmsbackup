@@ -9,6 +9,8 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Papa } from 'ngx-papaparse';
 import { map } from 'rxjs/operators';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+
 
 @Component({
   selector: 'app-unsettled',
@@ -31,6 +33,17 @@ export class UnsettledComponent implements OnInit {
   postdata:any=[];
   sheet_data:any;
   importedData:any=[];
+  month:any;
+  year:any;
+  user_id:any;
+  exportsheet:any=[];
+  csvData:any= [
+  ["Ahmed", "Tomi", "ah@smthing.co.com"],
+  ["Raed", "Labes", "rl@smthing.co.com"],
+  ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+  ];
+  sheet:any=[];
+  pushexportsheet:any[];
 
   userssetttledmodalRef:BsModalRef;
   singleusersingledataModalRef:BsModalRef;
@@ -45,6 +58,7 @@ export class UnsettledComponent implements OnInit {
       [10, 20, 50, "All"]]
     };
     
+
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
     this.filteredData=this.commonsalary.getMonthandYear();
@@ -66,33 +80,31 @@ export class UnsettledComponent implements OnInit {
   
     getFilterData()
   {    
-    var year;var month;
     $('#unsettledDataTables').DataTable().destroy();
-    this.filterdataform.controls.filteryear.value == "" ? year = this.unsettled_filter.selectedyear : year =
+    this.filterdataform.controls.filteryear.value == "" ? this.year = this.unsettled_filter.selectedyear : this.year =
     this.filterdataform.controls.filteryear.value    
-    this.filterdataform.controls.filtermonth.value == "" ? month = this.unsettled_filter.selectedmonth : month =
+    this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
     this.filterdataform.controls.filtermonth.value
     //console.log(year,month)
-    this.api.getUnSettledReimbursementUsers(year,month).subscribe((res:any) => {
-    this.unsettle_api_data=res;
+    this.api.getUnSettledReimbursementUsers(this.year,this.month).subscribe((res:any) => {
+    this.unsettle_api_data=res;    
     this.unsettledTableTrigger.next();
     }, (err) => {
     this.toastr.showError(err.error);
     });
-    //console.log(this.unsettle_api_data)
+
   }
 
   
   userunsettledList(template: TemplateRef<any>,s)
   {
-    this.userssetttledmodalRef = this.modalService.show(template);
-    var year;var month;
-    this.filterdataform.controls.filteryear.value == "" ? year = this.unsettled_filter.selectedyear : year =
+    this.userssetttledmodalRef = this.modalService.show(template);    
+    this.filterdataform.controls.filteryear.value == "" ? this.year = this.unsettled_filter.selectedyear : this.year =
     this.filterdataform.controls.filteryear.value    
-    this.filterdataform.controls.filtermonth.value == "" ? month = this.unsettled_filter.selectedmonth : month =
+    this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
     this.filterdataform.controls.filtermonth.value
-    var user_id=s.user_id;
-    this.api.getSinghleUserUnsettledData(year,month, user_id).subscribe((res:any) => {
+     this.user_id=s.user_id;
+    this.api.getSinghleUserUnsettledData(this.year,this.month,this.user_id).subscribe((res:any) => {
     this.single_user_unsettled_data=res.reimbursements;
     }, (err) => {
     this.toastr.showError(err.error);
@@ -108,6 +120,7 @@ export class UnsettledComponent implements OnInit {
     var spiltmonthandyear=(s.display_month_year).split('-');
     this.splitmonthyear=spiltmonthandyear;
   }
+
   closesingleusersingledatamodal()
   {
     this.singleusersingledataModalRef.hide();
@@ -171,6 +184,8 @@ export class UnsettledComponent implements OnInit {
       }
       if(this.csv_error.length===0)
       {
+        this.getFilterData();
+        this.refreshUnsettledData();
         this.toastr.showSuccess("Successfully Uploaded!");
       }
       else
@@ -193,5 +208,50 @@ export class UnsettledComponent implements OnInit {
   {
     this.errormodalofcsv.hide();
   }
+  refreshUnsettledData()
+  {
+    this.api.getSinghleUserUnsettledData(this.year,this.month,this.user_id).subscribe((res:any) => {
+    this.single_user_unsettled_data=res.reimbursements;
+    }, (err) => {
+    this.toastr.showError(err.error);
+    });
+  }
 
+  exportAllUserToCSV()
+  {
+     
+    
+    this.filterdataform.controls.filteryear.value == "" ? this.year = this.unsettled_filter.selectedyear : this.year =
+    this.filterdataform.controls.filteryear.value    
+    this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
+    this.filterdataform.controls.filtermonth.value
+    this.api.getAllUserExportAllList(this.month,this.year).subscribe((res:any) => {
+    this.exportsheet=res.reimbursements;
+    //console.log(this.exportsheet)
+    this.exportsheet.forEach((data)=>{
+      if(data.comment==null)
+      {
+        data.comment = 'N/A'
+      }
+      if(data.review_reason==null)
+      {
+        data.review_reason = 'N/A'
+      }
+      if(data.receipt_path=="" || data.receipt_path)
+      {
+        data.receipt_path = 'N/A'
+      }
+      //this.pushexportsheet.push(data.id,data.user_name,data.display_month_year,data.category_name,data.display_date);
+    })
+    //console.log(this.exportsheet)
+    var options = {headers: ["ID", "USERNAME", "MONTH/YEAR","CATEGORY NAME","DATE","PURPOSE","COMMENT","REVIEW_REASON","AMOUNT","RECIEPT","Settled"]};
+    new Angular5Csv(this.exportsheet, 'ExportAll',options);
+    //console.log(this.pushexportsheet)
+    }, (err) => {
+    this.toastr.showError(err.error);
+    });
+
+   
+    
+  }
 }

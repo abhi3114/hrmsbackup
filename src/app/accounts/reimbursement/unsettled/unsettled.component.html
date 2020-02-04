@@ -21,7 +21,7 @@
               <div class="lo-btn" style="margin-left: 215px;">
                 <input type="file" class="hidden" id="files" formControlName="csvfilehidden" (change)="importCsv()" accept=".csv">
               </div>
-              <button type="button" class="btn btn-warning">Export All</button>
+              <button type="button" class="btn btn-warning" (click)="exportAllUserToCSV()">Export</button>
               <label for="files" style="margin-left:5px;background: white;padding: 7px;font-size: 14px;color: #3449b0;font-weight: 400;">Upload Excel</label>
             </div>
           </div>
