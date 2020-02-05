@@ -1,30 +1,30 @@
 <div class="wrapper">
 <div class="content-wrapper">
-  <section class="content-header">
-    <h1 class="title" style="margin-bottom: 20px;" >Salary Import</h1>
-    <div class="">
-      <div class="col-md-12">
-        <label class="filter-label">Add Filter</label>
-        <div class="lo-btn">
-          <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth" style="" required style="width: 100%;">
-          <option  value="" disabled="">Select Month</option>
-          <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
-          </select>
-        </div>
-        <div class="lo-btn">
-          <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear" style="" required style="width: 100%;">
-          <option  value="" disabled="">Select Year</option>
-          <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
-          </select>
-        </div>
-        <div class="lo-btn inputf-holder">
-          <input type="file" class="form-control in-file" id="csv-file" name="files" ng-model="dataFile"  style="" />
-        </div>
-        <button type="submit" class="btn bg-orange btn-flat btn-salary" (click)="importCsv()" [ladda]="isLoading" style="padding: 6px 10px;">Import</button>&nbsp;
-        <button type="button" class="btn bg-orange btn-flat btn-salary" (click)="resetCsv()">Reset</button>
+<section class="content-header">
+  <h1 class="title" style="margin-bottom: 20px;" >Salary Import</h1>
+  <div class="">
+    <div class="col-md-12">
+      <label class="filter-label">Add Filter</label>
+      <div class="lo-btn">
+        <select name="bnknm" class="form-control select2 building-select d-inline"  [(ngModel)]="salary_filter.selectedmonth" style="" required style="width: 100%;">
+        <option  value="" disabled="">Select Month</option>
+        <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
+        </select>
       </div>
+      <div class="lo-btn">
+        <select name="endDate" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear" style="" required style="width: 100%;">
+        <option  value="" disabled="">Select Year</option>
+        <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
+        </select>
+      </div>
+      <div class="lo-btn inputf-holder">
+        <input type="file" class="form-control in-file" id="csv-file" name="files" ng-model="dataFile"  style="" />
+      </div>
+      <button type="submit" class="btn bg-orange btn-flat btn-salary" (click)="importCsv()" [ladda]="isLoading" style="padding: 6px 10px;">Import</button>&nbsp;
+      <button type="button" class="btn bg-orange btn-flat btn-salary" (click)="resetCsv()">Reset</button>
     </div>
-  </section>
+  </div>
+</section>
 <section class="content">
   <ng-container *ngIf="canShowtable">
     <div class="panel box box-primary" ng-show="showTables">

@@ -8,12 +8,12 @@
             <div class="col-md-12">
               <label class="filter-label">Add Filter</label>
               <div class="lo-btn">
-                <select formControlName="filtermonth" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedmonth" style="width: 100%;"  required>
+                <select formControlName="filtermonth" class="form-control select2 building-select d-inline" [(ngModel)]="settled_filter.selectedmonth" style="width: 100%;"  required>
                 <option *ngFor="let b of monthArray" value="{{b.id}}">{{b.name}}</option>
                 </select>
               </div>
               <div class="lo-btn">
-                <select formControlName="filteryear" class="form-control select2 building-select d-inline" [(ngModel)]="salary_filter.selectedyear" style="width: 100%;"  required>
+                <select formControlName="filteryear" class="form-control select2 building-select d-inline" [(ngModel)]="settled_filter.selectedyear" style="width: 100%;"  required>
                 <option *ngFor="let y of yearArray" value="{{y}}">{{y}}</option>
                 </select>
               </div>
@@ -74,7 +74,7 @@
               <td>{{ur.category_name}}</td>
               <td>{{ur.display_date}}</td>
               <td>{{ur.purpose}}</td>
-              <td>{{ur.comment}}</td>
+              <td>{{ur.review_reason}}</td>
               <td>{{ur.amount}}</td>
               <td>
                 <a style="cursor: pointer;" ><i class="fa fa-eye field-icon toggle-password" aria-hidden="true" (click)="singleusersinglesettleddata(singleusersinglesettleddatamodal,ur)"></i></a>

@@ -5,7 +5,7 @@ import { FieldType } from '@ngx-formly/core';
  selector: 'formly-field-input',
  template: `
    <label>Date<sup style="color:red;">*</sup></label>
-   <input name="endDate" type='text' class= 'formControl' placeholder="dd.mm.yyyy" [formlyAttributes]="field" [owlDateTime]="ledt" [owlDateTimeTrigger]="ledt" />
+   <input name="endDate" type='text' class= 'form-control' placeholder="dd.mm.yyyy" [formlyAttributes]="field" [owlDateTime]="ledt" [owlDateTimeTrigger]="ledt" />
    <owl-date-time  [pickerType]="'calendar'" #ledt></owl-date-time>
  `,
 })
