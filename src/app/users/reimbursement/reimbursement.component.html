@@ -164,7 +164,8 @@
         <div class="form-row">
           <div class="form-group col-md-12">
             <label>Attached Bill</label>&nbsp;
-            <a href="{{single_user_data.receipt}}" target='_blank' class="btn btn-primary">View File</a>
+            <a href="{{single_user_data.receipt_path}}" target='_blank' class="btn btn-primary" *ngIf="!attachedbill">View File</a>
+            <span *ngIf="attachedbill">No File Attached</span>
           </div>
         </div>
         <div class="row">

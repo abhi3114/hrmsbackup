@@ -33,6 +33,7 @@ export class UnapprovedReimbursementComponent implements OnInit
  modalRef: BsModalRef;
  modalRefchild: BsModalRef;
  splitmonthyear:any=[];
+ attachedbill:boolean=false;
 
   constructor(private api:unApprovedReimbursementService,public toastr: NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService,private currentmonthandyear:CommonSalaryService) 
   {
@@ -195,6 +196,14 @@ export class UnapprovedReimbursementComponent implements OnInit
   {
     this.modalRefchild = this.modalService.show(template);
     this.single_user_data=r;
+    if(r.receipt_path==null || r.receipt_path=="undefined" || r.receipt_path=="")
+    {
+      this.attachedbill=true;
+    }
+    else
+    {
+      this.attachedbill=false;
+    }
     var spiltmonthandyear=(r.display_month_year).split('-');
     this.splitmonthyear=spiltmonthandyear;
   }

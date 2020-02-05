@@ -32,6 +32,7 @@ export class RejectedReimbursementComponent implements OnInit {
   user_id:any;
   year:any;
   month:any;
+  attachedbill:boolean=false;
 
   constructor(private api:rejectedReimbursementService,private toastr:NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService,private currentmonthandyear:CommonSalaryService) 
   {
@@ -99,6 +100,14 @@ export class RejectedReimbursementComponent implements OnInit {
    {
       this.modalRefchild= this.modalService.show(template);
       this.single_user_data=r;
+      if(r.receipt_path==null || r.receipt_path=="undefined" || r.receipt_path=="")
+      {
+        this.attachedbill=true;
+      }
+      else
+      {
+        this.attachedbill=false;
+      }
       var spiltmonthandyear=(r.display_month_year).split('-');
       this.splitmonthyear=spiltmonthandyear;
      //console.log(this.single_user_data)

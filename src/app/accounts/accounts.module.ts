@@ -22,6 +22,8 @@ import { FullAndFinalComponent } from './full-and-final/full-and-final.component
 import { SharedModule } from '../shared/shared.module';
 import { SettledComponent } from './reimbursement/settled/settled.component';
 import { UnsettledComponent } from './reimbursement/unsettled/unsettled.component';
+import { ErrorUnsettledComponent } from './reimbursement/error-unsettled/error-unsettled.component';
+
 @NgModule({
     imports: [
     CommonModule,
@@ -40,6 +42,6 @@ import { UnsettledComponent } from './reimbursement/unsettled/unsettled.componen
     NgMultiSelectDropDownModule.forRoot(),
     LaddaModule,SharedModule
     ],
-    declarations: [SalaryImportComponent, SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent, MissingSalaryComponent, FullAndFinalComponent, SettledComponent, UnsettledComponent],
+    declarations: [SalaryImportComponent, SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent, MissingSalaryComponent, FullAndFinalComponent, SettledComponent, UnsettledComponent, ErrorUnsettledComponent],
     })
 export class AccountsModule { }

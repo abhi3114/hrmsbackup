@@ -24,6 +24,7 @@ export class SettledComponent implements OnInit {
   single_user_settled_data:any[];
   single_user_single_settled_data:any[];
   splitmonthyear:any[];
+  attachedbill:boolean=false;
   userssetttledmodalRef:BsModalRef;
   singleusersingledataModalRef:BsModalRef;
 
@@ -62,14 +63,13 @@ export class SettledComponent implements OnInit {
     this.filterdataform.controls.filteryear.value    
     this.filterdataform.controls.filtermonth.value == "" ? month = this.settled_filter.selectedmonth : month =
     this.filterdataform.controls.filtermonth.value
-    console.log(year,month)
+    //console.log(year,month)
     this.api.getSettledReimbursementUsers(year,month).subscribe((res:any) => {
     this.settle_api_data=res;
     this.settledTableTrigger.next();
     }, (err) => {
     this.toastr.showError(err.error);
     });
-    console.log(this.settle_api_data)
   }
 
   usersettledlist(template: TemplateRef<any>,s)
@@ -92,10 +92,16 @@ export class SettledComponent implements OnInit {
   {
     this.singleusersingledataModalRef=this.modalService.show(template);
     this.single_user_single_settled_data=s;
-    console.log(s.receipt)
-    console.log(s)
+    if(s.receipt_path==null || s.receipt_path=="undefined" || s.receipt_path=="")
+    {
+      this.attachedbill=true;
+    }
+    else
+    {
+      this.attachedbill=false;
+    }
     var spiltmonthandyear=(s.display_month_year).split('-');
-    this.splitmonthyear=spiltmonthandyear;    
+    this.splitmonthyear=spiltmonthandyear;
   }
   closesingleusersingledatamodal()
   {

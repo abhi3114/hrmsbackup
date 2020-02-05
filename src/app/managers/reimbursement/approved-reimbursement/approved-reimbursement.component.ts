@@ -27,12 +27,13 @@ export class ApprovedReimbursementComponent implements OnInit {
   single_user_data:any[];
   year:any; month:any;
   user_id:any;
- reimbursementapprovedTableOptions: DataTables.Settings = {};
- reimbursementapprovedTableTrigger: Subject<any> = new Subject();
- modalRef: BsModalRef;
- modalRefchild: BsModalRef;
- splitmonthyear:any;
- employee_department:any;
+  reimbursementapprovedTableOptions: DataTables.Settings = {};
+  reimbursementapprovedTableTrigger: Subject<any> = new Subject();
+  modalRef: BsModalRef;
+  modalRefchild: BsModalRef;
+  splitmonthyear:any;
+  employee_department:any;
+  attachedbill:boolean=false;
 
 
 
@@ -120,6 +121,14 @@ export class ApprovedReimbursementComponent implements OnInit {
   {
     this.modalRefchild = this.modalService.show(template);
     this.single_user_data=r;
+    if(r.receipt_path==null || r.receipt_path=="undefined" || r.receipt_path=="")
+    {
+      this.attachedbill=true;
+    }
+    else
+    {
+      this.attachedbill=false;
+    }
     var spiltmonthandyear=(r.display_month_year).split('-');
     this.splitmonthyear=spiltmonthandyear;
   }

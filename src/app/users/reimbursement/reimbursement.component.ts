@@ -49,6 +49,7 @@ export class ReimbursementComponent implements OnInit {
   reimbursementTableTrigger: Subject<any> = new Subject();
   monthArray:any;yearArray:any;filteredData:any;
   reimbursement_filter={selectedmonth:'',selectedyear:''};
+  attachedbill:boolean=false;
  
   config = {
     animated: true,
@@ -112,15 +113,14 @@ export class ReimbursementComponent implements OnInit {
     this.remService.createReimbursement(model).subscribe(res => {
       this.modalRef.hide();
       this.toastr.showSuccess('Response Recorded');
-      this.form.reset();
-      this.options.resetModel({ type: "" });
+      // this.form.reset();
+      // this.options.resetModel({ type: "" });
       this.modalRef.hide();
       this.getData();
       }, (err) => {
       this.toastr.showError(err.error);
-      this.options.resetModel({ type: "" });
+      // this.options.resetModel({ type: "" });
       this.modalRef.hide();
-      this.ngForm.resetForm();
     });
 
   }
@@ -329,10 +329,18 @@ export class ReimbursementComponent implements OnInit {
 
   viewreimbursementsingledata(template: TemplateRef<any>,l)
   {
-      this.viewmodalRef=this.modalService.show(template);
-      this.single_user_data=l;
-      var spiltmonthandyear=(l.display_month_year).split('-');
-      this.splitmonthyear=spiltmonthandyear;
+    this.viewmodalRef=this.modalService.show(template);
+    this.single_user_data=l;
+    if(l.receipt_path==null || l.receipt_path=="undefined" || l.receipt_path=="")
+    {
+      this.attachedbill=true;
+    }
+    else
+    {
+      this.attachedbill=false;
+    }
+    var spiltmonthandyear=(l.display_month_year).split('-');
+    this.splitmonthyear=spiltmonthandyear;
   }
   closeviewrembursementsingledatamodal()
   {

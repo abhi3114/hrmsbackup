@@ -19,10 +19,11 @@
               </div>
               <button type="submit" class="btn bg-orange btn-flat btn-apply">Apply</button>
               <div class="lo-btn" style="margin-left: 215px;">
-                <input type="file" class="hidden" id="files" formControlName="csvfilehidden" (change)="importCsv()" accept=".csv">
+                <!-- <input type="file" class="hidden" id="files" formControlName="csvfilehidden" (change)="" accept=".csv"> -->
               </div>
-              <button type="button" class="btn btn-warning" (click)="exportAllUserToCSV()">Export</button>
-              <label for="files" style="margin-left:5px;background: white;padding: 7px;font-size: 14px;color: #3449b0;font-weight: 400;">Upload Excel</label>
+              <button type="button" class="btn btn-warning" (click)="exportAllUserToCSV()">Export All</button>
+              <button type="button" class="btn btn-warning" (click)="importcsvmodal(uploadcsvmodal)">Upload Excel</button>
+              <!-- <label style="margin-left:5px;background: white;padding: 7px;font-size: 14px;color: #3449b0;font-weight: 400;" >Import Data</label> -->
             </div>
           </div>
         </div>
@@ -133,8 +134,9 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label>Attached Bill</label>&nbsp;
-            <a href="{{single_user_single_unsettled_datareceipt}}" target='_blank' class="btn btn-primary">View File</a>
+            <label>Attached Bill:</label>&nbsp;
+            <a href="{{single_user_single_unsettled_data.receipt_path}}" target='_blank' class="btn btn-primary" *ngIf="!attachedbill">View File</a>
+            <span *ngIf="attachedbill">No File Attached</span>
           </div>
         </div>
         <div class="row">
@@ -164,19 +166,37 @@
         <table class="table table-striped table-hover" >
           <thead>
             <tr>
-              <th>Status</th>
-              <th>Message</th>
+              <th>Error Count</th>
+              <th>Success Count</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let error of csv_error">
-              <td>{{error.status}}</td>
-              <td>{{error.message}}</td>
+            <tr>
+              <td>{{importedData.error_messages.length}}</td>
+              <td>{{importedData.success_messages.length}}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <button type="button" class="btn btn-warning" style="margin-left: 245px;"(click)="close_error_modal()">Close</button>
+    </div>
+  </section>
+</ng-template>
+<ng-template #uploadcsvmodal>
+  <div class="modal-header ticket-popup-header">
+    <h4 class="modal-title pull-left">Upload CSV File</h4>
+    <a><span class="fa fa-times pull-right" style="color: white;cursor:pointer;" (click)="closeimportcsvmodal()"></span></a>
+  </div>
+  <section content="modal-body">
+    <div class="box-body">
+      <form [formGroup]="uploadcsvdataform">
+        <div class="form-group col-md-4">
+          <input type="file" accept=".csv" formControlName="csvfilehidden" id="files">
+        </div>
+        <div class="form-group col-md-4">
+          <button (click)="importCsv()">Upload file</button>
+        </div>
+      </form>
     </div>
   </section>
 </ng-template>
