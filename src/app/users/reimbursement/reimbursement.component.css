@@ -52,3 +52,6 @@ formly-field-input ::placeholder{
     opacity: .5!important;
     
 }
+.test-grid{
+    clear: both;
+}

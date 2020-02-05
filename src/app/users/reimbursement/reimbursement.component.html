@@ -1,13 +1,14 @@
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
+      <div class="col-md-12">
       <h4>Reimbursement</h4>
-      <div>
+     
         <button type="submit"
           class="btn bg-orange btn-flat btn-request" (click)="recordResponse(responseTemplate,false)"><i class="fa fa-submit" aria-hidden="true"></i>New Claim</button>
       </div>
-      <div class="container">
-        <div class="row">
+      <div class="">
+        <div class="">
           <form (ngSubmit)="getData()" [formGroup]="reimbursementform">
           <div class="col-md-1">
             <label class="filter-label">Add Filter</label>
@@ -30,11 +31,11 @@
       </div>
     </section>
     <section class="content helpdesk_wrapper">
-      <div class="row">
+      <div class="">
         <div class="box-body">
-          <div class="table-responsive">
-            <div class="row">
-              <div class="col-md-12">
+          <div class="">
+            <div class="table-responsive">
+              <div class="">
                 <ul class="nav nav-tabs">
                   <li [ngClass]="{ 'active': openunapproved==true }">
                     <a id="labelColor" role="button" (click)="getUnapprovedData()">Unapproved</a>
@@ -162,12 +163,12 @@
             <label>Amount</label><br>
             <span>{{single_user_data.amount}}</span>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-8">
             <label>Date</label><br>
             <span>{{single_user_data.display_date}}</span>
           </div>
-          <div class="form-group col-md-4">
-          </div>
+          <!-- <div class="form-group col-md-4">
+          </div> -->
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
