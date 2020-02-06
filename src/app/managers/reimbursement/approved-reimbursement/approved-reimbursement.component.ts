@@ -104,8 +104,8 @@ export class ApprovedReimbursementComponent implements OnInit {
     {
       var comment=this.approvemodalform.controls.comment.value;
       this.api.sendForSingleReimbursementRejection(r, comment).subscribe(res => {
-      this.getfilterData()
-      this.refreshReimbursementData()
+      this.getfilterData();
+      this.refreshReimbursementData();
       this.modalRefchild.hide();
       this.approvemodalform.reset();
       this.toastr.showSuccess('Reimbursement Rejected successfully');

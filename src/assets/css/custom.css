@@ -1712,3 +1712,8 @@ ul.treeview-menu img {
     background-color: rgb(249, 152, 0);
     border-radius: 50%;
 }
+.eye-view{
+    cursor: pointer;
+    font-size:20px;
+    color:#3333ff
+}
