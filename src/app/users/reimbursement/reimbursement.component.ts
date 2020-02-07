@@ -201,6 +201,7 @@ export class ReimbursementComponent implements OnInit {
             templateOptions: {
               label: 'Purpose',
               placeholder: '',
+              rows:'3',
               required: true,
             }
           },
