@@ -2,7 +2,6 @@ import { Component, OnInit,TemplateRef,ViewChild,ElementRef } from '@angular/cor
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable,Subject } from 'rxjs';
 import { MonthYearService } from '../../../shared/service/month-year.service';
-import { CommonSalaryService } from '../../../shared/service/common-salary.service';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { UnsettledService } from './unsettled.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -25,8 +24,8 @@ export class UnsettledComponent implements OnInit {
   @ViewChild('error_modal_of_import_csv_file') error_modal_of_csv_file: ElementRef;
   filterdataform:FormGroup;
   uploadcsvdataform:FormGroup;
-  monthArray:any;yearArray:any;filteredData:any;
-  unsettled_filter={selectedmonth:'',selectedyear:''};
+  monthArray:any;yearArray:any;
+  unsettled_filter:any={selectedmonth:'',selectedyear:''};
   unsettledOptions: DataTables.Settings = {};
   unsettledTableTrigger: Subject<any> = new Subject();
   unsettle_api_data:any=[];
@@ -43,7 +42,10 @@ export class UnsettledComponent implements OnInit {
   user_id:any;
   exportsheet:any=[];
   attachedbill:boolean=false;
+  //isLoading is for buttons
   isLoading:boolean=false;
+  //loading is for tables
+  loading:boolean=false;
   csvData:any= [
   ["NAME","SURNAME","EMAIL"],
   ["Ahmed", "Tomi", "ah@smthing.co.com"],
@@ -59,7 +61,7 @@ export class UnsettledComponent implements OnInit {
   uploadcsvmodal:BsModalRef;
 
 
-  constructor(private monthandyear:MonthYearService,private commonsalary:CommonSalaryService,private api:UnsettledService,public toastr: NotificationService,private modalService: BsModalService, private papa:Papa) {
+  constructor(private monthandyear:MonthYearService,private api:UnsettledService,public toastr: NotificationService,private modalService: BsModalService, private papa:Papa) {
 
     this.unsettledOptions= {
       pagingType: 'full_numbers',
@@ -69,9 +71,8 @@ export class UnsettledComponent implements OnInit {
 
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
-    this.filteredData=this.commonsalary.getMonthandYear();
-    this.unsettled_filter.selectedmonth=this.filteredData.selectedmonth;
-    this.unsettled_filter.selectedyear= this.filteredData.selectedyear;
+    this.unsettled_filter.selectedmonth=moment().month()+1;
+    this.unsettled_filter.selectedyear=moment().year();
 
     this.filterdataform = new FormGroup({
       filtermonth: new FormControl('', [Validators.required]),
@@ -81,8 +82,8 @@ export class UnsettledComponent implements OnInit {
     this.uploadcsvdataform=new FormGroup({
          csvfile: new FormControl(''),
     });
-    this.getFilterData();
 
+    this.getFilterData();
   }
   ngOnInit()
   {}
@@ -90,18 +91,19 @@ export class UnsettledComponent implements OnInit {
   {
     $('#unsettledDataTables').DataTable().destroy();
     this.filterdataform.controls.filteryear.value == "" ? this.year = this.unsettled_filter.selectedyear : this.year =
-    this.filterdataform.controls.filteryear.value    
+    this.filterdataform.controls.filteryear.value
     this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
     this.filterdataform.controls.filtermonth.value
-    //console.log(year,month)
-    this.isLoading=true;
+    //console.log(this.year,this.month)
+    this.loading=true;
     this.api.getUnSettledReimbursementUsers(this.year,this.month).subscribe((res:any) => {
     this.unsettle_api_data=res;
     this.isLoading=false;
+    this.loading=false;
     this.unsettledTableTrigger.next();
     }, (err) => {
     this.toastr.showError(err.error);
-    this.isLoading=false;
+    this.loading=false;
     });
     this.currentmomentmonth=moment().month(this.month-1).format("MMMM");
 
@@ -110,14 +112,17 @@ export class UnsettledComponent implements OnInit {
   {
     this.userssetttledmodalRef = this.modalService.show(template);
     this.filterdataform.controls.filteryear.value == "" ? this.year = this.unsettled_filter.selectedyear : this.year =
-    this.filterdataform.controls.filteryear.value    
+    this.filterdataform.controls.filteryear.value
     this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
     this.filterdataform.controls.filtermonth.value
-     this.user_id=s.user_id;
+    this.user_id=s.user_id;
+    this.loading=true;
     this.api.getSinghleUserUnsettledData(this.year,this.month,this.user_id).subscribe((res:any) => {
     this.single_user_unsettled_data=res.reimbursements;
+    this.loading=false;
     }, (err) => {
     this.toastr.showError(err.error);
+    this.loading=false;
     });
   }
 
@@ -193,8 +198,8 @@ export class UnsettledComponent implements OnInit {
     this.api.importCsvData(this.unsettled_filter.selectedmonth, this.unsettled_filter.selectedyear, this.postdata).subscribe((response:any) => {
     //console.log(response);
     this.importedData = response;
-    console.log("success_messages",this.importedData.success_messages);
-    console.log("Error-Message",this.importedData.error_messages)
+    //console.log("success_messages",this.importedData.success_messages);
+    //console.log("Error-Message",this.importedData.error_messages)
     this.getErrorModal();
     this.getFilterData();
     this.refreshUnsettledData();
@@ -203,9 +208,9 @@ export class UnsettledComponent implements OnInit {
     this.isLoading=false;
     },
     (error) => {
-      this.toastr.showError('error due to Api');
-      this.isLoading=false;
-      });
+    this.toastr.showError('error due to Api');
+    this.isLoading=false;
+    });
   }
   getErrorModal()
   {
@@ -252,8 +257,10 @@ export class UnsettledComponent implements OnInit {
   }
   export_error_csv()
   {
+    this.isLoading=true;
     var options = {showLabels:true,showTitle: false,title: 'Your title',headers: ["ID","MESSAGE"]};
     new Angular5Csv(this.importedData.error_messages,'Error-CSV-Report-month-'+this.month+'-year-'+this.year,options);
+    this.isLoading=false;
     this.errormodalofcsv.hide();
   }
 

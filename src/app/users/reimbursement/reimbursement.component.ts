@@ -8,7 +8,6 @@ import {FormlyFormOptions, FormlyFieldConfig} from '@ngx-formly/core';
 import {Observable,Subject} from 'rxjs';
 import { NotificationService } from '../../shared/service/notification.service';
 import { MonthYearService } from '../../shared/service/month-year.service';
-import { CommonSalaryService } from '../../shared/service/common-salary.service';
 import * as moment from 'moment';
 
 @Component({
@@ -48,9 +47,13 @@ export class ReimbursementComponent implements OnInit {
   errorLargeFile:boolean;
   reimbursementTableTrigger: Subject<any> = new Subject();
   monthArray:any;yearArray:any;filteredData:any;
-  reimbursement_filter={selectedmonth:'',selectedyear:''};
+  reimbursement_filter:any={selectedmonth:'',selectedyear:''};
   attachedbill:boolean=false;
- 
+  //loading is for table
+  loading:boolean=false;
+  //isLoading is use for claim submit button
+  isLoading:boolean=false;
+  currentmonth:any;
   config = {
     animated: true,
     keyboard: false,
@@ -59,15 +62,13 @@ export class ReimbursementComponent implements OnInit {
   };
   splitmonthyear:any=[];
 
-  constructor(private modalService: BsModalService,private remService:Reimbursementservice,public toastr: NotificationService,private monthandyear:MonthYearService,private currentmonthandyear:CommonSalaryService)
+  constructor(private modalService: BsModalService,private remService:Reimbursementservice,public toastr: NotificationService,private monthandyear:MonthYearService)
   {
 
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
-    this.filteredData=this.currentmonthandyear.getMonthandYear();
-    this.reimbursement_filter.selectedmonth=this.filteredData.selectedmonth;
-    this.reimbursement_filter.selectedyear= this.filteredData.selectedyear;
-
+    this.reimbursement_filter.selectedmonth=moment().month()+1;
+    this.reimbursement_filter.selectedyear=moment().year();
     this.form = new FormGroup({
       category: new FormControl('', [Validators.required]),
       client_name: new FormControl('', [Validators.required])
@@ -88,9 +89,9 @@ export class ReimbursementComponent implements OnInit {
 
   }
 
-  ngOnInit(){
-
-    this.fields = []
+  ngOnInit()
+  {
+    this.fields = [];
     //console.log(this.reimbursementform.controls.month.value);
   }
 
@@ -108,9 +109,11 @@ export class ReimbursementComponent implements OnInit {
     }
     model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
     model["attachment_base64"] =  this.base64
-    console.log(this.model);
-    console.log(this.options);
+    //console.log(this.model);
+    //console.log(this.options);
+    this.isLoading=true;
     this.remService.createReimbursement(model).subscribe(res => {
+      this.isLoading=false;
       this.modalRef.hide();
       this.toastr.showSuccess('Response Recorded');
       // this.form.reset();
@@ -118,6 +121,7 @@ export class ReimbursementComponent implements OnInit {
       this.modalRef.hide();
       this.getData();
       }, (err) => {
+      this.isLoading=false;
       this.toastr.showError(err.error);
       // this.options.resetModel({ type: "" });
       this.modalRef.hide();
@@ -129,7 +133,7 @@ export class ReimbursementComponent implements OnInit {
   this.form_fields = [
     {
       // fieldGroupClassName: 'row',
-      fieldGroup: []
+      fieldGroup: [],
     }
   ];
   var optionArr = [];
@@ -224,18 +228,21 @@ export class ReimbursementComponent implements OnInit {
     this.openapproved = true;
     this.openunapproved = false;
     this.openrejected = false;
-     this.rembursement_api_data=[];
-      $('#RembursementDataTables').DataTable().destroy();
-      this.reimbursementform.controls.year.value == "" ? year = this.reimbursement_filter.selectedyear : year =
-     this.reimbursementform.controls.year.value
+    this.rembursement_api_data=[];
+    $('#RembursementDataTables').DataTable().destroy();
+    this.reimbursementform.controls.year.value == "" ? year = this.reimbursement_filter.selectedyear : year =
+    this.reimbursementform.controls.year.value
     this.reimbursementform.controls.month.value == "" ? month = this.reimbursement_filter.selectedmonth : month = this.reimbursementform.controls.month.value
-     this.remService.getApproved(month,year).subscribe((res:any) => {
-     this.rembursement_api_data=res.reimbursements;
-     console.log(this.rembursement_api_data)
-       this.reimbursementTableTrigger.next();
-      }, (err) => {
-        this.toastr.showError(err.error);
-        });
+    this.loading=true;
+    this.remService.getApproved(month,year).subscribe((res:any) => {
+    this.rembursement_api_data=res.reimbursements;
+    this.loading=false;
+    //console.log(this.rembursement_api_data)
+    this.reimbursementTableTrigger.next();
+    }, (err) => {
+    this.toastr.showError(err.error);
+    this.loading=false;
+    });
 
   }
   getUnapprovedData()
@@ -247,19 +254,23 @@ export class ReimbursementComponent implements OnInit {
     this.rembursement_api_data=[];
     $('#RembursementDataTables').DataTable().destroy();
     this.reimbursementform.controls.year.value == "" ? year = this.reimbursement_filter.selectedyear : year =
-     this.reimbursementform.controls.year.value
+    this.reimbursementform.controls.year.value
     this.reimbursementform.controls.month.value == "" ? month = this.reimbursement_filter.selectedmonth : month = this.reimbursementform.controls.month.value
+    this.loading=true;
     this.remService.getUnapproved(month,year).subscribe((res:any) =>{
-      this.rembursement_api_data=res.reimbursements;
-      console.log(this.rembursement_api_data)
-      this.reimbursementTableTrigger.next();
-      }, (err) => {
-        this.toastr.showError(err.error);
-        });
+    this.rembursement_api_data=res.reimbursements;
+    //for()
+    //console.log(this.rembursement_api_data[2].data.length);
+    this.loading=false;
+    this.reimbursementTableTrigger.next();
+    }, (err) => {
+    this.loading=false;
+    this.toastr.showError(err.error);
+     });
    }
    getRejectedData()
    {
-     var year;var month;
+    var year;var month;
     this.openrejected = true;
     this.openapproved = false;
     this.openunapproved = false;
@@ -268,13 +279,16 @@ export class ReimbursementComponent implements OnInit {
     this.reimbursementform.controls.year.value == "" ? year = this.reimbursement_filter.selectedyear : year =
     this.reimbursementform.controls.year.value
     this.reimbursementform.controls.month.value == "" ? month = this.reimbursement_filter.selectedmonth : month = this.reimbursementform.controls.month.value
+    this.loading=true;
     this.remService.getRejected(month,year).subscribe((res:any) => {
-      this.rembursement_api_data=res.reimbursements;
-      console.log(this.rembursement_api_data)
-      this.reimbursementTableTrigger.next();
-      }, (err) => {
-        this.toastr.showError(err.error);
-        });
+    this.rembursement_api_data=res.reimbursements;
+    this.loading=false;
+    //console.log(this.rembursement_api_data)
+    this.reimbursementTableTrigger.next();
+    }, (err) => {
+    this.loading=false;
+    this.toastr.showError(err.error);
+    });
    }
 
   getData()

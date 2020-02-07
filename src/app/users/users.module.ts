@@ -52,6 +52,7 @@ import { FormlyFieldFile } from './reimbursement/file-type.component';
 import { DatePickerComponent } from './reimbursement/date-picker/date-picker.component';
 import { FormlyHorizontalWrapper } from './reimbursement/horizontal-wrapper';
 import { CustomFieldSelectComponent } from './reimbursement/custom-field-select/custom-field-select.component';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 
 @NgModule({
@@ -75,6 +76,12 @@ import { CustomFieldSelectComponent } from './reimbursement/custom-field-select/
   TooltipModule,
   ClipboardModule,
   DeviceDetectorModule.forRoot(),
+  NgxLoadingModule.forRoot({
+        animationType: ngxLoadingAnimationTypes.circle,
+        primaryColour:'#f2910a',
+        secondaryColour:'#ffff',
+        backdropBorderRadius:'3px',
+    }),
   FormlyModule.forRoot({
     wrappers: [{ name: 'form-field-horizontal', component: FormlyHorizontalWrapper }],
     types: [

@@ -25,6 +25,8 @@ import { ReimbursementComponent } from './reimbursement/reimbursement.component'
 import { ApprovedReimbursementComponent } from './reimbursement/approved-reimbursement/approved-reimbursement.component';
 import { UnapprovedReimbursementComponent } from './reimbursement/unapproved-reimbursement/unapproved-reimbursement.component';
 import { RejectedReimbursementComponent } from './reimbursement/rejected-reimbursement/rejected-reimbursement.component';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
+import { LaddaModule } from 'angular2-ladda';
 
 
 @NgModule({
@@ -40,7 +42,14 @@ import { RejectedReimbursementComponent } from './reimbursement/rejected-reimbur
     BrowserAnimationsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    SharedModule
+    SharedModule,
+    LaddaModule,
+    NgxLoadingModule.forRoot({
+        animationType: ngxLoadingAnimationTypes.circle,
+        primaryColour:'#f2910a',
+        secondaryColour:'#ffff',
+        backdropBorderRadius:'3px',
+    }),
     ],
     declarations: [
     ApprovedComponent,

@@ -45,6 +45,7 @@
     </section>
   </div>
 </div>
+<ngx-loading [show]="loading"></ngx-loading>
 <ng-template #unapprovedrembursementlist>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Unapproved Reimbursement</h4>
@@ -59,8 +60,8 @@
         </div>
       </div>
     </div>
-    <button [disabled]="approverejectreimbursementform.invalid" type="button" class="btn btn-primary" (click)="approveallreimbursement()" data-style="expand-right">Approve</button>
-    <button [disabled]="approverejectreimbursementform.invalid" type="submit" class="btn btn-danger pull-right">Reject</button>
+    <button [disabled]="approverejectreimbursementform.invalid" type="button" class="btn btn-primary" (click)="approveallreimbursement()" data-style="expand-right" style="background-color: #337ab7!important;" [ladda]="approveloading">Approve</button>
+    <button [disabled]="approverejectreimbursementform.invalid" type="submit" class="btn btn-danger pull-right" style="background-color:#d9534f!important;" [ladda]="rejectloading">Reject</button>
     </form>
   </section>
   <div class="modal-body">
@@ -172,8 +173,8 @@
         </div>
         <div class="row">
           <div class="col-md-12" style="margin-top: 10px; margin-left: 5px; text-align: center;">
-            <button [disabled]="monoUnapprovedReimbursementform.invalid" type="submit" class="btn btn-primary" (click)="approveSinglereimbursement(single_user_data.id)">Approve</button>&nbsp;
-            <button [disabled]="monoUnapprovedReimbursementform.invalid" type="button" class="btn btn-warning" (click)="rejectSinglereimbursement(single_user_data.id)">Reject</button>
+            <button [disabled]="monoUnapprovedReimbursementform.invalid" type="submit" class="btn btn-primary" (click)="approveSinglereimbursement(single_user_data.id)" style="background-color: #337ab7!important;" [ladda]="approveloading">Approve</button>&nbsp;
+            <button [disabled]="monoUnapprovedReimbursementform.invalid" type="button" class="btn btn-danger" style="background-color:#d9534f!important;" (click)="rejectSinglereimbursement(single_user_data.id)" [ladda]="rejectloading">Reject</button>
           </div>
         </div>
       </div>

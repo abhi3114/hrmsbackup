@@ -45,6 +45,7 @@
     </section>
   </div>
 </div>
+<ngx-loading [show]="loading"></ngx-loading>
 <ng-template #rejectedrembursementlist>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Rejected Reimbursement</h4>
@@ -86,6 +87,7 @@
       </div>
     </div>
   </section>
+  <ngx-loading [show]="loading"></ngx-loading>
 </ng-template>
 <ng-template #showrejectedrembursementdata>
   <div class="modal-content">
@@ -155,7 +157,7 @@
         </div>
         <div class="row">
           <div class="col-md-12" style="margin-top: 10px; margin-left: 5px; text-align: center;">
-            <button [disabled]="rejectmodalform.invalid" type="button" class="btn btn-primary" (click)="approveSinglereimbursement(single_user_data.id)">Approve</button>
+            <button [disabled]="rejectmodalform.invalid" type="button" class="btn btn-primary" (click)="approveSinglereimbursement(single_user_data.id)" [ladda]="isLoading">Approve</button>
           </div>
         </div>
       </div>

@@ -3,7 +3,6 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { unApprovedReimbursementService } from './unapproved-reimbursement.service';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { MonthYearService } from '../../../shared/service/month-year.service';
-import { CommonSalaryService } from '../../../shared/service/common-salary.service';
 import {Observable,Subject} from 'rxjs';
 import * as moment from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -23,8 +22,8 @@ export class UnapprovedReimbursementComponent implements OnInit
   unapprovedreimbursementform:FormGroup;
   approverejectreimbursementform:FormGroup;
   monoUnapprovedReimbursementform:FormGroup;
-  monthArray:any;yearArray:any;filteredData:any;
-  unapproved_filter={selectedmonth:'',selectedyear:''};
+  monthArray:any;yearArray:any;
+  unapproved_filter:any={selectedmonth:'',selectedyear:''};
   user_id:any;
   month:any;
   year:any;
@@ -34,8 +33,14 @@ export class UnapprovedReimbursementComponent implements OnInit
  modalRefchild: BsModalRef;
  splitmonthyear:any=[];
  attachedbill:boolean=false;
+ //loading is for table
+ loading:boolean=false;
+ //rejectloading is for single reject user form and also in bulk reject users form
+ rejectloading:boolean=false;
+ //approveloading is for single approve user form and also in bulk approve users form
+ approveloading:boolean=false;
 
-  constructor(private api:unApprovedReimbursementService,public toastr: NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService,private currentmonthandyear:CommonSalaryService) 
+  constructor(private api:unApprovedReimbursementService,public toastr: NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService) 
   {
     this.unapprovedreimbursementform = new FormGroup({
       month: new FormControl('', [Validators.required]),
@@ -50,9 +55,8 @@ export class UnapprovedReimbursementComponent implements OnInit
 
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
-    this.filteredData=this.currentmonthandyear.getMonthandYear();
-    this.unapproved_filter.selectedmonth=this.filteredData.selectedmonth;
-    this.unapproved_filter.selectedyear= this.filteredData.selectedyear;
+    this.unapproved_filter.selectedmonth=moment().month()+1;
+    this.unapproved_filter.selectedyear=moment().year();
 
 
     this.getfilterData();
@@ -69,12 +73,15 @@ export class UnapprovedReimbursementComponent implements OnInit
     this.unapprovedreimbursementform.controls.year.value
     this.unapprovedreimbursementform.controls.month.value == "" ? month = this.unapproved_filter.selectedmonth : month =
     this.unapprovedreimbursementform.controls.month.value
+    this.loading=true;
     this.api.getUnapprovedService(year,month).subscribe((res:any) => {
-     this.rembursement_api_data=res;
-      this.reimbursementunapprovedTableTrigger.next();
-      }, (err) => {
-        this.toastr.showError(err.error);
-        });
+    this.rembursement_api_data=res;
+    this.loading=false;
+    this.reimbursementunapprovedTableTrigger.next();
+    }, (err) => {
+    this.loading=false;
+    this.toastr.showError(err.error);
+    });
   }
 
   approveallreimbursement()
@@ -88,16 +95,19 @@ export class UnapprovedReimbursementComponent implements OnInit
           approvecheckstore.push(id);
         });
         var postdata = { "reimbursement_ids":  approvecheckstore, reason: this.approverejectreimbursementform.controls.comment.value}
-        console.log(this.approverejectreimbursementform.controls.comment.value)
+        //console.log(this.approverejectreimbursementform.controls.comment.value)
+        this.approveloading=true;
         if(approvecheckstore != undefined && approvecheckstore.length > 0)
         {
           this.api.sendForBulkReimbursementApproval(postdata).subscribe(res => {
           approvecheckstore = [];
+          this.approveloading=false;
           this.getfilterData()
           this.refreshReimbursementData()
           this.toastr.showSuccess('Reimbursement approved successfully');
           this.approverejectreimbursementform.reset();
           }, (err) => {
+          this.approveloading=false;
           this.toastr.showError(err.error);
           });
         }
@@ -121,13 +131,16 @@ export class UnapprovedReimbursementComponent implements OnInit
       var postdata = { "reimbursement_ids":  rejectcheckstore, reason: this.approverejectreimbursementform.controls.comment.value}
         if(rejectcheckstore != undefined && rejectcheckstore.length > 0)
         {
+          this.rejectloading=true;
           this.api.sendForBulkReimbursementRejected(postdata).subscribe(res => {
           rejectcheckstore = [];
+          this.rejectloading=false;
           this.toastr.showSuccess('Reimbursement Rejected successfully');
           this.getfilterData()
           this.refreshReimbursementData()
           this.approverejectreimbursementform.reset();
           }, (err) => {
+          this.rejectloading=false;
           this.toastr.showError(err.error);
           });
         }
@@ -145,12 +158,14 @@ export class UnapprovedReimbursementComponent implements OnInit
       this.unapprovedreimbursementform.controls.year.value
       this.unapprovedreimbursementform.controls.month.value == "" ? this.month = this.unapproved_filter.selectedmonth : this.month =
       this.unapprovedreimbursementform.controls.month.value
-
+      this.loading=true;
       this.api.getUserUnapprovedData(this.year,this.month, this.user_id).subscribe((res:any) => {
       this.user_unapproved_reimbursement_data=res.reimbursements;
-      console.log(res.reimbursements)
+      this.loading=false;
+      //console.log(res.reimbursements)
        }, (err) => {
-         this.toastr.showError(err.error);
+      this.toastr.showError(err.error);
+      this.loading=false;
        });
   }
 
@@ -159,7 +174,9 @@ export class UnapprovedReimbursementComponent implements OnInit
     if(confirm("Are you sure to Approve this reimbursement "))
     {
         var reason = this.monoUnapprovedReimbursementform.controls.comment.value
+        this.approveloading=true;
         this.api.sendForSingleReimbursementApproval(r,reason).subscribe(res => {
+        this.approveloading=false;
         this.getfilterData()
         this.refreshReimbursementData()
         this.modalRefchild.hide();
@@ -167,6 +184,7 @@ export class UnapprovedReimbursementComponent implements OnInit
         this.toastr.showSuccess('Reimbursement Approved successfully');
         }, (err) => {
         this.monoUnapprovedReimbursementform.reset();
+        this.approveloading=false;
         this.toastr.showError(err.error);
         this.modalRefchild.hide();
         });
@@ -178,13 +196,16 @@ export class UnapprovedReimbursementComponent implements OnInit
     if(confirm("Are you sure to Reject this reimbursement "))
     {
       var reason = this.monoUnapprovedReimbursementform.controls.comment.value
+      this.rejectloading=true;
       this.api.sendForSingleReimbursementRejection(r, reason).subscribe(res => {
+      this.rejectloading=false;
       this.getfilterData()
       this.refreshReimbursementData()
       this.modalRefchild.hide();
       this.monoUnapprovedReimbursementform.reset();
       this.toastr.showSuccess('Reimbursement Rejected successfully');
       }, (err) => {
+      this.rejectloading=false;
       this.toastr.showError(err.error);
       this.modalRefchild.hide();
       this.monoUnapprovedReimbursementform.reset();
