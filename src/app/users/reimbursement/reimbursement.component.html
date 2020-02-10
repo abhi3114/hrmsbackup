@@ -3,7 +3,7 @@
     <section class="content-header">
       <div class="col-md-12">
       <h4>Reimbursement</h4>
-     
+
         <button type="submit"
           class="btn bg-orange btn-flat btn-request" (click)="recordResponse(responseTemplate,false)"><i class="fa fa-submit" aria-hidden="true"></i>New Claim</button>
       </div>
@@ -111,20 +111,20 @@
         </div>
       </div>
     </div>
-    
+
     <formly-form [model]="model" [fields]="fields" [options]="options">
     <div class='clearfix'></div>
-    <div class="col-md-12 rem-content">
-    <h4>Precautions</h4>
-    <ul>
-      <li>Date of the bill should be visible with correct reference to the expenses. </li>
-      <li>Purpose of the expense should be clearly mentioned. </li>
-      <li>The person involved in the business meeting or any other stakeholder should be clearly mentioned. </li>
-      <li>Always furnish authorized bill. </li>
-      <li>Documents should be correctly uploaded. </li>
-      <li>Each document should fall in proper category of the expense.</li>
-    </ul>
-  </div>
+    <div *ngIf="canShowPrecautions" class="col-md-12 rem-content">
+      <h4>Precautions</h4>
+      <ul>
+        <li>Date of the bill should be visible with correct reference to the expenses. </li>
+        <li>Purpose of the expense should be clearly mentioned. </li>
+        <li>The person involved in the business meeting or any other stakeholder should be clearly mentioned. </li>
+        <li>Always furnish authorized bill. </li>
+        <li>Documents should be correctly uploaded. </li>
+        <li>Each document should fall in proper category of the expense.</li>
+      </ul>
+    </div>
   <div class='clearfix'></div>
     <div class="md-footer-btm">
       <div class=''>

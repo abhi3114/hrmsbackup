@@ -25,6 +25,7 @@ export class ReimbursementComponent implements OnInit {
   options: FormlyFormOptions = {};
   api_data:any;
   canShowFormAttribute:boolean=false;
+  canShowPrecautions:boolean=true;
   form_fields:any=[];
   categoriesArray:any=[];
   reimbursementform:FormGroup;
@@ -109,30 +110,23 @@ export class ReimbursementComponent implements OnInit {
     }
     model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
     model["attachment_base64"] =  this.base64
-    //console.log(this.model);
-    //console.log(this.options);
     this.isLoading=true;
     this.remService.createReimbursement(model).subscribe(res => {
       this.isLoading=false;
       this.modalRef.hide();
       this.toastr.showSuccess('Response Recorded');
-      // this.form.reset();
-      // this.options.resetModel({ type: "" });
       this.modalRef.hide();
       this.getData();
       }, (err) => {
       this.isLoading=false;
       this.toastr.showError(err.error);
-      // this.options.resetModel({ type: "" });
       this.modalRef.hide();
     });
-
   }
 
   configureFields(selectedCategory){
   this.form_fields = [
     {
-      // fieldGroupClassName: 'row',
       fieldGroup: [],
     }
   ];
