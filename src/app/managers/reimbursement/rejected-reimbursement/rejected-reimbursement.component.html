@@ -87,7 +87,7 @@
       </div>
     </div>
   </section>
-  <ngx-loading [show]="loading"></ngx-loading>
+  <ngx-loading [show]="singleuserloading"></ngx-loading>
 </ng-template>
 <ng-template #showrejectedrembursementdata>
   <div class="modal-content">
@@ -151,7 +151,8 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label>Comment:</label>
+            <label>Comment:</label><br>
+            <span>{{single_user_data.review_reason}}</span>
             <textarea cols="75" rows="3" required="true" formControlName="comment" class="form-control" placeholder="Add comment"></textarea>
           </div>
         </div>

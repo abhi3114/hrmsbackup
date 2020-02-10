@@ -21,7 +21,7 @@
               <div class="lo-btn" style="margin-left:165px;">
                 <!-- <input type="file" class="hidden" id="files" formControlName="csvfilehidden" (change)="" accept=".csv"> -->
               </div>
-              <button type="button" class="btn btn-warning" [ladda]="isLoading" (click)="exportAllUserToCSV()">Export All</button>
+              <button type="button" class="btn btn-warning" (click)="exportmodal(exportcsvmodal)">Export All</button>
               <button type="button" class="btn btn-default" style="margin-left:5px;color: #3449b0;" (click)="importcsvmodal(uploadcsvmodal)">Import CSV</button>
               <!-- <label style="margin-left:5px;background: white;padding: 7px;font-size: 14px;color: #3449b0;font-weight: 400;" >Import Data</label> -->
             </div>
@@ -92,7 +92,7 @@
       </div>
     </div>
   </section>
-  <ngx-loading [show]="loading" ></ngx-loading>
+  <ngx-loading [show]="singleuserloading" ></ngx-loading>
 </ng-template>
 <ng-template #singleusersingleunsettleddatamodal>
   <div class="modal-content" >
@@ -132,6 +132,12 @@
           <div class="form-group col-md-12">
             <label>Purpose</label><br>
             <span>{{single_user_single_unsettled_data.purpose}}</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Manager Comment</label><br>
+            <span>{{single_user_single_unsettled_data.review_reason}}</span>
           </div>
         </div>
         <div class="form-row">
@@ -206,6 +212,28 @@
             <button (click)="importCsv()" [ladda]="isLoading" class=" btn btn-warning">Submit</button>
           </div>
         </form>
+      </div>
+    </div>
+  </section>
+</ng-template>
+<ng-template #exportcsvmodal>
+  <div class="modal-header ticket-popup-header">
+    <h4 class="modal-title pull-left">Export CSV</h4>
+    <a><span class="fa fa-times pull-right" style="color: white;cursor:pointer;" (click)="closeexportmodal()"></span></a>
+  </div>
+  <section content="modal-body">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-12">
+          <h4><b>Instruction need to follow before importing CSV</b></h4>
+          <ul>
+            <li>Please type "Y" if you want to settle the claim,if not type "N" in the column.</li>
+            <li>After you settled upload the sheet,by clicking on "Import CSV" and then select appropriate csv file to upload</li>
+          </ul>
+        </div>
+        <div style="padding-left: 250px;">
+          <button type="button" class="btn btn-warning" [ladda]="isLoading" (click)="exportAllUserToCSV()">Export All</button>
+        </div>
       </div>
     </div>
   </section>

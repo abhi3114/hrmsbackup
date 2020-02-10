@@ -46,6 +46,9 @@ export class UnsettledComponent implements OnInit {
   isLoading:boolean=false;
   //loading is for tables
   loading:boolean=false;
+  //singleuserloading is for single user record table
+  singleuserloading:boolean=false;
+
   csvData:any= [
   ["NAME","SURNAME","EMAIL"],
   ["Ahmed", "Tomi", "ah@smthing.co.com"],
@@ -59,6 +62,7 @@ export class UnsettledComponent implements OnInit {
   singleusersingledataModalRef:BsModalRef;
   errormodalofcsv:BsModalRef;
   uploadcsvmodal:BsModalRef;
+  exportcsvmodal:BsModalRef;
 
 
   constructor(private monthandyear:MonthYearService,private api:UnsettledService,public toastr: NotificationService,private modalService: BsModalService, private papa:Papa) {
@@ -116,13 +120,13 @@ export class UnsettledComponent implements OnInit {
     this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
     this.filterdataform.controls.filtermonth.value
     this.user_id=s.user_id;
-    this.loading=true;
+    this.singleuserloading=true;
     this.api.getSinghleUserUnsettledData(this.year,this.month,this.user_id).subscribe((res:any) => {
     this.single_user_unsettled_data=res.reimbursements;
-    this.loading=false;
+    this.singleuserloading=false;
     }, (err) => {
     this.toastr.showError(err.error);
-    this.loading=false;
+    this.singleuserloading=false;
     });
   }
 
@@ -130,6 +134,7 @@ export class UnsettledComponent implements OnInit {
   {
     this.singleusersingledataModalRef=this.modalService.show(template);
     this.single_user_single_unsettled_data=s;
+    console.log(this.single_user_unsettled_data)
     if(s.receipt_path==null || s.receipt_path=="undefined" || s.receipt_path=="")
     {
       this.attachedbill=true;
@@ -146,7 +151,6 @@ export class UnsettledComponent implements OnInit {
   {
     this.singleusersingledataModalRef.hide();
   }
-
   importcsvmodal(template: TemplateRef<any>)
   {
     this.uploadcsvmodal=this.modalService.show(template);
@@ -227,6 +231,14 @@ export class UnsettledComponent implements OnInit {
     }, (err) => {
     this.toastr.showError(err.error);
     });
+  }
+  exportmodal(template: TemplateRef<any>)
+  {
+    this.exportcsvmodal=this.modalService.show(template);
+  }
+  closeexportmodal()
+  {
+    this.exportcsvmodal.hide();
   }
   exportAllUserToCSV()
   {

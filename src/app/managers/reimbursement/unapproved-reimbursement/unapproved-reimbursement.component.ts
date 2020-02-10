@@ -39,6 +39,8 @@ export class UnapprovedReimbursementComponent implements OnInit
  rejectloading:boolean=false;
  //approveloading is for single approve user form and also in bulk approve users form
  approveloading:boolean=false;
+ //singleuserloading is for single user record table
+  singleuserloading:boolean=false;
 
   constructor(private api:unApprovedReimbursementService,public toastr: NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService) 
   {
@@ -158,14 +160,14 @@ export class UnapprovedReimbursementComponent implements OnInit
       this.unapprovedreimbursementform.controls.year.value
       this.unapprovedreimbursementform.controls.month.value == "" ? this.month = this.unapproved_filter.selectedmonth : this.month =
       this.unapprovedreimbursementform.controls.month.value
-      this.loading=true;
+      this.singleuserloading=true;
       this.api.getUserUnapprovedData(this.year,this.month, this.user_id).subscribe((res:any) => {
       this.user_unapproved_reimbursement_data=res.reimbursements;
-      this.loading=false;
+      this.singleuserloading=false;
       //console.log(res.reimbursements)
        }, (err) => {
       this.toastr.showError(err.error);
-      this.loading=false;
+      this.singleuserloading=false;
        });
   }
 
