@@ -20,6 +20,12 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MissingSalaryComponent } from './missing-salary/missing-salary.component';
 import { FullAndFinalComponent } from './full-and-final/full-and-final.component';
 import { SharedModule } from '../shared/shared.module';
+import { SettledComponent } from './reimbursement/settled/settled.component';
+import { UnsettledComponent } from './reimbursement/unsettled/unsettled.component';
+import { ErrorUnsettledComponent } from './reimbursement/error-unsettled/error-unsettled.component';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
+
+
 @NgModule({
     imports: [
     CommonModule,
@@ -36,8 +42,14 @@ import { SharedModule } from '../shared/shared.module';
     MatSlideToggleModule,
     PapaParseModule,
     NgMultiSelectDropDownModule.forRoot(),
-    LaddaModule,SharedModule
+    LaddaModule,SharedModule,
+    NgxLoadingModule.forRoot({
+        animationType: ngxLoadingAnimationTypes.circle,
+        primaryColour:'#f2910a',
+        secondaryColour:'#ffff',
+        backdropBorderRadius:'3px',
+    }),
     ],
-    declarations: [SalaryImportComponent, SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent, MissingSalaryComponent, FullAndFinalComponent],
+    declarations: [SalaryImportComponent, SalaryProcessingComponent, EditSalaryComponent, SalaryReportComponent, PaymentReportComponent, MissingSalaryComponent, FullAndFinalComponent, SettledComponent, UnsettledComponent, ErrorUnsettledComponent],
     })
 export class AccountsModule { }

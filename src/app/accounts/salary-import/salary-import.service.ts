@@ -3,12 +3,15 @@ import { HttpClient,HttpHeaders} from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import * as moment from 'moment';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class SalaryImportService {
 
   constructor(private http:HttpClient) { }
+  fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  fileExtension = '.xlsx';
 
   importCsvData(params)
   {
@@ -45,4 +48,7 @@ export class SalaryImportService {
     var data={selectedmonth,selectedyear}
     return data
   }
+
+
+
 }

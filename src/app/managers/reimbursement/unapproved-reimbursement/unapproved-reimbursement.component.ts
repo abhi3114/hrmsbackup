@@ -1,7 +1,8 @@
 import { Component, OnInit,TemplateRef} from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import{ unApprovedReimbursementService } from './unapproved-reimbursement.service';
+import { unApprovedReimbursementService } from './unapproved-reimbursement.service';
 import { NotificationService } from '../../../shared/service/notification.service';
+import { MonthYearService } from '../../../shared/service/month-year.service';
 import {Observable,Subject} from 'rxjs';
 import * as moment from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -12,7 +13,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
   templateUrl: './unapproved-reimbursement.component.html',
   styleUrls: ['./unapproved-reimbursement.component.css']
 })
-export class UnapprovedReimbursementComponent implements OnInit 
+export class UnapprovedReimbursementComponent implements OnInit
 {
 
   rembursement_api_data:any=[];
@@ -20,153 +21,221 @@ export class UnapprovedReimbursementComponent implements OnInit
   single_user_data:any[];
   unapprovedreimbursementform:FormGroup;
   approverejectreimbursementform:FormGroup;
-  currentmonth=moment().format('MMMM');
-  cmonth=moment().month(this.currentmonth).format("M");
-  currentyear=moment().format('YYYY');
-  months=[{"month_id":1,"month_name":'January'},
-          {"month_id":2,"month_name":'February'},
-          {"month_id":3,"month_name":'March'},
-          {"month_id":4,"month_name":'April'},
-          {"month_id":5,"month_name":'May'},
-          {"month_id":6,"month_name":'June'},
-          {"month_id":7,"month_name":'July'},
-          {"month_id":8,"month_name":'August'},
-          {"month_id":9,"month_name":'September'},
-          {"month_id":10,"month_name":'October'},
-          {"month_id":11,"month_name":'November'},
-          {"month_id":12,"month_name":'December'}
-          ];
- years=[2020,2019,2018,2017];
+  monoUnapprovedReimbursementform:FormGroup;
+  monthArray:any;yearArray:any;
+  unapproved_filter:any={selectedmonth:'',selectedyear:''};
+  user_id:any;
+  month:any;
+  year:any;
  reimbursementunapprovedTableOptions: DataTables.Settings = {};
  reimbursementunapprovedTableTrigger: Subject<any> = new Subject();
  modalRef: BsModalRef;
  modalRefchild: BsModalRef;
  splitmonthyear:any=[];
+ attachedbill:boolean=false;
+ //loading is for table
+ loading:boolean=false;
+ //rejectloading is for single reject user form and also in bulk reject users form
+ rejectloading:boolean=false;
+ //approveloading is for single approve user form and also in bulk approve users form
+ approveloading:boolean=false;
 
-  constructor(private api:unApprovedReimbursementService,public toastr: NotificationService,private modalService: BsModalService) { 
+  constructor(private api:unApprovedReimbursementService,public toastr: NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService) 
+  {
     this.unapprovedreimbursementform = new FormGroup({
       month: new FormControl('', [Validators.required]),
       year: new FormControl('', [Validators.required]),
     });
-    this.getfilterData();
     this.approverejectreimbursementform = new FormGroup({
       comment: new FormControl('', [Validators.required])
     });
+    this.monoUnapprovedReimbursementform = new FormGroup({
+      comment: new FormControl('', [Validators.required])
+    });
+
+    this.monthArray=this.monthandyear.populateMonth();
+    this.yearArray=this.monthandyear.populateYear();
+    this.unapproved_filter.selectedmonth=moment().month()+1;
+    this.unapproved_filter.selectedyear=moment().year();
+
+
+    this.getfilterData();
   }
 
-  ngOnInit() {}
+  ngOnInit()
+  {}
 
   getfilterData()
   {
-    var year;var month; 
-    $('#UnapprovedRembursementDataTables').DataTable().destroy();   
-    this.unapprovedreimbursementform.controls.year.value == "" ? year = this.currentyear : year =
+    var year;var month;
+    $('#UnapprovedRembursementDataTables').DataTable().destroy();
+    this.unapprovedreimbursementform.controls.year.value == "" ? year = this.unapproved_filter.selectedyear : year =
     this.unapprovedreimbursementform.controls.year.value
-    this.unapprovedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
-    this.unapprovedreimbursementform.controls.month.value    
+    this.unapprovedreimbursementform.controls.month.value == "" ? month = this.unapproved_filter.selectedmonth : month =
+    this.unapprovedreimbursementform.controls.month.value
+    this.loading=true;
     this.api.getUnapprovedService(year,month).subscribe((res:any) => {
-     this.rembursement_api_data=res;      
-      this.reimbursementunapprovedTableTrigger.next();       
-      }, (err) => {
-        this.toastr.showError(err.error);
-        });
-    
+    this.rembursement_api_data=res;
+    this.loading=false;
+    this.reimbursementunapprovedTableTrigger.next();
+    }, (err) => {
+    this.loading=false;
+    this.toastr.showError(err.error);
+    });
   }
 
   approveallreimbursement()
   {
-    var approvecheckstore = [];
-    $('.checkbox:checked').each(function() {
-      var id = $(this).attr('name');
-      approvecheckstore.push(id);
-      });
-    var postdata = { "reimbursement_ids":  approvecheckstore, reason: this.approverejectreimbursementform.controls.comment.value}    
-    if(approvecheckstore != undefined && approvecheckstore.length > 0)
+    if(confirm("Are you sure to Approve this Bulk reimbursement "))
     {
-      this.api.sendForBulkReimbursementApproval(postdata).subscribe(res => {
-        approvecheckstore = []; 
-        this.toastr.showSuccess('Reimbursement approved successfully');
-        this.approverejectreimbursementform.reset();
-        }, (err) => {
-        //$('.modal').remove();
-        this.toastr.showError(err.error);
-      });
+        var approvecheckstore = [];
+        $('.checkbox:checked').each(function()
+        {
+          var id = $(this).attr('name');
+          approvecheckstore.push(id);
+        });
+        var postdata = { "reimbursement_ids":  approvecheckstore, reason: this.approverejectreimbursementform.controls.comment.value}
+        //console.log(this.approverejectreimbursementform.controls.comment.value)
+        this.approveloading=true;
+        if(approvecheckstore != undefined && approvecheckstore.length > 0)
+        {
+          this.api.sendForBulkReimbursementApproval(postdata).subscribe(res => {
+          approvecheckstore = [];
+          this.approveloading=false;
+          this.getfilterData()
+          this.refreshReimbursementData()
+          this.toastr.showSuccess('Reimbursement approved successfully');
+          this.approverejectreimbursementform.reset();
+          }, (err) => {
+          this.approveloading=false;
+          this.toastr.showError(err.error);
+          });
+        }
+        else
+        {
+          this.toastr.CustomErrorMessage('Please check atleast one Reimbursement');
+        }
     }
-    else
-    {
-      this.toastr.CustomErrorMessage('Please check atleast one Reimbursement');
-    } 
   }
 
   rejectallreimbursement()
-  { 
-    var rejectcheckstore = [];
-    $('.checkbox:checked').each(function() {
-      var id = $(this).attr('name');
-      rejectcheckstore.push(id);
-      });
-    var postdata = { "reimbursement_ids":  rejectcheckstore, reason: this.approverejectreimbursementform.controls.comment.value}    
-    if(rejectcheckstore != undefined && rejectcheckstore.length > 0)
+  {
+    if(confirm("Are you sure to Reject this Bulk reimbursement "))
     {
-      this.api.sendForBulkReimbursementRejected(postdata).subscribe(res => {
-        rejectcheckstore = []; 
-        this.toastr.showSuccess('Reimbursement Rejected successfully');
-        this.approverejectreimbursementform.reset();
-        }, (err) => {
-        //$('.modal').remove();
-        this.toastr.showError(err.error);
+      var rejectcheckstore = [];
+      $('.checkbox:checked').each(function()
+      {
+        var id = $(this).attr('name');
+        rejectcheckstore.push(id);
       });
+      var postdata = { "reimbursement_ids":  rejectcheckstore, reason: this.approverejectreimbursementform.controls.comment.value}
+        if(rejectcheckstore != undefined && rejectcheckstore.length > 0)
+        {
+          this.rejectloading=true;
+          this.api.sendForBulkReimbursementRejected(postdata).subscribe(res => {
+          rejectcheckstore = [];
+          this.rejectloading=false;
+          this.toastr.showSuccess('Reimbursement Rejected successfully');
+          this.getfilterData()
+          this.refreshReimbursementData()
+          this.approverejectreimbursementform.reset();
+          }, (err) => {
+          this.rejectloading=false;
+          this.toastr.showError(err.error);
+          });
+        }
+        else
+        {
+          this.toastr.CustomErrorMessage('Please check atleast one Reimbursement');
+        }
     }
-    else
-    {
-      this.toastr.CustomErrorMessage('Please check atleast one Reimbursement');
-    } 
   }
   userrembursementList(template: TemplateRef<any>, r)
-    {
+  {
       this.modalRef = this.modalService.show(template);
-      var year;var month;
-      var user_id=r.user_id;
-      this.unapprovedreimbursementform.controls.year.value == "" ? year = this.currentyear : year =
+      this.user_id=r.user_id;
+      this.unapprovedreimbursementform.controls.year.value == "" ? this.year = this.unapproved_filter.selectedyear : this.year =
       this.unapprovedreimbursementform.controls.year.value
-      this.unapprovedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
+      this.unapprovedreimbursementform.controls.month.value == "" ? this.month = this.unapproved_filter.selectedmonth : this.month =
       this.unapprovedreimbursementform.controls.month.value
-
-      this.api.getUserUnapprovedData(year,month, user_id).subscribe((res:any) => {
-      this.user_unapproved_reimbursement_data=res.reimbursements;  
-      //console.log(this.user_unapproved_reimbursement_data);
+      this.loading=true;
+      this.api.getUserUnapprovedData(this.year,this.month, this.user_id).subscribe((res:any) => {
+      this.user_unapproved_reimbursement_data=res.reimbursements;
+      this.loading=false;
+      //console.log(res.reimbursements)
        }, (err) => {
-         this.toastr.showError(err.error);
+      this.toastr.showError(err.error);
+      this.loading=false;
        });
-    }
+  }
 
   approveSinglereimbursement(r)
   {
-      this.api.sendForSingleReimbursementApproval(r).subscribe(res => {
+    if(confirm("Are you sure to Approve this reimbursement "))
+    {
+        var reason = this.monoUnapprovedReimbursementform.controls.comment.value
+        this.approveloading=true;
+        this.api.sendForSingleReimbursementApproval(r,reason).subscribe(res => {
+        this.approveloading=false;
+        this.getfilterData()
+        this.refreshReimbursementData()
+        this.modalRefchild.hide();
+        this.monoUnapprovedReimbursementform.reset();
         this.toastr.showSuccess('Reimbursement Approved successfully');
-    }, (err) => {
-      this.toastr.showError(err.error);
-    });
+        }, (err) => {
+        this.monoUnapprovedReimbursementform.reset();
+        this.approveloading=false;
+        this.toastr.showError(err.error);
+        this.modalRefchild.hide();
+        });
+    }
   }
 
   rejectSinglereimbursement(r)
   {
-      //console.log(r);
-      this.api.sendForSingleReimbursementRejection(r).subscribe(res => {
-        this.toastr.showSuccess('Reimbursement Rejected successfully');
+    if(confirm("Are you sure to Reject this reimbursement "))
+    {
+      var reason = this.monoUnapprovedReimbursementform.controls.comment.value
+      this.rejectloading=true;
+      this.api.sendForSingleReimbursementRejection(r, reason).subscribe(res => {
+      this.rejectloading=false;
+      this.getfilterData()
+      this.refreshReimbursementData()
+      this.modalRefchild.hide();
+      this.monoUnapprovedReimbursementform.reset();
+      this.toastr.showSuccess('Reimbursement Rejected successfully');
       }, (err) => {
-        this.toastr.showError(err.error);
+      this.rejectloading=false;
+      this.toastr.showError(err.error);
+      this.modalRefchild.hide();
+      this.monoUnapprovedReimbursementform.reset();
       });
+    }
   }
 
   unapproveviewreimbursement(template: TemplateRef<any>, r)
   {
-      this.modalRefchild = this.modalService.show(template);
-      this.single_user_data=r;
-      var spiltmonthandyear=(r.display_month_year).split('-');
-      this.splitmonthyear=spiltmonthandyear;
+    this.modalRefchild = this.modalService.show(template);
+    this.single_user_data=r;
+    if(r.receipt_path==null || r.receipt_path=="undefined" || r.receipt_path=="")
+    {
+      this.attachedbill=true;
+    }
+    else
+    {
+      this.attachedbill=false;
+    }
+    var spiltmonthandyear=(r.display_month_year).split('-');
+    this.splitmonthyear=spiltmonthandyear;
   }
-  
-  
+
+  refreshReimbursementData()
+  {
+    this.api.getUserUnapprovedData(this.year,this.month, this.user_id).subscribe((res:any) => {
+    this.user_unapproved_reimbursement_data=res.reimbursements;
+    }, (err) => {
+    this.toastr.showError(err.error);
+    });
+  }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit,TemplateRef } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import{ approvedReimbursementService } from './approved-reimbursement.service';
 import { NotificationService } from '../../../shared/service/notification.service';
+import { MonthYearService } from '../../../shared/service/month-year.service';
 import {Observable,Subject} from 'rxjs';
 import * as moment from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -15,38 +16,31 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 })
 export class ApprovedReimbursementComponent implements OnInit {
 
-  
+
   approvedreimbursementform:FormGroup;
   approvemodalform:FormGroup;
+  monthArray:any;yearArray:any;
+  approved_filter:any={selectedmonth:'',selectedyear:''};
   rembursement_api_data:any=[];
   user_approved_reimbursement_data:any[];
   single_user_data:any[];
-  currentmonth=moment().format('MMMM');
-  cmonth=moment().month(this.currentmonth).format("M");
-  currentyear=moment().format('YYYY');
-  months=[{"month_id":1,"month_name":'January'},
-          {"month_id":2,"month_name":'February'},
-          {"month_id":3,"month_name":'March'},
-          {"month_id":4,"month_name":'April'},
-          {"month_id":5,"month_name":'May'},
-          {"month_id":6,"month_name":'June'},
-          {"month_id":7,"month_name":'July'},
-          {"month_id":8,"month_name":'August'},
-          {"month_id":9,"month_name":'September'},
-          {"month_id":10,"month_name":'October'},
-          {"month_id":11,"month_name":'November'},
-          {"month_id":12,"month_name":'December'}
-          ];
- years=[2020,2019,2018,2017];
- reimbursementapprovedTableOptions: DataTables.Settings = {};
- reimbursementapprovedTableTrigger: Subject<any> = new Subject();
- modalRef: BsModalRef;
- modalRefchild: BsModalRef;
- splitmonthyear:any;
+  year:any; month:any;
+  user_id:any;
+  reimbursementapprovedTableOptions: DataTables.Settings = {};
+  reimbursementapprovedTableTrigger: Subject<any> = new Subject();
+  modalRef: BsModalRef;
+  modalRefchild: BsModalRef;
+  splitmonthyear:any;
+  employee_department:any;
+  attachedbill:boolean=false;
+  //is loading is for button
+  isLoading:boolean=false;
+  //loading is for table
+  loading:boolean=false;
 
 
 
-  constructor(private api:approvedReimbursementService,public toastr: NotificationService, private modalService: BsModalService) { 
+  constructor(private api:approvedReimbursementService,public toastr: NotificationService, private modalService: BsModalService,private monthandyear:MonthYearService) {
       this.approvedreimbursementform = new FormGroup({
       month: new FormControl('', [Validators.required]),
       year: new FormControl('', [Validators.required]),
@@ -62,76 +56,99 @@ export class ApprovedReimbursementComponent implements OnInit {
           comment: new FormControl('', [Validators.required]),
         });
 
+    this.monthArray=this.monthandyear.populateMonth();
+    this.yearArray=this.monthandyear.populateYear();
+    this.approved_filter.selectedmonth=moment().month()+1;
+    this.approved_filter.selectedyear=moment().year();
     this.getfilterData();
-
   }
 
   ngOnInit() {}
 
-  
+
 
   getfilterData()
   {
-    var year;var month;
     $('#ApprovedRembursementDataTables').DataTable().destroy();
-    this.approvedreimbursementform.controls.year.value == "" ? year = this.currentyear : year =
+    this.approvedreimbursementform.controls.year.value == "" ? this.year = this.approved_filter.selectedyear : this.year =
     this.approvedreimbursementform.controls.year.value
-    this.approvedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
+    this.approvedreimbursementform.controls.month.value == "" ? this.month = this.approved_filter.selectedmonth : this.month =
     this.approvedreimbursementform.controls.month.value
-    this.api.getApprovedService(year,month).subscribe((res:any) => {
+    this.loading=true;
+    this.api.getApprovedService(this.year,this.month).subscribe((res:any) => {
     this.rembursement_api_data=res;
     this.reimbursementapprovedTableTrigger.next();
+    this.loading=false;
     }, (err) => {
     this.toastr.showError(err.error);
+    this.loading=false;
     });
   }
 
   userrembursementList(template: TemplateRef<any>, r)
   {
     this.modalRef = this.modalService.show(template);
-    var year;var month;
-    this.approvedreimbursementform.controls.year.value == "" ? year = this.currentyear : year =
+    this.approvedreimbursementform.controls.year.value == "" ? this.year = this.approved_filter.selectedyear : this.year =
     this.approvedreimbursementform.controls.year.value
-    this.approvedreimbursementform.controls.month.value == "" ? month = this.cmonth : month =
+    this.approvedreimbursementform.controls.month.value == "" ? this.month = this.approved_filter.selectedmonth : this.month =
     this.approvedreimbursementform.controls.month.value
-    var user_id=r.user_id;
-    this.api.getUserRembursementData(year,month, user_id).subscribe((res:any) => {
+    this.user_id = r.user_id;
+    this.loading=true;
+    this.api.getUserRembursementData(this.year,this.month,this.user_id).subscribe((res:any) => {
     this.user_approved_reimbursement_data=res.reimbursements;
-      //console.log(this.user_approved_reimbursement_data);
+    this.loading=false;
+    //console.log(res.reimbursements);
     }, (err) => {
     this.toastr.showError(err.error);
+    this.loading=false;
     });
 
   }
 
   rejectSinglereimbursement(r)
   {
-      //console.log(r)
-   
+    if(confirm("Are you sure to Reject this reimbursement "))
+    {
       var comment=this.approvemodalform.controls.comment.value;
-      this.api.sendForSingleReimbursementRejection(r).subscribe(res => {
-        this.toastr.showSuccess('Reimbursement Rejected successfully');
-      }, (err) => {
-        this.toastr.showError(err.error);
-      });
+      this.isLoading=true;
+      this.api.sendForSingleReimbursementRejection(r, comment).subscribe(res => {
+      this.isLoading=false;
+      this.getfilterData();
+      this.refreshReimbursementData();
       this.modalRefchild.hide();
-
+      this.approvemodalform.reset();
+      this.toastr.showSuccess('Reimbursement Rejected successfully');
+      }, (err) => {
+      this.toastr.showError(err.error);
+      this.isLoading=false
+      this.modalRefchild.hide();
+      this.approvemodalform.reset();
+      });
+    }
   }
 
   approveviewreimbursement(template: TemplateRef<any>, r)
   {
     this.modalRefchild = this.modalService.show(template);
     this.single_user_data=r;
+    if(r.receipt_path==null || r.receipt_path=="undefined" || r.receipt_path=="")
+    {
+      this.attachedbill=true;
+    }
+    else
+    {
+      this.attachedbill=false;
+    }
     var spiltmonthandyear=(r.display_month_year).split('-');
     this.splitmonthyear=spiltmonthandyear;
-    
   }
 
-  approvesavecomment()
-  {
-    console.log("hii")
-    /*if(approvecheckstore != undefined)
-    {}*/    
+  refreshReimbursementData(){
+    this.api.getUserRembursementData(this.year,this.month, this.user_id).subscribe((res:any) => {
+    this.user_approved_reimbursement_data=res.reimbursements;
+    }, (err) => {
+    this.toastr.showError(err.error);
+    });
   }
 
 }
