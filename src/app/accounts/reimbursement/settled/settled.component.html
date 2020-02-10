@@ -130,6 +130,12 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
+            <label>Manager Comment</label><br>
+            <span>{{single_user_single_unsettled_data.review_reason}}</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
             <label>Attached Bill:</label>&nbsp;
             <a href="{{single_user_single_settled_data.receipt_path}}" target='_blank' class="btn btn-primary" *ngIf="!attachedbill">View File</a>
             <span *ngIf="attachedbill">No File Attached</span>

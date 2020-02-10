@@ -51,6 +51,7 @@ export class ReimbursementComponent implements OnInit {
   monthArray:any;yearArray:any;filteredData:any;
   reimbursement_filter:any={selectedmonth:'',selectedyear:''};
   attachedbill:boolean=false;
+  precaution:boolean=true;
   //loading is for table
   loading:boolean=false;
   //isLoading is use for claim submit button
@@ -63,6 +64,7 @@ export class ReimbursementComponent implements OnInit {
     ignoreBackdropClick: true
   };
   splitmonthyear:any=[];
+  ola_uber_show:boolean=false;
 
   constructor(private modalService: BsModalService,private remService:Reimbursementservice,public toastr: NotificationService,private monthandyear:MonthYearService)
   {
@@ -172,7 +174,9 @@ export class ReimbursementComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  enableFormAccordingToCategory($event){
+  enableFormAccordingToCategory($event)
+  {
+    this.precaution=false;
     this.category = $event.target.value;
     let common_fields = [
       {
@@ -236,7 +240,7 @@ export class ReimbursementComponent implements OnInit {
     this.remService.getApproved(month,year).subscribe((res:any) => {
     this.rembursement_api_data=res.reimbursements;
     this.loading=false;
-    //console.log(this.rembursement_api_data)
+    console.log(this.rembursement_api_data)
     this.reimbursementTableTrigger.next();
     }, (err) => {
     this.toastr.showError(err.error);
@@ -258,8 +262,6 @@ export class ReimbursementComponent implements OnInit {
     this.loading=true;
     this.remService.getUnapproved(month,year).subscribe((res:any) =>{
     this.rembursement_api_data=res.reimbursements;
-    //for()
-    //console.log(this.rembursement_api_data[2].data.length);
     this.loading=false;
     this.reimbursementTableTrigger.next();
     }, (err) => {
@@ -282,7 +284,7 @@ export class ReimbursementComponent implements OnInit {
     this.remService.getRejected(month,year).subscribe((res:any) => {
     this.rembursement_api_data=res.reimbursements;
     this.loading=false;
-    //console.log(this.rembursement_api_data)
+    console.log(this.rembursement_api_data)
     this.reimbursementTableTrigger.next();
     }, (err) => {
     this.loading=false;
@@ -291,11 +293,10 @@ export class ReimbursementComponent implements OnInit {
    }
 
   getData()
-   {
+  {
     this.openrejected ? this.getRejectedData() : this.openapproved ? this.getApprovedData() :
     this.getUnapprovedData();
-
-   }
+  }
 
   modelChange(model) {
     console.warn(model);
@@ -344,6 +345,19 @@ export class ReimbursementComponent implements OnInit {
   {
     this.viewmodalRef=this.modalService.show(template);
     this.single_user_data=l;
+    console.log(this.single_user_data.category_name);
+    console.log(this.single_user_data.data.to);
+    console.log(this.single_user_data.data.client_name);
+    console.log(this.single_user_data.data.expense_for);
+    if(this.single_user_data.category_name==="Ola/Uber")
+    {
+      this.ola_uber_show=true;
+      console.log("hooo");
+    }
+    else
+    {
+      this.ola_uber_show=false;
+    }
     if(l.receipt_path==null || l.receipt_path=="undefined" || l.receipt_path=="")
     {
       this.attachedbill=true;

@@ -2,8 +2,7 @@
   <div class="content-wrapper">
     <section class="content-header">
       <div class="col-md-12">
-      <h4>Reimbursement</h4>
-
+        <h4>Reimbursement</h4>
         <button type="submit"
           class="btn bg-orange btn-flat btn-request" (click)="recordResponse(responseTemplate,false)"><i class="fa fa-submit" aria-hidden="true"></i>New Claim</button>
       </div>
@@ -54,7 +53,7 @@
             <table id="RembursementDataTables" class="table table-bordered table-striped table-hover" datatable [dtOptions]="rembursementTableOptions" [dtTrigger]="reimbursementTableTrigger">
             <thead>
               <tr>
-                <th>Sr.No</th>
+                <th>ID</th>
                 <th>Date</th>
                 <th>Category</th>
                 <th>Purpose</th>
@@ -73,7 +72,7 @@
                 <td>{{l.amount}}</td>
                 <td>
                   <a><i class="fa fa-eye field-icon toggle-password eye-view" aria-hidden="true" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)"></i></a>&nbsp;
-                  <a style="cursor: pointer;font-size:20px;color:#808080" *ngIf="openunapproved || openrejected"><i class="fa fa-pencil" aria-hidden="true" (click)="editrembursementsingledata(editrembursementsingledatamodal,l)"></i></a>&nbsp;
+                  <a style="cursor: pointer;font-size:20px;color:#808080" *ngIf="openunapproved"><i class="fa fa-pencil" aria-hidden="true" (click)="editrembursementsingledata(editrembursementsingledatamodal,l)"></i></a>&nbsp;
                   <a style="cursor: pointer;font-size:20px;color:#808080" data-confirm="Are you sure to delete this item?" *ngIf="openunapproved"><i class="fa fa-trash" (click)="deletereimbursementsingledata(l)"></i></a>
                 </td>
               </tr>
@@ -111,10 +110,12 @@
         </div>
       </div>
     </div>
+    <formly-form [model]="model" [fields]="fields" [options]="options">
+    <div class='clearfix'></div>
+    <div class="col-md-12 rem-content" *ngIf="precaution">
 
     <formly-form [model]="model" [fields]="fields" [options]="options">
     <div class='clearfix'></div>
-    <div *ngIf="canShowPrecautions" class="col-md-12 rem-content">
       <h4>Precautions</h4>
       <ul>
         <li>Date of the bill should be visible with correct reference to the expenses. </li>
@@ -125,7 +126,7 @@
         <li>Each document should fall in proper category of the expense.</li>
       </ul>
     </div>
-  <div class='clearfix'></div>
+    <div class='clearfix'></div>
     <div class="md-footer-btm">
       <div class=''>
         <button type="submit" class="btn btn-default btn-orange" [ladda]="isLoading">Submit</button>
@@ -134,8 +135,6 @@
     <div class='clearfix'></div>
     </formly-form>
     </form>
-
-
   </div>
 </ng-template>
 <ng-template #viewrembursementsingledatamodal>
@@ -160,6 +159,20 @@
             <span>{{single_user_data.category_name}}</span>
           </div>
         </div>
+        <div class="form-row" *ngIf="ola_uber_show">
+          <div class="form-group col-md-4">
+            <label>Expense-For</label><br>
+            <span>{{single_user_data.data.expense_for}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Client-Name</label><br>
+            <span>{{single_user_data.data.client_name}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>To</label><br>
+            <span>{{single_user_data.data.to}}</span>
+          </div>
+        </div>
         <div class="form-row">
           <div class="form-group col-md-4">
             <label>Amount</label><br>
@@ -170,7 +183,7 @@
             <span>{{single_user_data.display_date}}</span>
           </div>
           <!-- <div class="form-group col-md-4">
-          </div> -->
+            </div> -->
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
@@ -180,7 +193,13 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label>Attached Bill</label>&nbsp;
+            <label>Manager Comment</label><br>
+            <span>{{single_user_data.review_reason}}</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Attached Bill:</label>&nbsp;
             <a href="{{single_user_data.receipt_path}}" target='_blank' class="btn btn-primary" *ngIf="!attachedbill">View File</a>
             <span *ngIf="attachedbill">No File Attached</span>
           </div>
