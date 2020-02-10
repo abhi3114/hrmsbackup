@@ -31,6 +31,7 @@ export class ReimbursementComponent implements OnInit {
   reimbursementform:FormGroup;
   mySelectedFiles:any=[];
   single_user_data:any=[];
+  category:any;
   base64: any;
   reimbursementformdata={month:'',year:''};
   rembursement_api_data:any;
@@ -108,6 +109,7 @@ export class ReimbursementComponent implements OnInit {
     if ($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
       model['client_name'] = $('.client_name').val()
     }
+    model["category_id"] = this.category
     model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
     model["attachment_base64"] =  this.base64
     this.isLoading=true;
@@ -127,42 +129,42 @@ export class ReimbursementComponent implements OnInit {
   }
 
   configureFields(selectedCategory){
-  this.form_fields = [
-    {
-      fieldGroup: [],
-    }
-  ];
-  var optionArr = [];
-  var hashObject = {}
-  this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
-    this.api_data=res;
-    this.api_data.forEach(data => {
-      if (data.title != 'client_name'){
-        var type = (data.data_type == 'date') ? 'date' : ((data.title == 'expense_for') ? 'custom-select' : (data.data_type == 'integer' ? 'input' : data.data_type))
-        if (data.options != undefined){
-          data.options.forEach(option => {
-            optionArr.push(
-              {label: option, value: option}
-            )
-          })
-        }
-        var commonHash = {
-          key: data.title,
-          type: type,
-          className: 'col-md-4',
-          templateOptions: {
-            label: data.label,
-            placeholder: data.label,
-            required: data.required,
-            options: optionArr
-          }
-        }
-        this.form_fields[0].fieldGroup.push(commonHash)
-        this.form_fields;
+    this.form_fields = [
+      {
+        fieldGroup: [],
       }
+    ];
+    var optionArr = [];
+    var hashObject = {}
+    this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
+      this.api_data=res;
+      this.api_data.forEach(data => {
+        if (data.title != 'client_name'){
+          var type = (data.data_type == 'date') ? 'date' : ((data.title == 'expense_for') ? 'custom-select' : (data.data_type == 'integer' ? 'input' : data.data_type))
+          if (data.options != undefined){
+            data.options.forEach(option => {
+              optionArr.push(
+                {label: option, value: option}
+              )
+            })
+          }
+          var commonHash = {
+            key: data.title,
+            type: type,
+            className: 'col-md-4',
+            templateOptions: {
+              label: data.label,
+              placeholder: data.label,
+              required: data.required,
+              options: optionArr
+            }
+          }
+          this.form_fields[0].fieldGroup.push(commonHash)
+          this.form_fields;
+        }
+      });
+    },(err) => {
     });
-  },(err) => {
-  });
   }
 
   closeModal()
@@ -171,14 +173,14 @@ export class ReimbursementComponent implements OnInit {
   }
 
   enableFormAccordingToCategory($event){
-    var selectedCategory = $event.target.value;
+    this.category = $event.target.value;
     let common_fields = [
       {
         // fieldGroupClassName: 'row',
         fieldGroup: [
           {
             key: 'category_id',
-            defaultValue: selectedCategory
+            defaultValue: this.category
           },
           {
             key: 'amount',
@@ -213,7 +215,7 @@ export class ReimbursementComponent implements OnInit {
         ]
       }
     ]
-    this.configureFields(selectedCategory);
+    this.configureFields(this.category);
      setTimeout(()=>{
       this.fields = [...this.form_fields, ...common_fields];
     }, 1000);
