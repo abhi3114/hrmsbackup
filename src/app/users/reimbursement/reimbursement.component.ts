@@ -115,10 +115,12 @@ export class ReimbursementComponent implements OnInit {
       this.isLoading=false;
       this.modalRef.hide();
       this.toastr.showSuccess('Response Recorded');
+      this.options.resetModel();
       this.modalRef.hide();
       this.getData();
       }, (err) => {
       this.isLoading=false;
+      this.options.resetModel();
       this.toastr.showError(err.error);
       this.modalRef.hide();
     });
