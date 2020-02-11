@@ -7,7 +7,7 @@ import { RatingModule } from 'ngx-bootstrap/rating';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { OwlDateTimeModule, OwlNativeDateTimeModule,OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { UserRoutingModule } from './user-routing.module';
-import { ReactiveFormsModule , FormsModule } from '@angular/forms';
+import { ReactiveFormsModule , FormsModule, FormControl } from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
 import { MasterComponent } from '../shared/components/master/master.component';
@@ -54,6 +54,10 @@ import { FormlyHorizontalWrapper } from './reimbursement/horizontal-wrapper';
 import { CustomFieldSelectComponent } from './reimbursement/custom-field-select/custom-field-select.component';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
+export function IntegerValidator(control: FormControl): boolean {
+  return /^\d+$/.test(control.value);
+}
+
 
 @NgModule({
   imports: [
@@ -87,7 +91,21 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
     types: [
       { name: 'file', component: FormlyFieldFile},
       { name: 'date', component: DatePickerComponent },
-      { name: 'custom-select', component: CustomFieldSelectComponent }
+      { name: 'custom-select', component: CustomFieldSelectComponent },
+      {
+        name: 'Integer',
+        extends: 'input',
+        defaultOptions: {
+          validators: {
+            integer: IntegerValidator
+          }
+        },
+      }
+    ],
+    validationMessages: [
+      { name: 'required', message: 'This field is required' },
+      { name: 'other', message: (err, field) => err },
+      { name: 'integer', message: 'Invalid Number' }
     ],
   }),
 ],

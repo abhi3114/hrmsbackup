@@ -24,6 +24,7 @@ export class ReimbursementComponent implements OnInit {
   fields: FormlyFieldConfig[]
   options: FormlyFormOptions = {};
   api_data:any;
+  is_valid_form:boolean=false;
   canShowFormAttribute:boolean=false;
   canShowPrecautions:boolean=true;
   form_fields:any=[];
@@ -100,6 +101,7 @@ export class ReimbursementComponent implements OnInit {
   ngOnInit()
   {
     this.fields = [];
+    this.is_valid_form = false;
     //console.log(this.reimbursementform.controls.month.value);
   }
 
@@ -111,7 +113,6 @@ export class ReimbursementComponent implements OnInit {
 
 
   submit(model) {
-    console.log(model);
     if ($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
       model['client_name'] = $('.client_name').val()
     }
@@ -185,6 +186,12 @@ export class ReimbursementComponent implements OnInit {
     this.modalRef.hide();
   }
 
+  showError(field) {
+    setTimeout(() => {
+      this.is_valid_form = (field.formControl.valid && this.mySelectedFiles[0] != undefined )
+    }, 1000);
+  }
+
   enableFormAccordingToCategory($event)
   {
     this.options.resetModel();
@@ -202,7 +209,7 @@ export class ReimbursementComponent implements OnInit {
             },
             {
               key: 'amount',
-              type: 'input',
+              type: 'Integer',
               className: 'col-md-4',
               templateOptions: {
                 label: 'Amount',
@@ -237,6 +244,7 @@ export class ReimbursementComponent implements OnInit {
               className: 'col-md-12',
               templateOptions: {
                 label: 'Attach Bill',
+                required: true,
                 change: (field, $event) => this.handleFileInput($event.target.files)
               }
             }
@@ -255,7 +263,7 @@ export class ReimbursementComponent implements OnInit {
             },
             {
               key: 'amount',
-              type: 'input',
+              type: 'Integer',
               className: 'col-md-4',
               templateOptions: {
                 label: 'Amount',
