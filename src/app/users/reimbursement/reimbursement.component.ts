@@ -111,6 +111,11 @@ export class ReimbursementComponent implements OnInit {
     if ($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
       model['client_name'] = $('.client_name').val()
     }
+    Object.keys( model ).map( function ( key ) {
+      if ( model[key] == null){
+        delete model[key]
+      }
+    });
     model["category_id"] = this.category
     model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
     model["attachment_base64"] =  this.base64
