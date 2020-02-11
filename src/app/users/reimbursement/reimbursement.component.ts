@@ -97,6 +97,7 @@ export class ReimbursementComponent implements OnInit {
   ngOnInit()
   {
     this.fields = [];
+    this.is_valid_form = false;
     //console.log(this.reimbursementform.controls.month.value);
   }
 
@@ -184,7 +185,7 @@ export class ReimbursementComponent implements OnInit {
   }
 
   showError(field) {
-    this.is_valid_form = (field.formControl.valid && this.mySelectedFiles[0] != undefined)
+    this.is_valid_form = (field.formControl.valid && this.mySelectedFiles[0] != undefined )
   }
 
   enableFormAccordingToCategory($event)
@@ -204,7 +205,7 @@ export class ReimbursementComponent implements OnInit {
             },
             {
               key: 'amount',
-              type: 'input',
+              type: 'Integer',
               className: 'col-md-4',
               templateOptions: {
                 label: 'Amount',
@@ -258,7 +259,7 @@ export class ReimbursementComponent implements OnInit {
             },
             {
               key: 'amount',
-              type: 'input',
+              type: 'Integer',
               className: 'col-md-4',
               templateOptions: {
                 label: 'Amount',
