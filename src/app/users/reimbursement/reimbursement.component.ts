@@ -109,33 +109,31 @@ export class ReimbursementComponent implements OnInit {
 
 
   submit(model) {
-    if (this.form.valid) {
-      if ($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
-        model['client_name'] = $('.client_name').val()
-      }
-      Object.keys( model ).map( function ( key ) {
-        if ( model[key] == null){
-          delete model[key]
-        }
-      });
-      model["category_id"] = this.category
-      model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
-      model["attachment_base64"] =  this.base64
-      this.isLoading=true;
-      this.remService.createReimbursement(model).subscribe(res => {
-        this.isLoading=false;
-        this.modalRef.hide();
-        this.toastr.showSuccess('Response Recorded');
-        this.options.resetModel();
-        this.modalRef.hide();
-        this.getData();
-        }, (err) => {
-        this.isLoading=false;
-        this.options.resetModel();
-        this.toastr.showError(err.error);
-        this.modalRef.hide();
-      });
+    if ($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
+      model['client_name'] = $('.client_name').val()
     }
+    Object.keys( model ).map( function ( key ) {
+      if ( model[key] == null){
+        delete model[key]
+      }
+    });
+    model["category_id"] = this.category
+    model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
+    model["attachment_base64"] =  this.base64
+    this.isLoading=true;
+    this.remService.createReimbursement(model).subscribe(res => {
+      this.isLoading=false;
+      this.modalRef.hide();
+      this.toastr.showSuccess('Response Recorded');
+      this.options.resetModel();
+      this.modalRef.hide();
+      this.getData();
+      }, (err) => {
+      this.isLoading=false;
+      this.options.resetModel();
+      this.toastr.showError(err.error);
+      this.modalRef.hide();
+    });
   }
 
   configureFields(selectedCategory){
@@ -185,7 +183,9 @@ export class ReimbursementComponent implements OnInit {
   }
 
   showError(field) {
-    this.is_valid_form = (field.formControl.valid && this.mySelectedFiles[0] != undefined )
+    setTimeout(() => {
+      this.is_valid_form = (field.formControl.valid && this.mySelectedFiles[0] != undefined )
+    }, 1000);
   }
 
   enableFormAccordingToCategory($event)
