@@ -136,6 +136,7 @@ export class ReimbursementComponent implements OnInit {
   }
 
   configureFields(selectedCategory){
+    this.loading=true;
     this.form_fields = [
       {
         fieldGroup: [],
@@ -171,6 +172,7 @@ export class ReimbursementComponent implements OnInit {
         }
       });
     },(err) => {
+      this.loading=false;
     });
   }
 
@@ -181,53 +183,110 @@ export class ReimbursementComponent implements OnInit {
 
   enableFormAccordingToCategory($event)
   {
+    this.loading = true;
     this.precaution=false;
     this.category = $event.target.value;
-    let common_fields = [
-      {
-        // fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            key: 'category_id',
-            defaultValue: this.category
-          },
-          {
-            key: 'amount',
-            type: 'input',
-            className: 'col-md-4',
-            templateOptions: {
-              label: 'Amount',
-              placeholder: 'Enter Amount',
-              required: true,
+    let common_fields = []
+    if (this.category == 7){
+      common_fields = [
+        {
+          fieldGroup: [
+            {
+              key: 'category_id',
+              defaultValue: this.category
+            },
+            {
+              key: 'amount',
+              type: 'input',
+              className: 'col-md-4',
+              templateOptions: {
+                label: 'Amount',
+                placeholder: 'Enter Amount',
+                required: true,
+              }
+            },
+            {
+              key: 'date',
+              type: 'date',
+              className: 'col-md-4',
+              templateOptions: {
+                label: 'Date',
+                placeholder: 'Enter Date',
+                required: true,
+              }
+            },
+            {
+              key: 'purpose',
+              type: 'textarea',
+              className: 'clearfix col-md-12',
+              templateOptions: {
+                label: 'Purpose',
+                placeholder: '',
+                rows:'3',
+                required: true,
+              }
+            },
+            {
+              key: 'file',
+              type: 'file',
+              className: 'col-md-12',
+              templateOptions: {
+                label: 'Attach Bill',
+                change: (field, $event) => this.handleFileInput($event.target.files)
+              }
             }
-          },
-          {
-            key: 'purpose',
-            type: 'textarea',
-            className: 'clearfix col-md-12',
-            templateOptions: {
-              label: 'Purpose',
-              placeholder: '',
-              rows:'3',
-              required: true,
+          ]
+        }
+      ]
+    }
+    else
+    {
+      common_fields = [
+        {
+          fieldGroup: [
+            {
+              key: 'category_id',
+              defaultValue: this.category
+            },
+            {
+              key: 'amount',
+              type: 'input',
+              className: 'col-md-4',
+              templateOptions: {
+                label: 'Amount',
+                placeholder: 'Enter Amount',
+                required: true,
+              }
+            },
+            {
+              key: 'purpose',
+              type: 'textarea',
+              className: 'clearfix col-md-12',
+              templateOptions: {
+                label: 'Purpose',
+                placeholder: '',
+                rows:'3',
+                required: true,
+              }
+            },
+            {
+              key: 'file',
+              type: 'file',
+              className: 'col-md-12',
+              templateOptions: {
+                label: 'Attach Bill',
+                change: (field, $event) => this.handleFileInput($event.target.files)
+              }
             }
-          },
-          {
-            key: 'file',
-            type: 'file',
-            className: 'col-md-12',
-            templateOptions: {
-              label: 'Attach Bill',
-              change: (field, $event) => this.handleFileInput($event.target.files)
-            }
-          }
-        ]
-      }
-    ]
+          ]
+        }
+      ]
+    }
     this.configureFields(this.category);
      setTimeout(()=>{
       this.fields = [...this.form_fields, ...common_fields];
     }, 1000);
+    this.loading=false;
   }
 
   getApprovedData()
