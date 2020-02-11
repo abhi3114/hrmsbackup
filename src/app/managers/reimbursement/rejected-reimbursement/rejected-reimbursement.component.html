@@ -47,49 +47,51 @@
 </div>
 <ngx-loading [show]="loading"></ngx-loading>
 <ng-template #rejectedrembursementlist>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Rejected Reimbursement</h4>
-  </div>
-  <section content="modal-body">
-    <div class="box-body">
-      <div class="table-responsive">
-        <table class="table table-striped table-hover" >
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Month/Year</th>
-              <th>Category</th>
-              <th>Date</th>
-              <th>Purpose</th>
-              <th>Manager Comment</th>
-              <th>Amount</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let ur of user_rejected_reimbursement_data">
-              <td>{{ur.id}}</td>
-              <td>{{ur.user_name}}</td>
-              <td>{{ur.display_month_year}}</td>
-              <td>{{ur.category_name}}</td>
-              <td>{{ur.display_date}}</td>
-              <td>{{ur.purpose}}</td>
-              <td>{{ur.review_reason}}</td>
-              <td>{{ur.amount}}</td>
-              <td>
-                <a style="cursor: pointer;"><i class="fa fa-eye field-icon toggle-password eye-view" aria-hidden="true" (click)="rejectviewreimbursement(showrejectedrembursementdata,ur)"></i></a>
-                <!-- <a style="cursor: pointer;" (click)="approveSinglereimbursement(ur.id)"><i class="fa fa-check" aria-hidden="true"></i></a> -->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="modal-content modal-width">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Rejected Reimbursement</h4>
     </div>
-  </section>
-  <ngx-loading [show]="singleuserloading"></ngx-loading>
+    <section content="modal-body">
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover" >
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Month/Year</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Purpose</th>
+                <th>Manager Comment</th>
+                <th>Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ur of user_rejected_reimbursement_data">
+                <td>{{ur.id}}</td>
+                <td>{{ur.user_name}}</td>
+                <td>{{ur.display_month_year}}</td>
+                <td>{{ur.category_name}}</td>
+                <td>{{ur.display_date}}</td>
+                <td>{{ur.purpose}}</td>
+                <td>{{ur.review_reason}}</td>
+                <td>{{ur.amount}}</td>
+                <td>
+                  <img src="assets/images/eye.png" style="height:12px !important;width:20px !important;cursor: pointer;" (click)="rejectviewreimbursement(showrejectedrembursementdata,ur)">
+                  <!-- <a style="cursor: pointer;" (click)="approveSinglereimbursement(ur.id)"><i class="fa fa-check" aria-hidden="true"></i></a> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <ngx-loading [show]="singleuserloading"></ngx-loading>
+  </div>
 </ng-template>
-<ng-template #showrejectedrembursementdata>
+<ng-template  #showrejectedrembursementdata>
   <div class="modal-content">
     <form [formGroup]="rejectmodalform">
       <div class="modal-header ticket-popup-header">
