@@ -47,66 +47,68 @@
 </div>
 <ngx-loading [show]="loading"></ngx-loading>
 <ng-template #unapprovedrembursementlist>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Unapproved Reimbursement</h4>
-  </div>
-  <section class="content-header">
-    <form novalidate (ngSubmit)="rejectallreimbursement()" [formGroup]="approverejectreimbursementform">
-    <div class="row" autocomplete="off">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label>Reason<sup style="color:red;">*</sup></label>
-          <input name="comment" type='text' class="form-control"  [(ngModel)]="approverejectreimbursementform.comment"  formControlName="comment" required [class.error1]="!approverejectreimbursementform.controls.comment.valid && approverejectreimbursementform.controls.comment.dirty"/>
-        </div>
-      </div>
+  <div class="modal-content modal-width">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Unapproved Reimbursement</h4>
     </div>
-    <button [disabled]="approverejectreimbursementform.invalid" type="button" class="btn btn-primary" (click)="approveallreimbursement()" data-style="expand-right" style="background-color: #337ab7!important;" [ladda]="approveloading">Approve</button>
-    <button [disabled]="approverejectreimbursementform.invalid" type="submit" class="btn btn-danger pull-right" style="background-color:#d9534f!important;" [ladda]="rejectloading">Reject</button>
-    </form>
-  </section>
-  <div class="modal-body">
-    <section content="content">
-      <div class="box-body">
-        <div class="table-responsive">
-          <table class="table table-striped table-hover" >
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Month/Year</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th>Purpose</th>
-                <th>Manager Comment</th>
-                <th>Amount</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let ur of user_unapproved_reimbursement_data">
-                <td><input class="checkbox" name="{{ur.id}}" type="checkbox" /></td>
-                <td>{{ur.id}}</td>
-                <td>{{ur.user_name}}</td>
-                <td>{{ur.display_month_year}}</td>
-                <td>{{ur.category_name}}</td>
-                <td>{{ur.display_date}}</td>
-                <td>{{ur.purpose}}</td>
-                <td>{{ur.review_reason}}</td>
-                <td>{{ur.amount}}</td>
-                <td>
-                  <a style="cursor: pointer;"><i class="fa fa-eye field-icon toggle-password eye-view" aria-hidden="true" (click)="unapproveviewreimbursement(showunapprovedrembursementdata,ur)"></i></a>
-                  <!-- <a style="cursor: pointer;" (click)="approveSinglereimbursement(ur.id)"><i class="fa fa-check" aria-hidden="true"></i></a>
-                    <a style="cursor: pointer;" (click)="rejectSinglereimbursement(ur.id)"><i class="fa fa-times" aria-hidden="true"></i></a> -->
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <section class="content-header">
+      <form novalidate (ngSubmit)="rejectallreimbursement()" [formGroup]="approverejectreimbursementform">
+      <div class="row" autocomplete="off">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Reason<sup style="color:red;">*</sup></label>
+            <input name="comment" type='text' class="form-control"  [(ngModel)]="approverejectreimbursementform.comment"  formControlName="comment" required [class.error1]="!approverejectreimbursementform.controls.comment.valid && approverejectreimbursementform.controls.comment.dirty"/>
+          </div>
         </div>
       </div>
+      <button [disabled]="approverejectreimbursementform.invalid" type="button" class="btn btn-primary" (click)="approveallreimbursement()" data-style="expand-right" style="background-color: #337ab7!important;" [ladda]="approveloading">Approve</button>
+      <button [disabled]="approverejectreimbursementform.invalid" type="submit" class="btn btn-danger pull-right" style="background-color:#d9534f!important;" [ladda]="rejectloading">Reject</button>
+      </form>
     </section>
+    <div class="modal-body">
+      <section content="content">
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover" >
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Month/Year</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Purpose</th>
+                  <th>Manager Comment</th>
+                  <th>Amount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ur of user_unapproved_reimbursement_data">
+                  <td><input class="checkbox" name="{{ur.id}}" type="checkbox" /></td>
+                  <td>{{ur.id}}</td>
+                  <td>{{ur.user_name}}</td>
+                  <td>{{ur.display_month_year}}</td>
+                  <td>{{ur.category_name}}</td>
+                  <td>{{ur.display_date}}</td>
+                  <td>{{ur.purpose}}</td>
+                  <td>{{ur.review_reason}}</td>
+                  <td>{{ur.amount}}</td>
+                  <td>
+                    <img src="assets/images/eye.png" style="height:12px !important;width:20px !important;cursor: pointer;" (click)="unapproveviewreimbursement(showunapprovedrembursementdata,ur)">
+                    <!-- <a style="cursor: pointer;" (click)="approveSinglereimbursement(ur.id)"><i class="fa fa-check" aria-hidden="true"></i></a>
+                      <a style="cursor: pointer;" (click)="rejectSinglereimbursement(ur.id)"><i class="fa fa-times" aria-hidden="true"></i></a> -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+    <ngx-loading [show]="singleuserloading"></ngx-loading>
   </div>
-  <ngx-loading [show]="singleuserloading"></ngx-loading>
 </ng-template>
 <ng-template #showunapprovedrembursementdata  >
   <div class="modal-content">

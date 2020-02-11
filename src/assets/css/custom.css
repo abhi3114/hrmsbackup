@@ -1717,3 +1717,7 @@ ul.treeview-menu img {
     font-size:20px;
     color:#3333ff
 }
+.modal-width
+{
+    width:700px !important;
+}
