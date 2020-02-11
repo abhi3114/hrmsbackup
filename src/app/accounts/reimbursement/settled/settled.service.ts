@@ -6,21 +6,20 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 
-export class SettledService {  
+export class SettledService {
 
 constructor(private http:HttpClient) { }
 
 getSettledReimbursementUsers(year,month)
   {
-    return this.http.get(environment.baseUrl+ "accounts/reimbursements/settled?start_month="+month+"&start_year="+year,
+    return this.http.get(`${environment.baseUrl}accounts/reimbursements/${month}/${year}/settled`,
     {headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
-    "Content-Type": 'application/json'})})  
-
-  }  
+    "Content-Type": 'application/json'})})
+  }
 
   getSinghleUserSettledData(year,month,user_id)
-  {    
-    return this.http.get(environment.baseUrl+ "accounts/reimbursements/users/"+user_id+"/settled?start_month="+month+"&start_year="+year,
+  {
+    return this.http.get(`${environment.baseUrl}accounts/reimbursements/users/${user_id}/${month}/${year}/settled`,
    {headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
     "Content-Type": 'application/json'})})
   }

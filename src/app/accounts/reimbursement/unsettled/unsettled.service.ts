@@ -7,41 +7,38 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 
-export class UnsettledService {  
+export class UnsettledService {
 
 constructor(private http:HttpClient) { }
 
 getUnSettledReimbursementUsers(year,month)
 {
-   return this.http.get(environment.baseUrl+ "accounts/reimbursements/approved?start_month="+month+"&start_year="+year,
-    {headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
-    "Content-Type": 'application/json'})})  
+  return this.http.get(`${environment.baseUrl}accounts/reimbursements/${month}/${year}/approved`,
+  {headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+  "Content-Type": 'application/json'})})
 }
 
 getSinghleUserUnsettledData(year,month,user_id)
 {    
-    return this.http.get(environment.baseUrl+ "accounts/reimbursements/users/"+user_id+"/approved?start_month="+month+"&start_year="+year,
-   {headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
-    "Content-Type": 'application/json'})})
+  return this.http.get(`${environment.baseUrl}accounts/reimbursements/users/${user_id}/${month}/${year}/approved`,
+  {headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+  "Content-Type": 'application/json'})})
 }
 
-importCsvData(params)
+importCsvData(month, year, params)
 {
-	//console.log(params)
-	return this.http.post(environment.baseUrl+"accounts/reimbursements/import_reimbursements/", params,
-      {
-      headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
-        "Content-Type": 'application/json'})})
+	return this.http.post(`${environment.baseUrl}accounts/reimbursements/${month}/${year}/import`, params,
+  {
+  headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+  "Content-Type": 'application/json'})})
 }
 
   getAllUserExportAllList(month,year)
   {
-    //console.log("hii");
-    return this.http.get(environment.baseUrl+"accounts/reimbursements/export?start_month="+month+"&start_year="+year,
-      {
-      headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
-        "Content-Type": 'application/json'})})
-    
-  }  
+    return this.http.get(`${environment.baseUrl}/accounts/reimbursements/${month}/${year}/export`,
+    {
+    headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+    "Content-Type": 'application/json'})})
+  }
 
 }

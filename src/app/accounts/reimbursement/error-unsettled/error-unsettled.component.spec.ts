@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomFieldSelectComponent } from './custom-field-select.component';
+import { ErrorUnsettledComponent } from './error-unsettled.component';
 
-describe('CustomFieldSelectComponent', () => {
-  let component: CustomFieldSelectComponent;
-  let fixture: ComponentFixture<CustomFieldSelectComponent>;
+describe('ErrorUnsettledComponent', () => {
+  let component: ErrorUnsettledComponent;
+  let fixture: ComponentFixture<ErrorUnsettledComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomFieldSelectComponent ]
+      declarations: [ ErrorUnsettledComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CustomFieldSelectComponent);
+    fixture = TestBed.createComponent(ErrorUnsettledComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

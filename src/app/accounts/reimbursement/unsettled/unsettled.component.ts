@@ -2,7 +2,6 @@ import { Component, OnInit,TemplateRef,ViewChild,ElementRef } from '@angular/cor
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable,Subject } from 'rxjs';
 import { MonthYearService } from '../../../shared/service/month-year.service';
-import { CommonSalaryService } from '../../../shared/service/common-salary.service';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { UnsettledService } from './unsettled.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -10,6 +9,9 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Papa } from 'ngx-papaparse';
 import { map } from 'rxjs/operators';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import * as FileSaver from "file-saver";
+import * as moment from 'moment';
+
 
 
 @Component({
@@ -21,8 +23,9 @@ export class UnsettledComponent implements OnInit {
 
   @ViewChild('error_modal_of_import_csv_file') error_modal_of_csv_file: ElementRef;
   filterdataform:FormGroup;
-  monthArray:any;yearArray:any;filteredData:any;
-  unsettled_filter={selectedmonth:'',selectedyear:''};
+  uploadcsvdataform:FormGroup;
+  monthArray:any;yearArray:any;
+  unsettled_filter:any={selectedmonth:'',selectedyear:''};
   unsettledOptions: DataTables.Settings = {};
   unsettledTableTrigger: Subject<any> = new Subject();
   unsettle_api_data:any=[];
@@ -35,79 +38,95 @@ export class UnsettledComponent implements OnInit {
   importedData:any=[];
   month:any;
   year:any;
+  currentmomentmonth:any;
   user_id:any;
   exportsheet:any=[];
+  attachedbill:boolean=false;
+  //isLoading is for buttons
+  isLoading:boolean=false;
+  //loading is for tables
+  loading:boolean=false;
+  //singleuserloading is for single user record table
+  singleuserloading:boolean=false;
+
   csvData:any= [
+  ["NAME","SURNAME","EMAIL"],
   ["Ahmed", "Tomi", "ah@smthing.co.com"],
   ["Raed", "Labes", "rl@smthing.co.com"],
   ["Yezzi", "Min l3b", "ymin@cocococo.com"]
   ];
   sheet:any=[];
-  pushexportsheet:any[];
+  myFormattedCSV:any;
 
   userssetttledmodalRef:BsModalRef;
   singleusersingledataModalRef:BsModalRef;
   errormodalofcsv:BsModalRef;
+  uploadcsvmodal:BsModalRef;
+  exportcsvmodal:BsModalRef;
 
 
-  constructor(private monthandyear:MonthYearService,private commonsalary:CommonSalaryService,private api:UnsettledService,public toastr: NotificationService,private modalService: BsModalService, private papa:Papa) {
+  constructor(private monthandyear:MonthYearService,private api:UnsettledService,public toastr: NotificationService,private modalService: BsModalService, private papa:Papa) {
 
     this.unsettledOptions= {
       pagingType: 'full_numbers',
       lengthMenu: [[10, 20, 50, -1],
       [10, 20, 50, "All"]]
     };
-    
 
     this.monthArray=this.monthandyear.populateMonth();
     this.yearArray=this.monthandyear.populateYear();
-    this.filteredData=this.commonsalary.getMonthandYear();
-    this.unsettled_filter.selectedmonth=this.filteredData.selectedmonth;
-    this.unsettled_filter.selectedyear= this.filteredData.selectedyear;
+    this.unsettled_filter.selectedmonth=moment().month()+1;
+    this.unsettled_filter.selectedyear=moment().year();
 
     this.filterdataform = new FormGroup({
       filtermonth: new FormControl('', [Validators.required]),
       filteryear: new FormControl('', [Validators.required]),
-      csvfilehidden: new FormControl(''),
+    });
+
+    this.uploadcsvdataform=new FormGroup({
+         csvfile: new FormControl(''),
     });
 
     this.getFilterData();
-
   }
-
   ngOnInit()
   {}
-  
-    getFilterData()
-  {    
+  getFilterData()
+  {
     $('#unsettledDataTables').DataTable().destroy();
     this.filterdataform.controls.filteryear.value == "" ? this.year = this.unsettled_filter.selectedyear : this.year =
-    this.filterdataform.controls.filteryear.value    
+    this.filterdataform.controls.filteryear.value
     this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
     this.filterdataform.controls.filtermonth.value
-    //console.log(year,month)
+    //console.log(this.year,this.month)
+    this.loading=true;
     this.api.getUnSettledReimbursementUsers(this.year,this.month).subscribe((res:any) => {
-    this.unsettle_api_data=res;    
+    this.unsettle_api_data=res;
+    this.isLoading=false;
+    this.loading=false;
     this.unsettledTableTrigger.next();
     }, (err) => {
     this.toastr.showError(err.error);
+    this.loading=false;
     });
+    this.currentmomentmonth=moment().month(this.month-1).format("MMMM");
 
   }
-
-  
   userunsettledList(template: TemplateRef<any>,s)
   {
-    this.userssetttledmodalRef = this.modalService.show(template);    
+    this.userssetttledmodalRef = this.modalService.show(template);
     this.filterdataform.controls.filteryear.value == "" ? this.year = this.unsettled_filter.selectedyear : this.year =
-    this.filterdataform.controls.filteryear.value    
+    this.filterdataform.controls.filteryear.value
     this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
     this.filterdataform.controls.filtermonth.value
-     this.user_id=s.user_id;
+    this.user_id=s.user_id;
+    this.singleuserloading=true;
     this.api.getSinghleUserUnsettledData(this.year,this.month,this.user_id).subscribe((res:any) => {
     this.single_user_unsettled_data=res.reimbursements;
+    this.singleuserloading=false;
     }, (err) => {
     this.toastr.showError(err.error);
+    this.singleuserloading=false;
     });
   }
 
@@ -115,8 +134,15 @@ export class UnsettledComponent implements OnInit {
   {
     this.singleusersingledataModalRef=this.modalService.show(template);
     this.single_user_single_unsettled_data=s;
-    //console.log(s.receipt)
-    //console.log(s)
+    console.log(this.single_user_unsettled_data)
+    if(s.receipt_path==null || s.receipt_path=="undefined" || s.receipt_path=="")
+    {
+      this.attachedbill=true;
+    }
+    else
+    {
+      this.attachedbill=false;
+    }
     var spiltmonthandyear=(s.display_month_year).split('-');
     this.splitmonthyear=spiltmonthandyear;
   }
@@ -125,7 +151,15 @@ export class UnsettledComponent implements OnInit {
   {
     this.singleusersingledataModalRef.hide();
   }
-  
+  importcsvmodal(template: TemplateRef<any>)
+  {
+    this.uploadcsvmodal=this.modalService.show(template);
+  }
+   closeimportcsvmodal()
+  {
+    this.uploadcsvmodal.hide();
+    this.uploadcsvdataform.reset();
+  }
   importCsv(){
     let file = (<HTMLInputElement>($('#files')[0])).files[0];
     this.postdata = {};
@@ -135,22 +169,25 @@ export class UnsettledComponent implements OnInit {
     }
     else
     {
-      var can_import_sheet = true
+      var can_import_sheet = true;
+      this.isLoading=true;
       if(can_import_sheet)
       {
         this.papa.parse(file, {
           header: true,
           complete: (results) => {
            //this is for null check of csv data
-           // results.data.forEach((result,index)=>{
-           //    if(result.ID==""){
-           //      results.data.splice(index,1);
-           //    }
-           //  });
+           //console.log("My Result",results)
+           results.data.forEach((result,index)=>{
+              if(result.ID==""){
+                results.data.splice(index,1);
+              }
+            });
             this.sheet_data = results.data
             this.callSaveApi(this.sheet_data);
             }
           });
+        this.isLoading=false;
       }
       else
       {
@@ -158,52 +195,31 @@ export class UnsettledComponent implements OnInit {
       }
     }
   }
-
-
   callSaveApi(parsedSheetData)
   {
-    //console.log(parsedSheetData)
-    this.postdata = {'data':parsedSheetData,'month':this.unsettled_filter.selectedmonth,'year':this.unsettled_filter.selectedyear};
-    this.api.importCsvData(this.postdata).subscribe((response:any) => {
+    this.postdata = {'data':parsedSheetData};
+    this.isLoading=true;
+    this.api.importCsvData(this.unsettled_filter.selectedmonth, this.unsettled_filter.selectedyear, this.postdata).subscribe((response:any) => {
+    //console.log(response);
     this.importedData = response;
-      // response.forEach(function (item)=>{
-      //       if(item.status=="failed")
-      //       {
-      //        this.csv_error.push(this.item);
-      //       }
-      //  });
-      this.csv_error=[];
-      console.log(this.importedData)
-      for(let i=0;i<response.length;i++)
-      {
-        if(this.importedData[i].status=="failed")
-        {
-          this.csv_error.push(this.importedData[i])
-          console.log(this.importedData[i])
-        }
-      }
-      if(this.csv_error.length===0)
-      {
-        this.getFilterData();
-        this.refreshUnsettledData();
-        this.toastr.showSuccess("Successfully Uploaded!");
-      }
-      else
-      {
-        this.getErrorModal();
-      }
+    //console.log("success_messages",this.importedData.success_messages);
+    //console.log("Error-Message",this.importedData.error_messages)
+    this.getErrorModal();
+    this.getFilterData();
+    this.refreshUnsettledData();
+    //this.toastr.showSuccess("Successfully Uploaded!");
+    this.closeimportcsvmodal();
+    this.isLoading=false;
     },
     (error) => {
-      this.toastr.showError('error due to Api');
-      });
+    this.toastr.showError('error due to Api');
+    this.isLoading=false;
+    });
   }
-
   getErrorModal()
   {
     this.errormodalofcsv= this.modalService.show(this.error_modal_of_csv_file);
-    this.filterdataform.controls.csvfilehidden.reset();
   }
-
   close_error_modal()
   {
     this.errormodalofcsv.hide();
@@ -216,42 +232,50 @@ export class UnsettledComponent implements OnInit {
     this.toastr.showError(err.error);
     });
   }
-
+  exportmodal(template: TemplateRef<any>)
+  {
+    this.exportcsvmodal=this.modalService.show(template);
+  }
+  closeexportmodal()
+  {
+    this.exportcsvmodal.hide();
+  }
   exportAllUserToCSV()
   {
-     
-    
-    this.filterdataform.controls.filteryear.value == "" ? this.year = this.unsettled_filter.selectedyear : this.year =
-    this.filterdataform.controls.filteryear.value    
-    this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
-    this.filterdataform.controls.filtermonth.value
-    this.api.getAllUserExportAllList(this.month,this.year).subscribe((res:any) => {
-    this.exportsheet=res.reimbursements;
-    //console.log(this.exportsheet)
-    this.exportsheet.forEach((data)=>{
-      if(data.comment==null)
-      {
-        data.comment = 'N/A'
-      }
-      if(data.review_reason==null)
-      {
-        data.review_reason = 'N/A'
-      }
-      if(data.receipt_path=="" || data.receipt_path)
-      {
-        data.receipt_path = 'N/A'
-      }
-      //this.pushexportsheet.push(data.id,data.user_name,data.display_month_year,data.category_name,data.display_date);
-    })
-    //console.log(this.exportsheet)
-    var options = {headers: ["ID", "USERNAME", "MONTH/YEAR","CATEGORY NAME","DATE","PURPOSE","COMMENT","REVIEW_REASON","AMOUNT","RECIEPT","Settled"]};
-    new Angular5Csv(this.exportsheet, 'ExportAll',options);
-    //console.log(this.pushexportsheet)
-    }, (err) => {
-    this.toastr.showError(err.error);
-    });
-
-   
-    
+    if(confirm('Are you sure to Export CSV Data for Following: \nMONTH-'+this.currentmomentmonth+' & YEAR-'+this.year))
+    {
+      this.filterdataform.controls.filteryear.value == "" ? this.year = this.unsettled_filter.selectedyear : this.year =
+      this.filterdataform.controls.filteryear.value
+      this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
+      this.filterdataform.controls.filtermonth.value
+      this.api.getAllUserExportAllList(this.month,this.year).subscribe((res:any) => {
+      this.exportsheet=res.reimbursements;
+      // this.exportsheet.forEach((data)=>{
+      //   if(data.comment==null)
+      //   {
+      //     data.comment = 'N/A'
+      //   }
+      // })
+      //console.log(this.exportsheet)
+      this.isLoading=true;
+      var options = {showLabels:true,showTitle: false,title: 'Your title',headers: ["ID", "USERNAME", "MONTH/YEAR","CATEGORY NAME","DATE","EMPLOYEE CODE","DEPARTMENT NAME","MANAGER NAME","PURPOSE","REVIEW REASON","AMOUNT","RECIEPT","Settled"]};
+      new Angular5Csv(this.exportsheet, 'ExportAll-month-'+this.month+'-year-'+this.year,options);
+      this.isLoading=false;
+      this.closeexportmodal();
+      }, (err) => {
+      this.toastr.showError(err.error);
+      this.isLoading=false;
+      this.closeexportmodal();
+      });
+    }
   }
+  export_error_csv()
+  {
+    this.isLoading=true;
+    var options = {showLabels:true,showTitle: false,title: 'Your title',headers: ["ID","MESSAGE"]};
+    new Angular5Csv(this.importedData.error_messages,'Error-CSV-Report-month-'+this.month+'-year-'+this.year,options);
+    this.isLoading=false;
+    this.errormodalofcsv.hide();
+  }
+
 }

@@ -5,8 +5,9 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
   })
 export class CommonSalaryService {
-  constructor() { }
-  getMonthandYear(){
+  constructor() {}
+  getMonthandYear()
+  {
     var currentDate=moment();
     var end = new Date().getFullYear();
     var startOfMonth = moment().startOf('month');
@@ -14,7 +15,8 @@ export class CommonSalaryService {
     if (currentDate.isBetween(startOfMonth, tenthDayOfMonth))
     {
       var currentmonth= new Date().getMonth();
-      if(currentmonth == 0){
+      if(currentmonth == 0)
+      {
         var currentmonth= 12;
         var y=(end-1).toString();
       }

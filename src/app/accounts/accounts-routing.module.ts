@@ -11,6 +11,7 @@ import { FullAndFinalComponent } from './full-and-final/full-and-final.component
 import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
 import { SettledComponent } from'./reimbursement/settled/settled.component';
 import { UnsettledComponent } from'./reimbursement/unsettled/unsettled.component';
+import { ErrorUnsettledComponent } from './reimbursement/error-unsettled/error-unsettled.component';
 
 const routes: Routes = [
 {
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'users/salaries/full_and_final', component: FullAndFinalComponent},
   {path: 'users/reimbursement/settled', component: SettledComponent},
   {path: 'users/reimbursement/unsettled', component: UnsettledComponent},
+  {path:'users/reimbursement/unsettled/error-unsettled', component: ErrorUnsettledComponent},
   ]
 }
 ];

@@ -49,7 +49,7 @@ export class ReimbursementComponent implements OnInit
     this.rembursementform = new FormGroup({
       month: new FormControl('', [Validators.required]),
       year: new FormControl('', [Validators.required]),
-      });
+    });
   }
 
    getApprovedData()
@@ -97,12 +97,8 @@ export class ReimbursementComponent implements OnInit
    }
    pushData()
    {
-      //this.rembursementformdata.month=this.rembursementform.controls.month.value;
-      //this.rembursementformdata.year=this.rembursementform.controls.year.value;
-      //console.log(this.rembursementformdata.month,this.rembursementformdata.year);
-      var year=this.rembursementform.controls.year.value;
-      var month=this.rembursementform.controls.month.value;
-
+    var year=this.rembursementform.controls.year.value;
+    var month=this.rembursementform.controls.month.value;
     this.openapproved = true;
     this.openunapproved = false;
     this.openrejected = false;
@@ -114,6 +110,6 @@ export class ReimbursementComponent implements OnInit
       this.toastr.showError(err.error);
     });
 
-   }
+  }
 
 }

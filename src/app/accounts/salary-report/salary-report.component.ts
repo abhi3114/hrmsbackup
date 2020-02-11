@@ -167,9 +167,9 @@ export class SalaryReportComponent implements OnInit {
         if(number!=undefined)
         {
           var n=number.toLocaleString('en-IN', {
-            currency: 'INR',
-            maximumFractionDigits: 0
-            });
+          currency: 'INR',
+          maximumFractionDigits: 0
+          });
           return n;
         }
       }
