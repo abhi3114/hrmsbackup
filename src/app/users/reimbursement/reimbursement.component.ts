@@ -24,6 +24,7 @@ export class ReimbursementComponent implements OnInit {
   fields: FormlyFieldConfig[]
   options: FormlyFormOptions = {};
   api_data:any;
+  is_valid_form:boolean=false;
   canShowFormAttribute:boolean=false;
   canShowPrecautions:boolean=true;
   form_fields:any=[];
@@ -107,32 +108,33 @@ export class ReimbursementComponent implements OnInit {
 
 
   submit(model) {
-    console.log(model);
-    if ($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
-      model['client_name'] = $('.client_name').val()
-    }
-    Object.keys( model ).map( function ( key ) {
-      if ( model[key] == null){
-        delete model[key]
+    if (this.form.valid) {
+      if ($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
+        model['client_name'] = $('.client_name').val()
       }
-    });
-    model["category_id"] = this.category
-    model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
-    model["attachment_base64"] =  this.base64
-    this.isLoading=true;
-    this.remService.createReimbursement(model).subscribe(res => {
-      this.isLoading=false;
-      this.modalRef.hide();
-      this.toastr.showSuccess('Response Recorded');
-      this.options.resetModel();
-      this.modalRef.hide();
-      this.getData();
-      }, (err) => {
-      this.isLoading=false;
-      this.options.resetModel();
-      this.toastr.showError(err.error);
-      this.modalRef.hide();
-    });
+      Object.keys( model ).map( function ( key ) {
+        if ( model[key] == null){
+          delete model[key]
+        }
+      });
+      model["category_id"] = this.category
+      model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
+      model["attachment_base64"] =  this.base64
+      this.isLoading=true;
+      this.remService.createReimbursement(model).subscribe(res => {
+        this.isLoading=false;
+        this.modalRef.hide();
+        this.toastr.showSuccess('Response Recorded');
+        this.options.resetModel();
+        this.modalRef.hide();
+        this.getData();
+        }, (err) => {
+        this.isLoading=false;
+        this.options.resetModel();
+        this.toastr.showError(err.error);
+        this.modalRef.hide();
+      });
+    }
   }
 
   configureFields(selectedCategory){
@@ -179,6 +181,10 @@ export class ReimbursementComponent implements OnInit {
   closeModal()
   {
     this.modalRef.hide();
+  }
+
+  showError(field) {
+    this.is_valid_form = (field.formControl.valid && this.mySelectedFiles[0] != undefined)
   }
 
   enableFormAccordingToCategory($event)
@@ -233,6 +239,7 @@ export class ReimbursementComponent implements OnInit {
               className: 'col-md-12',
               templateOptions: {
                 label: 'Attach Bill',
+                required: true,
                 change: (field, $event) => this.handleFileInput($event.target.files)
               }
             }

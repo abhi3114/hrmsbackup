@@ -89,6 +89,10 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
       { name: 'date', component: DatePickerComponent },
       { name: 'custom-select', component: CustomFieldSelectComponent }
     ],
+    validationMessages: [
+      { name: 'required', message: 'This field is required' },
+      { name: 'other', message: (err, field) => err },
+    ],
   }),
 ],
   declarations: [
