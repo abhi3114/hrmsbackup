@@ -71,7 +71,7 @@
                 <td>{{l.review_reason}}</td>
                 <td>{{l.amount}}</td>
                 <td>
-                  <a><i class="fa fa-eye field-icon toggle-password eye-view" aria-hidden="true" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)"></i></a>&nbsp;
+                  <img src="assets/images/eye.png" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)" >&nbsp;
                   <a style="cursor: pointer;font-size:20px;color:#808080" *ngIf="openunapproved"><i class="fa fa-pencil" aria-hidden="true" (click)="editrembursementsingledata(editrembursementsingledatamodal,l)"></i></a>&nbsp;
                   <a style="cursor: pointer;font-size:20px;color:#808080" data-confirm="Are you sure to delete this item?" *ngIf="openunapproved"><i class="fa fa-trash" (click)="deletereimbursementsingledata(l)"></i></a>
                 </td>
@@ -113,9 +113,6 @@
     <formly-form [model]="model" [fields]="fields" [options]="options">
     <div class='clearfix'></div>
     <div class="col-md-12 rem-content" *ngIf="precaution">
-
-    <formly-form [model]="model" [fields]="fields" [options]="options">
-    <div class='clearfix'></div>
       <h4>Precautions</h4>
       <ul>
         <li>Date of the bill should be visible with correct reference to the expenses. </li>
