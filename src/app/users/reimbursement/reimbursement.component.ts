@@ -183,6 +183,7 @@ export class ReimbursementComponent implements OnInit {
 
   enableFormAccordingToCategory($event)
   {
+    this.options.resetModel();
     this.loading = true;
     this.precaution=false;
     this.category = $event.target.value;
