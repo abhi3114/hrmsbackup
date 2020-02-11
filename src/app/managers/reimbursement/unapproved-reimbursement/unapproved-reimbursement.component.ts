@@ -42,7 +42,7 @@ export class UnapprovedReimbursementComponent implements OnInit
  //singleuserloading is for single user record table
   singleuserloading:boolean=false;
 
-  constructor(private api:unApprovedReimbursementService,public toastr: NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService) 
+  constructor(private api:unApprovedReimbursementService,public toastr: NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService)
   {
     this.unapprovedreimbursementform = new FormGroup({
       month: new FormControl('', [Validators.required]),
@@ -163,8 +163,8 @@ export class UnapprovedReimbursementComponent implements OnInit
       this.singleuserloading=true;
       this.api.getUserUnapprovedData(this.year,this.month, this.user_id).subscribe((res:any) => {
       this.user_unapproved_reimbursement_data=res.reimbursements;
+      console.log(this.user_unapproved_reimbursement_data)
       this.singleuserloading=false;
-      //console.log(res.reimbursements)
        }, (err) => {
       this.toastr.showError(err.error);
       this.singleuserloading=false;

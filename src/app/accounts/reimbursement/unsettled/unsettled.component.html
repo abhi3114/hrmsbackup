@@ -106,6 +106,24 @@
       <div class="modal-body">
         <div class="form-row">
           <div class="form-group col-md-4">
+            <label>Name</label><br>
+            <span>{{single_user_single_unsettled_data.user_name}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Employee Code</label><br>
+            <span>{{single_user_single_unsettled_data.employee_number}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Department</label><br>
+            <span>{{single_user_single_unsettled_data.department_name}}</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Manager Name</label><br>
+            <span>{{single_user_single_unsettled_data.manager_name}}</span>
+          </div>
+          <div class="form-group col-md-4">
             <label>Month</label><br>
             <span>{{splitmonthyear[0]}}</span>
           </div>
@@ -113,21 +131,19 @@
             <label>Year</label><br>
             <span>{{splitmonthyear[1]}}</span>
           </div>
-          <div class="form-group col-md-4">
-            <label>Category</label><br>
-            <span>{{single_user_single_unsettled_data.category_name}}</span>
-          </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label>Amount</label><br>
-            <span>{{single_user_single_unsettled_data.amount}}</span>
+            <label>Category</label><br>
+            <span>{{single_user_single_unsettled_data.category_name}}</span>
           </div>
           <div class="form-group col-md-4">
             <label>Date</label><br>
             <span>{{single_user_single_unsettled_data.display_date}}</span>
           </div>
           <div class="form-group col-md-4">
+            <label>Amount</label><br>
+            <span>{{single_user_single_unsettled_data.amount}}</span>
           </div>
         </div>
         <div class="form-row">

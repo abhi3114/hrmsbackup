@@ -95,43 +95,43 @@
   </div>
   <div class="modal-body ticket-popup">
     <form [formGroup]="form" (ngSubmit)="submit(model)">
-      <div class="form-group rem-catfilter">
-        <label>Category<sup style="color:red;">*</sup></label>
-        <select name="category" (change)="enableFormAccordingToCategory($event)"
-        class="select2 form-control" style="width: 100%; height: 35px;" [class.error1]="!form.controls.category.valid && form.controls.category.dirty"
-        required>
-        <option value="" disabled="disabled">Select item</option>
-        <option *ngFor="let s of categoriesArray" value="{{s.id}}">{{s.value}}</option>
-        </select>
-        <div
-          *ngIf="(form.get( 'category').hasError( 'required') ) && form.get( 'category').touched">
-          <div class="error"
-            *ngIf="form.get( 'category').hasError( 'category') && form.get( 'category').touched">
-            This field is mandatory
-          </div>
+    <div class="form-group rem-catfilter">
+      <label>Category<sup style="color:red;">*</sup></label>
+      <select name="category" (change)="enableFormAccordingToCategory($event)"
+      class="select2 form-control" style="width: 100%; height: 35px;" [class.error1]="!form.controls.category.valid && form.controls.category.dirty"
+      required>
+      <option value="" disabled="disabled">Select item</option>
+      <option *ngFor="let s of categoriesArray" value="{{s.id}}">{{s.value}}</option>
+      </select>
+      <div
+        *ngIf="(form.get( 'category').hasError( 'required') ) && form.get( 'category').touched">
+        <div class="error"
+          *ngIf="form.get( 'category').hasError( 'category') && form.get( 'category').touched">
+          This field is mandatory
         </div>
       </div>
-      <formly-form [model]="model" [fields]="fields" [options]="options">
-        <div class='clearfix'></div>
-        <div class="col-md-12 rem-content" *ngIf="precaution">
-          <h4>Precautions</h4>
-          <ul>
-            <li>Date of the bill should be visible with correct reference to the expenses. </li>
-            <li>Purpose of the expense should be clearly mentioned. </li>
-            <li>The person involved in the business meeting or any other stakeholder should be clearly mentioned. </li>
-            <li>Always furnish authorized bill. </li>
-            <li>Documents should be correctly uploaded. </li>
-            <li>Each document should fall in proper category of the expense.</li>
-          </ul>
-        </div>
-        <div class='clearfix'></div>
-        <div class="md-footer-btm">
-          <div class=''>
-            <button type="submit" class="btn btn-default btn-orange" [ladda]="isLoading">Submit</button>
-          </div>
-        </div>
-        <div class='clearfix'></div>
-      </formly-form>
+    </div>
+    <formly-form [model]="model" [fields]="fields" [options]="options">
+    <div class='clearfix'></div>
+    <div class="col-md-12 rem-content" *ngIf="precaution">
+      <h4>Precautions</h4>
+      <ul>
+        <li>Date of the bill should be visible with correct reference to the expenses. </li>
+        <li>Purpose of the expense should be clearly mentioned. </li>
+        <li>The person involved in the business meeting or any other stakeholder should be clearly mentioned. </li>
+        <li>Always furnish authorized bill. </li>
+        <li>Documents should be correctly uploaded. </li>
+        <li>Each document should fall in proper category of the expense.</li>
+      </ul>
+    </div>
+    <div class='clearfix'></div>
+    <div class="md-footer-btm">
+      <div class=''>
+        <button type="submit" class="btn btn-default btn-orange" [ladda]="isLoading">Submit</button>
+      </div>
+    </div>
+    <div class='clearfix'></div>
+    </formly-form>
     </form>
   </div>
 </ng-template>
@@ -157,31 +157,49 @@
             <span>{{single_user_data.category_name}}</span>
           </div>
         </div>
-        <div class="form-row" *ngIf="ola_uber_show">
-          <div class="form-group col-md-4">
+        <div class="form-row">
+          <div class="form-group col-md-4" *ngIf="ola_uber_show">
             <label>Expense-For</label><br>
             <span>{{single_user_data.data.expense_for}}</span>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-4" *ngIf="clientnameshow">
             <label>Client-Name</label><br>
             <span>{{single_user_data.data.client_name}}</span>
           </div>
-          <div class="form-group col-md-4">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4" *ngIf="hotelshow">
+            <label>Hotel Name</label><br>
+            <span>{{single_user_data.data.hotel_name}}</span>
+          </div>
+          <div class="form-group col-md-4" *ngIf="fromtoshow">
+            <label>From</label><br>
+            <span>{{single_user_data.data.from}}</span>
+          </div>
+          <div class="form-group col-md-4" *ngIf="fromtoshow">
             <label>To</label><br>
             <span>{{single_user_data.data.to}}</span>
           </div>
         </div>
+        <div class="form-row" *ngIf="petrolshow">
+          <div class="form-group col-md-4">
+            <label>Vehcile Type</label><br>
+            <span>{{single_user_data.data.vehicle_type}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Kilometer</label><br>
+            <span>{{single_user_data.data.km}}</span>
+          </div>
+        </div>
         <div class="form-row">
+          <div class="form-group col-md-4" *ngIf="!fromtoshow">
+            <label>Applied Date</label><br>
+            <span>{{single_user_data.display_date}}</span>
+          </div>
           <div class="form-group col-md-4">
             <label>Amount</label><br>
             <span>{{single_user_data.amount}}</span>
           </div>
-          <div class="form-group col-md-8">
-            <label>Date</label><br>
-            <span>{{single_user_data.display_date}}</span>
-          </div>
-          <!-- <div class="form-group col-md-4">
-            </div> -->
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
