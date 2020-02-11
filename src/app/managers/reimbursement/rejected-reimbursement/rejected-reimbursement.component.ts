@@ -98,6 +98,7 @@ export class RejectedReimbursementComponent implements OnInit {
      this.singleuserloading=true;
      this.api.getUserRejectedData(this.year,this.month,this.user_id).subscribe((res:any) => {
      this.user_rejected_reimbursement_data=res.reimbursements;
+     console.log(this.user_rejected_reimbursement_data)
      this.singleuserloading=false;
     }, (err) => {
       this.toastr.showError(err.error);

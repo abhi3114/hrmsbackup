@@ -59,14 +59,13 @@ export class SettledComponent implements OnInit {
 
 
   getFilterData()
-  {    
+  {
     var year;var month;
     $('#settledDataTables').DataTable().destroy();
     this.filterdataform.controls.filteryear.value == "" ? year = this.settled_filter.selectedyear : year =
-    this.filterdataform.controls.filteryear.value    
+    this.filterdataform.controls.filteryear.value
     this.filterdataform.controls.filtermonth.value == "" ? month = this.settled_filter.selectedmonth : month =
     this.filterdataform.controls.filtermonth.value
-    //console.log(year,month)
     this.loading=true;
     this.api.getSettledReimbursementUsers(year,month).subscribe((res:any) => {
     this.settle_api_data=res;
@@ -83,7 +82,7 @@ export class SettledComponent implements OnInit {
     this.userssetttledmodalRef = this.modalService.show(template);
     var year;var month;
     this.filterdataform.controls.filteryear.value == "" ? year = this.settled_filter.selectedyear : year =
-    this.filterdataform.controls.filteryear.value    
+    this.filterdataform.controls.filteryear.value
     this.filterdataform.controls.filtermonth.value == "" ? month = this.settled_filter.selectedmonth : month =
     this.filterdataform.controls.filtermonth.value
     var user_id=s.user_id;

@@ -66,6 +66,10 @@ export class ReimbursementComponent implements OnInit {
   };
   splitmonthyear:any=[];
   ola_uber_show:boolean=false;
+  hotelshow:boolean=false;
+  petrolshow:boolean=false;
+  fromtoshow:boolean=false;
+  clientnameshow:boolean=false;
 
   constructor(private modalService: BsModalService,private remService:Reimbursementservice,public toastr: NotificationService,private monthandyear:MonthYearService)
   {
@@ -418,19 +422,6 @@ export class ReimbursementComponent implements OnInit {
   {
     this.viewmodalRef=this.modalService.show(template);
     this.single_user_data=l;
-    console.log(this.single_user_data.category_name);
-    console.log(this.single_user_data.data.to);
-    console.log(this.single_user_data.data.client_name);
-    console.log(this.single_user_data.data.expense_for);
-    if(this.single_user_data.category_name==="Ola/Uber")
-    {
-      this.ola_uber_show=true;
-      console.log("hooo");
-    }
-    else
-    {
-      this.ola_uber_show=false;
-    }
     if(l.receipt_path==null || l.receipt_path=="undefined" || l.receipt_path=="")
     {
       this.attachedbill=true;
@@ -441,6 +432,44 @@ export class ReimbursementComponent implements OnInit {
     }
     var spiltmonthandyear=(l.display_month_year).split('-');
     this.splitmonthyear=spiltmonthandyear;
+    //view form will be visible according to category
+    if(this.single_user_data.category_name==="Ola/Uber")
+    {
+      this.ola_uber_show=true;
+      if(this.single_user_data.data.expense_for==="client")
+      {
+        this.clientnameshow=true;
+      }
+    }
+    else
+    {
+      this.ola_uber_show=false;
+      this.clientnameshow=false;
+    }
+    if(this.single_user_data.category_name==="Hotel Stay")
+    {
+      this.hotelshow=true;
+    }
+    else
+    {
+      this.hotelshow=false;
+    }
+    if(this.single_user_data.category_name==="Petrol/CNG")
+    {
+      this.petrolshow=true;
+    }
+    else
+    {
+      this.petrolshow=false;
+    }
+    if(this.single_user_data.category_name==="Hotel Stay" || this.single_user_data.category_name==="Electricity" || this.single_user_data.category_name==="Mobile Bill")
+    {
+      this.fromtoshow=true;
+    }
+    else
+    {
+      this.fromtoshow=false;
+    }
   }
   closeviewrembursementsingledatamodal()
   {

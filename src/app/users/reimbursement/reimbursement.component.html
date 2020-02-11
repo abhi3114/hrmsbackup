@@ -167,31 +167,49 @@
             <span>{{single_user_data.category_name}}</span>
           </div>
         </div>
-        <div class="form-row" *ngIf="ola_uber_show">
-          <div class="form-group col-md-4">
+        <div class="form-row">
+          <div class="form-group col-md-4" *ngIf="ola_uber_show">
             <label>Expense-For</label><br>
             <span>{{single_user_data.data.expense_for}}</span>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-4" *ngIf="clientnameshow">
             <label>Client-Name</label><br>
             <span>{{single_user_data.data.client_name}}</span>
           </div>
-          <div class="form-group col-md-4">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4" *ngIf="hotelshow">
+            <label>Hotel Name</label><br>
+            <span>{{single_user_data.data.hotel_name}}</span>
+          </div>
+          <div class="form-group col-md-4" *ngIf="fromtoshow">
+            <label>From</label><br>
+            <span>{{single_user_data.data.from}}</span>
+          </div>
+          <div class="form-group col-md-4" *ngIf="fromtoshow">
             <label>To</label><br>
             <span>{{single_user_data.data.to}}</span>
           </div>
         </div>
+        <div class="form-row" *ngIf="petrolshow">
+          <div class="form-group col-md-4">
+            <label>Vehcile Type</label><br>
+            <span>{{single_user_data.data.vehicle_type}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Kilometer</label><br>
+            <span>{{single_user_data.data.km}}</span>
+          </div>
+        </div>
         <div class="form-row">
+          <div class="form-group col-md-4" *ngIf="!fromtoshow">
+            <label>Applied Date</label><br>
+            <span>{{single_user_data.display_date}}</span>
+          </div>
           <div class="form-group col-md-4">
             <label>Amount</label><br>
             <span>{{single_user_data.amount}}</span>
           </div>
-          <div class="form-group col-md-8">
-            <label>Date</label><br>
-            <span>{{single_user_data.display_date}}</span>
-          </div>
-          <!-- <div class="form-group col-md-4">
-            </div> -->
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">

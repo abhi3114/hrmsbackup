@@ -258,7 +258,7 @@ export class UnsettledComponent implements OnInit {
       // })
       //console.log(this.exportsheet)
       this.isLoading=true;
-      var options = {showLabels:true,showTitle: false,title: 'Your title',headers: ["ID", "USERNAME", "MONTH/YEAR","CATEGORY NAME","DATE","PURPOSE","REVIEW_REASON","AMOUNT","RECIEPT","Settled"]};
+      var options = {showLabels:true,showTitle: false,title: 'Your title',headers: ["ID", "USERNAME", "MONTH/YEAR","CATEGORY NAME","DATE","EMPLOYEE CODE","DEPARTMENT NAME","MANAGER NAME","PURPOSE","REVIEW REASON","AMOUNT","RECIEPT","Settled"]};
       new Angular5Csv(this.exportsheet, 'ExportAll-month-'+this.month+'-year-'+this.year,options);
       this.isLoading=false;
       this.closeexportmodal();
