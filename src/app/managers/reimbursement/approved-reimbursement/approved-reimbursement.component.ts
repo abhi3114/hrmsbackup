@@ -35,8 +35,10 @@ export class ApprovedReimbursementComponent implements OnInit {
   attachedbill:boolean=false;
   //is loading is for button
   isLoading:boolean=false;
-  //loading is for table
+  //loading is for rembursement count
   loading:boolean=false;
+  //singleuserloading is for single user record table
+  singleuserloading:boolean=false;
 
 
 
@@ -93,14 +95,14 @@ export class ApprovedReimbursementComponent implements OnInit {
     this.approvedreimbursementform.controls.month.value == "" ? this.month = this.approved_filter.selectedmonth : this.month =
     this.approvedreimbursementform.controls.month.value
     this.user_id = r.user_id;
-    this.loading=true;
+    this.singleuserloading=true;
     this.api.getUserRembursementData(this.year,this.month,this.user_id).subscribe((res:any) => {
     this.user_approved_reimbursement_data=res.reimbursements;
-    this.loading=false;
-    //console.log(res.reimbursements);
+    this.singleuserloading=false;
+    console.log(res.reimbursements);
     }, (err) => {
     this.toastr.showError(err.error);
-    this.loading=false;
+    this.singleuserloading=false;
     });
 
   }

@@ -47,46 +47,48 @@
 </div>
 <ngx-loading [show]="loading"></ngx-loading>
 <ng-template #userssettledlistModal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Settled Reimbursement</h4>
-  </div>
-  <section content="modal-body">
-    <div class="box-body">
-      <div class="table-responsive">
-        <table class="table table-striped table-hover" >
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Month/Year</th>
-              <th>Category</th>
-              <th>Date</th>
-              <th>Purpose</th>
-              <th>Manager Comment</th>
-              <th>Amount</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let ur of single_user_settled_data">
-              <td>{{ur.id}}</td>
-              <td>{{ur.user_name}}</td>
-              <td>{{ur.display_month_year}}</td>
-              <td>{{ur.category_name}}</td>
-              <td>{{ur.display_date}}</td>
-              <td>{{ur.purpose}}</td>
-              <td>{{ur.review_reason}}</td>
-              <td>{{ur.amount}}</td>
-              <td>
-                <a style="cursor: pointer;" ><i class="fa fa-eye field-icon toggle-password eye-view" aria-hidden="true" (click)="singleusersinglesettleddata(singleusersinglesettleddatamodal,ur)"></i></a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="modal-content modal-width">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Settled Reimbursement</h4>
     </div>
-  </section>
-  <ngx-loading [show]="loading" ></ngx-loading>
+    <section content="modal-body">
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover" >
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Month/Year</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Purpose</th>
+                <th>Manager Comment</th>
+                <th>Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ur of single_user_settled_data">
+                <td>{{ur.id}}</td>
+                <td>{{ur.user_name}}</td>
+                <td>{{ur.display_month_year}}</td>
+                <td>{{ur.category_name}}</td>
+                <td>{{ur.display_date}}</td>
+                <td>{{ur.purpose}}</td>
+                <td>{{ur.review_reason}}</td>
+                <td>{{ur.amount}}</td>
+                <td>
+                  <img src="assets/images/eye.png" style="height:12px !important;width:20px !important;cursor: pointer;" (click)="singleusersinglesettleddata(singleusersinglesettleddatamodal,ur)">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <ngx-loading [show]="singleuserloading" ></ngx-loading>
+  </div>
 </ng-template>
 <ng-template #singleusersinglesettleddatamodal>
   <div class="modal-content" >
@@ -126,6 +128,12 @@
           <div class="form-group col-md-12">
             <label>Purpose</label><br>
             <span>{{single_user_single_settled_data.purpose}}</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Manager Comment</label><br>
+            <span>{{single_user_single_settled_data.review_reason}}</span>
           </div>
         </div>
         <div class="form-row">

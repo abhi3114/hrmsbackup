@@ -2,8 +2,7 @@
   <div class="content-wrapper">
     <section class="content-header">
       <div class="col-md-12">
-      <h4>Reimbursement</h4>
-     
+        <h4>Reimbursement</h4>
         <button type="submit"
           class="btn bg-orange btn-flat btn-request" (click)="recordResponse(responseTemplate,false)"><i class="fa fa-submit" aria-hidden="true"></i>New Claim</button>
       </div>
@@ -54,7 +53,7 @@
             <table id="RembursementDataTables" class="table table-bordered table-striped table-hover" datatable [dtOptions]="rembursementTableOptions" [dtTrigger]="reimbursementTableTrigger">
             <thead>
               <tr>
-                <th>Sr.No</th>
+                <th>ID</th>
                 <th>Date</th>
                 <th>Category</th>
                 <th>Purpose</th>
@@ -72,9 +71,9 @@
                 <td>{{l.review_reason}}</td>
                 <td>{{l.amount}}</td>
                 <td>
-                  <a><i class="fa fa-eye field-icon toggle-password eye-view" aria-hidden="true" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)"></i></a>&nbsp;
-                  <a style="cursor: pointer;font-size:20px;color:#808080" *ngIf="openunapproved || openrejected"><i class="fa fa-pencil" aria-hidden="true" (click)="editrembursementsingledata(editrembursementsingledatamodal,l)"></i></a>&nbsp;
-                  <a style="cursor: pointer;font-size:20px;color:#808080" data-confirm="Are you sure to delete this item?" *ngIf="openunapproved"><i class="fa fa-trash" (click)="deletereimbursementsingledata(l)"></i></a>
+                  <img src="assets/images/eye.png" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)" style="height:12px !important;width:20px !important;cursor: pointer;">&nbsp;
+                  <img src="assets/images/pencil.png" (click)="editrembursementsingledata(editrembursementsingledatamodal,l)" style="height:15px !important;width:15px !important;cursor: pointer;" *ngIf="openunapproved">&nbsp;
+                  <img src="assets/images/delete.png" (click)="deletereimbursementsingledata(l)" style="height:16px !important;width:15px !important;cursor: pointer;" *ngIf="openunapproved">
                 </td>
               </tr>
             </tbody>
@@ -95,47 +94,44 @@
   </div>
   <div class="modal-body ticket-popup">
     <form [formGroup]="form" (ngSubmit)="submit(model)">
-    <div class="form-group rem-catfilter">
-      <label>Category<sup style="color:red;">*</sup></label>
-      <select name="category" (change)="enableFormAccordingToCategory($event)"
-      class="select2 form-control" style="width: 100%; height: 35px;" [class.error1]="!form.controls.category.valid && form.controls.category.dirty"
-      required>
-      <option value="" disabled="disabled">Select item</option>
-      <option *ngFor="let s of categoriesArray" value="{{s.id}}">{{s.value}}</option>
-      </select>
-      <div
-        *ngIf="(form.get( 'category').hasError( 'required') ) && form.get( 'category').touched">
-        <div class="error"
-          *ngIf="form.get( 'category').hasError( 'category') && form.get( 'category').touched">
-          This field is mandatory
+      <div class="form-group rem-catfilter">
+        <label>Category<sup style="color:red;">*</sup></label>
+        <select name="category" (change)="enableFormAccordingToCategory($event)"
+        class="select2 form-control" style="width: 100%; height: 35px;" [class.error1]="!form.controls.category.valid && form.controls.category.dirty"
+        required>
+        <option value="" disabled="disabled">Select item</option>
+        <option *ngFor="let s of categoriesArray" value="{{s.id}}">{{s.value}}</option>
+        </select>
+        <div
+          *ngIf="(form.get( 'category').hasError( 'required') ) && form.get( 'category').touched">
+          <div class="error"
+            *ngIf="form.get( 'category').hasError( 'category') && form.get( 'category').touched">
+            This field is mandatory
+          </div>
         </div>
       </div>
-    </div>
-    
-    <formly-form [model]="model" [fields]="fields" [options]="options">
-    <div class='clearfix'></div>
-    <div class="col-md-12 rem-content">
-    <h4>Precautions</h4>
-    <ul>
-      <li>Date of the bill should be visible with correct reference to the expenses. </li>
-      <li>Purpose of the expense should be clearly mentioned. </li>
-      <li>The person involved in the business meeting or any other stakeholder should be clearly mentioned. </li>
-      <li>Always furnish authorized bill. </li>
-      <li>Documents should be correctly uploaded. </li>
-      <li>Each document should fall in proper category of the expense.</li>
-    </ul>
-  </div>
-  <div class='clearfix'></div>
-    <div class="md-footer-btm">
-      <div class=''>
-        <button type="submit" class="btn btn-default btn-orange" [ladda]="isLoading">Submit</button>
-      </div>
-    </div>
-    <div class='clearfix'></div>
-    </formly-form>
+      <formly-form [model]="model" [fields]="fields" [options]="options">
+        <div class='clearfix'></div>
+        <div class="col-md-12 rem-content" *ngIf="precaution">
+          <h4>Precautions</h4>
+          <ul>
+            <li>Date of the bill should be visible with correct reference to the expenses. </li>
+            <li>Purpose of the expense should be clearly mentioned. </li>
+            <li>The person involved in the business meeting or any other stakeholder should be clearly mentioned. </li>
+            <li>Always furnish authorized bill. </li>
+            <li>Documents should be correctly uploaded. </li>
+            <li>Each document should fall in proper category of the expense.</li>
+          </ul>
+        </div>
+        <div class='clearfix'></div>
+        <div class="md-footer-btm">
+          <div class=''>
+            <button type="submit" class="btn btn-default btn-orange" [ladda]="isLoading">Submit</button>
+          </div>
+        </div>
+        <div class='clearfix'></div>
+      </formly-form>
     </form>
-
-
   </div>
 </ng-template>
 <ng-template #viewrembursementsingledatamodal>
@@ -160,6 +156,20 @@
             <span>{{single_user_data.category_name}}</span>
           </div>
         </div>
+        <div class="form-row" *ngIf="ola_uber_show">
+          <div class="form-group col-md-4">
+            <label>Expense-For</label><br>
+            <span>{{single_user_data.data.expense_for}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Client-Name</label><br>
+            <span>{{single_user_data.data.client_name}}</span>
+          </div>
+          <div class="form-group col-md-4">
+            <label>To</label><br>
+            <span>{{single_user_data.data.to}}</span>
+          </div>
+        </div>
         <div class="form-row">
           <div class="form-group col-md-4">
             <label>Amount</label><br>
@@ -170,7 +180,7 @@
             <span>{{single_user_data.display_date}}</span>
           </div>
           <!-- <div class="form-group col-md-4">
-          </div> -->
+            </div> -->
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
@@ -180,7 +190,13 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label>Attached Bill</label>&nbsp;
+            <label>Manager Comment</label><br>
+            <span>{{single_user_data.review_reason}}</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Attached Bill:</label>&nbsp;
             <a href="{{single_user_data.receipt_path}}" target='_blank' class="btn btn-primary" *ngIf="!attachedbill">View File</a>
             <span *ngIf="attachedbill">No File Attached</span>
           </div>

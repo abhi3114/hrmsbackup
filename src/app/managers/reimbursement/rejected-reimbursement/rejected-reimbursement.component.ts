@@ -36,6 +36,8 @@ export class RejectedReimbursementComponent implements OnInit {
   loading:boolean=false;
   //isLoading is for form/button
   isLoading:boolean=false;
+  //singleuserloading is for single user record table
+  singleuserloading:boolean=false;
 
   constructor(private api:rejectedReimbursementService,private toastr:NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService)
   {
@@ -93,13 +95,13 @@ export class RejectedReimbursementComponent implements OnInit {
      this.rejectedreimbursementform.controls.year.value
      this.rejectedreimbursementform.controls.month.value == "" ? this.month = this.rejected_filter.selectedmonth : this.month =
      this.rejectedreimbursementform.controls.month.value
-     this.loading=true;
+     this.singleuserloading=true;
      this.api.getUserRejectedData(this.year,this.month,this.user_id).subscribe((res:any) => {
      this.user_rejected_reimbursement_data=res.reimbursements;
-     this.loading=false;
+     this.singleuserloading=false;
     }, (err) => {
       this.toastr.showError(err.error);
-      this.loading=false;
+      this.singleuserloading=false;
     });
    }
 

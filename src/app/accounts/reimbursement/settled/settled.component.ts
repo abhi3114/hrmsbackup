@@ -29,6 +29,8 @@ export class SettledComponent implements OnInit {
   singleusersingledataModalRef:BsModalRef;
   //loading is for tables
   loading:boolean=false;
+  //singleuserloading is for single user record table
+  singleuserloading:boolean=false;
 
   constructor(private monthandyear:MonthYearService,private api:SettledService,public toastr: NotificationService,private modalService: BsModalService) {
 
@@ -85,13 +87,13 @@ export class SettledComponent implements OnInit {
     this.filterdataform.controls.filtermonth.value == "" ? month = this.settled_filter.selectedmonth : month =
     this.filterdataform.controls.filtermonth.value
     var user_id=s.user_id;
-    this.loading=true;
+    this.singleuserloading=true;
     this.api.getSinghleUserSettledData(year,month, user_id).subscribe((res:any) => {
     this.single_user_settled_data=res.reimbursements;
-    this.loading=false;
+    this.singleuserloading=false;
     }, (err) => {
     this.toastr.showError(err.error);
-    this.loading=false;
+    this.singleuserloading=false;
     });
   }
 

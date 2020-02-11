@@ -25,11 +25,13 @@ export class ReimbursementComponent implements OnInit {
   options: FormlyFormOptions = {};
   api_data:any;
   canShowFormAttribute:boolean=false;
+  canShowPrecautions:boolean=true;
   form_fields:any=[];
   categoriesArray:any=[];
   reimbursementform:FormGroup;
   mySelectedFiles:any=[];
   single_user_data:any=[];
+  category:any;
   base64: any;
   reimbursementformdata={month:'',year:''};
   rembursement_api_data:any;
@@ -49,6 +51,7 @@ export class ReimbursementComponent implements OnInit {
   monthArray:any;yearArray:any;filteredData:any;
   reimbursement_filter:any={selectedmonth:'',selectedyear:''};
   attachedbill:boolean=false;
+  precaution:boolean=true;
   //loading is for table
   loading:boolean=false;
   //isLoading is use for claim submit button
@@ -61,6 +64,7 @@ export class ReimbursementComponent implements OnInit {
     ignoreBackdropClick: true
   };
   splitmonthyear:any=[];
+  ola_uber_show:boolean=false;
 
   constructor(private modalService: BsModalService,private remService:Reimbursementservice,public toastr: NotificationService,private monthandyear:MonthYearService)
   {
@@ -107,66 +111,67 @@ export class ReimbursementComponent implements OnInit {
     if ($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
       model['client_name'] = $('.client_name').val()
     }
+    Object.keys( model ).map( function ( key ) {
+      if ( model[key] == null){
+        delete model[key]
+      }
+    });
+    model["category_id"] = this.category
     model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
     model["attachment_base64"] =  this.base64
-    //console.log(this.model);
-    //console.log(this.options);
     this.isLoading=true;
     this.remService.createReimbursement(model).subscribe(res => {
       this.isLoading=false;
       this.modalRef.hide();
       this.toastr.showSuccess('Response Recorded');
-      // this.form.reset();
-      // this.options.resetModel({ type: "" });
+      this.options.resetModel();
       this.modalRef.hide();
       this.getData();
       }, (err) => {
       this.isLoading=false;
+      this.options.resetModel();
       this.toastr.showError(err.error);
-      // this.options.resetModel({ type: "" });
       this.modalRef.hide();
     });
-
   }
 
   configureFields(selectedCategory){
-  this.form_fields = [
-    {
-      // fieldGroupClassName: 'row',
-      fieldGroup: [],
-    }
-  ];
-  var optionArr = [];
-  var hashObject = {}
-  this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
-    this.api_data=res;
-    this.api_data.forEach(data => {
-      if (data.title != 'client_name'){
-        var type = (data.data_type == 'date') ? 'date' : ((data.title == 'expense_for') ? 'custom-select' : (data.data_type == 'integer' ? 'input' : data.data_type))
-        if (data.options != undefined){
-          data.options.forEach(option => {
-            optionArr.push(
-              {label: option, value: option}
-            )
-          })
-        }
-        var commonHash = {
-          key: data.title,
-          type: type,
-          className: 'col-md-4',
-          templateOptions: {
-            label: data.label,
-            placeholder: data.label,
-            required: data.required,
-            options: optionArr
-          }
-        }
-        this.form_fields[0].fieldGroup.push(commonHash)
-        this.form_fields;
+    this.form_fields = [
+      {
+        fieldGroup: [],
       }
+    ];
+    var optionArr = [];
+    var hashObject = {}
+    this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
+      this.api_data=res;
+      this.api_data.forEach(data => {
+        if (data.title != 'client_name'){
+          var type = (data.data_type == 'date') ? 'date' : ((data.title == 'expense_for') ? 'custom-select' : (data.data_type == 'integer' ? 'input' : data.data_type))
+          if (data.options != undefined){
+            data.options.forEach(option => {
+              optionArr.push(
+                {label: option, value: option}
+              )
+            })
+          }
+          var commonHash = {
+            key: data.title,
+            type: type,
+            className: 'col-md-4',
+            templateOptions: {
+              label: data.label,
+              placeholder: data.label,
+              required: data.required,
+              options: optionArr
+            }
+          }
+          this.form_fields[0].fieldGroup.push(commonHash)
+          this.form_fields;
+        }
+      });
+    },(err) => {
     });
-  },(err) => {
-  });
   }
 
   closeModal()
@@ -174,15 +179,17 @@ export class ReimbursementComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  enableFormAccordingToCategory($event){
-    var selectedCategory = $event.target.value;
+  enableFormAccordingToCategory($event)
+  {
+    this.precaution=false;
+    this.category = $event.target.value;
     let common_fields = [
       {
         // fieldGroupClassName: 'row',
         fieldGroup: [
           {
             key: 'category_id',
-            defaultValue: selectedCategory
+            defaultValue: this.category
           },
           {
             key: 'amount',
@@ -217,7 +224,7 @@ export class ReimbursementComponent implements OnInit {
         ]
       }
     ]
-    this.configureFields(selectedCategory);
+    this.configureFields(this.category);
      setTimeout(()=>{
       this.fields = [...this.form_fields, ...common_fields];
     }, 1000);
@@ -238,7 +245,7 @@ export class ReimbursementComponent implements OnInit {
     this.remService.getApproved(month,year).subscribe((res:any) => {
     this.rembursement_api_data=res.reimbursements;
     this.loading=false;
-    //console.log(this.rembursement_api_data)
+    console.log(this.rembursement_api_data)
     this.reimbursementTableTrigger.next();
     }, (err) => {
     this.toastr.showError(err.error);
@@ -260,8 +267,6 @@ export class ReimbursementComponent implements OnInit {
     this.loading=true;
     this.remService.getUnapproved(month,year).subscribe((res:any) =>{
     this.rembursement_api_data=res.reimbursements;
-    //for()
-    //console.log(this.rembursement_api_data[2].data.length);
     this.loading=false;
     this.reimbursementTableTrigger.next();
     }, (err) => {
@@ -284,7 +289,7 @@ export class ReimbursementComponent implements OnInit {
     this.remService.getRejected(month,year).subscribe((res:any) => {
     this.rembursement_api_data=res.reimbursements;
     this.loading=false;
-    //console.log(this.rembursement_api_data)
+    console.log(this.rembursement_api_data)
     this.reimbursementTableTrigger.next();
     }, (err) => {
     this.loading=false;
@@ -293,11 +298,10 @@ export class ReimbursementComponent implements OnInit {
    }
 
   getData()
-   {
+  {
     this.openrejected ? this.getRejectedData() : this.openapproved ? this.getApprovedData() :
     this.getUnapprovedData();
-
-   }
+  }
 
   modelChange(model) {
     console.warn(model);
@@ -346,6 +350,19 @@ export class ReimbursementComponent implements OnInit {
   {
     this.viewmodalRef=this.modalService.show(template);
     this.single_user_data=l;
+    console.log(this.single_user_data.category_name);
+    console.log(this.single_user_data.data.to);
+    console.log(this.single_user_data.data.client_name);
+    console.log(this.single_user_data.data.expense_for);
+    if(this.single_user_data.category_name==="Ola/Uber")
+    {
+      this.ola_uber_show=true;
+      console.log("hooo");
+    }
+    else
+    {
+      this.ola_uber_show=false;
+    }
     if(l.receipt_path==null || l.receipt_path=="undefined" || l.receipt_path=="")
     {
       this.attachedbill=true;
