@@ -1529,8 +1529,16 @@ ul.treeview-menu img {
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     border-radius: 0!important;
 }
-
-
+.align-btn{
+    display: table;
+    margin: auto;
+}
+.form-group label span{
+    color:red;
+}
+.invalid-feedback formly-validation-message{
+    color:red;
+}
 /*=====Responsive=========*/
 
 @media (max-width: 1024px) {
