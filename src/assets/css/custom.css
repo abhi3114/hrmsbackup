@@ -1533,7 +1533,9 @@ ul.treeview-menu img {
     display: table;
     margin: auto;
 }
-
+.form-group label span{
+    color:red;
+}
 /*=====Responsive=========*/
 
 @media (max-width: 1024px) {
