@@ -1529,7 +1529,10 @@ ul.treeview-menu img {
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     border-radius: 0!important;
 }
-
+.align-btn{
+    display: table;
+    margin: auto;
+}
 
 /*=====Responsive=========*/
 
