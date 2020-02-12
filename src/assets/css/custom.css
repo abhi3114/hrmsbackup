@@ -1536,6 +1536,9 @@ ul.treeview-menu img {
 .form-group label span{
     color:red;
 }
+.invalid-feedback formly-validation-message{
+    color:red;
+}
 /*=====Responsive=========*/
 
 @media (max-width: 1024px) {
