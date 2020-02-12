@@ -199,6 +199,7 @@ export class ReimbursementComponent implements OnInit {
     this.precaution=false;
     this.category = $event.target.value;
     let common_fields = []
+    var amountCustomClass = this.category == 4 ? 'custom-amount' : ''
     if (this.category == 7){
       common_fields = [
         {
@@ -264,7 +265,7 @@ export class ReimbursementComponent implements OnInit {
             {
               key: 'amount',
               type: 'Integer',
-              className: 'col-md-4',
+              className: 'col-md-4'+' '+amountCustomClass,
               templateOptions: {
                 label: 'Amount',
                 placeholder: 'Enter Amount',

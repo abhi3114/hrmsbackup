@@ -1456,6 +1456,10 @@ button.btn.bg-orange.btn-flat {
     
 }
 
+.custom-amount{
+  clear:both
+}
+
 .modal-content {
     border-radius: 22px;
 }
