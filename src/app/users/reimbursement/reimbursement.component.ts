@@ -18,6 +18,7 @@ import * as moment from 'moment';
 
 export class ReimbursementComponent implements OnInit {
   @ViewChild('formDirective') ngForm;
+  showForm:boolean =false;
   form = new FormGroup({});
   today = new Date();
   model = {};
@@ -150,6 +151,7 @@ export class ReimbursementComponent implements OnInit {
     var optionArr = [];
     var hashObject = {}
     this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
+      this.loading=true;
       this.api_data=res;
       this.api_data.forEach(data => {
         if (data.title != 'client_name'){
@@ -174,6 +176,7 @@ export class ReimbursementComponent implements OnInit {
           }
           this.form_fields[0].fieldGroup.push(commonHash)
           this.form_fields;
+          this.loading=false;
         }
       });
     },(err) => {
@@ -183,17 +186,21 @@ export class ReimbursementComponent implements OnInit {
 
   closeModal()
   {
+    this.showForm = false;
     this.modalRef.hide();
   }
 
-  showError(field) {
-    setTimeout(() => {
-      this.is_valid_form = (field.formControl.valid && this.mySelectedFiles[0] != undefined )
-    }, 1000);
+  showError() {
+    
+    if(this.form_fields.length > 0 && this.form_fields[0].formControl != undefined){
+     return !(this.form_fields[0].formControl.valid && this.mySelectedFiles[0] != undefined )
+    }
+     
   }
 
   enableFormAccordingToCategory($event)
   {
+    this.showForm =true;
     this.options.resetModel();
     this.loading = true;
     this.precaution=false;
@@ -299,8 +306,10 @@ export class ReimbursementComponent implements OnInit {
     this.configureFields(this.category);
      setTimeout(()=>{
       this.fields = [...this.form_fields, ...common_fields];
+      this.showError()
     }, 1000);
     this.loading=false;
+   
   }
 
   getApprovedData()
