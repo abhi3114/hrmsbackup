@@ -186,6 +186,8 @@ export class ReimbursementComponent implements OnInit {
 
   closeModal()
   {
+    this.fields=[];
+    this.precaution = true;
     this.showForm = false;
     this.modalRef.hide();
   }
@@ -296,7 +298,8 @@ export class ReimbursementComponent implements OnInit {
               className: 'col-md-12',
               templateOptions: {
                 label: 'Attach Bill',
-                change: (field, $event) => this.handleFileInput($event.target.files)
+                change: (field, $event) => this.handleFileInput($event.target.files),
+                required: true
               }
             }
           ]
@@ -306,7 +309,6 @@ export class ReimbursementComponent implements OnInit {
     this.configureFields(this.category);
      setTimeout(()=>{
       this.fields = [...this.form_fields, ...common_fields];
-      this.showError()
     }, 1000);
     this.loading=false;
    
