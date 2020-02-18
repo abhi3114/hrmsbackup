@@ -13,10 +13,8 @@ import { FieldType } from '@ngx-formly/core';
          <option *ngFor="let e of expanseFor" value="{{e.id}}">{{e.value}}</option>
         </select>
       <label *ngIf="canShowField">Client Name<sup style="color:red;">*</sup></label>
-     <input *ngIf="canShowField"  type="text" class="form-control" [(ngModel)]="clientNameField.client_name" formControlName="client_name" required >
-     <div class="error" *ngIf="clientNameField.get('client_name').hasError('required') && canShowField && clientNameField.get('client_name').touched">
-       This field is mandatory
-     </div>
+     <input *ngIf="canShowField"  type="text" class="form-control"  formControlName="client_name">
+     
  `,
 })
 export class CustomFieldSelectComponent extends FieldType {
@@ -24,7 +22,7 @@ export class CustomFieldSelectComponent extends FieldType {
   expanseFor:any = [{"id": "client", "value": "Client"}, {"id": "self", "value": "Self"}]
 
   clientNameField = new FormGroup({
-    client_name: new FormControl('', [Validators.required]),
+    client_name: new FormControl(''),
   });
 
   toggleDeppendentField($event){

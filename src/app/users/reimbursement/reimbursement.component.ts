@@ -186,14 +186,15 @@ export class ReimbursementComponent implements OnInit {
 
   closeModal()
   {
+    this.fields=[];
+    this.precaution = true;
     this.showForm = false;
     this.modalRef.hide();
   }
 
   showError() {
-    
-    if(this.form_fields.length > 0 && this.form_fields[0].formControl != undefined){
-     return !(this.form_fields[0].formControl.valid && this.mySelectedFiles[0] != undefined )
+    if(this.fields.length > 0 && this.fields[0].formControl != undefined){
+     return !(this.fields[0].formControl.valid && this.mySelectedFiles[0] != undefined )
     }
      
   }
@@ -297,6 +298,7 @@ export class ReimbursementComponent implements OnInit {
               templateOptions: {
                 label: 'Attach Bill',
                 change: (field, $event) => this.handleFileInput($event.target.files)
+                
               }
             }
           ]
@@ -306,8 +308,9 @@ export class ReimbursementComponent implements OnInit {
     this.configureFields(this.category);
      setTimeout(()=>{
       this.fields = [...this.form_fields, ...common_fields];
-      this.showError()
-    }, 1000);
+      this.showError();
+     }, 1000);
+     
     this.loading=false;
    
   }
