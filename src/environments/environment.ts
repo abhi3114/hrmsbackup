@@ -7,6 +7,8 @@ export const environment = {
   //baseUrl:"https://dec6c6a1.ngrok.io/api/"
 
   baseUrl:"http://staging.hrms.property-pistol.in/api/"
+
+  //baseUrl:"https://6e2c91a7.ngrok.io/api/"
  //baseUrl:"https://6c4d1caa.ngrok.io/api/"
  //baseUrl:"http://b3477f5b.ngrok.io/api/"
 };
