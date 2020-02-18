@@ -306,7 +306,6 @@ export class ReimbursementComponent implements OnInit {
     this.configureFields(this.category);
      setTimeout(()=>{
       this.fields = [...this.form_fields, ...common_fields];
-      this.showError()
     }, 1000);
     this.loading=false;
    
