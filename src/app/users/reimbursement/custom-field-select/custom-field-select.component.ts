@@ -22,7 +22,7 @@ export class CustomFieldSelectComponent extends FieldType {
   expanseFor:any = [{"id": "client", "value": "Client"}, {"id": "self", "value": "Self"}]
 
   clientNameField = new FormGroup({
-    client_name: new FormControl('', []),
+    client_name: new FormControl(''),
   });
 
   toggleDeppendentField($event){
