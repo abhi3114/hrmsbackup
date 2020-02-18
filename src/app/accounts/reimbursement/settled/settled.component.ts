@@ -21,8 +21,8 @@ export class SettledComponent implements OnInit {
   settledOptions: DataTables.Settings = {};
   settledTableTrigger: Subject<any> = new Subject();
   settle_api_data:any=[];
-  single_user_settled_data:any[];
-  single_user_single_settled_data:any[];
+  single_user_settled_data:any=[];
+  single_user_single_settled_data:any=[];
   splitmonthyear:any[];
   attachedbill:boolean=false;
   userssetttledmodalRef:BsModalRef;
@@ -31,6 +31,11 @@ export class SettledComponent implements OnInit {
   loading:boolean=false;
   //singleuserloading is for single user record table
   singleuserloading:boolean=false;
+  ola_uber_show:boolean=false;
+  hotelshow:boolean=false;
+  petrolshow:boolean=false;
+  fromtoshow:boolean=false;
+  clientnameshow:boolean=false;
 
   constructor(private monthandyear:MonthYearService,private api:SettledService,public toastr: NotificationService,private modalService: BsModalService) {
 
@@ -100,6 +105,7 @@ export class SettledComponent implements OnInit {
   {
     this.singleusersingledataModalRef=this.modalService.show(template);
     this.single_user_single_settled_data=s;
+    console.log(this.single_user_settled_data);
     if(s.receipt_path==null || s.receipt_path=="undefined" || s.receipt_path=="")
     {
       this.attachedbill=true;
@@ -110,6 +116,43 @@ export class SettledComponent implements OnInit {
     }
     var spiltmonthandyear=(s.display_month_year).split('-');
     this.splitmonthyear=spiltmonthandyear;
+    if(this.single_user_single_settled_data.category_name==="Ola/Uber")
+    {
+      this.ola_uber_show=true;
+      if(this.single_user_single_settled_data.data.expense_for==="client")
+      {
+        this.clientnameshow=true;
+      }
+    }
+    else
+    {
+      this.ola_uber_show=false;
+      this.clientnameshow=false;
+    }
+    if(this.single_user_single_settled_data.category_name==="Hotel Stay")
+    {
+      this.hotelshow=true;
+    }
+    else
+    {
+      this.hotelshow=false;
+    }
+    if(this.single_user_single_settled_data.category_name==="Petrol/CNG")
+    {
+      this.petrolshow=true;
+    }
+    else
+    {
+      this.petrolshow=false;
+    }
+    if(this.single_user_single_settled_data.category_name==="Hotel Stay" || this.single_user_single_settled_data.category_name==="Electricity" || this.single_user_single_settled_data.category_name==="Mobile Bill")
+    {
+      this.fromtoshow=true;
+    }
+    else
+    {
+      this.fromtoshow=false;
+    }
   }
   closesingleusersingledatamodal()
   {
