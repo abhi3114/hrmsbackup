@@ -111,6 +111,10 @@ export class RejectedReimbursementComponent implements OnInit {
     });
    }
 
+  closerejectedrembursementdata()
+  {
+    this.modalRefchild.hide();
+  }
    rejectviewreimbursement(template: TemplateRef<any>, r)
    {
       this.modalRefchild= this.modalService.show(template);

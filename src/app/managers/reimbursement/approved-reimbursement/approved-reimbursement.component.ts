@@ -110,7 +110,10 @@ export class ApprovedReimbursementComponent implements OnInit {
     });
 
   }
-
+  closeapprovedrembursementdata()
+  {
+    this.modalRefchild.hide();
+  }
   rejectSinglereimbursement(r)
   {
     if(confirm("Are you sure to Reject this reimbursement "))

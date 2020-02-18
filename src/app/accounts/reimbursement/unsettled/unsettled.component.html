@@ -42,7 +42,7 @@
           <tbody>
             <tr *ngFor="let s of unsettle_api_data">
               <td>{{s.user_name}}</td>
-              <td><a (click)="userunsettledList(usersunsettledlistModal,s)">{{s.reimbursements_count}}</a></td>
+              <td><a style="cursor: pointer;" (click)="userunsettledList(usersunsettledlistModal,s)">{{s.reimbursements_count}}</a></td>
             </tr>
           </tbody>
           </table>
@@ -100,10 +100,10 @@
   <div class="modal-content" >
     <form>
       <div class="modal-header ticket-popup-header">
-        <h4 class="modal-title pull-left">Reimbursement Claim</h4>
+        <h4 class="modal-title pull-left">Claim Details</h4>
         <a><span class="fa fa-times pull-right" style="color: white;cursor:pointer;" (click)="closesingleusersingledatamodal()"></span></a>
       </div>
-      <div class="modal-body">
+      <div class="modal-header" style="background-color:#f5f6fb;padding-bottom: 0px;">
         <div class="form-row">
           <div class="form-group col-md-4">
             <label>Name</label><br>
@@ -123,8 +123,6 @@
             <label>Manager Name</label><br>
             <span>{{single_user_single_unsettled_data.manager_name}}</span>
           </div>
-        </div>
-        <div class="form-row">
           <div class="form-group col-md-4">
             <label>Month</label><br>
             <span>{{splitmonthyear[0]}}</span>
@@ -133,6 +131,10 @@
             <label>Year</label><br>
             <span>{{splitmonthyear[1]}}</span>
           </div>
+        </div>
+      </div>
+      <div class="modal-body" style="margin-top:-10px;">
+        <div class="form-row">
           <div class="form-group col-md-4">
             <label>Category</label><br>
             <span>{{single_user_single_unsettled_data.category_name}}</span>
@@ -143,7 +145,7 @@
             <label>Expense For</label><br>
             <span>{{single_user_single_unsettled_data.data.expense_for}}</span>
           </div>
-            <div class="form-group col-md-4" *ngIf="clientnameshow">
+          <div class="form-group col-md-4" *ngIf="clientnameshow">
             <label>Client Name</label><br>
             <span>{{single_user_single_unsettled_data.data.client_name}}</span>
           </div>
@@ -182,16 +184,6 @@
             <span>{{single_user_single_unsettled_data.amount}}</span>
           </div>
         </div>
-        <!-- <div class="form-row">
-          <div class="form-group col-md-4">
-            <label>Date</label><br>
-            <span>{{single_user_single_unsettled_data.display_date}}</span>
-          </div>
-          <div class="form-group col-md-4">
-            <label>Amount</label><br>
-            <span>{{single_user_single_unsettled_data.amount}}</span>
-          </div>
-        </div> -->
         <div class="form-row">
           <div class="form-group col-md-12">
             <label>Purpose</label><br>
@@ -262,7 +254,7 @@
     <div class="box-body">
       <div class="row">
         <div class="col-md-12">
-          <h4>Make sure that you are Uploading File For Following:</h4>
+          <h4>Make sure that you are uploading file for following:</h4>
           <h5>Month: <b>{{currentmomentmonth}}</b></h5>
           <h5>Year: <b>{{year}}</b></h5>
         </div>
@@ -273,7 +265,7 @@
             <input type="file" accept=".csv" formControlName="csvfile" id="files">
           </div>
           <div class="form-group col-md-3" style="padding-left: 250px;">
-            <button (click)="importCsv()" [ladda]="isLoading" class=" btn btn-warning">Submit</button>
+            <button (click)="importCsv()" [ladda]="isLoading" class=" btn btn-warning">Upload</button>
           </div>
         </form>
       </div>
@@ -291,8 +283,10 @@
         <div class="col-md-12">
           <h4><b>Instruction need to follow before importing CSV</b></h4>
           <ul>
-            <li><span style="color: #c62b34;"><b>Please type "Y" if you want to settle the claim,if not type "N" in the column.</b></span></li>
-            <li>After you settled upload the sheet,by clicking on "Import CSV" and then select appropriate csv file to upload</li>
+            <li><span style="color: #c62b34;"><b style="font-weight:500!important;">Please Type "Y" if you want to settle the claim, to reject type "N" in the last column. Leave blank if wish to keep it unsettled.</b></span></li>
+            <li>Don't change the excel file name.</li>
+            <li>Click on the link in the 'Attachment' column to view the bill provided by the employee.</li>
+            <li>After your changes, please upload this sheet, using 'Uplaod Excel' button on your dasboard.</li>
           </ul>
         </div>
         <div style="padding-left: 250px;">
