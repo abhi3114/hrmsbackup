@@ -84,6 +84,7 @@ export class ReimbursementComponent implements OnInit {
   petrolshow:boolean=false;
   fromtoshow:boolean=false;
   clientnameshow:boolean=false;
+  formlyLoading: boolean=false;
 
   constructor(private modalService: BsModalService,private remService:Reimbursementservice,public toastr: NotificationService,private monthandyear:MonthYearService)
   {
@@ -157,7 +158,7 @@ export class ReimbursementComponent implements OnInit {
   }
 
   configureFields(selectedCategory){
-    this.loading=true;
+    this.formlyLoading = true;
     this.form_fields = [
       {
         fieldGroup: [],
@@ -166,7 +167,7 @@ export class ReimbursementComponent implements OnInit {
     var optionArr = [];
     var hashObject = {}
     this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
-      this.loading=true;
+     
       this.api_data=res;
       this.api_data.forEach(data => {
         if (data.title != 'client_name'){
@@ -191,7 +192,7 @@ export class ReimbursementComponent implements OnInit {
           }
           this.form_fields[0].fieldGroup.push(commonHash)
           this.form_fields;
-          this.loading=false;
+         
         }
       });
     },(err) => {
@@ -208,9 +209,8 @@ export class ReimbursementComponent implements OnInit {
   }
 
   showError() {
-    console.log('my fields',this.fields)
+   
     if(this.fields.length > 0 && this.fields[0].formControl.valid != undefined){
-      console.log('Valid--->',this.fields[0].formControl.valid,this.mySelectedFiles[0] != undefined)
      return !(this.fields[0].formControl.valid && this.mySelectedFiles[0] != undefined )
     }
      
@@ -219,9 +219,9 @@ export class ReimbursementComponent implements OnInit {
   enableFormAccordingToCategory($event)
   {
    
+    this.fields = [];
     this.showForm =true;
     this.options.resetModel();
-    this.loading = true;
     this.precaution=false;
     this.category = $event.target.value;
     this.mySelectedFiles = [];
@@ -322,13 +322,14 @@ export class ReimbursementComponent implements OnInit {
         }
       ]
     }
-    this.configureFields(this.category);
+     this.configureFields(this.category);
+   
      setTimeout(()=>{
       this.fields = [...this.form_fields, ...common_fields];
       this.showError();
-     }, 1000);
      
-    this.loading=false;
+     }, 1000);
+    
    }
 
   getApprovedData()

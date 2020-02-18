@@ -87,6 +87,7 @@
 </div>
 <ngx-loading [show]="loading"></ngx-loading>
 <ng-template #responseTemplate>
+  
   <div class="modal-header ticket-popup-header">
     <h4 class=" modal-title pull-left">New Reimbursement Claim</h4>
     <button type="button" style="color: white;" class="close pull-right" aria-label="Close" (click)="closeModal()">
@@ -138,10 +139,9 @@
           </div>
         </div>
        </formly-form>
-      
-    </form>
+      </form>
   </div>
-  <ngx-loading [show]="nowloading"></ngx-loading>
+  <ngx-loading [show]="formlyLoading==true"></ngx-loading>
 </ng-template>
 <ng-template #viewrembursementsingledatamodal>
   <div class="modal-content" >
