@@ -176,6 +176,11 @@ export class UnapprovedReimbursementComponent implements OnInit
        });
   }
 
+  closeunapprovedrembursementdata()
+  {
+    this.modalRefchild.hide();
+  }
+
   approveSinglereimbursement(r)
   {
     if(confirm("Are you sure to Approve this reimbursement "))

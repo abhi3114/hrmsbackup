@@ -36,7 +36,7 @@
           <tbody>
             <tr *ngFor="let r of rembursement_api_data">
               <td>{{r.user_name}}</td>
-              <td><a (click)="userrembursementList(rejectedrembursementlist,r)">{{r.reimbursements_count}}</a></td>
+              <td><a style="cursor: pointer;" (click)="userrembursementList(rejectedrembursementlist,r)">{{r.reimbursements_count}}</a></td>
             </tr>
           </tbody>
           </table>
@@ -96,8 +96,9 @@
     <form [formGroup]="rejectmodalform">
       <div class="modal-header ticket-popup-header">
         <h4 class="modal-title pull-left">Reimbursement Claim</h4>
+        <a><span class="fa fa-times pull-right" style="color: white;cursor:pointer;" (click)="closerejectedrembursementdata()"></span></a>
       </div>
-      <div class="modal-body">
+      <div class="modal-header" style="background-color:#f5f6fb;padding-bottom: 0px;">
         <div class="form-row">
           <div class="form-group col-md-4">
             <label>Name</label><br>
@@ -126,12 +127,14 @@
             <span>{{single_user_data.category_name}}</span>
           </div>
         </div>
+      </div>
+      <div class="modal-body" style="margin-top:-10px;">
         <div class="form-row">
           <div class="form-group col-md-4" *ngIf="ola_uber_show">
             <label>Expense For</label><br>
             <span>{{single_user_data.data.expense_for}}</span>
           </div>
-            <div class="form-group col-md-4" *ngIf="clientnameshow">
+          <div class="form-group col-md-4" *ngIf="clientnameshow">
             <label>Client Name</label><br>
             <span>{{single_user_data.data.client_name}}</span>
           </div>
