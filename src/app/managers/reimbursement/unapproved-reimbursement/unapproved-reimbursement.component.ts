@@ -17,8 +17,8 @@ export class UnapprovedReimbursementComponent implements OnInit
 {
 
   rembursement_api_data:any=[];
-  user_unapproved_reimbursement_data:any[];
-  single_user_data:any[];
+  user_unapproved_reimbursement_data:any=[];
+  single_user_data:any=[];
   unapprovedreimbursementform:FormGroup;
   approverejectreimbursementform:FormGroup;
   monoUnapprovedReimbursementform:FormGroup;
@@ -41,6 +41,11 @@ export class UnapprovedReimbursementComponent implements OnInit
  approveloading:boolean=false;
  //singleuserloading is for single user record table
   singleuserloading:boolean=false;
+  ola_uber_show:boolean=false;
+  hotelshow:boolean=false;
+  petrolshow:boolean=false;
+  fromtoshow:boolean=false;
+  clientnameshow:boolean=false;
 
   constructor(private api:unApprovedReimbursementService,public toastr: NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService)
   {
@@ -229,6 +234,43 @@ export class UnapprovedReimbursementComponent implements OnInit
     }
     var spiltmonthandyear=(r.display_month_year).split('-');
     this.splitmonthyear=spiltmonthandyear;
+    if(this.single_user_data.category_name==="Ola/Uber")
+    {
+      this.ola_uber_show=true;
+      if(this.single_user_data.data.expense_for==="client")
+      {
+        this.clientnameshow=true;
+      }
+    }
+    else
+    {
+      this.ola_uber_show=false;
+      this.clientnameshow=false;
+    }
+    if(this.single_user_data.category_name==="Hotel Stay")
+    {
+      this.hotelshow=true;
+    }
+    else
+    {
+      this.hotelshow=false;
+    }
+    if(this.single_user_data.category_name==="Petrol/CNG")
+    {
+      this.petrolshow=true;
+    }
+    else
+    {
+      this.petrolshow=false;
+    }
+    if(this.single_user_data.category_name==="Hotel Stay" || this.single_user_data.category_name==="Electricity" || this.single_user_data.category_name==="Mobile Bill")
+    {
+      this.fromtoshow=true;
+    }
+    else
+    {
+      this.fromtoshow=false;
+    }
   }
 
   refreshReimbursementData()

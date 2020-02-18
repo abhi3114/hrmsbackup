@@ -29,8 +29,8 @@ export class UnsettledComponent implements OnInit {
   unsettledOptions: DataTables.Settings = {};
   unsettledTableTrigger: Subject<any> = new Subject();
   unsettle_api_data:any=[];
-  single_user_unsettled_data:any[];
-  single_user_single_unsettled_data:any[];
+  single_user_unsettled_data:any=[];
+  single_user_single_unsettled_data:any=[];
   splitmonthyear:any=[];
   csv_error:any=[];
   postdata:any=[];
@@ -48,6 +48,11 @@ export class UnsettledComponent implements OnInit {
   loading:boolean=false;
   //singleuserloading is for single user record table
   singleuserloading:boolean=false;
+  ola_uber_show:boolean=false;
+  hotelshow:boolean=false;
+  petrolshow:boolean=false;
+  fromtoshow:boolean=false;
+  clientnameshow:boolean=false;
 
   csvData:any= [
   ["NAME","SURNAME","EMAIL"],
@@ -145,6 +150,43 @@ export class UnsettledComponent implements OnInit {
     }
     var spiltmonthandyear=(s.display_month_year).split('-');
     this.splitmonthyear=spiltmonthandyear;
+    if(this.single_user_single_unsettled_data.category_name==="Ola/Uber")
+    {
+      this.ola_uber_show=true;
+      if(this.single_user_single_unsettled_data.data.expense_for==="client")
+      {
+        this.clientnameshow=true;
+      }
+    }
+    else
+    {
+      this.ola_uber_show=false;
+      this.clientnameshow=false;
+    }
+    if(this.single_user_single_unsettled_data.category_name==="Hotel Stay")
+    {
+      this.hotelshow=true;
+    }
+    else
+    {
+      this.hotelshow=false;
+    }
+    if(this.single_user_single_unsettled_data.category_name==="Petrol/CNG")
+    {
+      this.petrolshow=true;
+    }
+    else
+    {
+      this.petrolshow=false;
+    }
+    if(this.single_user_single_unsettled_data.category_name==="Hotel Stay" || this.single_user_single_unsettled_data.category_name==="Electricity" || this.single_user_single_unsettled_data.category_name==="Mobile Bill")
+    {
+      this.fromtoshow=true;
+    }
+    else
+    {
+      this.fromtoshow=false;
+    }
   }
 
   closesingleusersingledatamodal()
@@ -249,14 +291,17 @@ export class UnsettledComponent implements OnInit {
       this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
       this.filterdataform.controls.filtermonth.value
       this.api.getAllUserExportAllList(this.month,this.year).subscribe((res:any) => {
-      this.exportsheet=res.reimbursements;
-      // this.exportsheet.forEach((data)=>{
+      //this.exportsheet=res.reimbursements;
+      //this.exportsheet.forEach((data)=>{
       //   if(data.comment==null)
       //   {
       //     data.comment = 'N/A'
       //   }
       // })
-      //console.log(this.exportsheet)
+      for(let i=0;i<res.reimbursements.length;i++)
+      {
+        this.exportsheet.push([res.reimbursements[i].id,res.reimbursements[i].user_name,res.reimbursements[i].display_month_year,res.reimbursements[i].category_name,res.reimbursements[i].display_date,res.reimbursements[i].employee_number,res.reimbursements[i].department_name,res.reimbursements[i].manager_name,res.reimbursements[i].purpose,res.reimbursements[i].review_reason,res.reimbursements[i].amount,res.reimbursements[i].receipt_path]);
+      }
       this.isLoading=true;
       var options = {showLabels:true,showTitle: false,title: 'Your title',headers: ["ID", "USERNAME", "MONTH/YEAR","CATEGORY NAME","DATE","EMPLOYEE CODE","DEPARTMENT NAME","MANAGER NAME","PURPOSE","REVIEW REASON","AMOUNT","RECIEPT","Settled"]};
       new Angular5Csv(this.exportsheet, 'ExportAll-month-'+this.month+'-year-'+this.year,options);

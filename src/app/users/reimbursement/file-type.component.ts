@@ -5,7 +5,7 @@ import { FieldType } from '@ngx-formly/core';
   selector: 'formly-field-file',
   template: `
    <input type="file" [formlyAttributes]="field">
-   <span style='color:red;'>*</span>
+   <sup style="color:red;">*</sup>
   `
 })
 export class FormlyFieldFile extends FieldType {}
