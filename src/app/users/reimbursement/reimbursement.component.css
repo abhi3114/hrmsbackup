@@ -55,3 +55,17 @@ formly-field-input ::placeholder{
 .test-grid{
     clear: both;
 }
+
+.attatch-text{
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0;
+  color: #272727;
+}
+
+.extension-text{
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0;
+  color: #272727;
+}

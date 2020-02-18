@@ -1,4 +1,4 @@
-import { Component, OnInit,TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit,TemplateRef, ViewChild,ElementRef } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -18,6 +18,7 @@ import * as moment from 'moment';
 
 export class ReimbursementComponent implements OnInit {
   @ViewChild('formDirective') ngForm;
+  @ViewChild('myForm') myForm: ElementRef;
   showForm:boolean =false;
   form = new FormGroup({});
   today = new Date();
@@ -59,6 +60,18 @@ export class ReimbursementComponent implements OnInit {
   //isLoading is use for claim submit button
   isLoading:boolean=false;
   currentmonth:any;
+  nowloading:boolean =false;
+  placeHolder = {
+     "Mobile":
+     {
+      "From":"Start Of Cycle",
+      "To":"End Of Cycle"
+     },
+     "Hotel":{
+       "From":"Check-In Date",
+       "To":"Check-Out Date"
+     }
+  }
   config = {
     animated: true,
     keyboard: false,
@@ -108,11 +121,13 @@ export class ReimbursementComponent implements OnInit {
 
   recordResponse(template: TemplateRef<any>,canReopen :any)
   {
-
     this.modalRef = this.modalService.show(template, this.config);
   }
 
-
+  getPlaceHolders(type,placeholder):String{
+      console.log('this.placeHolder-->',this.placeHolder[type][placeholder])
+     return this.placeHolder[type][placeholder]
+  }
   submit(model) {
     if ($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
       model['client_name'] = $('.client_name').val()
@@ -155,7 +170,7 @@ export class ReimbursementComponent implements OnInit {
       this.api_data=res;
       this.api_data.forEach(data => {
         if (data.title != 'client_name'){
-          var type = (data.data_type == 'date') ? 'date' : ((data.title == 'expense_for') ? 'custom-select' : (data.data_type == 'integer' ? 'input' : data.data_type))
+          var type = data.data_type == 'date' ? 'date' : data.title == 'expense_for' ? 'custom-select' : data.data_type == 'integer' ? 'input' : data.data_type;
           if (data.options != undefined){
             data.options.forEach(option => {
               optionArr.push(
@@ -169,7 +184,7 @@ export class ReimbursementComponent implements OnInit {
             className: 'col-md-4',
             templateOptions: {
               label: data.label,
-              placeholder: data.label,
+              placeholder: ((this.category == '3' || this.category == '6') && (type == 'date')) ? this.getPlaceHolders('Mobile',data.label) : (this.category == '4' && (type == 'date')) ? this.getPlaceHolders('Hotel',data.label) : data.label,
               required: data.required,
               options: optionArr
             }
@@ -193,7 +208,9 @@ export class ReimbursementComponent implements OnInit {
   }
 
   showError() {
-    if(this.fields.length > 0 && this.fields[0].formControl != undefined){
+    console.log('my fields',this.fields)
+    if(this.fields.length > 0 && this.fields[0].formControl.valid != undefined){
+      console.log('Valid--->',this.fields[0].formControl.valid,this.mySelectedFiles[0] != undefined)
      return !(this.fields[0].formControl.valid && this.mySelectedFiles[0] != undefined )
     }
      
@@ -201,11 +218,13 @@ export class ReimbursementComponent implements OnInit {
 
   enableFormAccordingToCategory($event)
   {
+   
     this.showForm =true;
     this.options.resetModel();
     this.loading = true;
     this.precaution=false;
     this.category = $event.target.value;
+    this.mySelectedFiles = [];
     let common_fields = []
     var amountCustomClass = this.category == 4 ? 'custom-amount' : ''
     if (this.category == 7){
@@ -222,7 +241,7 @@ export class ReimbursementComponent implements OnInit {
               className: 'col-md-4',
               templateOptions: {
                 label: 'Amount',
-                placeholder: 'Enter Amount',
+                placeholder: 'Bill Amount',
                 required: true,
               }
             },
@@ -232,7 +251,7 @@ export class ReimbursementComponent implements OnInit {
               className: 'col-md-4',
               templateOptions: {
                 label: 'Date',
-                placeholder: 'Enter Date',
+                placeholder: 'Date of Travel',
                 required: true,
               }
             },
@@ -242,7 +261,7 @@ export class ReimbursementComponent implements OnInit {
               className: 'clearfix col-md-12',
               templateOptions: {
                 label: 'Purpose',
-                placeholder: '',
+                placeholder: 'Give Details',
                 rows:'3',
                 required: true,
               }
@@ -253,7 +272,6 @@ export class ReimbursementComponent implements OnInit {
               className: 'col-md-12',
               templateOptions: {
                 label: 'Attach Bill',
-                required: true,
                 change: (field, $event) => this.handleFileInput($event.target.files)
               }
             }
@@ -276,7 +294,7 @@ export class ReimbursementComponent implements OnInit {
               className: 'col-md-4'+' '+amountCustomClass,
               templateOptions: {
                 label: 'Amount',
-                placeholder: 'Enter Amount',
+                placeholder: 'Bill Amount',
                 required: true,
               }
             },
@@ -286,7 +304,7 @@ export class ReimbursementComponent implements OnInit {
               className: 'clearfix col-md-12',
               templateOptions: {
                 label: 'Purpose',
-                placeholder: '',
+                placeholder: 'Give Details',
                 rows:'3',
                 required: true,
               }
@@ -298,7 +316,6 @@ export class ReimbursementComponent implements OnInit {
               templateOptions: {
                 label: 'Attach Bill',
                 change: (field, $event) => this.handleFileInput($event.target.files)
-                
               }
             }
           ]
@@ -312,8 +329,7 @@ export class ReimbursementComponent implements OnInit {
      }, 1000);
      
     this.loading=false;
-   
-  }
+   }
 
   getApprovedData()
    {
