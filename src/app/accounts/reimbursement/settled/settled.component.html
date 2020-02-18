@@ -36,7 +36,7 @@
           <tbody>
             <tr *ngFor="let s of settle_api_data">
               <td>{{s.user_name}}</td>
-              <td><a (click)="usersettledlist(userssettledlistModal,s)">{{s.reimbursements_count}}</a></td>
+              <td><a style="cursor: pointer;" (click)="usersettledlist(userssettledlistModal,s)">{{s.reimbursements_count}}</a></td>
             </tr>
           </tbody>
           </table>
@@ -94,10 +94,10 @@
   <div class="modal-content" >
     <form>
       <div class="modal-header ticket-popup-header">
-        <h4 class="modal-title pull-left">Reimbursement Claim</h4>
+        <h4 class="modal-title pull-left">Claim Details</h4>
         <a><span class="fa fa-times pull-right" style="color: white;cursor:pointer;" (click)="closesingleusersingledatamodal()"></span></a>
       </div>
-      <div class="modal-body">
+      <div class="modal-header" style="background-color:#f5f6fb;padding-bottom: 0px;">
         <div class="form-row">
           <div class="form-group col-md-4">
             <label>Name</label><br>
@@ -113,12 +113,10 @@
           </div>
         </div>
         <div class="form-row">
-        <div class="form-group col-md-4">
+          <div class="form-group col-md-4">
             <label>Manager Name</label><br>
             <span>{{single_user_single_settled_data.manager_name}}</span>
           </div>
-        </div>
-        <div class="form-row">
           <div class="form-group col-md-4">
             <label>Month</label><br>
             <span>{{splitmonthyear[0]}}</span>
@@ -127,17 +125,21 @@
             <label>Year</label><br>
             <span>{{splitmonthyear[1]}}</span>
           </div>
+        </div>
+      </div>
+      <div class="modal-body" style="margin-top:-10px;">
+        <div class="form-row">
           <div class="form-group col-md-4">
             <label>Category</label><br>
             <span>{{single_user_single_settled_data.category_name}}</span>
-            </div>
+          </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-4" *ngIf="ola_uber_show">
             <label>Expense For</label><br>
             <span>{{single_user_single_settled_data.data.expense_for}}</span>
           </div>
-            <div class="form-group col-md-4" *ngIf="clientnameshow">
+          <div class="form-group col-md-4" *ngIf="clientnameshow">
             <label>Client Name</label><br>
             <span>{{single_user_single_settled_data.data.client_name}}</span>
           </div>
@@ -176,16 +178,6 @@
             <span>{{single_user_single_settled_data.amount}}</span>
           </div>
         </div>
-        <!-- <div class="form-row">
-            <div class="form-group col-md-4">
-            <label>Date</label><br>
-            <span>{{single_user_single_settled_data.display_date}}</span>
-          </div>
-          <div class="form-group col-md-4">
-            <label>Amount</label><br>
-            <span>{{single_user_single_settled_data.amount}}</span>
-          </div>
-        </div> -->
         <div class="form-row">
           <div class="form-group col-md-12">
             <label>Purpose</label><br>
