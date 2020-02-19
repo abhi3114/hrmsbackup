@@ -126,7 +126,7 @@ export class ReimbursementComponent implements OnInit {
   }
 
   getPlaceHolders(type,placeholder):String{
-      console.log('this.placeHolder-->',this.placeHolder[type][placeholder])
+      
      return this.placeHolder[type][placeholder]
   }
   submit(model) {
@@ -326,8 +326,6 @@ export class ReimbursementComponent implements OnInit {
      setTimeout(()=>{
       this.fields = [...this.form_fields, ...common_fields];
       this.formlyLoading = false;
-      this.showError();
-     
      }, 1000);
     
    }

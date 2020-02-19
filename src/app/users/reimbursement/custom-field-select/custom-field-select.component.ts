@@ -15,7 +15,7 @@ import { FieldType } from '@ngx-formly/core';
       <formly-validation-message *ngIf="showError" [field]="field"></formly-validation-message>
     </div>
       <label *ngIf="canShowField">Client Name<sup style="color:red;">*</sup></label>
-     <input *ngIf="canShowField" type="text" class="client_name form-control" formControlName="client_name">
+     <input *ngIf="canShowField" type="text" class="client_name form-control">
    `,
 })
 export class CustomFieldSelectComponent extends FieldType {
