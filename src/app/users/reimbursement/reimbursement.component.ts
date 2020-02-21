@@ -226,7 +226,7 @@ export class ReimbursementComponent implements OnInit {
         validFlag0 = validFlag0 && data.formControl.valid;
         }
       });
-      this.fields[0].fieldGroup.map((data,index)=>{
+      this.fields[1].fieldGroup.map((data,index)=>{
         if(index == 0){
         validFlag1 = data.formControl.valid;
         }
@@ -242,11 +242,9 @@ export class ReimbursementComponent implements OnInit {
   enableFormAccordingToCategory($event)
   {
    this.form_fields = [];
-    // this.fields = [];
-    if(this.fields.length > 0){
-    this.fields[0].formControl.reset()
-    // delete this.fields[0].form.controls['vehicle_type']
-    }
+   if(this.fields.length > 0){
+     this.fields[0].formControl.reset()
+   }
     
     setTimeout(()=>{this.showForm=false;this.showForm=true},2000)
     this.model = {};
