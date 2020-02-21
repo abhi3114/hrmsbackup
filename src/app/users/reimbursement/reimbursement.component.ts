@@ -19,7 +19,7 @@ import * as moment from 'moment';
 export class ReimbursementComponent implements OnInit {
   @ViewChild('formDirective') ngForm;
   @ViewChild('myForm') myForm: ElementRef;
-  showForm:boolean =false;
+  showForm:boolean =true;
   form = new FormGroup({});
   today = new Date();
   model = {};
@@ -138,6 +138,7 @@ export class ReimbursementComponent implements OnInit {
         delete model[key]
       }
     });
+    
     model["category_id"] = this.category
     model["name_file_attached"] =  this.mySelectedFiles[0] ? this.mySelectedFiles[0].name : null,
     model["attachment_base64"] =  this.base64
@@ -146,12 +147,17 @@ export class ReimbursementComponent implements OnInit {
       this.isLoading=false;
       this.modalRef.hide();
       this.toastr.showSuccess('Response Recorded');
-      this.options.resetModel();
-      this.modalRef.hide();
+      //this.options.resetModel();
+      this.fields[0].formControl.markAsPristine()
+      this.precaution=true;
+      this.closeModal()
       this.getData();
       }, (err) => {
       this.isLoading=false;
       this.options.resetModel();
+      this.fields=[];
+      this.fields[0].formControl.markAsPristine()
+      this.precaution=true;
       this.toastr.showError(err.error);
       this.modalRef.hide();
     });
@@ -167,13 +173,13 @@ export class ReimbursementComponent implements OnInit {
     var optionArr = [];
     var hashObject = {}
     this.remService.getAllFormAttribute(selectedCategory).subscribe(res => {
-     
       this.api_data=res;
-      this.api_data.forEach(data => {
+      this.api_data.forEach((data:any) => {
+       
         if (data.title != 'client_name'){
-          var type = data.data_type == 'date' ? 'date' : data.title == 'expense_for' ? 'custom-select' : data.data_type == 'integer' ? 'input' : data.data_type;
+         var type = data.data_type == 'date' ? 'date' : data.title == 'expense_for' ? 'custom-select' : data.data_type == 'integer' ? 'input' : data.data_type;
           if (data.options != undefined){
-            data.options.forEach(option => {
+            data.options.forEach((option:string) => {
               optionArr.push(
                 {label: option, value: option}
               )
@@ -190,9 +196,9 @@ export class ReimbursementComponent implements OnInit {
               options: optionArr
             }
           }
-          this.form_fields[0].fieldGroup.push(commonHash)
-          this.form_fields;
+          this.form_fields[0].fieldGroup.push(commonHash);
          
+          this.form_fields;
         }
       });
     },(err) => {
@@ -204,24 +210,48 @@ export class ReimbursementComponent implements OnInit {
   {
     this.fields=[];
     this.precaution = true;
-    this.showForm = false;
-    this.modalRef.hide();
+   this.modalRef.hide();
   }
 
-  showError() {
-   
+  showError(){
+    let validFlag0:boolean=false;
+    let validFlag1:boolean=false;
     if(this.fields.length > 0 && this.fields[0].formControl.valid != undefined){
-     return !(this.fields[0].formControl.valid && this.mySelectedFiles[0] != undefined )
-    }
+      this.fields[0].fieldGroup.map((data,index)=>{
+        if(index == 0){
+        validFlag0 = data.formControl.valid;
+        }
+        else{
+        validFlag0 = validFlag0 && data.formControl.valid;
+        }
+      });
+      this.fields[0].fieldGroup.map((data,index)=>{
+        if(index == 0){
+        validFlag1 = data.formControl.valid;
+        }
+        else{
+        validFlag1 = validFlag1 && data.formControl.valid;
+        }
+      });
      
+     return !(validFlag0 && validFlag1 && this.mySelectedFiles[0] != undefined )
+    }
   }
 
   enableFormAccordingToCategory($event)
   {
-   
-    this.fields = [];
-    this.showForm =true;
+   this.form_fields = [];
+    // this.fields = [];
+    if(this.fields.length > 0){
+    this.fields[0].formControl.reset()
+    // delete this.fields[0].form.controls['vehicle_type']
+    }
+    
+    setTimeout(()=>{this.showForm=false;this.showForm=true},2000)
+    this.model = {};
     this.options.resetModel();
+    this.options.updateInitialValue();
+    
     this.precaution=false;
     this.category = $event.target.value;
     this.mySelectedFiles = [];
@@ -324,9 +354,15 @@ export class ReimbursementComponent implements OnInit {
     }
      this.configureFields(this.category);
      setTimeout(()=>{
+     
       this.fields = [...this.form_fields, ...common_fields];
+     
+     
+    
       this.formlyLoading = false;
      }, 1000);
+     
+     
     
    }
 
@@ -345,7 +381,7 @@ export class ReimbursementComponent implements OnInit {
     this.remService.getApproved(month,year).subscribe((res:any) => {
     this.rembursement_api_data=res.reimbursements;
     this.loading=false;
-    console.log(this.rembursement_api_data)
+   
     this.reimbursementTableTrigger.next();
     }, (err) => {
     this.toastr.showError(err.error);
@@ -389,7 +425,7 @@ export class ReimbursementComponent implements OnInit {
     this.remService.getRejected(month,year).subscribe((res:any) => {
     this.rembursement_api_data=res.reimbursements;
     this.loading=false;
-    console.log(this.rembursement_api_data)
+    
     this.reimbursementTableTrigger.next();
     }, (err) => {
     this.loading=false;
@@ -408,7 +444,7 @@ export class ReimbursementComponent implements OnInit {
   }
 
   triggerOnChange(){
-    console.log('hello')
+    
   }
 
   handleFileInput(file) {
@@ -420,7 +456,7 @@ export class ReimbursementComponent implements OnInit {
         this.errorInvalidFile = false;
         this.errorLargeFile = false;
         this.responseData.file = this.mySelectedFiles[0];
-        console.log('File', this.responseData.file)
+       
         this.readThis(this.mySelectedFiles[0]);
       }
       else if (size > 5.00) {
@@ -527,7 +563,7 @@ export class ReimbursementComponent implements OnInit {
   editrembursementsingledata(template: TemplateRef<any>,l)
   {
       this.editmodalRef=this.modalService.show(template);
-      console.log(l)
+     
   }
 
 
