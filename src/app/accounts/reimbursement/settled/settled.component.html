@@ -76,7 +76,7 @@
                 <td>{{ur.category_name}}</td>
                 <td>{{ur.display_date}}</td>
                 <td>{{ur.purpose}}</td>
-                <td>{{ur.review_reason}}</td>
+                <td><span [innerHTML]="ur.review_reason | safeHtml"></span></td>
                 <td>{{ur.amount}}</td>
                 <td>
                   <img src="assets/images/eye.png" style="height:12px !important;width:20px !important;cursor: pointer;" (click)="singleusersinglesettleddata(singleusersinglesettleddatamodal,ur)">
@@ -187,7 +187,7 @@
         <div class="form-row">
           <div class="form-group col-md-12">
             <label>Manager Comment</label><br>
-            <span>{{single_user_single_settled_data.review_reason}}</span>
+            <span [innerHTML]="single_user_single_settled_data.review_reason | safeHtml"></span>
           </div>
         </div>
         <div class="form-row">

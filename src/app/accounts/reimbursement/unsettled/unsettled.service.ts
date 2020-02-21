@@ -33,12 +33,12 @@ importCsvData(month, year, params)
   "Content-Type": 'application/json'})})
 }
 
-  getAllUserExportAllList(month,year)
+getAllUserExportAllList(month,year)
+{
+  return this.http.get(`${environment.baseUrl}/accounts/reimbursements/${month}/${year}/export`,
   {
-    return this.http.get(`${environment.baseUrl}/accounts/reimbursements/${month}/${year}/export`,
-    {
-    headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
-    "Content-Type": 'application/json'})})
-  }
+   headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
+  "Content-Type": 'application/json'})})
+}
 
 }

@@ -68,7 +68,7 @@
                 <td>{{l.display_date}}</td>
                 <td>{{l.category_name}}</td>
                 <td>{{l.purpose}}</td>
-                <td>{{l.review_reason}}</td>
+                <td><span [innerHTML]="l.review_reason | safeHtml"></span></td>
                 <td>{{l.amount}}</td>
                 <td>
                   <img src="assets/images/eye.png" (click)="viewreimbursementsingledata(viewrembursementsingledatamodal,l)" style="height:12px !important;width:20px !important;cursor: pointer;">&nbsp;
@@ -134,7 +134,7 @@
           <div class='align-btn'>
               <!-- [disabled]="showError()" -->
             <button type="submit" class="btn btn-default btn-orange" [disabled]="false" [ladda]="isLoading">Submit</button>
-            <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeModal()">Cancel</button>
+            <button type="button" class="btn  btn-cancel" aria-label="Close" (click)="closeModal()"style="padding: 5px;min-width: 92px;font-weight: 400;border-radius: 2px;font-family: inherit;">Cancel</button>
           </div>
         </div>
        </formly-form>
@@ -218,7 +218,7 @@
         <div class="form-row">
           <div class="form-group col-md-12">
             <label>Manager Comment</label><br>
-            <span>{{single_user_data.review_reason}}</span>
+            <span [innerHTML]="single_user_data.review_reason | safeHtml"></span>
           </div>
         </div>
         <div class="form-row">

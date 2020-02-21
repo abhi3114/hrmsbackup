@@ -128,6 +128,7 @@ export class UnsettledComponent implements OnInit {
     this.singleuserloading=true;
     this.api.getSinghleUserUnsettledData(this.year,this.month,this.user_id).subscribe((res:any) => {
     this.single_user_unsettled_data=res.reimbursements;
+    console.log(this.single_user_unsettled_data)
     this.singleuserloading=false;
     }, (err) => {
     this.toastr.showError(err.error);
@@ -291,17 +292,17 @@ export class UnsettledComponent implements OnInit {
       this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
       this.filterdataform.controls.filtermonth.value
       this.api.getAllUserExportAllList(this.month,this.year).subscribe((res:any) => {
-      //this.exportsheet=res.reimbursements;
-      //this.exportsheet.forEach((data)=>{
-      //   if(data.comment==null)
-      //   {
-      //     data.comment = 'N/A'
-      //   }
-      // })
-      for(let i=0;i<res.reimbursements.length;i++)
-      {
-        this.exportsheet.push([res.reimbursements[i].id,res.reimbursements[i].user_name,res.reimbursements[i].display_month_year,res.reimbursements[i].category_name,res.reimbursements[i].display_date,res.reimbursements[i].employee_number,res.reimbursements[i].department_name,res.reimbursements[i].manager_name,res.reimbursements[i].purpose,res.reimbursements[i].review_reason,res.reimbursements[i].amount,res.reimbursements[i].receipt_path]);
-      }
+      this.exportsheet=res.reimbursements;
+      this.exportsheet.map((data)=>{
+        if(data.review_reason!=null)
+        {
+          data.review_reason=data.review_reason.split('</br>').join('');
+        }
+      })
+      // for(let i=0;i<res.reimbursements.length;i++)
+      // {
+      //   this.exportsheet.push([res.reimbursements[i].id,res.reimbursements[i].user_name,res.reimbursements[i].display_month_year,res.reimbursements[i].category_name,res.reimbursements[i].display_date,res.reimbursements[i].employee_number,res.reimbursements[i].department_name,res.reimbursements[i].manager_name,res.reimbursements[i].purpose,res.reimbursements[i].review_reason,res.reimbursements[i].amount,res.reimbursements[i].receipt_path]);
+      // }
       this.isLoading=true;
       var options = {showLabels:true,showTitle: false,title: 'Your title',headers: ["ID", "USERNAME", "MONTH/YEAR","CATEGORY NAME","DATE","EMPLOYEE CODE","DEPARTMENT NAME","MANAGER NAME","PURPOSE","REVIEW REASON","AMOUNT","RECIEPT","Settled"]};
       new Angular5Csv(this.exportsheet, 'ExportAll-month-'+this.month+'-year-'+this.year,options);
