@@ -69,3 +69,11 @@ formly-field-input ::placeholder{
   letter-spacing: 0;
   color: #272727;
 }
+.cancel-button
+{
+    padding: 5px;
+    min-width: 92px;
+    font-weight: 400;
+    border-radius: 2px;
+    font-family: inherit;
+}
