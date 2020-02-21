@@ -223,7 +223,14 @@ export class ReimbursementComponent implements OnInit {
     label.removeClass('invalid-feedback');
     let validFlag0:boolean=false;
     let validFlag1:boolean=false;
+    let validFlag2:boolean=false;
+    let stringOnlyRegex = new RegExp('^[a-zA-Z ]*$');
     if(this.fields.length > 0 && this.fields[0].formControl.valid != undefined){
+     
+      if($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
+        validFlag2 = stringOnlyRegex.test($('.client_name').val().toString());
+        console.log('validFlag2',validFlag2,$('.client_name').val().toString(),this.category);
+      }
       this.fields[0].fieldGroup.map((data,index)=>{
         if(index == 0){
         validFlag0 = data.formControl.valid;
@@ -240,8 +247,12 @@ export class ReimbursementComponent implements OnInit {
         validFlag1 = validFlag1 && data.formControl.valid;
         }
       });
-     
-     return !(validFlag0 && validFlag1 && this.mySelectedFiles[0] != undefined )
+     if(this.category == 1 && $('.client_name').val() != undefined){
+      return !(validFlag0 && validFlag1 && validFlag2 && this.mySelectedFiles[0] != undefined )
+     }
+     else{
+     return !(validFlag0 && validFlag1  && this.mySelectedFiles[0] != undefined )
+     }
     }
   }
 
