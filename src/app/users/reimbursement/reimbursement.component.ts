@@ -215,6 +215,12 @@ export class ReimbursementComponent implements OnInit {
   }
 
   showError(){
+    var el = $('.has-error');
+    el.addClass('error');
+    el.removeClass('has-error');
+    var label = $('.invalid-feedback');
+    label.addClass('error');
+    label.removeClass('invalid-feedback');
     let validFlag0:boolean=false;
     let validFlag1:boolean=false;
     if(this.fields.length > 0 && this.fields[0].formControl.valid != undefined){
@@ -272,6 +278,7 @@ export class ReimbursementComponent implements OnInit {
                 label: 'Amount',
                 placeholder: 'Bill Amount',
                 required: true,
+    
               }
             },
             {
