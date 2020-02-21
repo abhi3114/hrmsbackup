@@ -99,6 +99,7 @@ export class ReimbursementComponent implements OnInit {
     });
 
     this.rembursementTableOptions = {
+      order: [[ 0, "desc" ]],
       pagingType: 'full_numbers',
       lengthMenu: [[10, 20, 50, -1],
       [10, 20, 50, "All"]]
@@ -402,6 +403,7 @@ export class ReimbursementComponent implements OnInit {
     this.reimbursementform.controls.month.value == "" ? month = this.reimbursement_filter.selectedmonth : month = this.reimbursementform.controls.month.value
     this.loading=true;
     this.remService.getUnapproved(month,year).subscribe((res:any) =>{
+    console.log(res.reimbursements);
     this.rembursement_api_data=res.reimbursements;
     this.loading=false;
     this.reimbursementTableTrigger.next();
