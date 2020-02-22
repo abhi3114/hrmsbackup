@@ -296,7 +296,7 @@ export class ReimbursementComponent implements OnInit {
             {
               key: 'date',
               type: 'date',
-              className: 'col-md-4',
+              className: 'col-md-4 custom-amount',
               templateOptions: {
                 label: 'Date',
                 placeholder: 'Date of Travel',
