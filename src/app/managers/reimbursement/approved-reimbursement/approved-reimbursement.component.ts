@@ -103,7 +103,7 @@ export class ApprovedReimbursementComponent implements OnInit {
     this.api.getUserRembursementData(this.year,this.month,this.user_id).subscribe((res:any) => {
     this.user_approved_reimbursement_data=res.reimbursements;
     this.singleuserloading=false;
-    //console.log(res.reimbursements);
+    console.log(res.reimbursements);
     }, (err) => {
     this.toastr.showError(err.error);
     this.singleuserloading=false;
