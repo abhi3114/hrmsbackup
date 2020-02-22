@@ -18,6 +18,7 @@
     font-weight: 400;
     border: none;
     box-shadow: none;
+    opacity: .5;
 }
 
 .btn-orange.active{

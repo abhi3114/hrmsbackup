@@ -306,7 +306,7 @@ export class ReimbursementComponent implements OnInit {
             {
               key: 'purpose',
               type: 'textarea',
-              className: 'clearfix col-md-12',
+              className: 'clearfix col-md-12 prp-space',
               templateOptions: {
                 label: 'Purpose',
                 placeholder: 'Give Details',
@@ -349,7 +349,7 @@ export class ReimbursementComponent implements OnInit {
             {
               key: 'purpose',
               type: 'textarea',
-              className: 'clearfix col-md-12',
+              className: 'clearfix col-md-12 ',
               templateOptions: {
                 label: 'Purpose',
                 placeholder: 'Give Details',
