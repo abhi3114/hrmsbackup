@@ -1678,6 +1678,12 @@ ul.treeview-menu img {
         width: 100%;
         margin: 5px 0;
     }
+    .remCustom-modal{
+        width:90% !important;
+    }
+    .remCustom-modal .modal-content{
+        width:90% !important;
+    }
 }
 
 @media (max-width: 440px) {
@@ -1732,4 +1738,46 @@ ul.treeview-menu img {
 .modal-width
 {
     width:750px !important;
+}
+
+
+.modal {
+    text-align: center;
+    padding: 0!important;
+}
+    
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+.remCustom-modal{
+    width:750px !important;
+}
+.remCustom-modal .modal-content{
+    width:750px !important;
+}
+formly-field-file{
+    position: relative;
+    display: table;
+    
+}
+formly-field-file input {
+    
+    margin-bottom: 20px;
+}
+formly-field-file sup{
+    position: absolute;
+
+    right: 29%;
+    top: 9px;
+
 }

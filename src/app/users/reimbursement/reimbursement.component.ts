@@ -76,6 +76,7 @@ export class ReimbursementComponent implements OnInit {
     animated: true,
     keyboard: false,
     backdrop: true,
+    class: "remCustom-modal",
     ignoreBackdropClick: true
   };
   splitmonthyear:any=[];
@@ -580,10 +581,8 @@ export class ReimbursementComponent implements OnInit {
 
   editrembursementsingledata(template: TemplateRef<any>,l)
   {
-      this.editmodalRef=this.modalService.show(template);
-     
+    this.editmodalRef=this.modalService.show(template); 
   }
-
 
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
