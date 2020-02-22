@@ -36,7 +36,13 @@ export class SettledComponent implements OnInit {
   petrolshow:boolean=false;
   fromtoshow:boolean=false;
   clientnameshow:boolean=false;
-
+  config = {
+    animated: true,
+    keyboard: false,
+    backdrop: true,
+    class: "remCustom-modal",
+    
+  };
   constructor(private monthandyear:MonthYearService,private api:SettledService,public toastr: NotificationService,private modalService: BsModalService) {
 
   	this.settledOptions= {
@@ -84,7 +90,7 @@ export class SettledComponent implements OnInit {
 
   usersettledlist(template: TemplateRef<any>,s)
   {
-    this.userssetttledmodalRef = this.modalService.show(template);
+    this.userssetttledmodalRef = this.modalService.show(template,this.config);
     var year;var month;
     this.filterdataform.controls.filteryear.value == "" ? year = this.settled_filter.selectedyear : year =
     this.filterdataform.controls.filteryear.value

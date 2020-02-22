@@ -33,6 +33,13 @@ export class UnapprovedReimbursementComponent implements OnInit
  modalRefchild: BsModalRef;
  splitmonthyear:any=[];
  attachedbill:boolean=false;
+ config = {
+  animated: true,
+  keyboard: false,
+  backdrop: true,
+  class: "remCustom-modal",
+  
+};
  //loading is for table
  loading:boolean=false;
  //rejectloading is for single reject user form and also in bulk reject users form
@@ -161,7 +168,7 @@ export class UnapprovedReimbursementComponent implements OnInit
   }
   userrembursementList(template: TemplateRef<any>, r)
   {
-      this.modalRef = this.modalService.show(template);
+      this.modalRef = this.modalService.show(template,this.config);
       this.user_id=r.user_id;
       this.unapprovedreimbursementform.controls.year.value == "" ? this.year = this.unapproved_filter.selectedyear : this.year =
       this.unapprovedreimbursementform.controls.year.value

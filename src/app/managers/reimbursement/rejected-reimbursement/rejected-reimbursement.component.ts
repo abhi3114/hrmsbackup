@@ -43,7 +43,13 @@ export class RejectedReimbursementComponent implements OnInit {
   petrolshow:boolean=false;
   fromtoshow:boolean=false;
   clientnameshow:boolean=false;
-
+  config = {
+    animated: true,
+    keyboard: false,
+    backdrop: true,
+    class: "remCustom-modal",
+    
+  };
   constructor(private api:rejectedReimbursementService,private toastr:NotificationService,private modalService: BsModalService,private monthandyear:MonthYearService)
   {
       this.rejectedreimbursementform = new FormGroup({
@@ -94,7 +100,7 @@ export class RejectedReimbursementComponent implements OnInit {
 
    userrembursementList(template: TemplateRef<any>, r)
     {
-     this.modalRef = this.modalService.show(template);
+     this.modalRef = this.modalService.show(template,this.config);
      this.user_id=r.user_id;
      this.rejectedreimbursementform.controls.year.value == "" ? this.year = this.rejected_filter.selectedyear : this.year =
      this.rejectedreimbursementform.controls.year.value

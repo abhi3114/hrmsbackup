@@ -53,7 +53,13 @@ export class UnsettledComponent implements OnInit {
   petrolshow:boolean=false;
   fromtoshow:boolean=false;
   clientnameshow:boolean=false;
-
+  config = {
+    animated: true,
+    keyboard: false,
+    backdrop: true,
+    class: "remCustom-modal",
+    
+  };
   csvData:any= [
   ["NAME","SURNAME","EMAIL"],
   ["Ahmed", "Tomi", "ah@smthing.co.com"],
@@ -125,7 +131,7 @@ export class UnsettledComponent implements OnInit {
   }
   userunsettledList(template: TemplateRef<any>,s)
   {
-    this.userssetttledmodalRef = this.modalService.show(template);
+    this.userssetttledmodalRef = this.modalService.show(template,this.config);
     this.filterdataform.controls.filteryear.value == "" ? this.year = this.unsettled_filter.selectedyear : this.year =
     this.filterdataform.controls.filteryear.value
     this.filterdataform.controls.filtermonth.value == "" ? this.month = this.unsettled_filter.selectedmonth : this.month =
