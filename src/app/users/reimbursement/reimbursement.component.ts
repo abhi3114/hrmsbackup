@@ -178,7 +178,7 @@ export class ReimbursementComponent implements OnInit {
       this.api_data.forEach((data:any) => {
        
         if (data.title != 'client_name'){
-         var type = data.data_type == 'date' ? 'date' : data.title == 'expense_for' ? 'custom-select' : data.data_type == 'integer' ? 'input' : data.data_type;
+         var type = data.data_type == 'date' ? 'date' : data.title == 'expense_for' ? 'custom-select' : data.title == 'km' ? 'Integer' : data.data_type == 'integer' ? 'input' : data.data_type;
           if (data.options != undefined){
             data.options.forEach((option:string) => {
               optionArr.push(
@@ -215,6 +215,9 @@ export class ReimbursementComponent implements OnInit {
   }
 
   showError(){
+    if(this.fields.length == 0){
+      return true;
+    }
     var el = $('.has-error');
     el.addClass('error');
     el.removeClass('has-error');
@@ -227,7 +230,8 @@ export class ReimbursementComponent implements OnInit {
     let stringOnlyRegex = new RegExp('^[a-zA-Z ]*$');
     if(this.fields.length > 0 && this.fields[0].formControl.valid != undefined){
      
-      if($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0){
+      if($('.client_name').val() != undefined && $('.client_name').val().toString().length > 0)
+      {
         validFlag2 = stringOnlyRegex.test($('.client_name').val().toString());
         console.log('validFlag2',validFlag2,$('.client_name').val().toString(),this.category);
       }

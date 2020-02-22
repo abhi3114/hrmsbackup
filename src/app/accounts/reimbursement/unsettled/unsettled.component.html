@@ -262,10 +262,10 @@
       <div class="row">
         <form [formGroup]="uploadcsvdataform">
           <div class="form-group col-md-12">
-            <input type="file" accept=".csv" formControlName="csvfile" id="files">
+            <input type="file" accept=".csv" formControlName="csvfile" id="files" (change)=checkIfFilePresent()>
           </div>
           <div class="form-group col-md-3" style="padding-left: 250px;">
-            <button (click)="importCsv()" [ladda]="isLoading" class=" btn btn-warning">Upload</button>
+            <button (click)="importCsv()" [disabled]="!isFilePresent" [ladda]="isLoading" class=" btn btn-warning">Upload</button>
           </div>
         </form>
       </div>
