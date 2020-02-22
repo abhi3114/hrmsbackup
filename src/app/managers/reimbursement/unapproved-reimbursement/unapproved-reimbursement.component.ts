@@ -121,6 +121,7 @@ export class UnapprovedReimbursementComponent implements OnInit
         else
         {
           this.toastr.CustomErrorMessage('Please check atleast one Reimbursement');
+          this.approveloading=false;
         }
     }
   }
@@ -154,6 +155,7 @@ export class UnapprovedReimbursementComponent implements OnInit
         else
         {
           this.toastr.CustomErrorMessage('Please check atleast one Reimbursement');
+          this.rejectloading= false;
         }
     }
   }
