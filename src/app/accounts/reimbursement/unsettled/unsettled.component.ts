@@ -68,6 +68,7 @@ export class UnsettledComponent implements OnInit {
   errormodalofcsv:BsModalRef;
   uploadcsvmodal:BsModalRef;
   exportcsvmodal:BsModalRef;
+  isFilePresent: boolean =false;
 
 
   constructor(private monthandyear:MonthYearService,private api:UnsettledService,public toastr: NotificationService,private modalService: BsModalService, private papa:Papa) {
@@ -87,7 +88,7 @@ export class UnsettledComponent implements OnInit {
       filtermonth: new FormControl('', [Validators.required]),
       filteryear: new FormControl('', [Validators.required]),
     });
-
+  
     this.uploadcsvdataform=new FormGroup({
          csvfile: new FormControl(''),
     });
@@ -96,6 +97,11 @@ export class UnsettledComponent implements OnInit {
   }
   ngOnInit()
   {}
+   
+  checkIfFilePresent(){
+    let file = (<HTMLInputElement>($('#files')[0])).files[0];
+    file!=undefined?this.isFilePresent=true:this.isFilePresent=false;
+  }
   getFilterData()
   {
     $('#unsettledDataTables').DataTable().destroy();
@@ -200,6 +206,7 @@ export class UnsettledComponent implements OnInit {
   }
    closeimportcsvmodal()
   {
+    this.isFilePresent=false;
     this.uploadcsvmodal.hide();
     this.uploadcsvdataform.reset();
   }
@@ -212,6 +219,7 @@ export class UnsettledComponent implements OnInit {
     }
     else
     {
+      this.isFilePresent=true;
       var can_import_sheet = true;
       this.isLoading=true;
       if(can_import_sheet)
@@ -247,12 +255,19 @@ export class UnsettledComponent implements OnInit {
     this.importedData = response;
     //console.log("success_messages",this.importedData.success_messages);
     //console.log("Error-Message",this.importedData.error_messages)
+    if(this.importedData.error_messages.length == 0){
+      this.toastr.showSuccess('Imported Successfully')
+      
+    }
+    else{
     this.getErrorModal();
+    }
     this.getFilterData();
     this.refreshUnsettledData();
     //this.toastr.showSuccess("Successfully Uploaded!");
     this.closeimportcsvmodal();
     this.isLoading=false;
+    
     },
     (error) => {
     this.toastr.showError('error due to Api');

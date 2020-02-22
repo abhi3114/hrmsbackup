@@ -251,21 +251,23 @@
     <a><span class="fa fa-times pull-right" style="color: white;cursor:pointer;" (click)="closeimportcsvmodal()"></span></a>
   </div>
   <section content="modal-body">
-    <div class="box-body">
+    <div class="wapper-modalCSV">
       <div class="row">
         <div class="col-md-12">
           <h4>Make sure that you are uploading file for following:</h4>
-          <h5>Month: <b>{{currentmomentmonth}}</b></h5>
-          <h5>Year: <b>{{year}}</b></h5>
+          <ul class="list-inline">
+            <li>Month: <b>{{currentmomentmonth}}</b></li>
+            <li>Year: <b>{{year}}</b></li>
+          </ul>
         </div>
       </div>
       <div class="row">
         <form [formGroup]="uploadcsvdataform">
           <div class="form-group col-md-12">
-            <input type="file" accept=".csv" formControlName="csvfile" id="files">
+            <input type="file" accept=".csv" formControlName="csvfile" id="files" (change)=checkIfFilePresent()>
           </div>
-          <div class="form-group col-md-3" style="padding-left: 250px;">
-            <button (click)="importCsv()" [ladda]="isLoading" class=" btn btn-warning">Upload</button>
+          <div class="form-group col-md-12">
+            <button (click)="importCsv()" [disabled]="!isFilePresent" [ladda]="isLoading" class="btn btn-warning fc-center">Upload</button>
           </div>
         </form>
       </div>

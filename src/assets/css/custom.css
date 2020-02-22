@@ -1777,7 +1777,55 @@ formly-field-file input {
 formly-field-file sup{
     position: absolute;
 
-    right: 29%;
+    right: 28%;
     top: 9px;
+    font-weight: 700;
 
+}
+formly-validation-message {
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+sub, sup{
+    margin-left: 3px;
+    position: relative;
+    font-size: 12px;
+    line-height: 0;
+    vertical-align: baseline;
+    top: -.5em;
+}
+.form-group label span{
+   
+    position: relative;
+    font-size: 12px;
+    line-height: 0;
+    vertical-align: baseline;
+    top: -.5em;
+}
+formly-form input::placeholder{
+    color: #2583a2!important;
+}
+formly-field-textarea textarea::placeholder{
+    color: #2583a2!important;
+}
+.prp-space{
+    margin-top: 15px;
+}
+.wapper-modalCSV {
+    padding: 20px 35px;
+}
+.wapper-modalCSV h4 {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+.wapper-modalCSV ul.list-inline li{
+    padding: 5px 15px;
+    border: 1px solid #dfdfdf;
+    margin-left: 6px;
+    margin-bottom: 10px;
+}
+.fc-center{
+    display: table;
+    margin:auto;
 }
