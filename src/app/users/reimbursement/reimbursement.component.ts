@@ -423,7 +423,7 @@ export class ReimbursementComponent implements OnInit {
     this.reimbursementform.controls.year.value
     this.reimbursementform.controls.month.value == "" ? month = this.reimbursement_filter.selectedmonth : month = this.reimbursementform.controls.month.value
     this.loading=true;
-    this.remService.getUnapproved(month,year).subscribe((res:any) =>{
+    this.remService.getUnapproved().subscribe((res:any) =>{
     console.log(res.reimbursements);
     this.rembursement_api_data=res.reimbursements;
     this.loading=false;

@@ -24,9 +24,9 @@ export class Reimbursementservice
      "Content-Type": 'application/json'})})
   }
 
-  getUnapproved(month,year)
+  getUnapproved()
   {
-    return this.http.get(environment.baseUrl+"reimbursements/unapproved?start_month="+month+"&start_year="+year,
+    return this.http.get(environment.baseUrl+"reimbursements/unapproved",
     { headers: new HttpHeaders({"Authorization": 'Token token=' + localStorage.getItem('token'),
     "Content-Type": 'application/json'})})
   }
