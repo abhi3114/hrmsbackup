@@ -102,7 +102,7 @@ export class CustomPdfService {
               {text: 'Date of Joining', style: 'tableheadContent',border: [true, false, false, false]}, {text: joindate, style: 'tableContent',border: [false, false, true,false], alignment: 'left'}],
               [{text: 'Name', style: 'tableheadContent',border: [true, false, false, false]}, {text: username, style: 'tableContent',border: [false, false, true, false], alignment: 'left'},
               {text: 'Pan Card No', style: 'tableheadContent',border: [true, false, false, false]}, {text:salData.details.pan_no, style: 'tableContent',border: [false, false, true, false], alignment: 'left'}],
-              [{text: 'Location', style: 'tableheadContent',border: [true, false, false, false]}, {text: 'Mumbai', style: 'tableContent',border: [false, false, true, false], alignment: 'left'},
+              [{text: 'Location', style: 'tableheadContent',border: [true, false, false, false]}, {text:salData.location, style: 'tableContent',border: [false, false, true, false], alignment: 'left'},
               {text: 'PF Account No ', style: 'tableheadContent',border: [true, false, false, false]}, {text:ispf, style: 'tableContent',border: [false, false, true, false], alignment: 'left'}],
               [{text: 'Designation', style: 'tableheadContent',border: [true, false, false, false]}, {text:empDesignation, style: 'tableContent',border: [false, false, true, false], alignment: 'left'},
               {text: 'UAN No', style: 'tableheadContent',border: [true, false, false, false]}, {text:uanno, style: 'tableContent',border: [false, false, true, false], alignment: 'left'}],
